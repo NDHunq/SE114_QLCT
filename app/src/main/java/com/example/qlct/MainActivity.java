@@ -1,12 +1,16 @@
 package com.example.qlct;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.example.qlct.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,5 +24,60 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+
+        ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        // Tạo một instance của HomeFragment
+        Home_fragment homeFragment = new Home_fragment();
+
+        // Sử dụng FragmentManager và FragmentTransaction để thêm HomeFragment vào FrameLayout container
+        getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, homeFragment).commit();
+        LinearLayout homeButton = findViewById(R.id.home_button);
+        homeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Tạo một instance mới của HomeFragment
+                Home_fragment homeFragment = new Home_fragment();
+
+                // Sử dụng FragmentManager và FragmentTransaction để thay thế HomeFragment vào FrameLayout container
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, homeFragment).commit();
+            }
+        });
+        LinearLayout anabutton = findViewById(R.id.analysis_button);
+        anabutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Tạo một instance mới của HomeFragment
+                Analysis_fragment analysisFragment = new Analysis_fragment();
+
+                // Sử dụng FragmentManager và FragmentTransaction để thay thế HomeFragment vào FrameLayout container
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, analysisFragment).commit();
+            }
+        });
+        LinearLayout bugbutton = findViewById(R.id.budget_button);
+        bugbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Tạo một instance mới của HomeFragment
+                Budget_fragment budgetFragment = new Budget_fragment();
+
+                // Sử dụng FragmentManager và FragmentTransaction để thay thế HomeFragment vào FrameLayout container
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, budgetFragment).commit();
+            }
+        });
+        LinearLayout accbutton = findViewById(R.id.account_button);
+        accbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Tạo một instance mới của HomeFragment
+                Account_fragment accountFragment = new Account_fragment();
+
+                // Sử dụng FragmentManager và FragmentTransaction để thay thế HomeFragment vào FrameLayout container
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, accountFragment).commit();
+            }
+        });
     }
+
 }
