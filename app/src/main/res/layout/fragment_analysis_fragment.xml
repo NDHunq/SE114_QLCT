@@ -6,9 +6,36 @@
     tools:context=".Analysis_fragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="ana" />
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:background="@color/xanhnen"
+            android:layout_height="55dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:text="Home"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="37dp"
+                android:layout_marginStart="15dp"
+                android:layout_height="match_parent">
+
+            </TextView>
+
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginEnd="15dp"
+                android:layout_gravity="center"
+                android:background="@drawable/bell">
+
+            </ImageView>
+        </LinearLayout>
+    </LinearLayout>
+
 
 </FrameLayout>

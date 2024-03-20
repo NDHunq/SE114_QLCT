@@ -3,12 +3,202 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Budget_fragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="budgett" />
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:background="@color/xanhnen"
+            android:layout_height="55dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:text="Home"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="37dp"
+                android:layout_marginStart="15dp"
+                android:layout_height="match_parent">
+
+            </TextView>
+
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginEnd="15dp"
+                android:layout_gravity="center"
+                android:background="@drawable/bell">
+
+            </ImageView>
+        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="Select Wallet"
+            android:textColor="@color/xanhnen"
+            android:fontFamily="@font/inter_semibold"
+            android:gravity="center"
+            android:layout_marginStart="20dp"
+            android:textSize="18dp">
+        </TextView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/gred_backgound"
+            >
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:shapeAppearance="@style/circle"
+                android:src="@color/black"
+                android:layout_gravity="center"
+                android:layout_marginLeft="12dp">
+
+            </com.google.android.material.imageview.ShapeableImageView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Tên ví"
+                android:layout_marginLeft="20dp"
+                android:textSize="18dp"
+                android:fontFamily="@font/inter_semibold">
+
+            </TextView>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:layout_margin="15dp"
+                android:text="200000000đ  >"
+                android:textColor="#4CAF50"
+                android:textSize="18dp"
+                android:fontFamily="@font/inter_semibold">
+
+            </TextView>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:text="Running"
+                android:background="@drawable/background_bo_trai"
+                android:textSize="18dp"
+                android:textColor="@color/xanhnen"
+                android:fontFamily="@font/inter"
+                android:gravity="center">
+            </TextView>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:text="Finished"
+                android:background="@drawable/background_bo_phai"
+                android:backgroundTint="#ACACAC"
+                android:textSize="18dp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/inter"
+                android:gravity="center">
+            </TextView>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="10"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/gred_backgound">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="35dp">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="This day"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/inter"
+                    android:textSize="12dp"
+                    android:layout_height="match_parent">
+                </TextView>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="This week"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/inter"
+                    android:textSize="12dp"
+                    android:layout_height="match_parent">
+                </TextView>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="This month"
+                    android:textSize="12dp"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/inter"
+                    android:layout_height="match_parent">
+                </TextView>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="This year"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:fontFamily="@font/inter"
+                    android:textSize="12dp"
+                    android:layout_height="match_parent">
+                </TextView>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="Future"
+                    android:textSize="12dp"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:fontFamily="@font/inter"
+                    android:layout_height="match_parent">
+                </TextView>
+            </LinearLayout>
+
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <TextView
+                android:id="@+id/create_bud_butt"
+                android:layout_width="150dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="20dp"
+                android:gravity="center"
+                android:text="Create Budget"
+                android:fontFamily="@font/inter"
+                android:textColor="@color/white"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/gred_backgound"
+                android:backgroundTint="@color/xanhnen"
+                >
+
+            </TextView>
+        </RelativeLayout>
+    </LinearLayout>
 
 </FrameLayout>
