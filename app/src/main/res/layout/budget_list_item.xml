@@ -17,7 +17,7 @@
             app:shapeAppearanceOverlay="@style/circle"
             android:src="@color/black"
             android:layout_gravity="center"
-            android:layout_marginLeft="12dp">
+            android:layout_marginLeft="10dp">
 
         </com.google.android.material.imageview.ShapeableImageView>
 
@@ -57,7 +57,7 @@
 
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="7dp"
+                android:layout_marginEnd="10dp"
                 android:layout_alignParentRight="true"
                 android:orientation="vertical">
 
@@ -65,7 +65,7 @@
                     android:id="@+id/fromday"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="left"
+                    android:layout_gravity="right"
                     android:fontFamily="@font/inter"
                     android:text="Today, 21 March 2024"
                     android:textColor="@color/black"
@@ -96,8 +96,8 @@
         <SeekBar
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
            >
 
         </SeekBar>
@@ -112,6 +112,7 @@
                 android:fontFamily="@font/inter"
                 android:text="Budget"
                 android:textColor="@color/black"
+                android:layout_marginStart="10dp"
                 android:textSize="13dp">
 
             </TextView>
@@ -123,6 +124,7 @@
                 android:fontFamily="@font/inter"
                 android:text="2000000 đ"
                 android:layout_alignParentRight="true"
+                android:layout_marginEnd="10dp"
                 android:textColor="@color/black"
                 android:textSize="13dp">
 
