@@ -1,5 +1,6 @@
 package com.example.qlct;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +25,7 @@ public class AnalysisNetIncomeFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    TextView see_detail;
 
     public AnalysisNetIncomeFragment() {
         // Required empty public constructor
@@ -59,6 +62,15 @@ public class AnalysisNetIncomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_analysis_net_income, container, false);
+        View view=inflater.inflate(R.layout.fragment_analysis_net_income, container, false);
+        see_detail=view.findViewById(R.id.see_detail_net_income);
+        see_detail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getActivity(), AnalysisDetailNetIncome.class);
+                startActivity(intent);
+            }
+        });
+        return view;
     }
 }

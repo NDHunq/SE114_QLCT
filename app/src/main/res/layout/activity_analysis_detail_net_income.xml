@@ -1,10 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".AnalysisDetailNetIncome">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="10dp">
+        <ImageView
+            android:id="@+id/exit_netIcome"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:padding="5dp"
+            android:src="@drawable/back_line"
+            android:layout_marginLeft="10dp">
+        </ImageView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:textStyle="bold"
+            android:text="Net Income"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:layout_gravity="center"
+            ></TextView>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="8dp">
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/blue_calendar">
+
+        </ImageView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="All time"
+            android:layout_marginLeft="10dp"
+            android:textSize="18dp"
+            android:textColor="@color/black">
+
+        </TextView>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical"
+        android:background="@drawable/gred_backgound">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Income"
+                android:textColor="#177715"
+                android:textSize="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="4dp"
+                android:gravity="left">
+
+            </TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Expense"
+                android:textColor="#FF0000"
+                android:textSize="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="33dp"
+                android:gravity="left">
+            </TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="1000000 đ"
+                android:textColor="#177715"
+                android:textSize="15dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="4dp"
+                android:layout_alignParentEnd="true"
+                android:gravity="right">
+            </TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="500000 đ"
+                android:textColor="#FF0000"
+                android:textSize="15dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="33dp"
+                android:layout_alignParentEnd="true"
+                android:gravity="right">
+            </TextView>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_margin="5dp"
+            android:backgroundTint="@color/black"
+            android:background="@drawable/gred_backgound">
+        </RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="500000 đ"
+            android:textColor="@color/black"
+            android:textSize="15dp"
+            android:layout_marginEnd="20dp"
+            android:layout_alignParentEnd="true"
+            android:gravity="right">
+        </TextView>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="205dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="15dp"
+            android:src="@drawable/barchart">
+
+        </ImageView>
+    </LinearLayout>
+    <ListView
+        android:id="@+id/listvieww"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="10dp">
+
+    </ListView>
+</LinearLayout>
