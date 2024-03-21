@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:text="Date"
         android:textSize="18dp"
-        android:fontFamily="@font/inter_semibold"
+        android:textStyle="bold"
         android:layout_marginStart="20dp"
         android:textColor="@color/black">
     </TextView>
@@ -34,7 +34,7 @@
             android:background="@drawable/background_bo_trai"
             android:textSize="18dp"
             android:textColor="@color/black"
-            android:fontFamily="@font/inter"
+
             android:gravity="center">
         </TextView>
         <TextView
@@ -47,7 +47,7 @@
 
             android:textSize="18dp"
             android:textColor="@color/xanhnen"
-            android:fontFamily="@font/inter"
+
             android:gravity="center">
         </TextView>
     </LinearLayout>
@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:text="Apply"
             android:textSize="18dp"
-            android:fontFamily="@font/inter_semibold"
+            android:textStyle="bold"
             android:layout_marginStart="20dp"
             android:textColor="@color/xanhnen"
             android:layout_alignParentRight="true"

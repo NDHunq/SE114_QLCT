@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:text="Date"
         android:textSize="18dp"
-        android:fontFamily="@font/inter_semibold"
+        android:textStyle="bold"
         android:layout_marginStart="20dp"
         android:textColor="@color/black">
     </TextView>
@@ -33,7 +33,7 @@
             android:background="@drawable/background_bo_trai"
             android:textSize="18dp"
             android:textColor="@color/xanhnen"
-            android:fontFamily="@font/inter"
+
             android:gravity="center">
         </TextView>
         <TextView
@@ -47,7 +47,7 @@
             android:backgroundTint="#ACACAC"
             android:textSize="18dp"
             android:textColor="@color/black"
-            android:fontFamily="@font/inter"
+
             android:gravity="center">
         </TextView>
     </LinearLayout>
@@ -62,7 +62,7 @@
             android:text="Day"
             android:gravity="center"
             android:textColor="@color/black"
-            android:fontFamily="@font/inter"
+
             android:textSize="16dp"
             android:layout_height="match_parent">
         </TextView>
@@ -72,7 +72,7 @@
             android:text="Week"
             android:gravity="center"
             android:textColor="@color/black"
-            android:fontFamily="@font/inter"
+
             android:textSize="16dp"
             android:layout_height="match_parent">
         </TextView>
@@ -83,7 +83,7 @@
             android:textSize="16dp"
             android:gravity="center"
             android:textColor="@color/black"
-            android:fontFamily="@font/inter"
+
             android:layout_height="match_parent">
         </TextView>
         <TextView
@@ -92,7 +92,7 @@
             android:text="Year"
             android:textColor="@color/black"
             android:gravity="center"
-            android:fontFamily="@font/inter"
+
             android:textSize="16dp"
             android:layout_height="match_parent">
         </TextView>
@@ -103,7 +103,7 @@
             android:textSize="16dp"
             android:textColor="@color/black"
             android:gravity="center"
-            android:fontFamily="@font/inter"
+
             android:layout_height="match_parent">
         </TextView>
     </LinearLayout>
@@ -125,7 +125,7 @@
             android:text="10 March, 2024"
             android:gravity="center"
             android:textColor="@color/black"
-            android:fontFamily="@font/inter"
+
             android:textSize="16dp"
             android:layout_height="match_parent">
         </TextView>
@@ -152,7 +152,7 @@
             android:layout_height="wrap_content"
             android:text="Apply"
             android:textSize="18dp"
-            android:fontFamily="@font/inter_semibold"
+            android:textStyle="bold"
             android:layout_marginStart="20dp"
             android:textColor="@color/xanhnen"
             android:layout_alignParentRight="true"

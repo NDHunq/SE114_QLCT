@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:fontFamily="@font/inter_semibold"
+            android:textStyle="bold"
             android:text="Add budget"
             android:textSize="20dp"
             android:layout_gravity="center"
@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="20dp"
-            android:fontFamily="@font/inter_semibold"
+            android:textStyle="bold"
             android:text="Clothing"
             android:textSize="18dp"></TextView>
     </LinearLayout>
@@ -127,7 +127,7 @@
         android:layout_marginTop="15dp"
         android:layout_marginLeft="20dp"
         android:layout_marginBottom="10dp"
-        android:fontFamily="@font/inter_semibold">
+        android:textStyle="bold">
     </TextView>
     <LinearLayout
         android:layout_width="match_parent"
@@ -152,7 +152,7 @@
             android:text="Tên ví"
             android:layout_marginLeft="20dp"
             android:textSize="18dp"
-            android:fontFamily="@font/inter_semibold">
+            android:textStyle="bold">
 
         </TextView>
         <TextView
@@ -163,7 +163,7 @@
             android:text="200000000đ  >"
             android:textColor="#4CAF50"
             android:textSize="18dp"
-            android:fontFamily="@font/inter_semibold">
+            android:textStyle="bold">
 
         </TextView>
     </LinearLayout>
@@ -182,7 +182,7 @@
             android:layout_marginLeft="12dp"
             android:layout_marginTop="5dp"
             android:textSize="18dp"
-            android:fontFamily="@font/inter_semibold">
+            android:textStyle="bold">
 
         </TextView>
 
@@ -193,7 +193,6 @@
             android:layout_marginLeft="12dp"
             android:layout_marginTop="26dp"
 
-            android:fontFamily="@font/inter"
             android:text="Get notified when this budget finishes"
             android:textSize="12dp">
 

@@ -41,7 +41,8 @@
             android:layout_height="40dp"
             android:text="Select Wallet"
             android:textColor="@color/xanhnen"
-            android:fontFamily="@font/inter_semibold"
+
+            android:textStyle="bold"
             android:gravity="center"
             android:layout_marginStart="20dp"
             android:textSize="18dp">
@@ -69,7 +70,7 @@
                 android:text="Tên ví"
                 android:layout_marginLeft="20dp"
                 android:textSize="18dp"
-                android:fontFamily="@font/inter_semibold">
+                android:textStyle="bold">
 
             </TextView>
             <TextView
@@ -80,7 +81,7 @@
                 android:text="200000000đ  >"
                 android:textColor="#4CAF50"
                 android:textSize="18dp"
-                android:fontFamily="@font/inter_semibold">
+               android:textStyle="bold">
 
             </TextView>
         </LinearLayout>
@@ -90,6 +91,8 @@
             android:layout_marginStart="40dp"
             android:layout_marginEnd="40dp">
             <TextView
+                android:onClick="AddFragment"
+                android:id="@+id/running"
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:layout_weight="1"
@@ -98,10 +101,12 @@
                 android:background="@drawable/background_bo_trai"
                 android:textSize="18dp"
                 android:textColor="@color/xanhnen"
-                android:fontFamily="@font/inter"
+
                 android:gravity="center">
             </TextView>
             <TextView
+                android:onClick="AddFragment"
+                android:id="@+id/finish"
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:layout_weight="1"
@@ -111,71 +116,25 @@
                 android:backgroundTint="#ACACAC"
                 android:textSize="18dp"
                 android:textColor="@color/black"
-                android:fontFamily="@font/inter"
+
                 android:gravity="center">
             </TextView>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:orientation="vertical"
             android:layout_weight="10"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:background="@drawable/gred_backgound">
-            <LinearLayout
+
+            <FrameLayout
+                android:id="@+id/budget_container"
                 android:layout_width="match_parent"
-                android:layout_height="35dp">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:text="This day"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:fontFamily="@font/inter"
-                    android:textSize="12dp"
-                    android:layout_height="match_parent">
-                </TextView>
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:text="This week"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:fontFamily="@font/inter"
-                    android:textSize="12dp"
-                    android:layout_height="match_parent">
-                </TextView>
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:text="This month"
-                    android:textSize="12dp"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:fontFamily="@font/inter"
-                    android:layout_height="match_parent">
-                </TextView>
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:text="This year"
-                    android:textColor="@color/black"
-                    android:gravity="center"
-                    android:fontFamily="@font/inter"
-                    android:textSize="12dp"
-                    android:layout_height="match_parent">
-                </TextView>
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:text="Future"
-                    android:textSize="12dp"
-                    android:textColor="@color/black"
-                    android:gravity="center"
-                    android:fontFamily="@font/inter"
-                    android:layout_height="match_parent">
-                </TextView>
-            </LinearLayout>
+                android:layout_height="match_parent">
+
+            </FrameLayout>
 
         </LinearLayout>
         <RelativeLayout
@@ -190,7 +149,7 @@
                 android:layout_marginEnd="20dp"
                 android:gravity="center"
                 android:text="Create Budget"
-                android:fontFamily="@font/inter"
+
                 android:textColor="@color/white"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/gred_backgound"

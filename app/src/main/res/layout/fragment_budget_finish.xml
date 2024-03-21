@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BudgetFinishFragment"
+    android:background="@drawable/background_item"
+    android:backgroundTint="#F2F2F2">>
+
+    <!-- TODO: Update blank fragment layout -->
+    <ListView
+        android:id="@+id/listviewFinish"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        style="@style/CustomListViewStyle"
+       >
+
+    </ListView>
+
+</FrameLayout>
