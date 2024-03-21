@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:id="@+id/main"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".My_wallets">
+    <LinearLayout
+        android:layout_marginTop="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/backarrow"
+            android:layout_marginStart="12dp"
+            android:background="@drawable/back_arrow"
+            android:layout_gravity="center"
+            android:layout_width="34dp"
+            android:layout_height="35dp">
+    </ImageView>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_weight="1"
+            android:text="My wallets"
+            android:layout_gravity="center"
+            android:textSize="32dp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_height="wrap_content"></TextView>
+        <TextView
+            android:id="@+id/addnew"
+            android:layout_width="wrap_content"
+
+            android:layout_marginEnd="12dp"
+            android:text="ADD NEW"
+
+
+            android:layout_gravity="center"
+            android:textSize="21dp"
+            android:textStyle="bold"
+            android:textColor="@color/xanhnendam"
+            android:layout_height="wrap_content"></TextView>
+
+        
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+android:layout_marginStart="12dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/the12dp"
+        android:layout_height="50dp">
+     <EditText
+         android:background="@null"
+         android:textSize="20dp"
+
+
+         android:layout_marginStart="5dp"
+         android:layout_width="0dp"
+         android:layout_weight="1"
+         android:maxLines="1"
+         android:layout_height="match_parent">
+
+     </EditText>
+        <ImageButton
+            android:layout_width="26dp"
+
+            android:layout_gravity="center"
+            android:background="@drawable/search"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="12dp"
+            android:layout_height="26dp">
+
+        </ImageButton>
+
+
+    </LinearLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_marginTop="10dp"
+    android:layout_marginStart="12dp"
+    android:background="@drawable/the12dp"
+    android:layout_marginEnd="12dp"
+    android:layout_height="80dp">
+<ImageView
+        android:layout_width="50dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="12dp"
+        android:background="@drawable/hinhtrong"
+        android:layout_height="50dp"></ImageView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_marginEnd="12dp"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+
+            android:text="Total"
+            android:textColor="@color/xanhnendam"
+            android:textSize="22dp"
+
+
+
+            android:layout_marginStart="12dp"
+            android:layout_height="0dp"></TextView>
+        <TextView
+            android:layout_width="wrap_content"
+
+            android:text="2,000,000 đ"
+            android:textColor="@color/xanhdam"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            android:layout_marginStart="12dp"
+            android:layout_height="wrap_content"></TextView>
+    </LinearLayout>
+  
+    
+
+
+
+</LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+
+            android:layout_gravity="center"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="Include in total"
+            android:layout_marginStart="15dp"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_height="wrap_content">
+        </TextView>
+        <LinearLayout
+            android:id="@+id/sortbutton"
+            android:layout_width="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:background="@drawable/hinhchunhatvien7dp"
+            android:layout_height="35dp">
+            <ImageView
+                android:id="@+id/UP_DOWN"
+                android:background="@drawable/up_arrow"
+                android:layout_width="17dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="5dp"
+                android:layout_height="17dp"></ImageView>
+
+            <TextView
+                android:id="@+id/sortbutton_text"
+                android:layout_marginEnd="20dp"
+                android:layout_width="wrap_content"
+                android:text="Name"
+                android:layout_gravity="center"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content"></TextView>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/listView_wallets"
+        android:layout_width="match_parent"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_height="match_parent">
+
+
+    </ListView>
+       
+
+</LinearLayout>

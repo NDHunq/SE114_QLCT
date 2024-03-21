@@ -6,4 +6,8 @@
     </style>
 
     <style name="Theme.QLCT" parent="Base.Theme.QLCT" />
+    <style name="DialogAnimationn">
+        <item name="android:windowEnterAnimation">@anim/slide_in_bottom_vi</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_bottom_vi</item>
+    </style>
 </resources>
