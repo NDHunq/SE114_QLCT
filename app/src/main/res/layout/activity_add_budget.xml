@@ -192,9 +192,8 @@
             android:layout_gravity="center"
             android:layout_marginLeft="12dp"
             android:layout_marginTop="26dp"
-
             android:text="Get notified when this budget finishes"
-            android:textSize="12dp">
+            android:textSize="16dp">
 
         </TextView>
         <Switch
@@ -219,7 +218,6 @@
             android:layout_marginRight="20dp"
             android:src="@drawable/check"
            android:scaleType="fitCenter"
-
             android:background="@drawable/done_butt">
 
         </ImageButton>

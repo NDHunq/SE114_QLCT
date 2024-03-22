@@ -11,8 +11,8 @@ import java.util.List;
 
 public class Analysis_NetIncome_Adapter extends BaseAdapter {
     List<AnalysisNetIcome> list;
-    private Context context;
-    private int layout;
+    Context context;
+    int layout;
 
     public Analysis_NetIncome_Adapter(List<AnalysisNetIcome> list, Context context, int layout) {
         this.list = list;
@@ -22,7 +22,7 @@ public class Analysis_NetIncome_Adapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 0;
+        return list.size();
     }
 
     @Override
@@ -46,10 +46,10 @@ public class Analysis_NetIncome_Adapter extends BaseAdapter {
         TextView total=convertView.findViewById(R.id.total);
         //Gán giá trị
         AnalysisNetIcome netIcome=list.get(position);
-        year.setText(netIcome.getYear());
+        year.setText(String.valueOf(netIcome.getYear()));
         income.setText(String.valueOf(netIcome.getIncome()));
         expense.setText(String.valueOf(netIcome.getExpense()));
-        total.setText(String.valueOf(netIcome.getIncome()-netIcome.getExpense()));
+        total.setText(String.valueOf(netIcome.getIncome()-netIcome.getExpense()) +" đ");
         return convertView;
     }
 }

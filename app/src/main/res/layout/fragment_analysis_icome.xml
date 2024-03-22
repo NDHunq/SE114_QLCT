@@ -43,6 +43,7 @@
 
         </ImageView>
         <TextView
+            android:id="@+id/detail_inc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"

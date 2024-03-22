@@ -29,28 +29,27 @@ public class AnalysisDetailNetIncome extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        listView=this.findViewById(R.id.listvieww);
         exit=this.findViewById(R.id.exit_netIcome);
-        AnhXa();
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+        arraylist=new ArrayList<>();
+        AnhXa();
         Analysis_NetIncome_Adapter adapter=new Analysis_NetIncome_Adapter(arraylist,this,R.layout.analysis_net_income_list_item);
         listView.setAdapter(adapter);
-
     }
     void AnhXa(){
 
-        arraylist=new ArrayList<>();
-        arraylist.add(new AnalysisNetIcome(2019,10000000,200000));
-        arraylist.add(new AnalysisNetIcome(2020,10000000,200000));
-        arraylist.add(new AnalysisNetIcome(2021,10000000,200000));
-        arraylist.add(new AnalysisNetIcome(2022,10000000,200000));
-        arraylist.add(new AnalysisNetIcome(2023,10000000,200000));
-        arraylist.add(new AnalysisNetIcome(2024,10000000,200000));
+        listView=this.findViewById(R.id.listvieww);
+        arraylist.add(new AnalysisNetIcome(2019,1000000,20000));
+        arraylist.add(new AnalysisNetIcome(2020,1000000,20000));
+        arraylist.add(new AnalysisNetIcome(2021,1000000,20000));
+        arraylist.add(new AnalysisNetIcome(2022,1000000,20000));
+        arraylist.add(new AnalysisNetIcome(2023,1000000,20000));
+        arraylist.add(new AnalysisNetIcome(2024,1000000,20000));
 
 
     }
