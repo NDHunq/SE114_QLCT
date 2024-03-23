@@ -1,14 +1,11 @@
 package com.example.qlct;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -20,17 +17,17 @@ import java.util.ArrayList;
 public class Home_fragment extends Fragment {
 
     ListView listView;
-    ArrayList<TheGiaoDich>  theGiaoDichList;
-    TheGiaoDichAdap theGiaoDichAdap;
+    ArrayList<Home_TheGiaoDich>  theGiaoDichList;
+    Home_TheGiaoDich_Adapter theGiaoDichAdap;
     private  void Anhxa()
     {
 
         theGiaoDichList = new ArrayList<>();
-        theGiaoDichList.add(new TheGiaoDich(R.drawable.budget,"Tiền lương","5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList.add(new TheGiaoDich(R.drawable.budget,"Tiền lương","5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList.add(new TheGiaoDich(R.drawable.budget,"Tiền lương","5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList.add(new TheGiaoDich(R.drawable.budget,"Tiền lương","5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList.add(new TheGiaoDich(R.drawable.budget,"Tiền lương","5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList.add(new Home_TheGiaoDich(R.drawable.budget,"Tiền lương","5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList.add(new Home_TheGiaoDich(R.drawable.budget,"Tiền lương","5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList.add(new Home_TheGiaoDich(R.drawable.budget,"Tiền lương","5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList.add(new Home_TheGiaoDich(R.drawable.budget,"Tiền lương","5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList.add(new Home_TheGiaoDich(R.drawable.budget,"Tiền lương","5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
 
     }
     @Override
@@ -43,6 +40,14 @@ public class Home_fragment extends Fragment {
         // Tìm ImageView unseen
         ImageView unseen = view.findViewById(R.id.unseen);
         TextView text = view.findViewById(R.id.total_blance);
+        ImageView noti = view.findViewById(R.id.noti);
+        noti.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),Notificaiton.class);
+                startActivity(intent);
+            }
+        });
 
         // Đặt OnClickListener cho unseen
         unseen.setOnClickListener(new View.OnClickListener() {
@@ -75,14 +80,16 @@ public class Home_fragment extends Fragment {
                 Intent event;
 
 
-                Intent intent = new Intent(getActivity(), My_wallets.class);
+                Intent intent = new Intent(getActivity(), Home_My_wallets.class);
 
                 // Bắt đầu Activity mới
                 startActivity(intent);
             }
         });
-       theGiaoDichAdap= new TheGiaoDichAdap(getContext(),R.layout.dong_giao_dich,theGiaoDichList);
+       theGiaoDichAdap= new Home_TheGiaoDich_Adapter(getContext(),R.layout.home_dong_giao_dich,theGiaoDichList);
         listView.setAdapter(theGiaoDichAdap);
         return view;
+
+
     }
 }

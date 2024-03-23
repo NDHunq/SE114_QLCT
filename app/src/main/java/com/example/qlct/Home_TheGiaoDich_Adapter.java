@@ -10,12 +10,12 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class TheGiaoDichAdap extends BaseAdapter {
+public class Home_TheGiaoDich_Adapter extends BaseAdapter {
     private Context context;
     private int layout;
-    private ArrayList<TheGiaoDich> theGiaoDichList;
+    private ArrayList<Home_TheGiaoDich> theGiaoDichList;
 
-    public TheGiaoDichAdap(Context context, int layout, ArrayList<TheGiaoDich> theGiaoDichList) {
+    public Home_TheGiaoDich_Adapter(Context context, int layout, ArrayList<Home_TheGiaoDich> theGiaoDichList) {
         this.context = context;
         this.layout = layout;
         this.theGiaoDichList = theGiaoDichList;
@@ -46,7 +46,7 @@ public class TheGiaoDichAdap extends BaseAdapter {
         TextView ngaythang = (TextView) view.findViewById(R.id.ngaythang);
         TextView ghichu = (TextView) view.findViewById(R.id.GhiChu);
         TextView vitien = (TextView) view.findViewById(R.id.tenvi);
-        TheGiaoDich theGiaoDich = theGiaoDichList.get(i);
+        Home_TheGiaoDich theGiaoDich = theGiaoDichList.get(i);
         imageView.setImageResource(theGiaoDich.getHinhAnh());
         ten.setText(theGiaoDich.getTenGiaoDich());
         sotien.setText(theGiaoDich.getSoTien());

@@ -1,10 +1,9 @@
 package com.example.qlct;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -22,32 +21,32 @@ import androidx.core.view.WindowInsetsCompat;
 
 import java.util.ArrayList;
 
-public class My_wallets extends AppCompatActivity {
+public class Home_My_wallets extends AppCompatActivity {
     int up=0;
     String txt2=new String();
     LinearLayout linearLayout;
     ListView listView;
-    ArrayList<TheVi>  theViList;
-    TheVi theVi;
+    ArrayList<Home_TheVi>  theViList;
+    Home_TheVi theVi;
     private  void Anhxa()
     {
 
         theViList = new ArrayList<>();
-        theViList.add(new TheVi(R.drawable.wallet,"Ví tiền","5000000 đ"));
-        theViList.add(new TheVi(R.drawable.wallet,"Ví tiền","5000000 đ"));
-        theViList.add(new TheVi(R.drawable.wallet,"Ví tiền","5000000 đ"));
-        theViList.add(new TheVi(R.drawable.wallet,"Ví tiền","5000000 đ"));
-        theViList.add(new TheVi(R.drawable.wallet,"Ví tiền","5000000 đ"));
-        theViList.add(new TheVi(R.drawable.wallet,"Ví tiền","5000000 đ"));
-        theViList.add(new TheVi(R.drawable.wallet,"Ví tiền","5000000 đ"));
-        theViList.add(new TheVi(R.drawable.wallet,"Ví tiền","5000000 đ"));
-        theViList.add(new TheVi(R.drawable.wallet,"Ví tiền","5000000 đ"));
-        theViList.add(new TheVi(R.drawable.wallet,"Ví tiền","5000000 đ"));
-        theViList.add(new TheVi(R.drawable.wallet,"Ví tiền","5000000 đ"));
-        theViList.add(new TheVi(R.drawable.wallet,"Ví tiền","5000000 đ"));
-        theViList.add(new TheVi(R.drawable.wallet,"Ví tiền","5000000 đ"));
-        theViList.add(new TheVi(R.drawable.wallet,"Ví tiền","5000000 đ"));
-        theViList.add(new TheVi(R.drawable.wallet,"Ví tiền","5000000 đ"));
+        theViList.add(new Home_TheVi(R.drawable.wallet,"Ví tiền","5000000 đ"));
+        theViList.add(new Home_TheVi(R.drawable.wallet,"Ví tiền","5000000 đ"));
+        theViList.add(new Home_TheVi(R.drawable.wallet,"Ví tiền","5000000 đ"));
+        theViList.add(new Home_TheVi(R.drawable.wallet,"Ví tiền","5000000 đ"));
+        theViList.add(new Home_TheVi(R.drawable.wallet,"Ví tiền","5000000 đ"));
+        theViList.add(new Home_TheVi(R.drawable.wallet,"Ví tiền","5000000 đ"));
+        theViList.add(new Home_TheVi(R.drawable.wallet,"Ví tiền","5000000 đ"));
+        theViList.add(new Home_TheVi(R.drawable.wallet,"Ví tiền","5000000 đ"));
+        theViList.add(new Home_TheVi(R.drawable.wallet,"Ví tiền","5000000 đ"));
+        theViList.add(new Home_TheVi(R.drawable.wallet,"Ví tiền","5000000 đ"));
+        theViList.add(new Home_TheVi(R.drawable.wallet,"Ví tiền","5000000 đ"));
+        theViList.add(new Home_TheVi(R.drawable.wallet,"Ví tiền","5000000 đ"));
+        theViList.add(new Home_TheVi(R.drawable.wallet,"Ví tiền","5000000 đ"));
+        theViList.add(new Home_TheVi(R.drawable.wallet,"Ví tiền","5000000 đ"));
+        theViList.add(new Home_TheVi(R.drawable.wallet,"Ví tiền","5000000 đ"));
 
     }
     @Override
@@ -60,9 +59,22 @@ public class My_wallets extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        TextView add = findViewById(R.id.addnew);
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent event;
+
+
+                Intent intent = new Intent(Home_My_wallets.this  , Home_New_wallet.class);
+
+                // Bắt đầu Activity mới
+                startActivity(intent);
+            }
+        });
        listView = this.<ListView>findViewById(R.id.listView_wallets);
         Anhxa();
-        TheViAdap theViAdap = new TheViAdap(this,R.layout.dong_vi,theViList);
+        Home_TheVi_Adapter theViAdap = new Home_TheVi_Adapter(this,R.layout.home_dong_vi,theViList);
         listView.setAdapter(theViAdap);
 
         ImageView backArrow = findViewById(R.id.backarrow);

@@ -1,6 +1,6 @@
 package com.example.qlct;
 
-public class TheGiaoDich {
+public class Home_TheGiaoDich {
     private int HinhAnh;
     private String TenGiaoDich;
     private String SoTien;
@@ -8,7 +8,7 @@ public class TheGiaoDich {
     private String GhiChu;
     private String ViTien;
 
-    public TheGiaoDich(int hinhAnh, String tenGiaoDich, String soTien, String ngayThang, String ghiChu, String viTien) {
+    public Home_TheGiaoDich(int hinhAnh, String tenGiaoDich, String soTien, String ngayThang, String ghiChu, String viTien) {
         HinhAnh = hinhAnh;
         TenGiaoDich = tenGiaoDich;
         SoTien = soTien;

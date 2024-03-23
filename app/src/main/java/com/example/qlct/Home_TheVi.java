@@ -1,11 +1,11 @@
 package com.example.qlct;
 
-public class TheVi {
+public class Home_TheVi {
     private int HinhAnh;
     private String TenVi;
     private String SoTien;
 
-    public TheVi(int hinhAnh, String tenVi, String soTien) {
+    public Home_TheVi(int hinhAnh, String tenVi, String soTien) {
         HinhAnh = hinhAnh;
         TenVi = tenVi;
         SoTien = soTien;

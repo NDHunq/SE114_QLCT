@@ -1,6 +1,7 @@
 package com.example.qlct;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,12 +11,12 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class TheViAdap extends BaseAdapter {
+public class Home_TheVi_Adapter extends BaseAdapter {
     private Context context;
     private int layout;
-    private ArrayList<TheVi> theViList;
+    private ArrayList<Home_TheVi> theViList;
 
-    public TheViAdap(Context context, int layout, ArrayList<TheVi> theViList) {
+    public Home_TheVi_Adapter(Context context, int layout, ArrayList<Home_TheVi> theViList) {
         this.context = context;
         this.layout = layout;
         this.theViList = theViList;
@@ -43,10 +44,18 @@ public class TheViAdap extends BaseAdapter {
         ImageView imageView = (ImageView) view.findViewById(R.id.hinhanhVi);
         TextView ten = (TextView) view.findViewById(R.id.tenVi_theVi);
         TextView sotien = (TextView) view.findViewById(R.id.tienVi_theVi);
-        TheVi theVi = theViList.get(i);
+        Home_TheVi theVi = theViList.get(i);
         imageView.setImageResource(theVi.getHinhAnh());
         ten.setText(theVi.getTenVi());
         sotien.setText(theVi.getSoTien());
+        ImageView optionsVi = (ImageView) view.findViewById(R.id.optionsVi); // Assuming you have optionsVi ImageView in your item layout
+        optionsVi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, Home_Wallet_Information.class);
+                context.startActivity(intent);
+            }
+        });
         return view;
     }
 }

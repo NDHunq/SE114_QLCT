@@ -29,6 +29,7 @@
                 </TextView>
 
                 <ImageButton
+                    android:id="@+id/noti"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:layout_marginEnd="15dp"
@@ -53,6 +54,7 @@
             <ImageView
                 android:id="@+id/unseen"
                 android:layout_width="34dp"
+
                 android:layout_marginStart="12dp"
                 android:layout_gravity="center"
                 android:background="@drawable/eye"
@@ -196,6 +198,7 @@ android:layout_marginTop="12dp"
 
                 <ListView
                     android:id="@+id/listView"
+                    android:scrollbars="none"
                     android:layout_marginStart="12dp"
                     android:layout_marginEnd="12dp"
                     android:layout_width="match_parent"
