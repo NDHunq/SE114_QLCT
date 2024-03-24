@@ -71,7 +71,7 @@ public class AddBudget extends AppCompatActivity {
         dialog.getWindow().setGravity(Gravity.BOTTOM);
         dialog.getWindow().getAttributes().windowAnimations=R.style.DialogAnimation;
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
-        dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_bgH);
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_bgh);
         renew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

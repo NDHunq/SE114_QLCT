@@ -219,7 +219,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginBottom="20dp"
             android:layout_marginRight="20dp"
-            android:src="@drawable/checkH"
+            android:src="@drawable/checkh"
            android:scaleType="fitCenter"
             android:background="@drawable/done_butt">
 
