@@ -16,6 +16,7 @@
         android:background="@drawable/circle_shape"
         android:backgroundTint="#FFEB3B"
         >
+
     </TextView>
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/avt"
