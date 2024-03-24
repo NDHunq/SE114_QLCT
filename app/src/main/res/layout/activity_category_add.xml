@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Category_Add">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_marginTop="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/cancel"
+            android:layout_width="40dp"
+            android:layout_height="50dp"
+            android:text="X"
+            android:textAlignment="center"
+            android:layout_marginStart="12dp"
+
+            android:textColor="@color/black"
+            android:textSize="37dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></TextView>
+
+        <TextView
+            android:layout_marginStart="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="Add Category"
+            android:textColor="@color/black"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            app:layout_constraintStart_toEndOf="@+id/cancel"
+            app:layout_constraintTop_toTopOf="parent"></TextView>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_marginTop="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <LinearLayout
+            android:id="@+id/incomeclick"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/nenxanhlacay7dp"
+            android:layout_width="140dp"
+            android:layout_height="40dp">
+            <ImageView
+                android:id="@+id/incomeimg"
+                android:layout_marginStart="8dp"
+                android:layout_gravity="center"
+                android:layout_width="30dp"
+                android:background="@drawable/downarrow_white"
+                android:layout_height="28dp">
+
+            </ImageView>
+            <TextView
+                android:id="@+id/incometxt"
+                android:layout_width="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="Income"
+                android:textStyle="bold"
+                android:textSize="20dp"
+                android:textColor="@color/white"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content">
+
+            </TextView>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/expenseclick"
+            android:layout_marginStart="12dp"
+            android:background="@drawable/hinhchunhatvien7dp"
+            android:layout_width="140dp"
+            android:layout_height="40dp">
+            <ImageView
+                android:id="@+id/expenseimg"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/uparrow_black"
+                android:layout_gravity="center"
+                android:layout_width="30dp"
+                android:layout_height="28dp">
+
+            </ImageView>
+            <TextView
+                android:id="@+id/expensetxt"
+                android:layout_width="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="Expense"
+                android:textStyle="bold"
+                android:textSize="20dp"
+                android:textColor="@color/black"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content">
+
+            </TextView>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.cardview.widget.CardView
+
+            android:layout_width="50dp"
+            android:layout_marginEnd="12dp"
+
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="20dp"
+            app:cardCornerRadius="250dp"
+           >
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="153dp"
+                android:id="@+id/icon"
+                app:cardBackgroundColor="@color/white"
+                android:layout_height="155dp"
+                android:layout_gravity="center"
+                app:cardCornerRadius="250dp">
+
+                <ImageView
+                    android:id="@+id/hinhanh"
+                    android:background="@drawable/question"
+                    android:layout_width="51dp"
+
+                    android:layout_height="51dp"
+
+                    android:layout_gravity="center">
+
+
+                </ImageView>
+
+            </androidx.cardview.widget.CardView>
+
+        </androidx.cardview.widget.CardView>
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:textSize="20dp"
+            android:maxLines="1"
+            android:layout_height="wrap_content"
+            android:hint="Category name"
+            android:layout_marginEnd="20dp"
+            ></com.google.android.material.textfield.TextInputEditText>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        
+    </LinearLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:layout_width="70dp"
+        android:background="@drawable/nenxanh7dp"
+        android:layout_gravity="end"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="12dp"
+        android:layout_height="70dp">
+
+
+        <ImageButton
+
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/check"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </ImageButton>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

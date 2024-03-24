@@ -3,4 +3,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="xamnen">#F7F3F3</color>
+    <color name="xanhnen">#5CC2F2</color>
+    <color name="xanhdam">#459244</color>
+    <color name="xanhnendam">#1EABED</color>
+    <color name="red">#F45C5C</color>
+    <color name="xam">#F2F2F2</color>
 </resources>
