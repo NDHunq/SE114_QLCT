@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddBudget"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:id="@+id/exit_budget"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="X"
+            android:textSize="25dp"
+            android:padding="5dp"
+            android:layout_marginLeft="10dp">
+        </TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:textStyle="bold"
+            android:text="Add budget"
+            android:textSize="20dp"
+            android:layout_gravity="center"
+            ></TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
+            android:gravity="center"
+            android:text="?"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            android:background="@drawable/circle_shape"
+            android:textColor="#FEFEFE">
+        </TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:textStyle="bold"
+            android:text="Clothing"
+            android:textSize="18dp"></TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_weight="9"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="0dp"
+            android:hint="Amount"
+            app:boxStrokeColor="#1EABED"
+            app:boxStrokeWidth="2dp"
+            style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:hintTextColor="#1EABED"
+                android:textColor="#1EABED">
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_marginTop="15dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="10dp"
+            android:layout_gravity="center"
+            android:src="@drawable/dollar_blue" android:layout_weight="1"></ImageView>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content">
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_weight="6"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            android:hint="Select day"
+            app:boxStrokeColor="#1EABED"
+            app:boxStrokeWidth="2dp"
+            style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:hintTextColor="#1EABED"
+                android:textColor="#1EABED">
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+        <ImageView
+            android:id="@+id/date_pickerr"
+            android:layout_width="0dp"
+            android:layout_marginTop="15dp"
+            android:layout_gravity="center"
+            android:layout_height="35dp"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/blue_calendar" android:layout_weight="1"></ImageView>
+    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Wallet"
+        android:textColor="#1EABED"
+        android:textSize="18dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="10dp"
+        android:textStyle="bold">
+    </TextView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/gred_backgound"
+        >
+        <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:shapeAppearanceOverlay="@style/circle"
+            android:src="@color/black"
+            android:layout_gravity="center"
+            android:layout_marginLeft="12dp">
+
+        </com.google.android.material.imageview.ShapeableImageView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Tên ví"
+            android:layout_marginLeft="20dp"
+            android:textSize="18dp"
+            android:textStyle="bold">
+
+        </TextView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:layout_margin="15dp"
+            android:text="200000000đ  >"
+            android:textColor="#4CAF50"
+            android:textSize="18dp"
+            android:textStyle="bold">
+
+        </TextView>
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="18dp"
+        android:background="@drawable/gred_backgound">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Enable Notification"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="5dp"
+            android:textSize="18dp"
+            android:textStyle="bold">
+
+        </TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="26dp"
+            android:text="Get notified when this budget finishes"
+            android:textSize="16dp">
+
+        </TextView>
+        <Switch
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:thumbTint="#fff"
+            android:trackTint="#2196F3"
+            android:trackTintMode="add"
+            >
+
+        </Switch>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/checkh"
+           android:scaleType="fitCenter"
+            android:background="@drawable/done_butt">
+
+        </ImageButton>
+    </RelativeLayout>
+
+</LinearLayout>

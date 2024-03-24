@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_item"
+    android:layout_marginBottom="10dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="10dp">
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/image"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            app:shapeAppearanceOverlay="@style/circle"
+            android:src="@color/black"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp">
+
+        </com.google.android.material.imageview.ShapeableImageView>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="7dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/inter_semibold"
+                android:text="Food"
+                android:textColor="@color/black"
+                android:textSize="18dp">
+
+            </TextView>
+            <TextView
+                android:id="@+id/vi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/inter"
+                android:text="Ten vi"
+                android:textColor="@color/black"
+                android:textSize="15dp">
+
+            </TextView>
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="10dp"
+                android:layout_alignParentRight="true"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/fromday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:fontFamily="@font/inter"
+                    android:text="Today, 21 March 2024"
+                    android:textColor="@color/black"
+                    android:textSize="15dp">
+
+                </TextView>
+                <TextView
+                    android:id="@+id/today"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:fontFamily="@font/inter"
+                    android:text="-Tuesday 26, March 2024"
+                    android:textColor="@color/black"
+                    android:textSize="15dp">
+
+                </TextView>
+            </LinearLayout>
+        </RelativeLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+        <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+           >
+
+        </SeekBar>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/inter"
+                android:text="Budget"
+                android:textColor="@color/black"
+                android:layout_marginStart="10dp"
+                android:textSize="13dp">
+
+            </TextView>
+            <TextView
+                android:id="@+id/maxmoney"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/inter"
+                android:text="2000000 đ"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="10dp"
+                android:textColor="@color/black"
+                android:textSize="13dp">
+
+            </TextView>
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

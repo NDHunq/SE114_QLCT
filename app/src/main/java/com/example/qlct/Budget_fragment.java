@@ -1,42 +1,34 @@
 package com.example.qlct;
 
+import static com.example.qlct.R.drawable.background_bo_phai;
+import static com.example.qlct.R.drawable.background_bo_trai;
+
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.appcompat.widget.TintInfo;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Budget_fragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import android.widget.FrameLayout;
+import android.widget.TextView;
 public class Budget_fragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private TextView create_bud_butt, running, finish;
 
     public Budget_fragment() {
         // Required empty public constructor
     }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Budget_fragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static Budget_fragment newInstance(String param1, String param2) {
         Budget_fragment fragment = new Budget_fragment();
         Bundle args = new Bundle();
@@ -45,7 +37,6 @@ public class Budget_fragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,11 +45,60 @@ public class Budget_fragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
+    @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_budget_fragment, container, false);
+        View view=inflater.inflate(R.layout.fragment_budget_fragment, container, false);
+        create_bud_butt=view.findViewById(R.id.create_bud_butt);
+        running=view.findViewById(R.id.running);
+        finish=view.findViewById(R.id.finish);
+        create_bud_butt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().startActivity(new Intent(getActivity(),AddBudget.class));
+            }
+        });
+        FragmentManager fragmentManager=getChildFragmentManager();
+        FragmentTransaction transaction=fragmentManager.beginTransaction();
+        Fragment child=new BudgetRunningFragment();
+        transaction.replace(R.id.budget_container,child);
+        transaction.commit();
+        running.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                running.setBackgroundTintList(null);
+                running.setBackgroundResource(background_bo_trai);
+                finish.setBackgroundResource(background_bo_phai);
+                finish.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#ACACAC")));
+                running.setTextColor(Color.parseColor("#1EABED"));
+                finish.setTextColor(Color.BLACK);
+
+                FragmentManager fragmentManager2=getChildFragmentManager();
+                FragmentTransaction transaction2=fragmentManager2.beginTransaction();
+                Fragment child1=new BudgetRunningFragment();
+                transaction2.replace(R.id.budget_container,child1);
+                transaction2.commit();
+            }
+        });
+        finish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                running.setBackgroundResource(background_bo_trai);
+                finish.setBackgroundTintList(null);
+                finish.setBackgroundResource(background_bo_phai);
+                running.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#ACACAC")));
+                finish.setTextColor(Color.parseColor("#1EABED"));
+                running.setTextColor(Color.BLACK);
+
+                FragmentManager fragmentManager3=getChildFragmentManager();
+                FragmentTransaction transaction3=fragmentManager3.beginTransaction();
+                Fragment child2=new BudgetFinishFragment();
+                transaction3.replace(R.id.budget_container,child2);
+                transaction3.commit();
+            }
+        });
+
+        return view;
     }
 }
