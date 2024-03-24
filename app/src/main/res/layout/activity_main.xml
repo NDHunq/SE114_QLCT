@@ -223,7 +223,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="85dp"
-
+                android:id="@+id/button"
                 android:layout_height="85dp"
                 android:background="@drawable/hinhtronnen"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -231,6 +231,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <Button
+
                     android:layout_width="70dp"
                     android:layout_marginTop="3dp"
                     android:layout_height="70dp"

@@ -80,6 +80,7 @@ public class AddBudget extends AppCompatActivity {
                 noRenew.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
                         dialog.setContentView(R.layout.bottom_sheet_no_renew);
                     }
                 });

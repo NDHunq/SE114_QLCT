@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/dialog_bg"
+        android:layout_height="450dp">
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:text="Sort by"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_height="wrap_content">
+
+        </TextView>
+      <LinearLayout
+          android:id="@+id/name"
+
+          android:layout_width="match_parent"
+
+          android:layout_height="70dp">
+            <TextView
+                android:id="@+id/nametxt"
+                android:layout_gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="Name"
+                android:textSize="25dp"
+              
+                android:textColor="@color/black"
+                android:layout_marginStart="20dp"
+                android:layout_height="wrap_content">
+
+            </TextView>
+      </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:id="@+id/total_blance"
+            android:layout_width="match_parent"
+            android:layout_height="70dp">
+            <TextView
+                android:id="@+id/total_blancetxt"
+                android:layout_gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="Total Blance"
+                android:textSize="25dp"
+
+                android:textColor="@color/black"
+                android:layout_marginStart="20dp"
+                android:layout_height="wrap_content">
+
+            </TextView>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/recent"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="70dp">
+            <TextView
+                android:id="@+id/recenttxt"
+                android:layout_gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="Recently Used"
+                android:textSize="25dp"
+
+                android:textColor="@color/black"
+                android:layout_marginStart="20dp"
+                android:layout_height="wrap_content">
+
+            </TextView>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_height="52dp">
+            <LinearLayout
+                android:id="@+id/ASC"
+
+                android:layout_width="0dp"
+
+                android:layout_weight="1"
+                android:background="@drawable/nutchuachonbentrai"
+
+
+                android:layout_height="52dp">
+<TextView
+    android:layout_width="match_parent"
+    android:id="@+id/ASCtxt"
+    android:text="ASC"
+    android:textSize="26dp"
+    android:textStyle="bold"
+    android:textAlignment="center"
+    android:layout_gravity="center"
+    android:layout_height="wrap_content">
+
+</TextView>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/DESC"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/nutchuachonbenphai"
+
+
+                android:layout_height="52dp">
+                <TextView
+                    android:id="@+id/DESCtxt"
+                    android:layout_width="match_parent"
+                    android:text="DESC"
+                    android:textSize="26dp"
+                    android:textStyle="bold"
+                    android:textAlignment="center"
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content">
+
+                </TextView>
+
+            </LinearLayout>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/apply"
+            android:layout_width="wrap_content"
+            android:layout_gravity="end"
+            android:layout_height="40dp"
+            android:text="Apply"
+            android:layout_marginTop="10dp"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:layout_marginEnd="4dp"
+            android:textColor="@color/xanhnendam"
+            >
+
+        </TextView>
+    </LinearLayout>
+
+
+</LinearLayout>

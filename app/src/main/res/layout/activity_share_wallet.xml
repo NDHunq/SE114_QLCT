@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Share_Wallet">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_marginTop="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/cancel"
+            android:layout_width="40dp"
+            android:layout_height="50dp"
+            android:text="X"
+            android:textAlignment="center"
+            android:layout_marginStart="12dp"
+
+            android:textColor="@color/black"
+            android:textSize="37dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></TextView>
+
+        <TextView
+            android:layout_marginStart="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="Share Wallet"
+            android:textColor="@color/black"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            app:layout_constraintStart_toEndOf="@+id/cancel"
+            app:layout_constraintTop_toTopOf="parent"></TextView>
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:id="@+id/addnew"
+            android:layout_marginEnd="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_gravity="center"
+
+
+            android:gravity="bottom"
+            android:text="SHARE"
+            android:textColor="@color/xanhnendam"
+            android:textSize="21dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></TextView>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:background="@drawable/the12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_height="70dp">
+        <androidx.cardview.widget.CardView
+            android:layout_gravity="center"
+            android:layout_width="50dp"
+
+            android:layout_marginStart="20dp"
+            app:cardCornerRadius="250dp"
+            android:layout_height="50dp">
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center">
+
+            </ImageView>
+
+
+        </androidx.cardview.widget.CardView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+          android:layout_marginTop="8dp"
+                android:textSize="25dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+
+                android:layout_marginStart="20dp"
+                android:text="Vi1"
+                android:layout_height="wrap_content">
+
+            </TextView>
+            <TextView
+                android:layout_width="wrap_content"
+
+                android:textSize="15dp"
+
+                android:layout_marginEnd="12dp"
+                android:textColor="@color/xanhnendam"
+                android:textStyle="bold"
+
+                android:layout_marginStart="20dp"
+                android:text="5/10 members"
+                android:layout_height="wrap_content">
+
+            </TextView>
+
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+    <ListView
+        android:id="@+id/listView_share_wallets"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="0dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:scrollbars="none"
+        android:layout_marginBottom="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </ListView>
+    
+
+</LinearLayout>

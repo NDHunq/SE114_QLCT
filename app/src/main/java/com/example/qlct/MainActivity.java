@@ -1,6 +1,7 @@
 package com.example.qlct;
 
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,11 +9,19 @@ import android.widget.TextView;
 
 import android.graphics.Color;
 
+
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+
 import android.widget.LinearLayout;
 
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -48,7 +57,16 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-
+        ConstraintLayout button = findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Tạo một instance của Category_Add
+                Intent intent;
+                intent = new Intent(MainActivity.this, Category_Add.class);
+                startActivity(intent);
+            }
+        });
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
