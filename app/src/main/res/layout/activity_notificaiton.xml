@@ -7,16 +7,75 @@
     android:layout_height="match_parent"
     tools:context=".Notificaiton">
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_marginTop="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/cancel"
+                android:layout_width="40dp"
+                android:textAlignment="center"
+                android:layout_marginStart="12dp"
+                android:text="X"
+                android:textSize="37dp"
+
+
+                android:textColor="@color/black"
+                android:layout_height="50dp"></TextView>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:text="Notification"
+
+                android:layout_gravity="center"
+                android:textSize="32dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content"></TextView>
+
+
+
+        </LinearLayout>
         <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginTop="12dp"
             android:layout_marginStart="12dp"
             android:layout_marginEnd="12dp"
             android:id="@+id/rcv_notic"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_weight="1"
+            android:layout_height="0dp">
 
         </androidx.recyclerview.widget.RecyclerView>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:elevation="30dp"
+            android:outlineAmbientShadowColor="#000000"
+            android:outlineSpotShadowColor="#000000"
+            android:background="@android:color/white">
+
+            <TextView
+
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CLEAR ALL"
+                android:textStyle="bold"
+                android:textSize="20dp"
+                android:textColor="@color/red"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </TextView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 

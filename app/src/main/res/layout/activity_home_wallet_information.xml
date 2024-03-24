@@ -153,15 +153,17 @@ android:layout_marginEnd="15dp"
                              </TextView>
 
                              <LinearLayout
+                                 android:id="@+id/currency"
                                  android:layout_marginBottom="5dp"
                                  android:layout_marginEnd="12dp"
                                  android:layout_width="wrap_content"
 
-                                 android:layout_height="35dp"
+                                 android:layout_height="30dp"
                                  android:background="@drawable/hinhchunhatvien7dp"
                                  app:layout_constraintBottom_toBottomOf="parent"
                                  app:layout_constraintEnd_toEndOf="parent">
                                  <TextView
+                                     android:id="@+id/txt"
                                      android:layout_gravity="center"
                                      android:layout_width="wrap_content"
                                      android:text="đ"
@@ -225,7 +227,7 @@ android:layout_marginEnd="15dp"
                                  android:layout_gravity="center"
                                  android:layout_marginTop="1dp"
                                  android:layout_width="25dp"
-                                 android:background="@color/xanhnendam"
+                                 android:background="@drawable/nenxanh2dp"
                                  android:layout_marginStart="7dp"
                                  android:layout_height="25dp">
 
@@ -329,15 +331,6 @@ android:layout_marginEnd="15dp"
 
 
                          </LinearLayout>
-                         <ListView
-                             android:id="@+id/listviewmember"
-                             android:scrollbars="none"
-                             android:layout_width="match_parent"
-                             android:layout_marginStart="12dp"
-                             android:layout_marginEnd="12dp"
-                             android:layout_height="400dp">
-
-                         </ListView>
                          <androidx.constraintlayout.widget.ConstraintLayout
                              android:orientation="horizontal"
                              android:layout_width="match_parent"
@@ -357,12 +350,29 @@ android:layout_marginEnd="15dp"
                              </ImageView>
                          </androidx.constraintlayout.widget.ConstraintLayout>
 
+                         <LinearLayout
+                             android:layout_width="wrap_content"
+                             android:layout_marginBottom="12dp"
+                             android:layout_height="wrap_content">
+                             <ListView
+                                 android:id="@+id/listviewmember"
+                                 android:scrollbars="none"
+                                 android:layout_width="match_parent"
+                                 android:layout_marginStart="12dp"
+                                 android:layout_marginEnd="12dp"
+                                 android:layout_height="1dp">
+
+                             </ListView>
+                         </LinearLayout>
+
+
 
 
 
                      </LinearLayout>
                      <LinearLayout
 
+                         android:id="@+id/addnewmember"
                          android:layout_width="match_parent"
                          android:layout_height="75dp">
                          <androidx.cardview.widget.CardView
@@ -535,11 +545,13 @@ android:layout_marginEnd="15dp"
 
                              </TextView>
                              <LinearLayout
+                                 android:id="@+id/membercan"
                                  android:layout_width="wrap_content"
                                  android:layout_marginEnd="12dp"
                                  android:background="@drawable/hinhchunhatvien7dp"
                                  android:layout_height="wrap_content">
                                  <TextView
+                                        android:id="@+id/txtmembercan"
                                      android:layout_marginTop="3dp"
                                      android:layout_marginBottom="3dp"
                                      android:layout_width="wrap_content"

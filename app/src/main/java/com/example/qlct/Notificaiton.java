@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,6 +36,13 @@ public class Notificaiton extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+        TextView cancel = findViewById(R.id.cancel);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
         });
         relativeLayout = this.findViewById(R.id.main);
         recyclerView = this.findViewById(R.id.rcv_notic);
@@ -71,7 +79,7 @@ public class Notificaiton extends AppCompatActivity {
     private void getListnoti()
     {
         notificationList = new ArrayList<>();
-        notificationList.add(new Notification_class("header1","content1",R.drawable.budget,1));
+        notificationList.add(new Notification_class("header1dsfsdafsdfsdfsdfdsffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff","content1",R.drawable.budget,1));
         notificationList.add(new Notification_class("header2","content2",R.drawable.budget,0));
         notificationList.add(new Notification_class("header3","content3",R.drawable.budget,1));
         notificationList.add(new Notification_class("header4","content4",R.drawable.budget,1));

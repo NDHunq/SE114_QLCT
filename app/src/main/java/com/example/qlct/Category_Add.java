@@ -3,12 +3,9 @@ package com.example.qlct;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.View;
-import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -22,45 +19,59 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+public class Category_Add extends AppCompatActivity {
+    int sb=1;
+    int sc=1;
 
-public class Home_New_wallet extends AppCompatActivity {
-String currency;
-int sc=1;
-int sb=1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_new_wallet);
+        setContentView(R.layout.activity_category_add);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        CardView icon = findViewById(R.id.icon);
-        icon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDialog2();
-            }
+
+        CardView ic = findViewById(R.id.icon);
+        ic.setOnClickListener(v -> {
+       showDialog();
+        });
+        LinearLayout income= findViewById(R.id.incomeclick);
+        LinearLayout expense= findViewById(R.id.expenseclick);
+        income.setOnClickListener(v -> {
+            income.setBackgroundResource(R.drawable.nenxanhlacay7dp);
+            TextView incomeText = findViewById(R.id.incometxt);
+            incomeText.setTextColor(getResources().getColor(R.color.white));
+            TextView expenseText = findViewById(R.id.expensetxt);
+            expenseText.setTextColor(getResources().getColor(R.color.black));
+            expense.setBackgroundResource(R.drawable.hinhchunhatvien7dp);
+            ImageView incomeimg = findViewById(R.id.incomeimg);
+            ImageView expenseimg = findViewById(R.id.expenseimg);
+            incomeimg.setImageResource(R.drawable.downarrow_white);
+            expenseimg.setImageResource(R.drawable.uparrow_black);
+        });
+        expense.setOnClickListener(v -> {
+            TextView incomeText = findViewById(R.id.incometxt);
+            incomeText.setTextColor(getResources().getColor(R.color.black));
+            TextView expenseText = findViewById(R.id.expensetxt);
+            expenseText.setTextColor(getResources().getColor(R.color.white));
+
+            expense.setBackgroundResource(R.drawable.nendo7dp);
+            income.setBackgroundResource(R.drawable.hinhchunhatvien7dp);
+            ImageView incomeimg = findViewById(R.id.incomeimg);
+            ImageView expenseimg = findViewById(R.id.expenseimg);
+            incomeimg.setImageResource(R.drawable.downarrow_black);
+            expenseimg.setImageResource(R.drawable.uparrow_white);
+
         });
         TextView cancel = findViewById(R.id.cancel);
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
+        cancel.setOnClickListener(v -> {
+            finish();
         });
-        TextView currency = findViewById(R.id.txtCurrency);
-        currency.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-  showDialog();
-                }
-
-        });
-
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -71,112 +82,11 @@ int sb=1;
             img.setImageURI(selectedImage);
             CardView ic = findViewById(R.id.icon);
             ic.setCardBackgroundColor(Color.WHITE);
+
         }
     }
 
-    private void showDialog()
-    { final Dialog dialog = new Dialog(this);
-        dialog.requestWindowFeature(dialog.getWindow().FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.bottomsheet_currency);
-        dialog.show();
-        dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimationn;
-        dialog.getWindow().setGravity(Gravity.BOTTOM);
-        dialog.show();
-        LinearLayout bo1 = dialog.findViewById(R.id.bo1);
-        LinearLayout bo2 = dialog.findViewById(R.id.bo2);
-        LinearLayout bo3 = dialog.findViewById(R.id.bo3);
-        LinearLayout bo4 = dialog.findViewById(R.id.bo4);
-        TextView txt1 = findViewById(R.id.crr);
-        if(txt1.getText().toString().equals("$"))
-        {
-            bo1.setBackgroundResource(R.drawable.nenluachon);
-        }
-        else if(txt1.getText().toString().equals("đ"))
-        {
-            bo2.setBackgroundResource(R.drawable.nenluachon);
-        }
-        else if(txt1.getText().toString().equals("€"))
-        {
-            bo3.setBackgroundResource(R.drawable.nenluachon);
-        }
-        else if(txt1.getText().toString().equals("¥"))
-        {
-            bo4.setBackgroundResource(R.drawable.nenluachon);
-        }
-
-        bo1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                currency = "$";
-                bo1.setBackgroundResource(R.drawable.nenluachon);
-                bo2.setBackgroundResource(0);
-                bo3.setBackgroundResource(0);
-                bo4.setBackgroundResource(0);
-
-            }
-        });
-        bo2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                currency = "đ";
-                bo2.setBackgroundResource(R.drawable.nenluachon);
-                bo1.setBackgroundResource(0);
-                bo3.setBackgroundResource(0);
-                bo4.setBackgroundResource(0);
-            }
-        });
-
-        bo3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                currency = "€";
-                bo3.setBackgroundResource(R.drawable.nenluachon);
-                bo2.setBackgroundResource(0);
-                bo1.setBackgroundResource(0);
-                bo4.setBackgroundResource(0);
-            }
-        });
-        bo4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                currency = "¥";
-                bo4.setBackgroundResource(R.drawable.nenluachon);
-                bo2.setBackgroundResource(0);
-                bo3.setBackgroundResource(0);
-                bo1.setBackgroundResource(0);
-            }
-        });
-        TextView ok = dialog.findViewById(R.id.apply);
-        ok.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TextView txt = findViewById(R.id.crr);
-                TextView txt2 = findViewById(R.id.txtCurrency);
-                txt.setText(currency);
-                if(currency.equals("$"))
-                {
-                    txt2.setText("United States Dollar");
-                }
-                else if(currency.equals("đ"))
-                {
-                    txt2.setText("Việt Nam Đồng");
-                }
-                else if(currency.equals("€"))
-                {
-                    txt2.setText("Euro");
-                }
-                else if(currency.equals("¥"))
-                {
-                    txt2.setText("Yaun Renminbi");
-                }
-                dialog.dismiss();
-            }
-        });
-    }
-    private  void showDialog2()
-    {
+    private  void showDialog() {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(dialog.getWindow().FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.bottomsheet_icon_category);
@@ -205,7 +115,7 @@ int sb=1;
         ConstraintLayout bo18 = dialog.findViewById(R.id.bot18);
 
         bo1.setOnClickListener(v -> {
-            bo1.setBackgroundResource(R.drawable.nenluachon);
+         bo1.setBackgroundResource(R.drawable.nenluachon);
             bo2.setBackgroundResource(0);
             bo3.setBackgroundResource(0);
             bo4.setBackgroundResource(0);
@@ -677,13 +587,14 @@ int sb=1;
         });
         TextView upload = dialog.findViewById(R.id.upload);
         upload.setOnClickListener(v -> {
-            Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(intent,3);
-            dialog.dismiss();
+          Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+          startActivityForResult(intent,3);
+          dialog.dismiss();
         });
 
 
 
-
     }
+
+
 }

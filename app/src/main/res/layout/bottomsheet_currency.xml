@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/dialog_bg"
+        android:layout_height="470dp">
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:text="Currency"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_height="wrap_content">
+
+        </TextView>
+        <LinearLayout
+            android:id="@+id/bo1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="20dp"
+
+                android:background="@drawable/america"
+                android:layout_height="50dp">
+
+            </ImageView>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/name"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                    android:layout_weight="1"
+                android:layout_height="70dp">
+
+                <TextView
+                    android:id="@+id/nametxt"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="51dp"
+                    android:layout_weight="1"
+                    android:text="United States Dollar"
+                    android:layout_marginStart="20dp"
+
+
+                    android:textColor="@color/black"
+                    android:textSize="25dp"
+
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                </TextView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_height="wrap_content"
+                    android:text="$"
+                    android:textSize="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                </TextView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/bo2"
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="20dp"
+                    android:background="@drawable/vietnam"
+                    android:layout_height="50dp">
+
+                </ImageView>
+
+
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="70dp">
+
+                <TextView
+
+                    android:layout_marginTop="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="51dp"
+                    android:layout_weight="1"
+                    android:text="Việt Nam Đồng"
+                    android:layout_marginStart="20dp"
+
+
+                    android:textColor="@color/black"
+                    android:textSize="25dp"
+
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                </TextView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_height="wrap_content"
+                    android:text="đ"
+                    android:textSize="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                </TextView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/bo3"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:background="@drawable/european"
+                    android:layout_marginStart="20dp"
+                    android:layout_gravity="center"
+                    android:layout_height="50dp">
+
+                </ImageView>
+
+
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="70dp">
+
+                <TextView
+
+                    android:layout_marginTop="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="51dp"
+                    android:layout_weight="1"
+                    android:text="Euro"
+                    android:layout_marginStart="20dp"
+
+
+                    android:textColor="@color/black"
+                    android:textSize="25dp"
+
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                </TextView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_height="wrap_content"
+                    android:text="€"
+                    android:textSize="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                </TextView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/bo4"
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:background="@drawable/china"
+    android:layout_marginStart="20dp"
+                    android:layout_gravity="center"
+                    android:layout_height="50dp">
+
+                </ImageView>
+
+
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="70dp">
+
+                <TextView
+
+                    android:layout_marginTop="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="51dp"
+                    android:layout_weight="1"
+                    android:text="Yuan Renminibi"
+                    android:layout_marginStart="20dp"
+
+
+                    android:textColor="@color/black"
+                    android:textSize="25dp"
+
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                </TextView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_height="wrap_content"
+                    android:text="¥"
+                    android:textSize="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                </TextView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+
+
+
+
+        <TextView
+            android:id="@+id/apply"
+            android:layout_width="wrap_content"
+            android:layout_gravity="end"
+            android:layout_height="40dp"
+            android:text="Apply"
+            android:layout_marginTop="10dp"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:layout_marginEnd="4dp"
+            android:textColor="@color/xanhnendam"
+            >
+
+        </TextView>
+    </LinearLayout>
+
+
+</LinearLayout>

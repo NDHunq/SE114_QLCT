@@ -48,6 +48,14 @@ public class Home_fragment extends Fragment {
                 startActivity(intent);
             }
         });
+        ImageView optionVi = view.findViewById(R.id.optionsVi);
+        optionVi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), Home_Wallet_Information.class);
+                startActivity(intent);
+            }
+        });
 
         // Đặt OnClickListener cho unseen
         unseen.setOnClickListener(new View.OnClickListener() {
