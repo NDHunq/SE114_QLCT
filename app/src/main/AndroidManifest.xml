@@ -13,7 +13,6 @@
         android:theme="@style/Theme.QLCT"
         tools:targetApi="31">
         <activity
-
             android:name=".AnalysisDetailExpense"
             android:exported="false" />
         <activity
@@ -25,11 +24,9 @@
         <activity
             android:name=".AddBudget"
             android:exported="false" />
-
         <activity
             android:name=".Category_Add"
             android:exported="false" />
-
         <activity
             android:name=".Share_Wallet"
             android:exported="false"
@@ -45,7 +42,6 @@
             android:exported="false" />
         <activity
             android:name=".Home_My_wallets"
-
             android:exported="false" />
         <activity
             android:name=".MainActivity"
@@ -61,5 +57,4 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
-
 </manifest>

@@ -2,3 +2,10 @@
 plugins {
     alias(libs.plugins.androidApplication) apply false
 }
+
+buildscript{
+    repositories{
+        google()
+        mavenCentral()
+    }
+}
