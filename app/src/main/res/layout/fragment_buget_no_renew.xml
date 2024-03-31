@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BugetNoRenewFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp">
+            <TextView
+                android:id="@+id/day"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="Day"
+                android:gravity="center"
+                android:textColor="@color/black"
+
+                android:textSize="16dp"
+                android:layout_height="match_parent">
+            </TextView>
+            <TextView
+                android:id="@+id/week"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="Week"
+                android:gravity="center"
+                android:textColor="@color/black"
+
+                android:textSize="16dp"
+                android:layout_height="match_parent">
+            </TextView>
+            <TextView
+                android:id="@+id/month"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="Month"
+                android:textSize="16dp"
+                android:gravity="center"
+                android:textColor="@color/black"
+
+                android:layout_height="match_parent">
+            </TextView>
+            <TextView
+                android:id="@+id/year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="Year"
+                android:textColor="@color/black"
+                android:gravity="center"
+
+                android:textSize="16dp"
+                android:layout_height="match_parent">
+            </TextView>
+            <TextView
+                android:id="@+id/time_span"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="Time Span"
+                android:textSize="16dp"
+                android:textColor="@color/black"
+                android:gravity="center"
+
+                android:layout_height="match_parent">
+            </TextView>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp">
+
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:src="@drawable/back">
+            </ImageView>
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="10 March, 2024"
+                android:gravity="center"
+                android:textColor="@color/black"
+
+                android:textSize="16dp"
+                android:layout_height="match_parent">
+            </TextView>
+            <ImageView
+                android:id="@+id/next"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/next">
+            </ImageView>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
+            <TextView
+                android:id="@+id/apply"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Apply"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/xanhnen"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="10dp"
+                >
+            </TextView>
+        </RelativeLayout>
+    </LinearLayout>
+
+</FrameLayout>

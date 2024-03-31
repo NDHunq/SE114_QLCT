@@ -6,6 +6,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,13 +16,14 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class AddBudget extends AppCompatActivity {
+public class AddBudget extends AppCompatActivity implements OnDataPass {
     ImageView date_picker;
     TextView apply;
     Dialog dialog ;
     TextView renew;
     TextView noRenew;
-    String status;
+    FrameLayout frameLayout;
+    TextView date;
 
     private TextView exit_budget;
     @Override
@@ -34,9 +36,9 @@ public class AddBudget extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        status="norenew";
         date_picker=this.findViewById(R.id.date_pickerr);
         exit_budget=this.findViewById(R.id.exit_budget);
+        date=this.findViewById(R.id.date);
 
         exit_budget.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,43 +56,14 @@ public class AddBudget extends AppCompatActivity {
     }
     void ShowDialog()
     {
-        dialog=new Dialog(this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-
-            dialog.setContentView(R.layout.bottom_sheet_no_renew);
-            dialog.show();
-            apply=dialog.findViewById(R.id.apply);
-            renew=dialog.findViewById(R.id.renew);
-            apply.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.dismiss();
-                }
-            });
-
-        dialog.getWindow().setGravity(Gravity.BOTTOM);
-        dialog.getWindow().getAttributes().windowAnimations=R.style.DialogAnimation;
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
-        dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_bgh);
-        renew.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.setContentView(R.layout.bottom_sheet_renew);
-                noRenew=dialog.findViewById(R.id.noRenew);
-                noRenew.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        dialog.setContentView(R.layout.bottom_sheet_no_renew);
-                    }
-                });
-
-
-
-            }
-        });
+           MyDialogFragment dialogFragment;
+           dialogFragment = new MyDialogFragment();
+           dialogFragment.show(getSupportFragmentManager(), "tag");
 
     }
 
+    public void onDataPass(String data) {
+        date.setText(data);
+    }
 
 }
