@@ -72,6 +72,7 @@
             </TextView>
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/time"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginStart="20dp"
@@ -102,7 +103,58 @@
                 android:src="@drawable/next">
             </ImageView>
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/from_to"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="10dp"
+            android:visibility="gone">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="From: "
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="16dp">
 
+            </TextView>
+            <TextView
+                android:id="@+id/from"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:text="01/01/2024"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:background="@drawable/grey_background"
+                android:textSize="16dp"
+                android:layout_height="match_parent">
+            </TextView>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="To: "
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="16dp">
+
+            </TextView>
+            <TextView
+                android:id="@+id/to"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+               android:background="@drawable/grey_background"
+                android:text="07/09/2024"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="16dp"
+                android:layout_height="match_parent">
+            </TextView>
+
+        </LinearLayout>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

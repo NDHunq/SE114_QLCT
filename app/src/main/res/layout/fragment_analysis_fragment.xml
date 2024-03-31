@@ -42,7 +42,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/gred_backgound">
+            android:background="@drawable/grey_background">
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -86,7 +86,7 @@
                 android:layout_marginEnd="12dp"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="12dp"
-                android:background="@drawable/gred_backgound"
+                android:background="@drawable/grey_background"
                 android:backgroundTint="#D9D9D9">
                 <TextView
                     android:layout_width="90dp"

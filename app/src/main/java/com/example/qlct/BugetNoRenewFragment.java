@@ -3,28 +3,24 @@ package com.example.qlct;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.res.Resources;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.android.material.datepicker.MaterialDatePicker;
-
-import java.lang.reflect.Field;
-import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -52,6 +48,9 @@ public class BugetNoRenewFragment extends Fragment {
     ImageView back;
     ImageView next;
     static String status;
+    LinearLayout time;
+    LinearLayout from_to;
+    TextView from,to;
     private OnDataPass dataPasser;
 
     @Override
@@ -104,6 +103,10 @@ public class BugetNoRenewFragment extends Fragment {
         timespan=view.findViewById(R.id.time_span);
         back=view.findViewById(R.id.back);
         next=view.findViewById(R.id.next);
+        time=view.findViewById(R.id.time);
+        from_to=view.findViewById(R.id.from_to);
+        from=view.findViewById(R.id.from);
+        to=view.findViewById(R.id.to);
         status="day";
         Calendar calendar = Calendar.getInstance();
         // Lấy ngày, tháng, năm hiện tại
@@ -117,27 +120,43 @@ public class BugetNoRenewFragment extends Fragment {
                 status="day";
                 Calendar calendar = Calendar.getInstance();
                 // Lấy ngày, tháng, năm hiện tại
-                int day = calendar.get(Calendar.DAY_OF_MONTH);
-                int month = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0 nên cần cộng thêm 1
-                int year = calendar.get(Calendar.YEAR);
-                date.setText(day + "/" + month + "/" + year);
+                int dayy = calendar.get(Calendar.DAY_OF_MONTH);
+                int monthh = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0 nên cần cộng thêm 1
+                int yearr = calendar.get(Calendar.YEAR);
+                date.setText(dayy + "/" + monthh + "/" + yearr);
+                v.setBackground(getResources().getDrawable(R.drawable.grey_background));
+                week.setBackground(null);
+                month.setBackground(null);
+                year.setBackground(null);
+                timespan.setBackground(null);
             }
         });
+
         month.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 status="month";
-                int month = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0 nên cần cộng thêm 1
-                int year = calendar.get(Calendar.YEAR);
-                date.setText( month + "/" + year);
+                int monthh = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0 nên cần cộng thêm 1
+                int yearr = calendar.get(Calendar.YEAR);
+                date.setText( monthh + "/" + yearr);
+                v.setBackground(getResources().getDrawable(R.drawable.grey_background));
+                week.setBackground(null);
+                day.setBackground(null);
+                year.setBackground(null);
+                timespan.setBackground(null);
             }
         });
         year.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 status="year";
-                int year = calendar.get(Calendar.YEAR);
-                date.setText(year+"");
+                int yearr = calendar.get(Calendar.YEAR);
+                date.setText(yearr+"");
+                v.setBackground(getResources().getDrawable(R.drawable.grey_background));
+                week.setBackground(null);
+                month.setBackground(null);
+                day.setBackground(null);
+                timespan.setBackground(null);
             }
         });
         week.setOnClickListener(new View.OnClickListener() {
@@ -146,16 +165,84 @@ public class BugetNoRenewFragment extends Fragment {
                 status="week";
                 Calendar calendar = Calendar.getInstance();
                 // Lấy ngày, tháng, năm hiện tại
-                int day = calendar.get(Calendar.DAY_OF_MONTH);
-                int month = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0 nên cần cộng thêm 1
-                int year = calendar.get(Calendar.YEAR);
-                date.setText(getStartAndEndOfWeek(day + "/" + month + "/" + year));
+                int dayy = calendar.get(Calendar.DAY_OF_MONTH);
+                int monthh = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0 nên cần cộng thêm 1
+                int yearr = calendar.get(Calendar.YEAR);
+                date.setText(getStartAndEndOfWeek(dayy + "/" + monthh + "/" + yearr));
+                v.setBackground(getResources().getDrawable(R.drawable.grey_background));
+                day.setBackground(null);
+                month.setBackground(null);
+                year.setBackground(null);
+                timespan.setBackground(null);
             }
         });
         timespan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 status="timespan";
+                v.setBackground(getResources().getDrawable(R.drawable.grey_background));
+                week.setBackground(null);
+                month.setBackground(null);
+                year.setBackground(null);
+                day.setBackground(null);
+                time.setVisibility(View.GONE);
+                from_to.setVisibility(View.VISIBLE);
+                from = view.findViewById(R.id.from);
+                to = view.findViewById(R.id.to);
+                from.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final Calendar c = Calendar.getInstance();
+                        int year = c.get(Calendar.YEAR);
+                        int month = c.get(Calendar.MONTH);
+                        int day = c.get(Calendar.DAY_OF_MONTH);
+
+                        // Tạo một DatePickerDialog mới
+                        DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
+                                new DatePickerDialog.OnDateSetListener() {
+                                    @Override
+                                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                                        // Định dạng ngày được chọn và đặt nó vào TextView
+                                        Calendar calendar = Calendar.getInstance();
+                                        calendar.set(year, monthOfYear, dayOfMonth);
+                                        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                                        from.setText(format.format(calendar.getTime()));
+                                    }
+                                }, year, month, day);
+                        // Hiển thị DatePickerDialog
+                        datePickerDialog.show();
+                    }
+                });
+                to.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final Calendar c = Calendar.getInstance();
+                        int year = c.get(Calendar.YEAR);
+                        int month = c.get(Calendar.MONTH);
+                        int day = c.get(Calendar.DAY_OF_MONTH);
+
+                        // Tạo một DatePickerDialog mới
+                        DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
+                                new DatePickerDialog.OnDateSetListener() {
+                                    @Override
+                                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                                        // Định dạng ngày được chọn và đặt nó vào TextView
+                                        Calendar calendar = Calendar.getInstance();
+                                        calendar.set(year, monthOfYear, dayOfMonth);
+                                        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                                        if(compareDates(from.getText().toString(),format.format(calendar.getTime()))==1 || compareDates(from.getText().toString(),format.format(calendar.getTime()))==0)
+                                        {
+                                            Toast.makeText(getContext(), "Ngày kết thúc không được nhỏ hơn hoặc bằng ngày bắt đầu", Toast.LENGTH_LONG).show();
+                                        }
+                                        else
+                                            to.setText(format.format(calendar.getTime()));
+                                    }
+                                }, year, month, day);
+                        // Hiển thị DatePickerDialog
+                        datePickerDialog.show();
+                    }
+                });
             }
         });
         next.setOnClickListener(new View.OnClickListener() {
@@ -242,6 +329,7 @@ public class BugetNoRenewFragment extends Fragment {
                         break;
                     case "timespan":
                     {
+
 
                     }
                         break;
@@ -330,11 +418,6 @@ public class BugetNoRenewFragment extends Fragment {
 
                     }
                     break;
-                    case "timespan":
-                    {
-
-                    }
-                    break;
                 }
             }
         });
@@ -368,7 +451,7 @@ public class BugetNoRenewFragment extends Fragment {
                                         // Định dạng ngày được chọn và đặt nó vào TextView
                                         Calendar calendar = Calendar.getInstance();
                                         calendar.set(year, monthOfYear, dayOfMonth);
-                                        SimpleDateFormat format = new SimpleDateFormat("dd MMMM, yyyy", Locale.getDefault());
+                                        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
                                         date.setText(format.format(calendar.getTime()));
                                     }
                                 }, year, month, day);
@@ -396,10 +479,10 @@ public class BugetNoRenewFragment extends Fragment {
                         break;
                     case "week":
                     {
-                        final Calendar c = Calendar.getInstance();
-                        int year = c.get(Calendar.YEAR);
-                        int month = c.get(Calendar.MONTH);
-                        int day = c.get(Calendar.DAY_OF_MONTH);
+                        final Calendar b = Calendar.getInstance();
+                        int year = b.get(Calendar.YEAR);
+                        int month = b.get(Calendar.MONTH);
+                        int day = b.get(Calendar.DAY_OF_MONTH);
 
                         // Tạo một DatePickerDialog mới
                         DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
@@ -409,8 +492,13 @@ public class BugetNoRenewFragment extends Fragment {
                                         // Định dạng ngày được chọn và đặt nó vào TextView
                                         Calendar calendar = Calendar.getInstance();
                                         calendar.set(year, monthOfYear, dayOfMonth);
-                                        SimpleDateFormat format = new SimpleDateFormat("dd MMMM, yyyy", Locale.getDefault());
-                                        date.setText(format.format(calendar.getTime()));
+                                        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                                        if(isEndDateLessThanCurrent(getStartAndEndOfWeek(format.format(calendar.getTime())))==true)
+                                        {
+                                            Toast.makeText(getContext(), "Ngày kết thúc không được nhỏ hơn hiện tại", Toast.LENGTH_LONG).show();
+                                        }
+                                        else
+                                            date.setText(getStartAndEndOfWeek(format.format(calendar.getTime())));
                                     }
                                 }, year, month, day);
                         // Hiển thị DatePickerDialog
@@ -451,5 +539,38 @@ public class BugetNoRenewFragment extends Fragment {
         // In ra ngày chủ nhật
         result=result+ format.format(calendar.getTime());
         return result;
+    }
+    public boolean isEndDateLessThanCurrent(String dateString) {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        try {
+            // Tách chuỗi ngày thành hai chuỗi riêng biệt
+            String[] dates = dateString.split(" - ");
+            // Chuyển đổi chuỗi ngày thứ hai thành đối tượng Date
+            Date endDate = format.parse(dates[1]);
+            Date currentDate = Calendar.getInstance().getTime();
+            // So sánh ngày thứ hai với ngày hiện tại
+            return endDate.before(currentDate) ;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public int compareDates(String date1, String date2) {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        try {
+            Date d1 = format.parse(date1);
+            Date d2 = format.parse(date2);
+
+            if (d1.before(d2)) {
+                return -1; // date1 nhỏ hơn date2
+            } else if (d1.after(d2)) {
+                return 1; // date1 lớn hơn date2
+            } else {
+                return 0; // date1 bằng date2
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 }

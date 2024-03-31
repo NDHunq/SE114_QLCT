@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AnalysisExpenseFragment"
-    android:background="@drawable/gred_backgound">
+    android:background="@drawable/grey_background">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
