@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AddBudget"
+    android:background="@color/white"
     android:orientation="vertical">
     <LinearLayout
         android:layout_width="wrap_content"
@@ -17,16 +18,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="X"
+            android:textColor="@color/black"
             android:textSize="25dp"
             android:padding="5dp"
             android:layout_marginLeft="10dp">
         </TextView>
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:textStyle="bold"
+            android:textColor="@color/black"
             android:text="Add budget"
             android:textSize="20dp"
             android:layout_gravity="center"
@@ -86,40 +88,38 @@
             android:layout_marginTop="15dp"
             android:layout_height="match_parent"
             android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
             android:layout_gravity="center"
             android:src="@drawable/dollar_blue" android:layout_weight="1"></ImageView>
     </LinearLayout>
     <LinearLayout
         android:layout_width="300dp"
         android:layout_height="wrap_content">
-        <com.google.android.material.textfield.TextInputLayout
+        <TextView
+            android:id="@+id/date"
             android:layout_width="0dp"
-            android:layout_weight="6"
+            android:layout_weight="9"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="15dp"
-            android:hint="Select day"
-            app:boxStrokeColor="#1EABED"
-            app:boxStrokeWidth="2dp"
-            style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox">
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                app:hintTextColor="#1EABED"
-                android:textColor="#1EABED">
+            android:layout_marginStart="22dp"
+            android:layout_marginTop="0dp"
+            android:hint="Date"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:layout_gravity="center_vertical"
+            android:textColor="#1EABED">
 
-            </com.google.android.material.textfield.TextInputEditText>
-        </com.google.android.material.textfield.TextInputLayout>
+        </TextView>
+
         <ImageView
             android:id="@+id/date_pickerr"
             android:layout_width="0dp"
-            android:layout_marginTop="15dp"
-            android:layout_gravity="center"
             android:layout_height="35dp"
+            android:layout_gravity="center_vertical"
             android:layout_marginLeft="5dp"
-            android:src="@drawable/blue_calendar" android:layout_weight="1"></ImageView>
+            android:layout_marginTop="15dp"
+            android:layout_weight="1"
+            android:layout_marginBottom="15dp"
+            android:src="@drawable/blue_calendar"></ImageView>
     </LinearLayout>
     <TextView
         android:layout_width="wrap_content"
@@ -137,7 +137,7 @@
         android:layout_height="55dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:background="@drawable/gred_backgound"
+        android:background="@drawable/grey_background"
         >
         <com.google.android.material.imageview.ShapeableImageView
             android:layout_width="40dp"
@@ -176,7 +176,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginTop="18dp"
-        android:background="@drawable/gred_backgound">
+        android:background="@drawable/grey_background">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -212,18 +212,34 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <ImageButton
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="20dp"
-            android:layout_marginRight="20dp"
-            android:src="@drawable/checkh"
-           android:scaleType="fitCenter"
-            android:background="@drawable/done_butt">
+        <androidx.constraintlayout.widget.ConstraintLayout
 
-        </ImageButton>
+            android:layout_width="70dp"
+            android:background="@drawable/nenxanh7dp"
+            android:layout_gravity="end"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="20dp"
+            android:layout_height="70dp">
+
+
+            <ImageButton
+
+                android:id="@+id/button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/check"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </ImageButton>
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </RelativeLayout>
 
 </LinearLayout>

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#008477"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/year"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="2024"
+                android:layout_marginBottom="10dp"
+                android:textSize="35sp"
+                android:layout_marginStart="20dp"
+                android:textColor="@color/white"
+                android:layout_marginTop="5dp"/>
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="30dp"
+                android:src="@drawable/up_white">
+
+            </ImageView>
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="20dp"
+                android:src="@drawable/down_white">
+
+            </ImageView>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="4"
+        android:rowCount="3">
+        <TextView android:id="@+id/january"
+            android:gravity="center"
+            android:layout_columnWeight="1"
+            android:text="2018"
+            android:textSize="20sp"
+            android:layout_margin="10dp"
+            android:layout_column="0"
+            android:layout_row="0"/>
+        <TextView android:id="@+id/february"
+            android:gravity="center"
+            android:layout_columnWeight="1"
+            android:text="2019"
+            android:textSize="20sp"
+            android:layout_margin="10dp"
+            android:layout_column="1"
+            android:layout_row="0"/>
+        <TextView android:id="@+id/march"
+            android:gravity="center"
+            android:layout_columnWeight="1"
+            android:text="2020"
+            android:textSize="20sp"
+            android:layout_margin="10dp"
+            android:layout_column="2"
+            android:layout_row="0"/>
+        <TextView android:id="@+id/april"
+            android:gravity="center"
+            android:layout_columnWeight="1"
+            android:text="2021"
+            android:textSize="20sp"
+            android:layout_margin="10dp"
+            android:layout_column="3"
+            android:layout_row="0"/>
+        <TextView android:id="@+id/may"
+            android:gravity="center"
+            android:layout_columnWeight="1"
+            android:text="2022"
+            android:textSize="20sp"
+            android:layout_margin="10dp"
+            android:layout_column="0"
+            android:layout_row="1"/>
+        <TextView android:id="@+id/june"
+            android:gravity="center"
+            android:layout_columnWeight="1"
+            android:text="2023"
+            android:textSize="20sp"
+            android:layout_margin="10dp"
+            android:layout_column="1"
+            android:layout_row="1"/>
+        <TextView android:id="@+id/july"
+            android:gravity="center"
+            android:layout_columnWeight="1"
+            android:text="2024"
+            android:textSize="20sp"
+            android:layout_margin="10dp"
+            android:layout_column="2"
+            android:layout_row="1"/>
+        <TextView android:id="@+id/august"
+            android:gravity="center"
+            android:layout_columnWeight="1"
+            android:text="2025"
+            android:textSize="20sp"
+            android:layout_margin="10dp"
+            android:layout_column="3"
+            android:layout_row="1"/>
+        <TextView android:id="@+id/september"
+            android:gravity="center"
+            android:layout_columnWeight="1"
+            android:text="2026"
+            android:textSize="20sp"
+            android:layout_margin="10dp"
+            android:layout_column="0"
+            android:layout_row="2"/>
+        <TextView android:id="@+id/october"
+            android:gravity="center"
+            android:layout_columnWeight="1"
+            android:text="2027"
+            android:textSize="20sp"
+            android:layout_margin="10dp"
+            android:layout_column="1"
+            android:layout_row="2"/>
+        <TextView android:id="@+id/november"
+            android:gravity="center"
+            android:layout_columnWeight="1"
+            android:text="2028"
+            android:textSize="20sp"
+            android:layout_margin="10dp"
+            android:layout_column="2"
+            android:layout_row="2"/>
+        <TextView android:id="@+id/december"
+            android:gravity="center"
+            android:layout_columnWeight="1"
+            android:text="2029"
+            android:textSize="20sp"
+            android:layout_margin="10dp"
+            android:layout_column="3"
+            android:layout_row="2"/>
+
+    </GridLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true">
+            <TextView
+                android:id="@+id/cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Cancel"
+                android:textColor="#008477"
+                android:textSize="20dp"
+                android:layout_marginBottom="20dp"
+                android:textStyle="bold">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/ok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:textColor="#008477"
+                android:layout_marginBottom="20dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="30dp"
+                android:layout_toRightOf="@id/cancel"
+                android:text="Ok">
+
+            </TextView>
+        </LinearLayout>
+
+    </RelativeLayout>
+</LinearLayout>

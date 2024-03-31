@@ -9,6 +9,14 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.TextView;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +33,13 @@ public class Analysis_fragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    RadioButton month,year;
+    ImageView back,next ;
+    TextView date;
+    final Calendar calendar = Calendar.getInstance();
+    final SimpleDateFormat monthFormat = new SimpleDateFormat("MM/yyyy", Locale.getDefault());
+    final SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
+
 
     public Analysis_fragment() {
         // Required empty public constructor
@@ -79,6 +94,78 @@ public class Analysis_fragment extends Fragment {
         Fragment child2= new AnalysisIcomeFragment();
         transaction2.replace(R.id.ChildFrag3,child2);
         transaction2.commit();
+
+        AnhXa(view);
+
         return view;
+    }
+
+    public void AnhXa(View view) {
+        month=view.findViewById(R.id.month);
+        month.setChecked(true);
+        year=view.findViewById(R.id.year);
+        back=view.findViewById(R.id.back);
+        next=view.findViewById(R.id.next);
+        next.setVisibility(View.INVISIBLE);
+        date = view.findViewById(R.id.date);
+        month.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    date.setText(monthFormat.format(Calendar.getInstance().getTime()));
+                    next.setVisibility(View.INVISIBLE);
+                    calendar.setTime(Calendar.getInstance().getTime());
+                }
+            }
+        });
+
+        year.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    date.setText(yearFormat.format(Calendar.getInstance().getTime()));
+                    next.setVisibility(View.INVISIBLE);
+                    calendar.setTime(Calendar.getInstance().getTime());
+                }
+            }
+        });
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (month.isChecked()) {
+                    calendar.add(Calendar.MONTH, 1);
+                    date.setText(monthFormat.format(calendar.getTime()));
+                    if ((calendar.getTime().getMonth()==(Calendar.getInstance().getTime().getMonth()))&&(calendar.getTime().getYear()==(Calendar.getInstance().getTime().getYear()))) {
+                        next.setVisibility(View.INVISIBLE);
+                    }
+
+                } else if (year.isChecked()) {
+                    calendar.add(Calendar.YEAR, 1);
+                    date.setText(yearFormat.format(calendar.getTime()));
+                    if (calendar.getTime().getYear()==(Calendar.getInstance().getTime().getYear())) {
+                        next.setVisibility(View.INVISIBLE);
+                    }
+                }
+
+                // If the new date is equal to or after the current date, hide the next button
+
+            }
+        });
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // Update the date TextView
+                if (month.isChecked()) {
+                    calendar.add(Calendar.MONTH, -1);
+                    date.setText(monthFormat.format(calendar.getTime()));
+                } else if (year.isChecked()) {
+                    calendar.add(Calendar.YEAR, -1);
+                    date.setText(yearFormat.format(calendar.getTime()));
+                }
+
+                next.setVisibility(View.VISIBLE);
+            }
+        });
     }
 }

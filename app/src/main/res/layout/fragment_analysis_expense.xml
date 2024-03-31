@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AnalysisExpenseFragment"
-    android:background="@drawable/gred_backgound">
+    android:background="@drawable/grey_background">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
@@ -34,14 +34,14 @@
             android:layout_gravity="left"
             ></TextView>
 
-        <ImageView
-            android:layout_width="455dp"
-            android:layout_height="199dp"
-            android:layout_marginStart="-30dp"
-            android:layout_marginEnd="20dp"
-            android:src="@drawable/piechart">
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/piechart"
+            android:layout_width="match_parent"
+            android:layout_height="188dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp">
 
-        </ImageView>
+        </com.github.mikephil.charting.charts.PieChart>
         <TextView
             android:id="@+id/detail_exp"
             android:layout_width="wrap_content"
@@ -52,9 +52,11 @@
             android:text="See details"
             android:textSize="18dp"
             android:layout_marginStart="15dp"
-            android:layout_marginTop="0dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:layout_gravity="center"
             ></TextView>
+
     </LinearLayout>
 
 </FrameLayout>

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,7 @@ public class BudgetRunningFragment extends Fragment {
     private String mParam2;
     ListView listView;
     List<Budget> list;
+    TextView day,week,month,year,future;
 
     public BudgetRunningFragment() {
     }
@@ -44,18 +46,74 @@ public class BudgetRunningFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.fragment_budget_running, container, false);
         listView=view.findViewById(R.id.listviewRunning);
-        Anhxa();
+        Anhxa(view);
         Budget_adapter adapter=new Budget_adapter(getContext(),R.layout.budget_list_item,list);
         listView.setAdapter(adapter);
         return view;
     }
-    void Anhxa(){
+    void Anhxa(View view){
+        day=view.findViewById(R.id.day);
+        week=view.findViewById(R.id.week);
+        month=view.findViewById(R.id.month);
+        year=view.findViewById(R.id.year);
+        future=view.findViewById(R.id.future);
         list=new ArrayList<>();
         list.add(new Budget("Food","Vi1",2000000,5000,"21, March 2024","25 March 2024",R.drawable.dish));
         list.add(new Budget("Food","Vi1",2000000,5000,"21, March 2024","25 March 2024",R.drawable.dish));
         list.add(new Budget("Food","Vi1",2000000,5000,"21, March 2024","25 March 2024",R.drawable.dish));
         list.add(new Budget("Food","Vi1",2000000,5000,"21, March 2024","25 March 2024",R.drawable.dish));
         list.add(new Budget("Food","Vi1",2000000,5000,"21, March 2024","25 March 2024",R.drawable.dish));
+
+        day.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.setBackground(getResources().getDrawable(R.drawable.grey_background2));
+                week.setBackground(null);
+                month.setBackground(null);
+                year.setBackground(null);
+                future.setBackground(null);
+            }
+        });
+        week.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.setBackground(getResources().getDrawable(R.drawable.grey_background2));
+                day.setBackground(null);
+                month.setBackground(null);
+                year.setBackground(null);
+                future.setBackground(null);
+            }
+        });
+        month.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.setBackground(getResources().getDrawable(R.drawable.grey_background2));
+                week.setBackground(null);
+                day.setBackground(null);
+                year.setBackground(null);
+                future.setBackground(null);
+            }
+        });
+        year.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.setBackground(getResources().getDrawable(R.drawable.grey_background2));
+                week.setBackground(null);
+                month.setBackground(null);
+                day.setBackground(null);
+                future.setBackground(null);
+            }
+        });
+        future.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.setBackground(getResources().getDrawable(R.drawable.grey_background2));
+                week.setBackground(null);
+                month.setBackground(null);
+                year.setBackground(null);
+                day.setBackground(null);
+            }
+        });
 
     }
 }
