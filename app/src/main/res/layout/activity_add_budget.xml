@@ -19,25 +19,28 @@
             android:layout_height="wrap_content"
             android:text="X"
             android:textColor="@color/black"
-            android:textSize="25dp"
+            android:textSize="33dp"
+            android:layout_marginTop="10dp"
             android:padding="5dp"
             android:layout_marginLeft="10dp">
         </TextView>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="6dp"
             android:textStyle="bold"
             android:textColor="@color/black"
             android:text="Add budget"
-            android:textSize="20dp"
+            android:textSize="28dp"
             android:layout_gravity="center"
             ></TextView>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp">
         <TextView
             android:layout_width="40dp"
             android:layout_height="40dp"
@@ -83,40 +86,56 @@
 
             </com.google.android.material.textfield.TextInputEditText>
         </com.google.android.material.textfield.TextInputLayout>
-        <ImageView
+        <TextView
+            android:id="@+id/crr"
             android:layout_width="0dp"
-            android:layout_marginTop="15dp"
-            android:layout_height="match_parent"
+            android:layout_marginTop="12dp"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
+            android:textSize="35dp"
+            android:textColor="#1EABED"
+            android:gravity="center"
+            android:text="$"
+            android:textStyle="normal"
             android:layout_gravity="center"
-            android:src="@drawable/dollar_blue" android:layout_weight="1"></ImageView>
+            android:layout_weight="1"></TextView>
     </LinearLayout>
     <LinearLayout
-        android:layout_width="300dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/date"
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="0dp"
             android:layout_weight="9"
             android:layout_height="wrap_content"
-            android:layout_marginStart="22dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="0dp"
             android:hint="Date"
+            app:boxStrokeColor="#1EABED"
+            app:boxStrokeWidth="2dp"
+            style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:textSize="20dp"
+            android:text="2024"
             android:textStyle="bold"
-            android:layout_gravity="center_vertical"
+            app:hintTextColor="#1EABED"
             android:textColor="#1EABED">
 
-        </TextView>
-
+        </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
         <ImageView
             android:id="@+id/date_pickerr"
             android:layout_width="0dp"
             android:layout_height="35dp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginStart="7dp"
+            android:layout_marginTop="17dp"
+            android:layout_marginEnd="10dp"
             android:layout_weight="1"
             android:layout_marginBottom="15dp"
             android:src="@drawable/blue_calendar"></ImageView>
@@ -196,7 +215,7 @@
             android:layout_marginLeft="12dp"
             android:layout_marginTop="26dp"
             android:text="Get notified when this budget finishes"
-            android:textSize="16dp">
+            android:textSize="14dp">
 
         </TextView>
         <Switch

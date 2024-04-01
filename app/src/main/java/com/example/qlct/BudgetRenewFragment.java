@@ -35,6 +35,7 @@ public class BudgetRenewFragment extends Fragment {
     private String mParam2;
     ListView listView;
     TextView apply;
+    String date;
 
     public BudgetRenewFragment() {
         // Required empty public constructor
@@ -92,6 +93,10 @@ public class BudgetRenewFragment extends Fragment {
                 // Lấy tham chiếu đến MyDialogFragment
                 MyDialogFragment dialogFragment = (MyDialogFragment) getParentFragment();
                 if (dialogFragment != null) {
+                    if (getActivity() instanceof AddBudget) {
+                        AddBudget grandpa = (AddBudget) getActivity();
+                        grandpa.SetData(date);
+                    }
                     // Đóng dialog
                     dialogFragment.dismiss();
                 }
@@ -100,7 +105,7 @@ public class BudgetRenewFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getContext(),arrayList.get(position),Toast.LENGTH_LONG).show();
+               date= arrayList.get(position);
             }
         });
         return view;

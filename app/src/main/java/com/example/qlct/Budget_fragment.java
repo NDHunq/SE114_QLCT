@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 public class Budget_fragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
@@ -25,6 +26,7 @@ public class Budget_fragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private TextView create_bud_butt, running, finish;
+    ImageView bell;
 
     public Budget_fragment() {
         // Required empty public constructor
@@ -53,6 +55,15 @@ public class Budget_fragment extends Fragment {
         create_bud_butt=view.findViewById(R.id.create_bud_butt);
         running=view.findViewById(R.id.running);
         finish=view.findViewById(R.id.finish);
+        bell = view.findViewById(R.id.bell);
+
+        bell.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),Notificaiton.class);
+                startActivity(intent);
+            }
+        });
         create_bud_butt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

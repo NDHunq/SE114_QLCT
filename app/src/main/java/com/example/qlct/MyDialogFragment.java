@@ -1,5 +1,6 @@
 package com.example.qlct;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -17,7 +18,9 @@ import androidx.fragment.app.DialogFragment;
 public class MyDialogFragment extends DialogFragment {
     TextView noRenew;
     TextView renew;
+    TextView date;
     TextView apply;
+    Activity parent;
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -33,7 +36,6 @@ public class MyDialogFragment extends DialogFragment {
 
         noRenew = dialog.findViewById(R.id.no_renew);
         renew = dialog.findViewById(R.id.renew);
-
         BugetNoRenewFragment fragment = new BugetNoRenewFragment();
         getChildFragmentManager().beginTransaction().replace(R.id.container_renew, fragment).commit();
 
@@ -63,6 +65,7 @@ public class MyDialogFragment extends DialogFragment {
                 noRenew.setTextColor(Color.parseColor( "#1EABED"));
             }
         });
+
         return dialog;
     }
 }

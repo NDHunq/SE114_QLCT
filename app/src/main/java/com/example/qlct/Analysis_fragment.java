@@ -1,5 +1,6 @@
 package com.example.qlct;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -36,6 +37,7 @@ public class Analysis_fragment extends Fragment {
     RadioButton month,year;
     ImageView back,next ;
     TextView date;
+    ImageView bell;
     final Calendar calendar = Calendar.getInstance();
     final SimpleDateFormat monthFormat = new SimpleDateFormat("MM/yyyy", Locale.getDefault());
     final SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
@@ -108,6 +110,15 @@ public class Analysis_fragment extends Fragment {
         next=view.findViewById(R.id.next);
         next.setVisibility(View.INVISIBLE);
         date = view.findViewById(R.id.date);
+        bell = view.findViewById(R.id.bell);
+
+        bell.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),Notificaiton.class);
+                startActivity(intent);
+            }
+        });
         month.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

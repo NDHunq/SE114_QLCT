@@ -1,5 +1,6 @@
 package com.example.qlct;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -11,7 +12,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -129,6 +134,8 @@ public class BugetNoRenewFragment extends Fragment {
                 month.setBackground(null);
                 year.setBackground(null);
                 timespan.setBackground(null);
+                time.setVisibility(View.VISIBLE);
+                from_to.setVisibility(View.GONE);
             }
         });
 
@@ -144,6 +151,8 @@ public class BugetNoRenewFragment extends Fragment {
                 day.setBackground(null);
                 year.setBackground(null);
                 timespan.setBackground(null);
+                time.setVisibility(View.VISIBLE);
+                from_to.setVisibility(View.GONE);
             }
         });
         year.setOnClickListener(new View.OnClickListener() {
@@ -157,6 +166,8 @@ public class BugetNoRenewFragment extends Fragment {
                 month.setBackground(null);
                 day.setBackground(null);
                 timespan.setBackground(null);
+                time.setVisibility(View.VISIBLE);
+                from_to.setVisibility(View.GONE);
             }
         });
         week.setOnClickListener(new View.OnClickListener() {
@@ -174,6 +185,8 @@ public class BugetNoRenewFragment extends Fragment {
                 month.setBackground(null);
                 year.setBackground(null);
                 timespan.setBackground(null);
+                time.setVisibility(View.VISIBLE);
+                from_to.setVisibility(View.GONE);
             }
         });
         timespan.setOnClickListener(new View.OnClickListener() {
@@ -235,8 +248,13 @@ public class BugetNoRenewFragment extends Fragment {
                                         {
                                             Toast.makeText(getContext(), "Ngày kết thúc không được nhỏ hơn hoặc bằng ngày bắt đầu", Toast.LENGTH_LONG).show();
                                         }
+                                        else if(isEndDateLessThanCurrent(". - "+format.format(calendar.getTime())))
+                                        {
+                                            Toast.makeText(getContext(), "Ngày kết thúc không được nhỏ hơn hiện tại", Toast.LENGTH_LONG).show();
+                                        }
                                         else
                                             to.setText(format.format(calendar.getTime()));
+
                                     }
                                 }, year, month, day);
                         // Hiển thị DatePickerDialog
@@ -427,8 +445,18 @@ public class BugetNoRenewFragment extends Fragment {
                 // Lấy tham chiếu đến MyDialogFragment
                 MyDialogFragment dialogFragment = (MyDialogFragment) getParentFragment();
                 if (dialogFragment != null) {
-                    // Đóng dialog
-                    dialogFragment.dismiss();
+                    if (getActivity() instanceof AddBudget) {
+                        AddBudget grandpa = (AddBudget) getActivity();
+                        if(status=="timespan")
+                        {
+                            grandpa.SetData(from.getText().toString()+" - "+to.getText().toString());
+                        }
+                        else
+                            grandpa.SetData(date.getText().toString());
+
+                    } else {
+                        // Handle the case where the parent activity is not an instance of AddBudget
+                    }dialogFragment.dismiss();
                 }
             }
         });
@@ -452,7 +480,12 @@ public class BugetNoRenewFragment extends Fragment {
                                         Calendar calendar = Calendar.getInstance();
                                         calendar.set(year, monthOfYear, dayOfMonth);
                                         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-                                        date.setText(format.format(calendar.getTime()));
+                                        if(isEndDateLessThanCurrent(". - "+format.format(calendar.getTime()))==true)
+                                        {
+                                            Toast.makeText(getContext(), "Ngày không được nhỏ hơn hiện tại", Toast.LENGTH_LONG).show();
+                                        }
+                                        else
+                                            date.setText(format.format(calendar.getTime()));
                                     }
                                 }, year, month, day);
                         // Hiển thị DatePickerDialog
@@ -466,6 +499,63 @@ public class BugetNoRenewFragment extends Fragment {
                         dialog.setContentView(R.layout.dialog_month_picker);
                         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                         dialog.show();
+                        GridView gridView = dialog.findViewById(R.id.gridView);
+                        TextView month_lbl = dialog.findViewById(R.id.month);
+                        TextView year_lbl = dialog.findViewById(R.id.year);
+                        TextView cancel = dialog.findViewById(R.id.cancel);
+                        TextView ok = dialog.findViewById(R.id.ok);
+                        ImageView up = dialog.findViewById(R.id.up);
+                        ImageView down = dialog.findViewById(R.id.down);
+                        String[] month={"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
+                        ArrayAdapter monthAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, month) ;
+                        gridView.setAdapter(monthAdapter);
+                        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                month_lbl.setText(month[position]);
+                            }
+                        });
+                        up.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                year_lbl.setText(Integer.parseInt(year_lbl.getText().toString())+1+"");
+                            }
+                        });
+                        down.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Calendar calendar = Calendar.getInstance();
+                                int currentYear = calendar.get(Calendar.YEAR);
+                                if(Integer.parseInt(year_lbl.getText().toString())>currentYear)
+                                    year_lbl.setText(Integer.parseInt(year_lbl.getText().toString())-1+"");
+                                else
+                                    Toast.makeText(getContext(), "Năm không được nhỏ hơn "+currentYear, Toast.LENGTH_LONG).show();
+                            }
+                        });
+                        cancel.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                            }
+                        });
+                        ok.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                String inputDate = month_lbl.getText().toString()+" "+year_lbl.getText().toString();
+                                SimpleDateFormat inputFormat = new SimpleDateFormat("MMM yyyy", Locale.ENGLISH);
+                                SimpleDateFormat outputFormat = new SimpleDateFormat("M/yyyy", Locale.ENGLISH);
+
+                                try {
+                                    Date daTe = inputFormat.parse(inputDate);
+                                    String outputDate = outputFormat.format(daTe);
+                                    date.setText(outputDate);
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
+
+                                dialog.dismiss();
+                            }
+                        });
                     }
                         break;
                     case "year":
@@ -475,6 +565,51 @@ public class BugetNoRenewFragment extends Fragment {
                         dialog.setContentView(R.layout.dialog_year_picker);
                         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                         dialog.show();
+                        GridView gridView = dialog.findViewById(R.id.gridView);
+                        TextView year_lbl = dialog.findViewById(R.id.year);
+                        TextView cancel = dialog.findViewById(R.id.cancel);
+                        TextView ok = dialog.findViewById(R.id.ok);
+                        ImageView up = dialog.findViewById(R.id.up);
+                        ImageView down = dialog.findViewById(R.id.down);
+                        String[] years={"2024","2025","2026","2027","2028","2029","2030","2031","2032","2033","2034","2035"};
+                        ArrayAdapter yearAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, years) ;
+                        gridView.setAdapter(yearAdapter);
+                        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                year_lbl.setText(years[position]);
+                            }
+                        });
+                        up.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                year_lbl.setText(Integer.parseInt(year_lbl.getText().toString())+1+"");
+                            }
+                        });
+                        down.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Calendar calendar = Calendar.getInstance();
+                                int currentYear = calendar.get(Calendar.YEAR);
+                                if(Integer.parseInt(year_lbl.getText().toString())>currentYear)
+                                    year_lbl.setText(Integer.parseInt(year_lbl.getText().toString())-1+"");
+                                else
+                                    Toast.makeText(getContext(), "Năm không được nhỏ hơn "+currentYear, Toast.LENGTH_LONG).show();
+                            }
+                        });
+                        cancel.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                            }
+                        });
+                        ok.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                date.setText(year_lbl.getText().toString());
+                                dialog.dismiss();
+                            }
+                        });
                     }
                         break;
                     case "week":
@@ -547,7 +682,9 @@ public class BugetNoRenewFragment extends Fragment {
             String[] dates = dateString.split(" - ");
             // Chuyển đổi chuỗi ngày thứ hai thành đối tượng Date
             Date endDate = format.parse(dates[1]);
-            Date currentDate = Calendar.getInstance().getTime();
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.DAY_OF_MONTH, -1);
+            Date currentDate = calendar.getTime();
             // So sánh ngày thứ hai với ngày hiện tại
             return endDate.before(currentDate) ;
         } catch (ParseException e) {
