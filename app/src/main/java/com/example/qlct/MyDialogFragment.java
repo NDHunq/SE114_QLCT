@@ -26,7 +26,8 @@ public class MyDialogFragment extends DialogFragment {
         dialog.setContentView(R.layout.bottom_sheet);
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.getWindow().setGravity(Gravity.BOTTOM);
-        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        //dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimationn;
 
         dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_bgh);
 
@@ -60,7 +61,6 @@ public class MyDialogFragment extends DialogFragment {
                 renew.setTextColor(Color.BLACK);
                 noRenew.setBackgroundTintList(null);
                 noRenew.setTextColor(Color.parseColor( "#1EABED"));
-
             }
         });
         return dialog;
