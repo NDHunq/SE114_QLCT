@@ -231,20 +231,26 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <androidx.constraintlayout.widget.ConstraintLayout
 
-            android:layout_width="70dp"
-            android:background="@drawable/nenxanh7dp"
-            android:layout_gravity="end"
-            android:layout_alignParentBottom="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_margin="20dp"
-            android:layout_height="70dp">
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="end"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/nenxanh7dp">
 
 
             <ImageButton
 
-                android:id="@+id/button"
+                android:id="@+id/done"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/check"
@@ -255,7 +261,6 @@
                 app:layout_constraintTop_toTopOf="parent">
 
             </ImageButton>
-
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

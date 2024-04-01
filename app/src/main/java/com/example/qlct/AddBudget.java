@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -28,6 +29,7 @@ public class AddBudget extends AppCompatActivity implements OnDataPass {
     FrameLayout frameLayout;
     EditText date;
     String currency;
+    ImageButton done;
     int sc=1;
     int sb=1;
 
@@ -46,6 +48,13 @@ public class AddBudget extends AppCompatActivity implements OnDataPass {
         exit_budget=this.findViewById(R.id.exit_budget);
         date=this.findViewById(R.id.date);
         crr=this.findViewById(R.id.crr);
+        done=this.findViewById(R.id.done);
+        done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         crr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

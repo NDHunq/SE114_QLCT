@@ -373,7 +373,12 @@ public class BugetNoRenewFragment extends Fragment {
                         calendar.add(Calendar.DAY_OF_MONTH, -1);
 
                         // Định dạng ngày mới và đặt nó vào TextView
-                        date.setText(format.format(calendar.getTime()));
+                        if(isEndDateLessThanCurrent(". - "+format.format(calendar.getTime()))) {
+                            Toast.makeText(getContext(), "Ngày không được nhỏ hơn hiện tại", Toast.LENGTH_LONG).show();
+                            calendar.add(Calendar.DAY_OF_MONTH, 1);
+                        }
+                            else
+                            date.setText(format.format(calendar.getTime()));
                     }
                     break;
                     case "month":
@@ -389,9 +394,13 @@ public class BugetNoRenewFragment extends Fragment {
 
                         // Giảm tháng đi 1
                         calendar.add(Calendar.MONTH, -1);
-
-                        // Định dạng tháng mới và đặt nó vào TextView
-                        date.setText(format.format(calendar.getTime()));
+                        if(!isDateLessThanCurrent(format.format(calendar.getTime())))
+                        {
+                            Toast.makeText(getContext(), "Tháng không được nhỏ hơn hiện tại", Toast.LENGTH_LONG).show();
+                            calendar.add(Calendar.MONTH, 1);
+                        }
+                        else
+                            date.setText(format.format(calendar.getTime()));
                     }
                     break;
                     case "year":
@@ -407,9 +416,13 @@ public class BugetNoRenewFragment extends Fragment {
 
                         // Giảm năm đi 1
                         calendar.add(Calendar.YEAR, -1);
-
-                        // Định dạng năm mới và đặt nó vào TextView
-                        date.setText(format.format(calendar.getTime()));
+                        if(!isYearLessThanCurrent(format.format(calendar.getTime())))
+                        {
+                            Toast.makeText(getContext(), "Năm không được nhỏ hơn hiện tại", Toast.LENGTH_LONG).show();
+                            calendar.add(Calendar.YEAR, 1);
+                        }
+                        else
+                            date.setText(format.format(calendar.getTime()));
 
                     }
                     break;
@@ -430,10 +443,16 @@ public class BugetNoRenewFragment extends Fragment {
                         // Giảm ngày đi 7 (1 tuần)
                         calendarStart.add(Calendar.DAY_OF_MONTH, -7);
                         calendarEnd.add(Calendar.DAY_OF_MONTH, -7);
-
-                        // Định dạng ngày mới và đặt nó vào TextView
-                        date.setText(format.format(calendarStart.getTime()) + " - " + format.format(calendarEnd.getTime()));
-
+                        if(isEndDateLessThanCurrent(". - "+format.format(calendarEnd.getTime()))) {
+                            Toast.makeText(getContext(), "Ngày kết thúc không được nhỏ hơn hiện tại", Toast.LENGTH_LONG).show();
+                            calendarStart.add(Calendar.DAY_OF_MONTH, 7);
+                            calendarEnd.add(Calendar.DAY_OF_MONTH, 7);
+                        }
+                        else
+                        {
+                            // Định dạng ngày mới và đặt nó vào TextView
+                            date.setText(format.format(calendarStart.getTime()) + " - " + format.format(calendarEnd.getTime()));
+                        }
                     }
                     break;
                 }
@@ -548,7 +567,12 @@ public class BugetNoRenewFragment extends Fragment {
                                 try {
                                     Date daTe = inputFormat.parse(inputDate);
                                     String outputDate = outputFormat.format(daTe);
-                                    date.setText(outputDate);
+                                    if(!isDateLessThanCurrent(outputDate))
+                                    {
+                                        Toast.makeText(getContext(), "Tháng không được nhỏ hơn hiện tại", Toast.LENGTH_LONG).show();
+                                    }
+                                    else
+                                        date.setText(outputDate);
                                 } catch (ParseException e) {
                                     e.printStackTrace();
                                 }
@@ -606,7 +630,12 @@ public class BugetNoRenewFragment extends Fragment {
                         ok.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                date.setText(year_lbl.getText().toString());
+                                if(!isYearLessThanCurrent(year_lbl.getText().toString()))
+                                {
+                                    Toast.makeText(getContext(), "Năm không được nhỏ hơn hiện tại", Toast.LENGTH_LONG).show();
+                                }
+                                else
+                                    date.setText(year_lbl.getText().toString());
                                 dialog.dismiss();
                             }
                         });
@@ -708,6 +737,50 @@ public class BugetNoRenewFragment extends Fragment {
         } catch (ParseException e) {
             e.printStackTrace();
             return 0;
+        }
+
+    }
+    public boolean isDateLessThanCurrent(String dateString) {
+        SimpleDateFormat format = new SimpleDateFormat("M/yyyy");
+        try {
+            // Phân tích chuỗi ngày thành đối tượng Date
+            Date inputDate = format.parse(dateString);
+
+            // Lấy tháng và năm hiện tại
+            Calendar currentCalendar = Calendar.getInstance();
+            int currentYear = currentCalendar.get(Calendar.YEAR);
+            int currentMonth = currentCalendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0 nên cần cộng thêm 1
+
+            // Lấy tháng và năm từ chuỗi ngày
+            Calendar inputCalendar = Calendar.getInstance();
+            inputCalendar.setTime(inputDate);
+            int inputYear = inputCalendar.get(Calendar.YEAR);
+            int inputMonth = inputCalendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0 nên cần cộng thêm 1
+
+            // So sánh tháng và năm
+            if (inputYear < currentYear || (inputYear == currentYear && inputMonth < currentMonth)) {
+                return false;
+            } else {
+                return true;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public boolean isYearLessThanCurrent(String yearString) {
+        // Chuyển đổi chuỗi năm thành số nguyên
+        int inputYear = Integer.parseInt(yearString);
+
+        // Lấy năm hiện tại
+        Calendar currentCalendar = Calendar.getInstance();
+        int currentYear = currentCalendar.get(Calendar.YEAR);
+
+        // So sánh năm
+        if (inputYear < currentYear) {
+            return false;
+        } else {
+            return true;
         }
     }
 }

@@ -22,7 +22,7 @@
                 android:text="Day"
                 android:gravity="center"
                 android:textColor="@color/black"
-
+                android:background="@drawable/grey_background"
                 android:textSize="16dp"
                 android:layout_height="match_parent">
             </TextView>
