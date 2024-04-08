@@ -88,6 +88,7 @@ int sb=1;
         LinearLayout bo2 = dialog.findViewById(R.id.bo2);
         LinearLayout bo3 = dialog.findViewById(R.id.bo3);
         LinearLayout bo4 = dialog.findViewById(R.id.bo4);
+
         TextView txt1 = findViewById(R.id.crr);
         if(txt1.getText().toString().equals("$"))
         {
@@ -194,15 +195,16 @@ int sb=1;
         ConstraintLayout bo7 = dialog.findViewById(R.id.bo7);
         ConstraintLayout bo8 = dialog.findViewById(R.id.bo8);
         ConstraintLayout bo9 = dialog.findViewById(R.id.bo9);
-        ConstraintLayout bo10 = dialog.findViewById(R.id.bot10);
+        ConstraintLayout bo10 = dialog.findViewById(R.id.bo10);
         ConstraintLayout bo11 = dialog.findViewById(R.id.bo11);
-        ConstraintLayout bo12 = dialog.findViewById(R.id.bot12);
-        ConstraintLayout bo13 = dialog.findViewById(R.id.bot13);
-        ConstraintLayout bo14 = dialog.findViewById(R.id.bot14);
-        ConstraintLayout bo15 = dialog.findViewById(R.id.bot15);
-        ConstraintLayout bo16 = dialog.findViewById(R.id.bot16);
-        ConstraintLayout bo17 = dialog.findViewById(R.id.bot17);
-        ConstraintLayout bo18 = dialog.findViewById(R.id.bot18);
+        ConstraintLayout bo12 = dialog.findViewById(R.id.bo12);
+        ConstraintLayout bo13 = dialog.findViewById(R.id.bo13);
+        ConstraintLayout bo14 = dialog.findViewById(R.id.bo14);
+        ConstraintLayout bo15 = dialog.findViewById(R.id.bo15);
+        ConstraintLayout bo16 = dialog.findViewById(R.id.bo16);
+        ConstraintLayout bo17 = dialog.findViewById(R.id.bo17);
+        ConstraintLayout bo18 = dialog.findViewById(R.id.bo18);
+
 
         bo1.setOnClickListener(v -> {
             bo1.setBackgroundResource(R.drawable.nenluachon);
@@ -224,6 +226,7 @@ int sb=1;
             bo17.setBackgroundResource(0);
             bo18.setBackgroundResource(0);
 
+
         });
         bo2.setOnClickListener(v -> {
             bo2.setBackgroundResource(R.drawable.nenluachon);
@@ -244,6 +247,7 @@ int sb=1;
             bo16.setBackgroundResource(0);
             bo17.setBackgroundResource(0);
             bo18.setBackgroundResource(0);
+
         });
         bo3.setOnClickListener(v -> {
             bo3.setBackgroundResource(R.drawable.nenluachon);
@@ -264,6 +268,7 @@ int sb=1;
             bo16.setBackgroundResource(0);
             bo17.setBackgroundResource(0);
             bo18.setBackgroundResource(0);
+
         });
         bo4.setOnClickListener(v -> {
             bo4.setBackgroundResource(R.drawable.nenluachon);
@@ -284,6 +289,7 @@ int sb=1;
             bo16.setBackgroundResource(0);
             bo17.setBackgroundResource(0);
             bo18.setBackgroundResource(0);
+
         });
         bo5.setOnClickListener(v -> {
             bo5.setBackgroundResource(R.drawable.nenluachon);
@@ -304,6 +310,7 @@ int sb=1;
             bo16.setBackgroundResource(0);
             bo17.setBackgroundResource(0);
             bo18.setBackgroundResource(0);
+
         });
         bo6.setOnClickListener(v -> {
             bo6.setBackgroundResource(R.drawable.nenluachon);
@@ -324,6 +331,7 @@ int sb=1;
             bo16.setBackgroundResource(0);
             bo17.setBackgroundResource(0);
             bo18.setBackgroundResource(0);
+
         });
         bo7.setOnClickListener(v -> {
             bo7.setBackgroundResource(R.drawable.nenluachon);
@@ -344,6 +352,7 @@ int sb=1;
             bo16.setBackgroundResource(0);
             bo17.setBackgroundResource(0);
             bo18.setBackgroundResource(0);
+
         });
         bo8.setOnClickListener(v -> {
             bo8.setBackgroundResource(R.drawable.nenluachon);
@@ -364,6 +373,7 @@ int sb=1;
             bo16.setBackgroundResource(0);
             bo17.setBackgroundResource(0);
             bo18.setBackgroundResource(0);
+
         });
         bo9.setOnClickListener(v -> {
             bo9.setBackgroundResource(R.drawable.nenluachon);
@@ -384,6 +394,7 @@ int sb=1;
             bo16.setBackgroundResource(0);
             bo17.setBackgroundResource(0);
             bo18.setBackgroundResource(0);
+
         });
         bo10.setOnClickListener(v -> {
             bo10.setBackgroundResource(R.drawable.nenluachon);
@@ -404,6 +415,7 @@ int sb=1;
             bo16.setBackgroundResource(0);
             bo17.setBackgroundResource(0);
             bo18.setBackgroundResource(0);
+
         });
         bo11.setOnClickListener(v -> {
             bo11.setBackgroundResource(R.drawable.nenluachon);
@@ -424,6 +436,7 @@ int sb=1;
             bo16.setBackgroundResource(0);
             bo17.setBackgroundResource(0);
             bo18.setBackgroundResource(0);
+
         });
         bo12.setOnClickListener(v -> {
             bo12.setBackgroundResource(R.drawable.nenluachon);
@@ -444,7 +457,9 @@ int sb=1;
             bo16.setBackgroundResource(0);
             bo17.setBackgroundResource(0);
             bo18.setBackgroundResource(0);
+
         });
+
         bo13.setOnClickListener(v -> {
             bo13.setBackgroundResource(R.drawable.nenluachon);
             bo2.setBackgroundResource(0);
@@ -464,7 +479,9 @@ int sb=1;
             bo16.setBackgroundResource(0);
             bo17.setBackgroundResource(0);
             bo18.setBackgroundResource(0);
+
         });
+
         bo14.setOnClickListener(v -> {
             bo14.setBackgroundResource(R.drawable.nenluachon);
             bo2.setBackgroundResource(0);
@@ -484,7 +501,9 @@ int sb=1;
             bo16.setBackgroundResource(0);
             bo17.setBackgroundResource(0);
             bo18.setBackgroundResource(0);
+
         });
+
         bo15.setOnClickListener(v -> {
             bo15.setBackgroundResource(R.drawable.nenluachon);
             bo2.setBackgroundResource(0);
@@ -504,6 +523,7 @@ int sb=1;
             bo16.setBackgroundResource(0);
             bo17.setBackgroundResource(0);
             bo18.setBackgroundResource(0);
+
         });
         bo16.setOnClickListener(v -> {
             bo16.setBackgroundResource(R.drawable.nenluachon);
@@ -524,8 +544,9 @@ int sb=1;
             bo1.setBackgroundResource(0);
             bo17.setBackgroundResource(0);
             bo18.setBackgroundResource(0);
+
         });
-        bo17.setOnClickListener(v -> {
+bo17.setOnClickListener(v -> {
             bo17.setBackgroundResource(R.drawable.nenluachon);
             bo2.setBackgroundResource(0);
             bo3.setBackgroundResource(0);
@@ -544,6 +565,7 @@ int sb=1;
             bo16.setBackgroundResource(0);
             bo1.setBackgroundResource(0);
             bo18.setBackgroundResource(0);
+
         });
 
         bo18.setOnClickListener(v -> {
@@ -565,7 +587,10 @@ int sb=1;
             bo16.setBackgroundResource(0);
             bo17.setBackgroundResource(0);
             bo1.setBackgroundResource(0);
+
         });
+
+
         ConstraintLayout co1 = dialog.findViewById(R.id.co1);
         ConstraintLayout co2 = dialog.findViewById(R.id.co2);
         ConstraintLayout co3 = dialog.findViewById(R.id.co3);
