@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,7 +15,7 @@ import androidx.core.view.WindowInsetsCompat;
 public class Account extends AppCompatActivity {
 ImageButton mywallet;
 ImageButton mycate;
-ImageButton setting;
+LinearLayout setting;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +44,7 @@ setting.setOnClickListener(new View.OnClickListener() {
     public void onClick(View v) {
         Intent myintent=new Intent(Account.this, Setting.class);
         startActivity(myintent);
+
     }
 });
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {

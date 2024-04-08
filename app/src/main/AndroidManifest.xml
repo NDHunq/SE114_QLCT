@@ -17,13 +17,19 @@
             android:exported="false" />
         <activity
             android:name=".Create_Account"
-            android:exported="false" />
+            android:exported="true" >
+
+        </activity>
         <activity
             android:name=".Login_Signin"
             android:exported="false" />
         <activity
             android:name=".My_categories"
-            android:exported="false" />
+            android:exported="true" >
+
+
+
+        </activity>
         <activity
             android:name=".email_confirm_save"
             android:exported="false" />
@@ -45,6 +51,11 @@
         <activity
             android:name=".Account"
             android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
         <activity
