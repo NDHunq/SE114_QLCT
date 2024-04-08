@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".verificaiton">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+
+            >
+
+            <ImageButton
+                android:layout_marginLeft="20dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/back_arrow">
+
+            </ImageButton>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Verification required"
+                android:textColor="@color/black"
+                android:textSize="30dp">
+
+            </TextView>
+        </LinearLayout>
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="30dp"
+            android:text="Enter the code we-ve have emailed to">
+        </TextView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="t****@gmail.com"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="30dp">
+        </TextView>
+        <LinearLayout
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            >
+            <EditText
+                android:layout_width="50dp"
+                android:layout_marginRight="10dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/background_item">
+            </EditText>
+            <EditText
+                android:layout_width="50dp"
+                android:layout_marginRight="10dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/background_item">
+            </EditText>
+            <EditText
+                android:layout_width="50dp"
+                android:layout_marginRight="10dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/background_item">
+            </EditText>
+            <EditText
+                android:layout_width="50dp"
+                android:layout_marginRight="10dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/background_item">
+            </EditText>
+            <EditText
+                android:layout_width="50dp"
+                android:layout_marginRight="10dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/background_item">
+            </EditText>
+            <EditText
+                android:layout_width="50dp"
+                android:layout_marginRight="10dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/background_item">
+            </EditText>
+        </LinearLayout>
+        <TextView
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="Resent Email"
+            android:textColor="@color/xanhnen"
+            android:gravity="center_vertical"
+            android:textSize="20dp">
+        </TextView>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <Button
+                android:id="@+id/nextrequired"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Next"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:textSize="25dp"
+                android:textColor="@color/xanhnen"
+                android:textStyle="bold"
+                android:background="FFFFFF"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp"
+                >
+
+            </Button>
+        </RelativeLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

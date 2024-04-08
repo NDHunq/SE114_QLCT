@@ -13,7 +13,51 @@
         android:theme="@style/Theme.QLCT"
         tools:targetApi="31">
         <activity
+            android:name=".select_currency"
+            android:exported="false" />
+        <activity
+            android:name=".Create_Account"
+            android:exported="false" />
+        <activity
+            android:name=".Login_Signin"
+            android:exported="false" />
+        <activity
+            android:name=".My_categories"
+            android:exported="false" />
+        <activity
+            android:name=".email_confirm_save"
+            android:exported="false" />
+        <activity
+            android:name=".verificaiton"
+            android:exported="false" />
+        <activity
+            android:name=".New_email"
+            android:exported="false" />
+        <activity
+            android:name=".NewPassword"
+            android:exported="false" />
+        <activity
+            android:name=".Email_Confirm"
+            android:exported="false" />
+        <activity
+            android:name=".Setting"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Account"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".AnalysisDetailExpense"
             android:exported="false" />
         <activity
@@ -25,11 +69,9 @@
         <activity
             android:name=".AddBudget"
             android:exported="false" />
-
         <activity
             android:name=".Category_Add"
             android:exported="false" />
-
         <activity
             android:name=".Share_Wallet"
             android:exported="false"
@@ -45,7 +87,6 @@
             android:exported="false" />
         <activity
             android:name=".Home_My_wallets"
-
             android:exported="false" />
         <activity
             android:name=".MainActivity"

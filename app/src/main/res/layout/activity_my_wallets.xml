@@ -174,7 +174,7 @@ android:layout_marginStart="12dp"
             android:layout_height="35dp">
             <ImageView
                 android:id="@+id/UP_DOWN"
-                android:background="@drawable/up_arrow"
+                android:background="@drawable/up_arrow_1"
                 android:layout_width="17dp"
                 android:layout_gravity="center"
                 android:layout_marginStart="10dp"

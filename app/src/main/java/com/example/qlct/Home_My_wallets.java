@@ -243,7 +243,7 @@ public class Home_My_wallets extends AppCompatActivity {
                 up=upin;
                 if(up==0)
                 {
-                    upDownImage.setBackgroundResource(R.drawable.up_arrow);
+                    upDownImage.setBackgroundResource(R.drawable.up_arrow_1);
                 }
                 else
                 {
