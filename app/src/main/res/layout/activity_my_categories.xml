@@ -43,7 +43,7 @@
                 android:layout_width="90dp"
                 android:layout_height="40dp"
                 android:layout_marginRight="20dp"
-                android:background=""
+                android:background="@color/white"
                 android:contextClickable="true"
                 android:text="ADD NEW"
                 android:textColor="@color/xanhnen"
