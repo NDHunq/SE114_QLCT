@@ -25,15 +25,16 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="150dp"
                     android:layout_height="150dp"
-                    app:cardCornerRadius="250dp"
-                    android:layout_gravity="center">
+                    android:layout_gravity="center"
+                    app:cardCornerRadius="250dp">
+
                     <ImageView
                         android:id="@+id/hinhanh"
                         android:layout_width="35dp"
 
-                        android:layout_gravity="center"
+                        android:layout_height="35dp"
 
-                        android:layout_height="35dp">
+                        android:layout_gravity="center">
 
 
                     </ImageView>
@@ -55,7 +56,7 @@
                     android:layout_height="wrap_content"
                     android:text="Food"
                     android:textStyle="bold"
-                    android:textSize="27dp"
+                    android:textSize="23dp"
                     android:textColor="@color/black"
 
                     ></TextView>
@@ -77,7 +78,7 @@
                         android:layout_marginStart="5dp"
                         android:layout_width="match_parent"
                         android:text="Vi 1"
-                        android:textSize="20dp"
+                        android:textSize="18dp"
                         android:layout_height="match_parent">
 
                     </TextView>
@@ -102,7 +103,7 @@ android:layout_gravity="center"
                         android:textAlignment="textEnd"
                         android:layout_width="match_parent"
                         android:text="12/12/2020"
-                        android:textSize="17dp"
+                        android:textSize="14dp"
                         android:layout_height="wrap_content">
 
                     </TextView>
@@ -111,7 +112,7 @@ android:layout_gravity="center"
                         android:layout_width="match_parent"
                         android:text="2.000.000 đ"
                         android:textAlignment="textEnd"
-                        android:textSize="26dp"
+                        android:textSize="23dp"
                         android:textStyle="bold"
                         android:textColor="@color/xanhdam"
 
@@ -137,8 +138,8 @@ android:background="#ADADAD"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Ghi Chu"
-
-                android:textSize="17dp"
+android:layout_marginTop="5dp"
+                android:textSize="15dp"
                 android:layout_marginStart="12dp"
                 >
                 
