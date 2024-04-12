@@ -5,12 +5,12 @@ public class cate_item {
 
         private int imagecate;
         private String name;
-        private int imagemore;
+        private int imagedelete;
 
-        public cate_item(int imagecate, String name, int imagemore) {
+        public cate_item(int imagecate, String name, int imagedelete) {
             this.imagecate = imagecate;
             this.name = name;
-            this.imagemore = imagemore;
+            this.imagedelete = imagedelete;
         }
 
         public int getImagecate() {
@@ -29,12 +29,12 @@ public class cate_item {
             this.name = name;
         }
 
-        public int getImagemore() {
-            return imagemore;
+        public int getImagedelete() {
+            return imagedelete;
         }
 
-        public void setImagemore(int imagemore) {
-            this.imagemore = imagemore;
+        public void setImagedelete(int imagemore) {
+            this.imagedelete = imagemore;
         }
     }
 

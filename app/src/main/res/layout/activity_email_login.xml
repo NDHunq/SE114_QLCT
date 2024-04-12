@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".email_confirm_save">
+    tools:context=".Email_Confirm">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -21,7 +21,7 @@
             >
 
             <ImageButton
-                android:id="@+id/backemailconfirm_save"
+                android:id="@+id/backemailconfirm_next"
                 android:layout_marginLeft="20dp"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
@@ -116,10 +116,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <Button
-                android:background="#FFFFFF"
+                android:id="@+id/next"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Save"
+                android:text="Next"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
                 android:textSize="25dp"
@@ -127,9 +127,10 @@
                 android:textStyle="bold"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
+                android:background="@color/white"
                 >
-
             </Button>
         </RelativeLayout>
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

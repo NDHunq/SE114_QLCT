@@ -21,6 +21,7 @@
             android:orientation="horizontal">
 
             <ImageButton
+                android:id="@+id/backmycate"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginLeft="20dp"
@@ -130,12 +131,12 @@
 
         </RelativeLayout>
 
-        <ListView
+        <ListView android:dividerHeight="10dp"
+            android:divider="@android:color/transparent"
             android:id="@+id/mylv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="20dp">
-
+            android:layout_margin="20dp">
         </ListView>
 
     </LinearLayout>

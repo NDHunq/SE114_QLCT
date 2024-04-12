@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class Email_Confirm extends AppCompatActivity {
 Button next;
+ImageButton backemmailconfirm_next;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,10 +26,18 @@ Button next;
             return insets;
         });
         next=findViewById(R.id.next);
+        backemmailconfirm_next=findViewById(R.id.backemailconfirm_next);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent myintent=new Intent(Email_Confirm.this, NewPassword.class);
+                startActivity(myintent);
+            }
+        });
+        backemmailconfirm_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myintent=new Intent(Email_Confirm.this, Setting.class);
                 startActivity(myintent);
             }
         });

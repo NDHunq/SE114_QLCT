@@ -45,12 +45,12 @@ public class categories_Adapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         LayoutInflater inflater=(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view=inflater.inflate(layout,null);
-        ImageView imagecate= view.findViewById(R.id.circle_black);
-        TextView textname= view.findViewById(R.id.category);
-        ImageView imagemore= view.findViewById(R.id.more);
+        ImageView imagecate= (ImageView) view.findViewById(R.id.circle_black);
+        TextView textname= (TextView) view.findViewById(R.id.category);
+        ImageView imagedelete= (ImageView) view.findViewById(R.id.delete);
         cate_item cateItem=listcase.get(i);
         imagecate.setImageResource(cateItem.getImagecate());
-        imagemore.setImageResource(cateItem.getImagemore());
+       imagecate.setImageResource(cateItem.getImagedelete());
         textname.setText(cateItem.getName());
         return  view;
     }

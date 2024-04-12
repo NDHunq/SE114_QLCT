@@ -22,6 +22,7 @@
             >
 
             <ImageButton
+                android:id="@+id/backsetting"
                 android:layout_marginLeft="10dp"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
@@ -90,6 +91,7 @@
                     </TextView>
                 </LinearLayout>
                 <LinearLayout
+                    android:id="@+id/changemail"
                     android:layout_width="100dp"
                     android:layout_height="30dp"
                     android:layout_marginRight="10dp"
@@ -98,7 +100,7 @@
                     android:orientation="horizontal">
 
                     <ImageButton
-                        android:id="@+id/changemail"
+
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_marginLeft="10dp"
@@ -151,6 +153,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/changpass"
                     android:layout_width="100dp"
                     android:layout_height="30dp"
                     android:background="@drawable/background_item"
@@ -158,7 +161,7 @@
                     android:orientation="horizontal">
 
                     <ImageButton
-                        android:id="@+id/changpass"
+
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_marginLeft="10dp"

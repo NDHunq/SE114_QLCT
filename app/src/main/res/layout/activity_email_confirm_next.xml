@@ -21,6 +21,7 @@
         >
 
         <ImageButton
+            android:id="@+id/backemailconfirm_next"
             android:layout_marginLeft="20dp"
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -126,7 +127,7 @@
                 android:textStyle="bold"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
-               android:background="#FFFFFF"
+               android:background="@color/white"
                 >
             </Button>
         </RelativeLayout>
