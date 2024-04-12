@@ -9,6 +9,7 @@
     android:layout_margin="10dp"
     android:layout_width="50dp"
     android:layout_height="50dp"
+    android:background="@drawable/hinhtronden"
  >
 </ImageView>
     <TextView
@@ -17,19 +18,24 @@
         android:text="Clothing"
         android:textSize="20dp"
         android:textColor="@color/black"
-        android:gravity=""
+        android:gravity="center"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:layout_height="match_parent">
+
     </TextView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
     <ImageView
-        android:id="@+id/more"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:background="@drawable/show_more"
+        android:id="@+id/delete"
+      android:layout_marginRight="10dp"
+        android:background="@drawable/delete"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_gravity="center">
-
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true">
     </ImageView>
+    </RelativeLayout>
 </LinearLayout>

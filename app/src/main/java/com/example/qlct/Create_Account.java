@@ -27,7 +27,7 @@ Button nextcreateaccount;
         nextcreateaccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myintent=new Intent(Create_Account.this,Email_Confirm.class);
+                Intent myintent=new Intent(Create_Account.this,email_login.class);
                 startActivity(myintent);
             }
         });
