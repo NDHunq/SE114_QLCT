@@ -2,6 +2,7 @@ package com.example.qlct;
 
 import android.app.Application;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -36,7 +37,6 @@ public class Account_fragment extends Fragment {
             public void onClick(View v) {
                 Intent myintent=new Intent(getActivity(),Notificaiton.class);
                 startActivity(myintent);
-                System.out.println("CCCCCCC");
             }
         });
         mycate.setOnClickListener(new View.OnClickListener() {
