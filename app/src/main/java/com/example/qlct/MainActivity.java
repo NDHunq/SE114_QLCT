@@ -20,7 +20,7 @@ import com.example.qlct.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
     private void updateButtonBackgrounds(int selectedButtonId) {
         // Danh sách các button
-        int[] buttonIds = newgitint[]{R.id.thehome, R.id.theanalysis, R.id.thebudget, R.id.theaccount};
+        int[] buttonIds = new int[]{R.id.thehome, R.id.theanalysis, R.id.thebudget, R.id.theaccount};
 
         // Duyệt qua từng button
         for (int id : buttonIds) {
