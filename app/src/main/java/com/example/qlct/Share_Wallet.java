@@ -10,6 +10,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.qlct.Home.Home_The_Share_Wallet;
+import com.example.qlct.Home.Home_The_Share_Wallet_Apapter;
+
 import java.util.ArrayList;
 
 public class Share_Wallet extends AppCompatActivity {

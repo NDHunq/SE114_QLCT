@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Home_Wallet_Information">
+    tools:context=".Home.Home_Wallet_Information">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_marginTop="12dp"
         android:layout_width="match_parent"
