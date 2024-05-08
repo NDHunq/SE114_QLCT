@@ -94,6 +94,19 @@ public class Home_fragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+
+        TextView showmore = view.findViewById(R.id.show_more);
+        showmore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Tao intent show more
+                Intent ShowMoreIntent = new Intent(getActivity(), TransactionDetail.class);
+
+                // Mo activity transaction details
+                startActivity(ShowMoreIntent);
+            }
+        });
        theGiaoDichAdap= new Home_TheGiaoDich_Adapter(getContext(),R.layout.home_dong_giao_dich,theGiaoDichList);
         listView.setAdapter(theGiaoDichAdap);
         return view;

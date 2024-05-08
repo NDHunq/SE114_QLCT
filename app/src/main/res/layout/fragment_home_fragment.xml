@@ -213,6 +213,7 @@ android:layout_marginTop="12dp"
                     android:layout_height="50dp">
 
                     <TextView
+                        android:id="@+id/show_more"
                         android:layout_gravity="center"
                         android:textAlignment="center"
                         android:layout_width="245dp"
