@@ -76,6 +76,7 @@
                 android:layout_weight="1"/>
 
             <TextView
+                android:id="@+id/trans_detail_date_txtview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="All time"
