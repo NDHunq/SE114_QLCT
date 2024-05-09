@@ -1,11 +1,14 @@
 package com.example.qlct.Home;
 
 public class Home_TheVi {
+
+    public String id;
     private int HinhAnh;
     private String TenVi;
     private String SoTien;
 
-    public Home_TheVi(int hinhAnh, String tenVi, String soTien) {
+    public Home_TheVi(String id, int hinhAnh, String tenVi, String soTien) {
+        this.id = id;
         HinhAnh = hinhAnh;
         TenVi = tenVi;
         SoTien = soTien;

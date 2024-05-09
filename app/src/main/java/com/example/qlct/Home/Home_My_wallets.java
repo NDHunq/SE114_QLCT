@@ -4,7 +4,9 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -19,9 +21,24 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.qlct.API_Entity.CreateWalletEntity;
+import com.example.qlct.API_Entity.GetAllWalletsEntity;
+import com.example.qlct.API_Entity.UpdateWalletEntity;
+import com.example.qlct.API_Utils.WalletAPIUtil;
 import com.example.qlct.R;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONObject;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class Home_My_wallets extends AppCompatActivity {
     int up=0;
@@ -30,27 +47,25 @@ public class Home_My_wallets extends AppCompatActivity {
     ListView listView;
     ArrayList<Home_TheVi>  theViList;
     Home_TheVi theVi;
+
     private  void Anhxa()
     {
-
-        theViList = new ArrayList<>();
-        theViList.add(new Home_TheVi(R.drawable.wallet,"Ví tiền","5000000 đ"));
-        theViList.add(new Home_TheVi(R.drawable.wallet,"Ví tiền","5000000 đ"));
-        theViList.add(new Home_TheVi(R.drawable.wallet,"Ví tiền","5000000 đ"));
-        theViList.add(new Home_TheVi(R.drawable.wallet,"Ví tiền","5000000 đ"));
-        theViList.add(new Home_TheVi(R.drawable.wallet,"Ví tiền","5000000 đ"));
-        theViList.add(new Home_TheVi(R.drawable.wallet,"Ví tiền","5000000 đ"));
-        theViList.add(new Home_TheVi(R.drawable.wallet,"Ví tiền","5000000 đ"));
-        theViList.add(new Home_TheVi(R.drawable.wallet,"Ví tiền","5000000 đ"));
-        theViList.add(new Home_TheVi(R.drawable.wallet,"Ví tiền","5000000 đ"));
-        theViList.add(new Home_TheVi(R.drawable.wallet,"Ví tiền","5000000 đ"));
-        theViList.add(new Home_TheVi(R.drawable.wallet,"Ví tiền","5000000 đ"));
-        theViList.add(new Home_TheVi(R.drawable.wallet,"Ví tiền","5000000 đ"));
-        theViList.add(new Home_TheVi(R.drawable.wallet,"Ví tiền","5000000 đ"));
-        theViList.add(new Home_TheVi(R.drawable.wallet,"Ví tiền","5000000 đ"));
-        theViList.add(new Home_TheVi(R.drawable.wallet,"Ví tiền","5000000 đ"));
-
+        try {
+            theViList = new ArrayList<>();
+            ArrayList<GetAllWalletsEntity> parseAPIList = new WalletAPIUtil().getAllWalletAPI();
+            //Chạy vòng lặp để lấy ra các field cần thiết cho hiển thị ra Views
+            for (GetAllWalletsEntity item : parseAPIList) {
+                theViList.add(new Home_TheVi(item.id, R.drawable.wallet, item.name, item.amount));
+            }
+            Log.d("Get_wallet_data_object", theViList.toString());
+        }
+        catch (Exception e) {
+            //Thông báo lỗi, không thể kết nối đến server, co the hien mot notification ra app
+            e.printStackTrace();
+        }
     }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +81,6 @@ public class Home_My_wallets extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent event;
-
 
                 Intent intent = new Intent(Home_My_wallets.this  , Home_New_wallet.class);
 
