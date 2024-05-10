@@ -24,6 +24,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.bumptech.glide.Glide;
 import com.example.qlct.API_Entity.CreateBudgetEntity;
 import com.example.qlct.API_Entity.GetAllCategoryy;
 import com.example.qlct.API_Utils.BudgetAPIUtil;
@@ -31,8 +32,10 @@ import com.example.qlct.API_Utils.CategoryAPIUntill;
 import com.example.qlct.API_Utils.WalletAPIUtil;
 import com.example.qlct.AddTransaction;
 import com.example.qlct.Category;
+import com.example.qlct.Category2;
 import com.example.qlct.Category_Add;
 import com.example.qlct.Category_adapter;
+import com.example.qlct.Category_adapter2;
 import com.example.qlct.Fragment.MyDialogFragment;
 import com.example.qlct.OnDataPass;
 import com.example.qlct.R;
@@ -58,7 +61,7 @@ public class AddBudget extends AppCompatActivity implements OnDataPass {
     TextView Category;
     TextInputEditText  amount;
     private ListView categoryListView;
-    private List<Category> categoryList;
+    private List<Category2> categoryList;
     ImageView hinhanh;
     private TextView exit_budget;
     ArrayList<GetAllCategoryy> list;
@@ -154,7 +157,7 @@ public class AddBudget extends AppCompatActivity implements OnDataPass {
 
         categoryListView = dialog.findViewById(R.id.select_category_listview);
         AnhXaCategory();
-        Category_adapter categoryAdapter = new Category_adapter(dialog.getContext(), R.layout.category_list_item, categoryList);
+        Category_adapter2 categoryAdapter = new Category_adapter2(dialog.getContext(), R.layout.category_list_item, categoryList);
         categoryListView.setAdapter(categoryAdapter);
 
         TextView addnew = dialog.findViewById(R.id.select_category_addnew_btn);
@@ -168,22 +171,20 @@ public class AddBudget extends AppCompatActivity implements OnDataPass {
         categoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Category clickedCategory = categoryList.get(position);
+                Category2 clickedCategory = categoryList.get(position);
                 Category.setText(clickedCategory.getCategory_name());
-                hinhanh.setImageResource(clickedCategory.getImage());
+                //hinhanh.setImageResource(clickedCategory.getImage());
+                Glide.with(AddBudget.this).load(clickedCategory.getImage()).into(hinhanh);
                 dialog.dismiss();
             }
         });
     }
     private void AnhXaCategory(){
-        categoryList = new ArrayList<com.example.qlct.Category>();
-        categoryList.add(new Category("Food", R.drawable.dish));
-        categoryList.add(new Category("Clothing", R.drawable.clothes));
-        categoryList.add(new Category("Thu nhập", R.drawable.dish));
-        categoryList.add(new Category("Food", R.drawable.dish));
-        categoryList.add(new Category("Food", R.drawable.dish));
-        categoryList.add(new Category("Food", R.drawable.dish));
-        categoryList.add(new Category("Food", R.drawable.dish));
+        categoryList = new ArrayList<>();
+        ArrayList<GetAllCategoryy> list = new CategoryAPIUntill().getAllCategoryys();
+        for (int i = 0; i < list.size(); i++) {
+            categoryList.add(new Category2(list.get(i).getName(), list.get(i).getPicture()));
+        }
     }
     void ShowDialog()
     {

@@ -3,6 +3,8 @@ package com.example.qlct.API_Utils;
 import android.util.Log;
 
 import com.example.qlct.API_Config;
+import com.example.qlct.API_Entity.CreateCategoryEntity;
+import com.example.qlct.API_Entity.CreateWalletEntity;
 import com.example.qlct.API_Entity.GetAllCategoryy;
 import com.example.qlct.API_Entity.GetAllWalletsEntity;
 import com.google.gson.Gson;
@@ -13,8 +15,10 @@ import org.json.JSONObject;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class CategoryAPIUntill {
@@ -48,4 +52,38 @@ public class CategoryAPIUntill {
             return null;
         }
     }
+    public void createCategoryAPI( CreateCategoryEntity createCategoryEntity) {
+        try {
+            OkHttpClient client = new OkHttpClient().newBuilder()
+                    .build();
+
+            MediaType mediaType = MediaType.parse("application/json");
+            RequestBody body = RequestBody.create( new Gson().toJson(createCategoryEntity), mediaType);
+            Request request = new Request.Builder()
+                    .url( SERVER + "/" + API_VERSION + "/category")
+                    .method("POST", body)
+                    .addHeader("Authorization", LOGIN_TOKEN)
+                    .build();
+            Response response = client.newCall(request).execute();
+            String jsonData = response.body().string();
+            Log.d("Create_wallet", jsonData);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void deleteCategory(String categoryId){
+        try {
+            OkHttpClient client = new OkHttpClient().newBuilder()
+                    .build();
+            Request request = new Request.Builder()
+                    .url( SERVER + "/" + API_VERSION + "/category/" + categoryId)
+                    .method("DELETE", null)
+                    .addHeader("Authorization", LOGIN_TOKEN)
+                    .build();
+            Response response = client.newCall(request).execute();
+            String jsonData = response.body().string();
+            Log.d("Delete_wallet", jsonData);
+        }catch (Exception e) {
+            e.printStackTrace();
+        } }
 }

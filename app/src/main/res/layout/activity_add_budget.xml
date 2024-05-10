@@ -65,7 +65,9 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/question_icon">
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/question_icon"
+                    >
 
                 </ImageView>
 
@@ -80,7 +82,7 @@
             android:layout_gravity="center"
             android:layout_marginLeft="15dp"
             android:textStyle="bold"
-            android:text="Thu nhập"
+            android:text="Select category"
             android:textSize="18dp"></TextView>
     </LinearLayout>
 

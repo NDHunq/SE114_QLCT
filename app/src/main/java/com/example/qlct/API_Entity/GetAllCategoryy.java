@@ -22,5 +22,9 @@ public class GetAllCategoryy {
     public String getId() {
         return id;
     }
+
+    public String getPicture() {
+        return picture;
+    }
 }
 
