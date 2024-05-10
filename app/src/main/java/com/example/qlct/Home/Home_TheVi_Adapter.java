@@ -9,8 +9,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.qlct.API_Entity.GetAllWalletsEntity;
 import com.example.qlct.R;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Home_TheVi_Adapter extends BaseAdapter {
@@ -55,6 +57,8 @@ public class Home_TheVi_Adapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, Home_Wallet_Information.class);
+                GetAllWalletsEntity entity = theViList.get(i).getEntity();
+                intent.putExtra("walletEntity", (Serializable) entity);
                 context.startActivity(intent);
             }
         });

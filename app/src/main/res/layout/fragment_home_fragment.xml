@@ -142,12 +142,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="70dp">
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_gravity="center"
-                            android:layout_marginStart="12dp"
-                            android:background="@drawable/hinhtrong"
-                            android:layout_height="50dp"></ImageView>
+
                         <TextView
                             android:layout_width="0dp"
                             android:layout_weight="1"

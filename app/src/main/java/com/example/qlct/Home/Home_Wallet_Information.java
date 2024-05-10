@@ -17,6 +17,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.qlct.API_Entity.GetAllWalletsEntity;
 import com.example.qlct.R;
 import com.example.qlct.Share_Wallet;
 
@@ -25,11 +26,14 @@ import java.util.ArrayList;
 public class Home_Wallet_Information extends AppCompatActivity {
 
     int chon1=0;
+  GetAllWalletsEntity wallet;
+
     int chon2=0;
     int chon1in=0;
     int chon2in=0;
     String currency;
     ListView listView;
+    GetAllWalletsEntity entity = (GetAllWalletsEntity) getIntent().getSerializableExtra("walletEntity");
    ArrayList<Home_The_member> theMemberList;
   Home_The_Member_Adapter theMemberAdap;
     private  void Anhxa()
@@ -53,6 +57,7 @@ public class Home_Wallet_Information extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_home_wallet_information);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -60,21 +65,13 @@ public class Home_Wallet_Information extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        Anhxa();
-        LinearLayout addmember =this.findViewById(R.id.addnewmember);
-        addmember.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent event;
-                event = new Intent(Home_Wallet_Information.this, Share_Wallet.class);
-                startActivity(event);
-            }
-        });
+        TextView name= findViewById(R.id.namewallet);
 
-        listView = this.findViewById(R.id.listviewmember);
-        listView.setVisibility(View.GONE);
-        theMemberAdap = new Home_The_Member_Adapter(this,R.layout.home_dong_member,theMemberList);
-        listView.setAdapter(theMemberAdap);
+
+
+
+
+
         TextView cancel = findViewById(R.id.cancel);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,46 +79,10 @@ public class Home_Wallet_Information extends AppCompatActivity {
                 finish();
             }
         });
-        LinearLayout membercan = findViewById(R.id.membercan);
-membercan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-             showDialog2();
-            }
-        });
-
-        ImageView more = this.findViewById(R.id.more);
-        more.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(listView.getVisibility()==View.GONE)
-                {
-                    View listItem = theMemberAdap.getView(0, null, listView);
-                    listItem.measure(0, 0);
-
-// Get the height of the item
-                    int itemHeight = listItem.getMeasuredHeight();
-                    int height=0;
-                    height+=theMemberList.size()*itemHeight;
-
-                    ListView listViewMember = findViewById(R.id.listviewmember);
-                    ViewGroup.LayoutParams params = listViewMember.getLayoutParams();
-                    params.height = height;
-                    listViewMember.setLayoutParams(params);
-                    listView.setVisibility(View.VISIBLE);
-                    more.setBackgroundResource(R.drawable.up);
 
 
-                }
-                else
-                {
-                    ListView listViewMember = findViewById(R.id.listviewmember);
 
-                    listView.setVisibility(View.GONE);
-                    more.setBackgroundResource(R.drawable.upp);
-                }
-            }
-        });
+
         LinearLayout linearLayout = findViewById(R.id.currency);
         linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -230,41 +191,13 @@ membercan.setOnClickListener(new View.OnClickListener() {
         dialog.getWindow().setGravity(Gravity.BOTTOM);
         LinearLayout bo1 = dialog.findViewById(R.id.bo1);
         LinearLayout bo2 = dialog.findViewById(R.id.bo2);
-        TextView txtmember= this.findViewById(R.id.txtmembercan);
+
         TextView apply = dialog.findViewById(R.id.apply);
         ImageView check1 = dialog.findViewById(R.id.check1);
         ImageView check2 = dialog.findViewById(R.id.check2);
         check1.setVisibility(View.GONE);
         check2.setVisibility(View.GONE);
-        if(txtmember.getText().toString().equals("can view"))
-        {
-            chon1in=0;
-            chon2in=0;
 
-        }
-        else if(txtmember.getText().toString().equals("transaction"))
-        {
-            bo1.setBackgroundResource(R.drawable.nenluachon);
-            check1.setVisibility(View.VISIBLE);
-            chon1in=1;
-            chon2in=0;
-        }
-        else if(txtmember.getText().toString().equals("add member"))
-        {
-            bo2.setBackgroundResource(R.drawable.nenluachon);
-            check2.setVisibility(View.VISIBLE);
-            chon1in=0;
-            chon2in=1;
-        }
-        else if(txtmember.getText().toString().equals("transaction and add member"))
-        {
-            bo1.setBackgroundResource(R.drawable.nenluachon);
-            bo2.setBackgroundResource(R.drawable.nenluachon);
-            check1.setVisibility(View.VISIBLE);
-            check2.setVisibility(View.VISIBLE);
-            chon1in=1;
-            chon2in=1;
-        }
         bo1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -305,23 +238,8 @@ membercan.setOnClickListener(new View.OnClickListener() {
         apply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TextView txt = findViewById(R.id.txtmembercan);
-                if(chon1in==0&&chon2in==0)
-                {
-                    txt.setText("can view");
-                }
-                else if(chon1in==1&&chon2in==0)
-                {
-                    txt.setText("transaction");
-                }
-                else if(chon1in==0&&chon2in==1)
-                {
-                    txt.setText("add member");
-                }
-                else if(chon1in==1&&chon2in==1)
-                {
-                    txt.setText("transaction and add member");
-                }
+
+
                 dialog.dismiss();
             }
         });

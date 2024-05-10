@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -22,15 +24,21 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.qlct.API_Entity.CreateWalletEntity;
+import com.example.qlct.API_Utils.WalletAPIUtil;
 import com.example.qlct.R;
+import com.google.android.material.textfield.TextInputEditText;
 
 
 public class Home_New_wallet extends AppCompatActivity {
 String currency;
+String getcurrency;
+
 int sc=1;
 int sb=1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_new_wallet);
@@ -39,13 +47,19 @@ int sb=1;
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        CardView icon = findViewById(R.id.icon);
-        icon.setOnClickListener(new View.OnClickListener() {
+
+        TextInputEditText ammount = findViewById(R.id.Amount_txtbox);
+        TextInputEditText name =findViewById(R.id.Walletname_txtbox);
+        ImageButton upload = findViewById(R.id.addnewbut);
+        upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDialog2();
+                CreateWalletEntity createWalletEntity = new CreateWalletEntity(name.getText().toString(),Integer.parseInt(ammount.getText().toString()),getcurrency);
+                WalletAPIUtil WalletAPIUtil = new WalletAPIUtil();
+WalletAPIUtil.createWalletAPI(createWalletEntity);
             }
         });
+
         TextView cancel = findViewById(R.id.cancel);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,6 +127,7 @@ int sb=1;
             @Override
             public void onClick(View v) {
                 currency = "$";
+
                 bo1.setBackgroundResource(R.drawable.nenluachon);
                 bo2.setBackgroundResource(0);
                 bo3.setBackgroundResource(0);
@@ -124,6 +139,7 @@ int sb=1;
             @Override
             public void onClick(View v) {
                 currency = "đ";
+
                 bo2.setBackgroundResource(R.drawable.nenluachon);
                 bo1.setBackgroundResource(0);
                 bo3.setBackgroundResource(0);
@@ -135,6 +151,7 @@ int sb=1;
             @Override
             public void onClick(View v) {
                 currency = "€";
+
                 bo3.setBackgroundResource(R.drawable.nenluachon);
                 bo2.setBackgroundResource(0);
                 bo1.setBackgroundResource(0);
@@ -145,6 +162,7 @@ int sb=1;
             @Override
             public void onClick(View v) {
                 currency = "¥";
+
                 bo4.setBackgroundResource(R.drawable.nenluachon);
                 bo2.setBackgroundResource(0);
                 bo3.setBackgroundResource(0);
@@ -161,18 +179,22 @@ int sb=1;
                 if(currency.equals("$"))
                 {
                     txt2.setText("United States Dollar");
+                    getcurrency="USD";
                 }
                 else if(currency.equals("đ"))
                 {
                     txt2.setText("Việt Nam Đồng");
+                    getcurrency="VND";
                 }
                 else if(currency.equals("€"))
                 {
                     txt2.setText("Euro");
+                    getcurrency="EUR";
                 }
                 else if(currency.equals("¥"))
                 {
                     txt2.setText("Yaun Renminbi");
+                    getcurrency="CNY";
                 }
                 dialog.dismiss();
             }
@@ -209,6 +231,7 @@ int sb=1;
 
 
         bo1.setOnClickListener(v -> {
+            sb=1;
             bo1.setBackgroundResource(R.drawable.nenluachon);
             bo2.setBackgroundResource(0);
             bo3.setBackgroundResource(0);
@@ -670,6 +693,11 @@ bo17.setOnClickListener(v -> {
         co1.setBackgroundResource(R.drawable.nenluachon);
         TextView apply = dialog.findViewById(R.id.apply);
         apply.setOnClickListener(v -> {
+            if(sb==1)
+            {
+                ImageView ic = findViewById(R.id.hinhanh);
+                ic.setBackgroundResource(R.drawable.food_cate);
+            }
             if(sc==1)
             {
                 CardView ic = findViewById(R.id.icon);
@@ -700,6 +728,7 @@ bo17.setOnClickListener(v -> {
                 CardView ic = findViewById(R.id.icon);
                 ic.setCardBackgroundColor(Color.parseColor("#890AEC"));
             }
+
             dialog.dismiss();
         });
         TextView upload = dialog.findViewById(R.id.upload);

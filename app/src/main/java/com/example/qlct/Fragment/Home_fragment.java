@@ -63,7 +63,7 @@ public class Home_fragment extends Fragment {
                 theGiaoDichList.add(new Home_TheGiaoDich(R.drawable.wallet,item.category.name, item.amount, item.transaction_date, item.notes, item.wallet.name));
             }
             Log.d("Get_wallet_data_object", theGiaoDichList.toString());
-            theGiaoDichList.add(new Home_TheGiaoDich(R.drawable.wallet,"Ăn uống","5000000 đ","20%","20/10/2021","Ăn uống"));
+
         }
         catch (Exception e) {
             System.out.println("Error: " + e.getMessage());

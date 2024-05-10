@@ -55,7 +55,7 @@ public class Home_My_wallets extends AppCompatActivity {
             ArrayList<GetAllWalletsEntity> parseAPIList = new WalletAPIUtil().getAllWalletAPI();
             //Chạy vòng lặp để lấy ra các field cần thiết cho hiển thị ra Views
             for (GetAllWalletsEntity item : parseAPIList) {
-                theViList.add(new Home_TheVi(item.id, R.drawable.wallet, item.name, item.amount));
+                theViList.add(new Home_TheVi(item.id, R.drawable.wallet, item.name, item.amount,item));
             }
             Log.d("Get_wallet_data_object", theViList.toString());
         }
