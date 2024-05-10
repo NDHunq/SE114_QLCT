@@ -1,16 +1,22 @@
 package com.example.qlct.Budget;
 
 import android.app.Dialog;
+import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,12 +29,17 @@ import com.example.qlct.API_Entity.GetAllCategoryy;
 import com.example.qlct.API_Utils.BudgetAPIUtil;
 import com.example.qlct.API_Utils.CategoryAPIUntill;
 import com.example.qlct.API_Utils.WalletAPIUtil;
+import com.example.qlct.AddTransaction;
+import com.example.qlct.Category;
+import com.example.qlct.Category_Add;
+import com.example.qlct.Category_adapter;
 import com.example.qlct.Fragment.MyDialogFragment;
 import com.example.qlct.OnDataPass;
 import com.example.qlct.R;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AddBudget extends AppCompatActivity implements OnDataPass {
     ImageView date_picker;
@@ -41,13 +52,14 @@ public class AddBudget extends AppCompatActivity implements OnDataPass {
     EditText date;
     String currency;
     ImageButton done;
+    LinearLayout Select_category;
     int sc=1;
     int sb=1;
     TextView Category;
     TextInputEditText  amount;
-    TextInputEditText Date;
-    TextView a;
-
+    private ListView categoryListView;
+    private List<Category> categoryList;
+    ImageView hinhanh;
     private TextView exit_budget;
     ArrayList<GetAllCategoryy> list;
     @Override
@@ -67,14 +79,14 @@ public class AddBudget extends AppCompatActivity implements OnDataPass {
         done=this.findViewById(R.id.done);
         Category=this.findViewById(R.id.Category_txt);
         amount=this.findViewById(R.id.Amount_txtbox);
-        Date=this.findViewById(R.id.date);
-        a=this.findViewById(R.id.a);
+        Select_category=this.findViewById(R.id.Select_category);
+        hinhanh=this.findViewById(R.id.hinhanh);
         GetAllCategory();
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 BudgetAPIUtil budgetAPIUtil = new BudgetAPIUtil();
-                CreateBudgetEntity createBudgetEntity = new CreateBudgetEntity(GetIDCategory(Category.getText().toString()), Double.parseDouble(amount.getText().toString()), Date.getText().toString());
+                CreateBudgetEntity createBudgetEntity = new CreateBudgetEntity(GetIDCategory(Category.getText().toString()), Double.parseDouble(amount.getText().toString()), date.getText().toString());
                 budgetAPIUtil.createBudget(createBudgetEntity);
                 finish();
             }
@@ -104,7 +116,12 @@ public class AddBudget extends AppCompatActivity implements OnDataPass {
                 ShowDialog();
             }
         });
-
+        Select_category.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShowDialogSelectCate();
+            }
+        });
     }
     void GetAllCategory()
     {
@@ -120,6 +137,53 @@ public class AddBudget extends AppCompatActivity implements OnDataPass {
             }
         }
         return "";
+    }
+    void ShowDialogSelectCate()
+    {
+        final Dialog dialog = new Dialog(AddBudget.this);
+
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.bottomsheet_select_category);
+
+        dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimationn;
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_bgh);
+        dialog.show();
+
+        categoryListView = dialog.findViewById(R.id.select_category_listview);
+        AnhXaCategory();
+        Category_adapter categoryAdapter = new Category_adapter(dialog.getContext(), R.layout.category_list_item, categoryList);
+        categoryListView.setAdapter(categoryAdapter);
+
+        TextView addnew = dialog.findViewById(R.id.select_category_addnew_btn);
+        addnew.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent AddCategoryIntent = new Intent(dialog.getContext(), Category_Add.class);
+                startActivity(AddCategoryIntent);
+            }
+        });
+        categoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Category clickedCategory = categoryList.get(position);
+                Category.setText(clickedCategory.getCategory_name());
+                hinhanh.setImageResource(clickedCategory.getImage());
+                dialog.dismiss();
+            }
+        });
+    }
+    private void AnhXaCategory(){
+        categoryList = new ArrayList<com.example.qlct.Category>();
+        categoryList.add(new Category("Food", R.drawable.dish));
+        categoryList.add(new Category("Clothing", R.drawable.clothes));
+        categoryList.add(new Category("Thu nhập", R.drawable.dish));
+        categoryList.add(new Category("Food", R.drawable.dish));
+        categoryList.add(new Category("Food", R.drawable.dish));
+        categoryList.add(new Category("Food", R.drawable.dish));
+        categoryList.add(new Category("Food", R.drawable.dish));
     }
     void ShowDialog()
     {

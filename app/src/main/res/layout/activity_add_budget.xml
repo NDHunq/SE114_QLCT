@@ -38,27 +38,47 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/Select_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="7dp">
-        <TextView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="20dp"
-            android:gravity="center"
-            android:text="?"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            android:background="@drawable/circle_shape"
-            android:textColor="#FEFEFE">
-        </TextView>
+        <androidx.cardview.widget.CardView
+
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+
+            android:layout_gravity="center"
+
+            app:cardCornerRadius="250dp">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/icon"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="250dp">
+
+                <ImageView
+                    android:id="@+id/hinhanh"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/question_icon">
+
+                </ImageView>
+
+            </androidx.cardview.widget.CardView>
+
+        </androidx.cardview.widget.CardView>
 
         <TextView
             android:id="@+id/Category_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="15dp"
             android:textStyle="bold"
             android:text="Thu nhập"
             android:textSize="18dp"></TextView>
@@ -67,41 +87,45 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="0dp"
-            android:layout_weight="9"
+            style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+            android:layout_width="42dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="0dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="9"
             android:hint="Amount"
             app:boxStrokeColor="#1EABED"
-            app:boxStrokeWidth="2dp"
-            style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox">
+            app:boxStrokeWidth="2dp">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/Amount_txtbox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="#1EABED"
                 android:textSize="20dp"
                 android:textStyle="bold"
-                app:hintTextColor="#1EABED"
-                android:textColor="#1EABED">
+                app:hintTextColor="#1EABED">
 
             </com.google.android.material.textfield.TextInputEditText>
         </com.google.android.material.textfield.TextInputLayout>
+
         <TextView
             android:id="@+id/crr"
-            android:layout_width="0dp"
-            android:layout_marginTop="12dp"
+            android:layout_width="7dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="12dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
-            android:textSize="35dp"
-            android:textColor="#1EABED"
+            android:layout_weight="1"
             android:gravity="center"
             android:text="$"
-            android:textStyle="normal"
-            android:layout_gravity="center"
-            android:layout_weight="1"></TextView>
+            android:textColor="#1EABED"
+            android:textSize="35dp"
+            android:textStyle="normal"></TextView>
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
@@ -112,7 +136,7 @@
             android:layout_weight="9"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="0dp"
+            android:layout_marginTop="5dp"
             android:hint="Date"
             app:boxStrokeColor="#1EABED"
             app:boxStrokeWidth="2dp"

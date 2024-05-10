@@ -18,6 +18,7 @@ import com.example.qlct.Home.Home_TheGiaoDich_Adapter;
 import com.example.qlct.Home.Home_Wallet_Information;
 import com.example.qlct.Notification.Notificaiton;
 import com.example.qlct.R;
+import com.example.qlct.TransactionDetail;
 
 import java.util.ArrayList;
 
@@ -99,6 +100,19 @@ public class Home_fragment extends Fragment {
 
                 // Bắt đầu Activity mới
                 startActivity(intent);
+            }
+        });
+
+
+        TextView showmore = view.findViewById(R.id.show_more);
+        showmore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Tao intent show more
+                Intent ShowMoreIntent = new Intent(getActivity(), TransactionDetail.class);
+
+                // Mo activity transaction details
+                startActivity(ShowMoreIntent);
             }
         });
        theGiaoDichAdap= new Home_TheGiaoDich_Adapter(getContext(),R.layout.home_dong_giao_dich,theGiaoDichList);

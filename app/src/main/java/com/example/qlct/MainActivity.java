@@ -25,6 +25,7 @@ import com.example.qlct.Fragment.Analysis_fragment;
 import com.example.qlct.Fragment.Budget_fragment;
 import com.example.qlct.Fragment.Home_fragment;
 import com.example.qlct.databinding.ActivityMainBinding;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -128,5 +129,16 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+
+        FloatingActionButton addtrans = findViewById(R.id.add_transaction_button);
+        addtrans.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent AddTransIntent = new Intent(MainActivity.this, AddTransaction.class);
+                startActivity(AddTransIntent);
+            }
+        });
+
     }
 }
