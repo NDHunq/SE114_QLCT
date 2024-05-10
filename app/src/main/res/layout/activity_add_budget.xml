@@ -54,12 +54,13 @@
         </TextView>
 
         <TextView
+            android:id="@+id/Category_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="20dp"
             android:textStyle="bold"
-            android:text="Clothing"
+            android:text="Thu nhập"
             android:textSize="18dp"></TextView>
     </LinearLayout>
 
@@ -77,6 +78,7 @@
             app:boxStrokeWidth="2dp"
             style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox">
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/Amount_txtbox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20dp"
@@ -140,55 +142,7 @@
             android:layout_marginBottom="15dp"
             android:src="@drawable/blue_calendar"></ImageView>
     </LinearLayout>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Select Wallet"
-        android:textColor="#1EABED"
-        android:textSize="18dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginBottom="10dp"
-        android:textStyle="bold">
-    </TextView>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/grey_background"
-        >
-        <com.google.android.material.imageview.ShapeableImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            app:shapeAppearanceOverlay="@style/circle"
-            android:src="@color/black"
-            android:layout_gravity="center"
-            android:layout_marginLeft="12dp">
 
-        </com.google.android.material.imageview.ShapeableImageView>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Tên ví"
-            android:layout_marginLeft="20dp"
-            android:textSize="18dp"
-            android:textStyle="bold">
-
-        </TextView>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:layout_margin="15dp"
-            android:text="200000000đ  >"
-            android:textColor="#4CAF50"
-            android:textSize="18dp"
-            android:textStyle="bold">
-
-        </TextView>
-    </LinearLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="55dp"
@@ -209,6 +163,7 @@
         </TextView>
 
         <TextView
+            android:id="@+id/a"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -221,11 +176,7 @@
         <Switch
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:thumbTint="#fff"
-            android:trackTint="#2196F3"
-            android:trackTintMode="add"
             >
-
         </Switch>
     </RelativeLayout>
     <RelativeLayout

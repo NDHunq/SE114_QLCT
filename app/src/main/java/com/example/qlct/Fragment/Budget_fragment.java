@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.qlct.Budget.AddBudget;
@@ -32,6 +33,7 @@ public class Budget_fragment extends Fragment {
     private String mParam2;
     private TextView create_bud_butt, running, finish;
     ImageView bell;
+    LinearLayout running_budget;
 
     public Budget_fragment() {
         // Required empty public constructor
@@ -61,6 +63,7 @@ public class Budget_fragment extends Fragment {
         running=view.findViewById(R.id.running);
         finish=view.findViewById(R.id.finish);
         bell = view.findViewById(R.id.bell);
+        running_budget=view.findViewById(R.id.running_budget);
 
         bell.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,6 +92,7 @@ public class Budget_fragment extends Fragment {
                 finish.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#ACACAC")));
                 running.setTextColor(Color.parseColor("#1EABED"));
                 finish.setTextColor(Color.BLACK);
+                running_budget.setVisibility(View.VISIBLE);
 
                 FragmentManager fragmentManager2=getChildFragmentManager();
                 FragmentTransaction transaction2=fragmentManager2.beginTransaction();
@@ -106,6 +110,7 @@ public class Budget_fragment extends Fragment {
                 running.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#ACACAC")));
                 finish.setTextColor(Color.parseColor("#1EABED"));
                 running.setTextColor(Color.BLACK);
+                running_budget.setVisibility(View.GONE);
 
                 FragmentManager fragmentManager3=getChildFragmentManager();
                 FragmentTransaction transaction3=fragmentManager3.beginTransaction();

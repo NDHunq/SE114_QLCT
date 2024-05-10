@@ -2,6 +2,7 @@ package com.example.qlct.Budget;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
@@ -17,9 +18,17 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.qlct.API_Entity.CreateBudgetEntity;
+import com.example.qlct.API_Entity.GetAllCategoryy;
+import com.example.qlct.API_Utils.BudgetAPIUtil;
+import com.example.qlct.API_Utils.CategoryAPIUntill;
+import com.example.qlct.API_Utils.WalletAPIUtil;
 import com.example.qlct.Fragment.MyDialogFragment;
 import com.example.qlct.OnDataPass;
 import com.example.qlct.R;
+import com.google.android.material.textfield.TextInputEditText;
+
+import java.util.ArrayList;
 
 public class AddBudget extends AppCompatActivity implements OnDataPass {
     ImageView date_picker;
@@ -34,8 +43,13 @@ public class AddBudget extends AppCompatActivity implements OnDataPass {
     ImageButton done;
     int sc=1;
     int sb=1;
+    TextView Category;
+    TextInputEditText  amount;
+    TextInputEditText Date;
+    TextView a;
 
     private TextView exit_budget;
+    ArrayList<GetAllCategoryy> list;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,9 +65,17 @@ public class AddBudget extends AppCompatActivity implements OnDataPass {
         date=this.findViewById(R.id.date);
         crr=this.findViewById(R.id.crr);
         done=this.findViewById(R.id.done);
+        Category=this.findViewById(R.id.Category_txt);
+        amount=this.findViewById(R.id.Amount_txtbox);
+        Date=this.findViewById(R.id.date);
+        a=this.findViewById(R.id.a);
+        GetAllCategory();
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                BudgetAPIUtil budgetAPIUtil = new BudgetAPIUtil();
+                CreateBudgetEntity createBudgetEntity = new CreateBudgetEntity(GetIDCategory(Category.getText().toString()), Double.parseDouble(amount.getText().toString()), Date.getText().toString());
+                budgetAPIUtil.createBudget(createBudgetEntity);
                 finish();
             }
         });
@@ -83,6 +105,21 @@ public class AddBudget extends AppCompatActivity implements OnDataPass {
             }
         });
 
+    }
+    void GetAllCategory()
+    {
+        list=new CategoryAPIUntill().getAllCategoryys();
+    }
+    String GetIDCategory(String name)
+    {
+        for(int i=0;i<list.size();i++)
+        {
+            if(list.get(i).getName().equals(name))
+            {
+                return list.get(i).getId();
+            }
+        }
+        return "";
     }
     void ShowDialog()
     {
