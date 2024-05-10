@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BudgetRunningFragment"
+    tools:context=".Budget.BudgetRunningFragment"
     android:background="@drawable/background_item"
     android:backgroundTint="#F2F2F2">
 
@@ -17,6 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="35dp">
             <TextView
+                android:id="@+id/day"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:text="This day"
@@ -27,6 +28,7 @@
                 android:layout_height="match_parent">
             </TextView>
             <TextView
+                android:id="@+id/week"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:text="This week"
@@ -37,6 +39,7 @@
                 android:layout_height="match_parent">
             </TextView>
             <TextView
+                android:id="@+id/month"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:text="This month"
@@ -47,6 +50,7 @@
                 android:layout_height="match_parent">
             </TextView>
             <TextView
+                android:id="@+id/year"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:text="This year"
@@ -57,6 +61,7 @@
                 android:layout_height="match_parent">
             </TextView>
             <TextView
+                android:id="@+id/future"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:text="Future"

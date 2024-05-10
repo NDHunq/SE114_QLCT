@@ -3,6 +3,7 @@
   <component name="deploymentTargetDropDown">
     <value>
       <entry key="app">
+<<<<<<< HEAD
         <State>
           <targetSelectedWithDropDown>
             <Target>
@@ -28,6 +29,9 @@
             </Target>
           </targetsSelectedWithDialog>
         </State>
+=======
+        <State />
+>>>>>>> origin/api-implement
       </entry>
     </value>
   </component>

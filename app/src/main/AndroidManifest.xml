@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -13,39 +15,35 @@
         android:theme="@style/Theme.QLCT"
         tools:targetApi="31">
         <activity
-
-            android:name=".AnalysisDetailExpense"
+            android:name=".Analysis.AnalysisDetailExpense"
             android:exported="false" />
         <activity
-            android:name=".AnalysisDetailIncome"
+            android:name=".Analysis.AnalysisDetailIncome"
             android:exported="false" />
         <activity
-            android:name=".AnalysisDetailNetIncome"
+            android:name=".Analysis.AnalysisDetailNetIncome"
             android:exported="false" />
         <activity
-            android:name=".AddBudget"
+            android:name=".Budget.AddBudget"
             android:exported="false" />
-
         <activity
             android:name=".Category_Add"
             android:exported="false" />
-
         <activity
             android:name=".Share_Wallet"
             android:exported="false"
             android:theme="@style/Theme.QLCT" />
         <activity
-            android:name=".Notificaiton"
+            android:name=".Notification.Notificaiton"
             android:exported="false" />
         <activity
-            android:name=".Home_Wallet_Information"
+            android:name=".Home.Home_Wallet_Information"
             android:exported="false" />
         <activity
-            android:name=".Home_New_wallet"
+            android:name=".Home.Home_New_wallet"
             android:exported="false" />
         <activity
-            android:name=".Home_My_wallets"
-
+            android:name=".Home.Home_My_wallets"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
@@ -61,5 +59,4 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
-
 </manifest>
