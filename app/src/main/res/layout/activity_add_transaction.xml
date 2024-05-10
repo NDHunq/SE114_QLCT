@@ -116,11 +116,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/add_trans_button_layout">
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/Amount_txtbox_layout"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_weight="9"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:hint="Amount"
+            app:prefixText="$"
+            app:prefixTextColor="@color/xanhnen"
+            app:errorEnabled="true"
             app:hintTextColor="@color/xanhnen"
             android:textColor="#5CC2F2"
             android:layout_marginEnd="10dp"
@@ -128,13 +132,14 @@
             app:boxStrokeColor="@color/xanhnen"
             app:boxStrokeWidth="1dp"
             android:textColorHighlight="@color/xanhnen"
-            android:textColorHint="@color/xanhnen">
+            android:textColorHint="@color/black">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/Amount_txtbox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number"
+                android:textColor="@color/xanhnen"
                 />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -164,8 +169,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:weightSum="6">
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/add_trans_calendar_icon"
@@ -173,19 +177,18 @@
             android:layout_height="wrap_content"
             android:src="@drawable/calendar_icon"
             android:layout_gravity="center"
-            android:layout_marginEnd="10dp"
-            android:layout_weight="2"/>
+            android:layout_marginEnd="10dp" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_weight="4"
             android:hint="Selected Date"
             android:textColorHint="@color/black"
             app:boxStrokeColor="@color/black"
-            app:boxStrokeWidth="1dp">
+            app:boxStrokeWidth="1dp"
+            app:endIconMode="clear_text">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/select_date_txtbox"
                 android:layout_width="match_parent"

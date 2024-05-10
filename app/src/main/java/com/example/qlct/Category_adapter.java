@@ -9,6 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.material.card.MaterialCardView;
+
 import org.xmlpull.v1.XmlPullParser;
 
 import java.util.ArrayList;
@@ -49,10 +51,29 @@ public class Category_adapter extends BaseAdapter {
         convertView = inflater.inflate(layout, null);
         ImageView categoryIcon = convertView.findViewById(R.id.category_icon);
         TextView categoryName = convertView.findViewById(R.id.category_txtview);
+        MaterialCardView cardView = convertView.findViewById(R.id.category_icon_cardview);
 
         Category category = categoryList.get(position);
         categoryIcon.setImageResource(category.getImage());
         categoryName.setText(category.getCategory_name());
+        switch (category.getCategory_type()){
+            case 1:
+            {
+                categoryName.setTextColor(context.getResources().getColor(R.color.xanhdam));
+                categoryIcon.setColorFilter(context.getResources().getColor(R.color.xanhdam));
+                cardView.setStrokeColor(context.getResources().getColor(R.color.xanhdam));
+            }break;
+            case 2: {
+                categoryName.setTextColor(context.getResources().getColor(R.color.red));
+                categoryIcon.setColorFilter(context.getResources().getColor(R.color.red));
+                cardView.setStrokeColor(context.getResources().getColor(R.color.red));
+            }break;
+            case 3: {
+                categoryName.setTextColor(context.getResources().getColor(R.color.xanhnen));
+                categoryIcon.setColorFilter(context.getResources().getColor(R.color.xanhnen));
+                cardView.setStrokeColor(context.getResources().getColor(R.color.xanhnen));
+            }break;
+        }
 
         return convertView;
     }

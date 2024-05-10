@@ -1,6 +1,8 @@
 package com.example.qlct;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
@@ -12,11 +14,14 @@ import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -27,8 +32,11 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -38,6 +46,8 @@ public class AddTransaction extends AppCompatActivity {
 
     private ListView categoryListView;
     private List<Category> categoryList;
+
+    private List<Category> renderCategoryList;
 
     private String currency;
 
@@ -63,13 +73,43 @@ public class AddTransaction extends AppCompatActivity {
     }
     private void AnhXaCategory(){
         categoryList = new ArrayList<Category>();
-        categoryList.add(new Category("Food", R.drawable.dish));
-        categoryList.add(new Category("Food", R.drawable.dish));
-        categoryList.add(new Category("Food", R.drawable.dish));
-        categoryList.add(new Category("Food", R.drawable.dish));
-        categoryList.add(new Category("Food", R.drawable.dish));
-        categoryList.add(new Category("Food", R.drawable.dish));
-        categoryList.add(new Category("Food", R.drawable.dish));
+        categoryList.add(new Category("Food", R.drawable.dish, 1));
+        categoryList.add(new Category("Food", R.drawable.dish, 2));
+        categoryList.add(new Category("Food", R.drawable.dish, 3));
+        categoryList.add(new Category("Food", R.drawable.dish, 1));
+        categoryList.add(new Category("Food", R.drawable.dish, 2));
+        categoryList.add(new Category("Food", R.drawable.dish, 3));
+        categoryList.add(new Category("Food", R.drawable.dish, 1));
+    }
+
+    private void RenderCategoryList(){
+        if(!categoryList.isEmpty()){
+            if(income){
+                renderCategoryList = new ArrayList<Category>();
+                for (Category category : categoryList){
+                    if(category.getCategory_type() == 1){
+                        renderCategoryList.add(category);
+                    }
+                }
+            }
+            else if(expense){
+                renderCategoryList = new ArrayList<Category>();
+                for (Category category : categoryList){
+                    if(category.getCategory_type() == 2){
+                        renderCategoryList.add(category);
+                    }
+                }
+            }
+            else if(transfer){
+                renderCategoryList = new ArrayList<Category>();
+                for (Category category : categoryList){
+                    if(category.getCategory_type() == 3){
+                        renderCategoryList.add(category);
+                    }
+                }
+
+            }
+        }
     }
 
     private void AnhXaWallet(){
@@ -99,7 +139,8 @@ public class AddTransaction extends AppCompatActivity {
 
         categoryListView = dialog.findViewById(R.id.select_category_listview);
         AnhXaCategory();
-        Category_adapter categoryAdapter = new Category_adapter(dialog.getContext(), R.layout.category_list_item, categoryList);
+        RenderCategoryList();
+        Category_adapter categoryAdapter = new Category_adapter(dialog.getContext(), R.layout.category_list_item, renderCategoryList);
         categoryListView.setAdapter(categoryAdapter);
 
         TextView addnew = dialog.findViewById(R.id.select_category_addnew_btn);
@@ -214,6 +255,21 @@ public class AddTransaction extends AppCompatActivity {
             public void onClick(View v) {
                 Button btn = findViewById(R.id.add_trans_currency_btn);
                 btn.setText(currency);
+                TextInputLayout amount = findViewById(R.id.Amount_txtbox_layout);
+                switch (currency){
+                    case "USD":
+                        amount.setPrefixText("$");
+                        break;
+                    case "VND":
+                        amount.setPrefixText("₫");
+                        break;
+                    case "EUR":
+                        amount.setPrefixText("€");
+                        break;
+                    case "CNY":
+                        amount.setPrefixText("¥");
+                        break;
+                }
                 dialog.dismiss();
             }
         });
@@ -303,6 +359,7 @@ public class AddTransaction extends AppCompatActivity {
                 setExpenseBackground(expense_btn);
                 setTransferBackground(transfer_btn);
                 setRemind();
+                RenderCategoryList();
             }
         });
 
@@ -316,6 +373,7 @@ public class AddTransaction extends AppCompatActivity {
                 setExpenseBackground(expense_btn);
                 setTransferBackground(transfer_btn);
                 setRemind();
+                RenderCategoryList();
             }
         });
 
@@ -329,6 +387,7 @@ public class AddTransaction extends AppCompatActivity {
                 setExpenseBackground(expense_btn);
                 setTransferBackground(transfer_btn);
                 setRemind();
+                RenderCategoryList();
             }
         });
 
@@ -353,6 +412,55 @@ public class AddTransaction extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 showCurrencyDialog();
+            }
+        });
+
+        ImageView calendarIcon = findViewById(R.id.add_trans_calendar_icon);
+        calendarIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Lấy ngày hiện tại làm ngày mặc định cho DatePickerDialog
+                final Calendar c = Calendar.getInstance();
+                int year = c.get(Calendar.YEAR);
+                int month = c.get(Calendar.MONTH);
+                int day = c.get(Calendar.DAY_OF_MONTH);
+
+                // Tạo và hiển thị DatePickerDialog
+                DatePickerDialog datePickerDialog = new DatePickerDialog(AddTransaction.this,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                // Người dùng đã chọn ngày, cập nhật select_date_txtbox
+                                String selectedDate = dayOfMonth + "/" + (month + 1) + "/" + year;
+                                TextInputEditText dateTextBox = findViewById(R.id.select_date_txtbox);
+                                dateTextBox.setText(selectedDate);
+                            }
+                        }, year, month, day);
+                datePickerDialog.show();
+            }
+        });
+
+        ImageView remindIcon = findViewById(R.id.remind_btn);
+        remindIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Lấy thời gian hiện tại làm thời gian mặc định cho TimePickerDialog
+                final Calendar c = Calendar.getInstance();
+                int hour = c.get(Calendar.HOUR_OF_DAY);
+                int minute = c.get(Calendar.MINUTE);
+
+                // Tạo và hiển thị TimePickerDialog
+                TimePickerDialog timePickerDialog = new TimePickerDialog(AddTransaction.this,
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                // Người dùng đã chọn thời gian, cập nhật select_date_txtbox
+                                String selectedTime = hourOfDay + ":" + minute;
+                                TextView timeTextBox = findViewById(R.id.remind_txt);
+                                timeTextBox.setText(selectedTime);
+                            }
+                        }, hour, minute, true);
+                timePickerDialog.show();
             }
         });
     }

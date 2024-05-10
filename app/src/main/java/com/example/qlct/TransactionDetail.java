@@ -3,6 +3,7 @@ package com.example.qlct;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
+import android.widget.ExpandableListView;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -34,17 +36,24 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
 public class TransactionDetail extends AppCompatActivity {
 
+    private ExpandableListView expandableListView;
+    private List<TransactionDetail_ExpandableListItems> listDataHeader;
+    private HashMap<TransactionDetail_ExpandableListItems, List<TransactionDetail_TheGiaoDich>> listDataChild;
+    private TransactionDetail_ExpandableListView expandableListAdapter;
     private TextView apply;
     private TextView date;
     private TextView day;
@@ -830,6 +839,15 @@ public class TransactionDetail extends AppCompatActivity {
             return insets;
         });
 
+        setupExpandableListView();
+        expandableListView.setGroupIndicator(null);
+        expandableListAdapter = new TransactionDetail_ExpandableListView(TransactionDetail.this, listDataHeader, listDataChild);
+        expandableListView.setAdapter(expandableListAdapter);
+
+        for (int i = 0; i < expandableListAdapter.getGroupCount(); i++) {
+            expandableListView.expandGroup(i);
+        }
+
         dateTxtView = findViewById(R.id.trans_detail_date_txtview);
         ImageButton backbutton = findViewById(R.id.trans_detail_back_btn);
         backbutton.setOnClickListener(new View.OnClickListener() {
@@ -878,6 +896,16 @@ public class TransactionDetail extends AppCompatActivity {
                 showDateDialog();
             }
         });
+
+        FloatingActionButton addTransaction = findViewById(R.id.trans_detail_add_trans);
+        addTransaction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(TransactionDetail.this, AddTransaction.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     public String getStartAndEndOfWeek(String inputDate) {
@@ -940,7 +968,6 @@ public class TransactionDetail extends AppCompatActivity {
             e.printStackTrace();
             return 0;
         }
-
     }
     public boolean isDateLessThanCurrent(String dateString) {
         SimpleDateFormat format = new SimpleDateFormat("M/yyyy");
@@ -984,5 +1011,48 @@ public class TransactionDetail extends AppCompatActivity {
         } else {
             return true;
         }
+    }
+
+    public void setupExpandableListView(){
+        expandableListView = findViewById(R.id.trans_detail_listview);
+        listDataHeader = new ArrayList<>();
+        listDataChild = new HashMap<TransactionDetail_ExpandableListItems, List<TransactionDetail_TheGiaoDich>>();
+        listDataHeader.add(new TransactionDetail_ExpandableListItems(LocalDate.parse("2022-07-02"), "200000d", "200000d"));
+        listDataHeader.add(new TransactionDetail_ExpandableListItems(LocalDate.parse("2022-07-03"), "200000d", "200000d"));
+        listDataHeader.add(new TransactionDetail_ExpandableListItems(LocalDate.parse("2022-07-04"), "200000d", "200000d"));
+        listDataHeader.add(new TransactionDetail_ExpandableListItems(LocalDate.parse("2022-07-05"), "200000d", "200000d"));
+
+        List<TransactionDetail_TheGiaoDich> theGiaoDichList = new ArrayList<>();
+        theGiaoDichList.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", 1),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", 2),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", 1),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", 3),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", 2),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+
+        List<TransactionDetail_TheGiaoDich> theGiaoDichList2 = new ArrayList<>();
+        theGiaoDichList2.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", 3),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList2.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", 1),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList2.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", 2),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList2.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", 1),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList2.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", 2),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+
+        List<TransactionDetail_TheGiaoDich> theGiaoDichList3 = new ArrayList<>();
+        theGiaoDichList3.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", 3),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList3.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", 2),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList3.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", 3),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList3.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", 1),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList3.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", 1),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+
+        List<TransactionDetail_TheGiaoDich> theGiaoDichList4 = new ArrayList<>();
+        theGiaoDichList4.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", 2),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList4.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", 1),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList4.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", 3),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList4.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", 1),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList4.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", 2),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+
+        listDataChild.put(listDataHeader.get(0), theGiaoDichList);
+        listDataChild.put(listDataHeader.get(1), theGiaoDichList2);
+        listDataChild.put(listDataHeader.get(2), theGiaoDichList3);
+        listDataChild.put(listDataHeader.get(3), theGiaoDichList4);
     }
 }
