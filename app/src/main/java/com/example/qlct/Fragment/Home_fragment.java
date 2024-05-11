@@ -3,6 +3,7 @@ package com.example.qlct.Fragment;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -29,6 +30,7 @@ import com.example.qlct.Home_TheTopSpent;
 import com.example.qlct.Home_TheTopSpent_Adapter;
 import com.example.qlct.Notification.Notificaiton;
 import com.example.qlct.R;
+import com.example.qlct.doitiente;
 
 import java.util.ArrayList;
 
@@ -39,6 +41,7 @@ public class Home_fragment extends Fragment {
     Home_TheGiaoDich_Adapter theGiaoDichAdap;
     ArrayList<Home_TheTopSpent> theTopSpentList;
     Home_TheTopSpent_Adapter theTopSpentAdap;
+
 
     private  void Anhxa2()
     {
@@ -60,6 +63,7 @@ public class Home_fragment extends Fragment {
                 {
                     break;
                 }
+
                 theGiaoDichList.add(new Home_TheGiaoDich(R.drawable.wallet,item.category.name, item.amount, item.transaction_date, item.notes, item.wallet.name));
             }
             Log.d("Get_wallet_data_object", theGiaoDichList.toString());
@@ -76,12 +80,36 @@ public class Home_fragment extends Fragment {
 
 
     }
+    double  TongTien=0;
+    doitiente doitien = new doitiente(1/25455,1/27462.13,1/3522.40);
+
+    public  void loadData()
+    {
+
+    }
+    String TenVi ="Total";
+    double ammount = 0;
+    String currency_unit = "đ";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         Anhxa();
         Anhxa2();
+
+        Bundle arguments = getArguments();
+
+        if (arguments != null) {
+             TenVi = arguments.getString("tenvi");
+             ammount = arguments.getDouble("ammount");
+             currency_unit = arguments.getString("currency_unit");
+            // Now you can use "tenvi" and "ammount" in your fragment
+        }
+        else
+        {
+
+
+        }
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home_fragment, container, false);
         listView = view.findViewById(R.id.listView);
@@ -89,6 +117,19 @@ public class Home_fragment extends Fragment {
         ImageView unseen = view.findViewById(R.id.unseen);
         TextView text = view.findViewById(R.id.total_blance);
         ImageView noti = view.findViewById(R.id.noti);
+        TextView textView = view.findViewById(R.id.tenVi);
+        textView.setText(TenVi);
+        if(TenVi.equals("Total"))
+        {
+            textView.setTextColor(Color.parseColor("#1EABED"));
+        }
+        else
+        {
+            textView.setTextColor(Color.GRAY);
+        }
+
+        TextView totalbalance = view.findViewById(R.id.total_blance);
+        totalbalance.setText(String.valueOf(ammount)+ currency_unit);
         noti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,7 +153,7 @@ public class Home_fragment extends Fragment {
                 if(text.getText().equals("**********"))
                 {
                     unseen.setBackgroundResource(R.drawable.eye);
-                    text.setText("1000000 đ");
+                    text.setText(String.valueOf(ammount)+ " đ");
                 }
 
                else
@@ -163,6 +204,9 @@ public class Home_fragment extends Fragment {
 
                 Intent intent = new Intent(getActivity(), Home_My_wallets.class);
 
+                TextView vi = view.findViewById(R.id.tenVi);
+                Log.d("adfdf",vi.getText().toString());
+                intent.putExtra("viduocchon",vi.getText());
                 // Bắt đầu Activity mới
                 startActivity(intent);
             }

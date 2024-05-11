@@ -1,5 +1,6 @@
 package com.example.qlct.Home;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -25,7 +27,9 @@ import com.example.qlct.API_Entity.CreateWalletEntity;
 import com.example.qlct.API_Entity.GetAllWalletsEntity;
 import com.example.qlct.API_Entity.UpdateWalletEntity;
 import com.example.qlct.API_Utils.WalletAPIUtil;
+import com.example.qlct.MainActivity;
 import com.example.qlct.R;
+import com.example.qlct.doitiente;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -47,6 +51,9 @@ public class Home_My_wallets extends AppCompatActivity {
     ListView listView;
     ArrayList<Home_TheVi>  theViList;
     Home_TheVi theVi;
+    String viduocchon;
+    double TongTien=0;
+    doitiente doitien = new doitiente(1/25455,1/27462.13,1/3522.40);
 
     private  void Anhxa()
     {
@@ -55,7 +62,31 @@ public class Home_My_wallets extends AppCompatActivity {
             ArrayList<GetAllWalletsEntity> parseAPIList = new WalletAPIUtil().getAllWalletAPI();
             //Chạy vòng lặp để lấy ra các field cần thiết cho hiển thị ra Views
             for (GetAllWalletsEntity item : parseAPIList) {
-                theViList.add(new Home_TheVi(item.id, R.drawable.wallet, item.name, item.amount,item));
+                String donvi = "";
+                double amount = Double.parseDouble(item.amount);
+                if(item.currency_unit.equals("VND"))
+                {donvi=" ₫";
+                    TongTien += amount;}
+                if(item.currency_unit.equals("USD"))
+                {donvi=" $";
+                    TongTien += amount*doitien.getUSDtoVND();}
+                if(item.currency_unit.equals("EUR"))
+                {donvi=" €";
+                    TongTien += amount*doitien.getUERtoVND();}
+                if(item.currency_unit.equals("CNY"))
+                {donvi=" ¥";
+                    TongTien += amount*doitien.getCNYtoVND();}
+
+                if(item.name.equals(viduocchon) )
+                {
+                    theViList.add(new Home_TheVi(item.id, R.drawable.wallet, item.name, item.amount+donvi,item,1));
+
+                }
+               else
+                {
+                    theViList.add(new Home_TheVi(item.id, R.drawable.wallet, item.name, item.amount+donvi,item,0));
+                }
+
             }
             Log.d("Get_wallet_data_object", theViList.toString());
         }
@@ -68,6 +99,7 @@ public class Home_My_wallets extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_my_wallets);
@@ -76,6 +108,33 @@ public class Home_My_wallets extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        viduocchon= getIntent().getStringExtra("viduocchon");
+        if(viduocchon==null)
+        {
+            viduocchon="Total";
+        }
+        if(viduocchon.equals("Total"))
+        {
+           LinearLayout total_layout = findViewById(R.id.total_layout);
+            total_layout.setBackgroundResource(R.drawable.the12dpvienxanh);
+        }
+
+
+        Anhxa();
+
+        TextView tongtien = findViewById(R.id.tongammount);
+        LinearLayout total =findViewById(R.id.total_layout);
+        total.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.putExtra("tenvi", "Total");
+                intent.putExtra("ammount", TongTien);
+                intent.putExtra("currency_unit", " đ");
+                startActivity(intent);
+            }
+        });
+
         TextView add = findViewById(R.id.addnew);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,13 +144,37 @@ public class Home_My_wallets extends AppCompatActivity {
                 Intent intent = new Intent(Home_My_wallets.this  , Home_New_wallet.class);
 
                 // Bắt đầu Activity mới
-                startActivity(intent);
+                startActivityForResult(intent, 1);
+                Anhxa();
+
             }
         });
        listView = this.<ListView>findViewById(R.id.listView_wallets);
-        Anhxa();
+
+        String strTongTien = String.valueOf(TongTien);
+        tongtien.setText(strTongTien+ " ₫");
+
         Home_TheVi_Adapter theViAdap = new Home_TheVi_Adapter(this,R.layout.home_dong_vi,theViList);
         listView.setAdapter(theViAdap);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Get the clicked item
+                Home_TheVi clickedItem = theViList.get(position);
+
+                // Create an Intent to start MainActivity
+                Intent intent = new Intent(Home_My_wallets.this, MainActivity.class);
+
+
+                // Put the "tenvi" and "ammount" properties of the clicked item as extras into the Intent
+                intent.putExtra("tenvi", clickedItem.item.name);
+                intent.putExtra("ammount",Double.parseDouble(clickedItem.item.amount));
+
+                intent.putExtra("currency_unit", clickedItem.item.currency_unit);
+                // Start MainActivity
+                startActivity(intent);
+            }
+        });
 
         ImageView backArrow = findViewById(R.id.backarrow);
 
@@ -121,7 +204,7 @@ public class Home_My_wallets extends AppCompatActivity {
         dialog.setContentView(R.layout.bottomsheet_sapxepvi);
 
         dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimationn;
         dialog.getWindow().setGravity(Gravity.BOTTOM);
         ImageView upDownImage = this.findViewById(R.id.UP_DOWN);
@@ -267,5 +350,19 @@ public class Home_My_wallets extends AppCompatActivity {
                 }
             }
         });
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Check if the result comes from our request
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+            // Call Anhxa() here
+            Anhxa();
+
+            // Refresh the ListView
+            Home_TheVi_Adapter theViAdap = new Home_TheVi_Adapter(this,R.layout.home_dong_vi,theViList);
+            listView.setAdapter(theViAdap);
+        }
     }
 }

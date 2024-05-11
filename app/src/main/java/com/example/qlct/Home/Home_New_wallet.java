@@ -1,5 +1,6 @@
 package com.example.qlct.Home;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -57,6 +58,9 @@ int sb=1;
                 CreateWalletEntity createWalletEntity = new CreateWalletEntity(name.getText().toString(),Integer.parseInt(ammount.getText().toString()),getcurrency);
                 WalletAPIUtil WalletAPIUtil = new WalletAPIUtil();
 WalletAPIUtil.createWalletAPI(createWalletEntity);
+                setResult(Activity.RESULT_OK);
+                finish();
+
             }
         });
 

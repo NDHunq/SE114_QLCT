@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.qlct.API_Entity.GetAllWalletsEntity;
@@ -33,13 +34,14 @@ public class Home_TheVi_Adapter extends BaseAdapter {
 
     @Override
     public Object getItem(int i) {
-        return null;
+        return theViList.get(i);
     }
 
     @Override
     public long getItemId(int i) {
         return 0;
     }
+
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
@@ -52,13 +54,23 @@ public class Home_TheVi_Adapter extends BaseAdapter {
         imageView.setImageResource(theVi.getHinhAnh());
         ten.setText(theVi.getTenVi());
         sotien.setText(theVi.getSoTien());
+        if(theVi.duocchon==1)
+        {
+            LinearLayout main = (LinearLayout) view.findViewById(R.id.main);
+            main.setBackgroundResource(R.drawable.the12dpvienxanh);
+        }
         ImageView optionsVi = (ImageView) view.findViewById(R.id.optionsVi); // Assuming you have optionsVi ImageView in your item layout
         optionsVi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, Home_Wallet_Information.class);
-                GetAllWalletsEntity entity = theViList.get(i).getEntity();
-                intent.putExtra("walletEntity", (Serializable) entity);
+                Home_TheVi theViItem = theViList.get(i);
+                intent.putExtra("name",theViItem.item.name);
+              intent.putExtra("ammount",theViItem.item.amount);
+                intent.putExtra("currency",theViItem.item.currency_unit);
+
+                intent.putExtra("start",theViItem.item.create_at);
+                intent.putExtra("update",theViItem.item.update_at);
                 context.startActivity(intent);
             }
         });

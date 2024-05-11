@@ -79,6 +79,7 @@ android:layout_marginStart="12dp"
 
     </LinearLayout>
 <LinearLayout
+    android:id="@+id/total_layout"
     android:layout_width="match_parent"
     android:layout_marginTop="10dp"
     android:layout_marginStart="12dp"
@@ -133,6 +134,7 @@ android:layout_marginStart="12dp"
             android:layout_marginStart="12dp"
             android:layout_height="0dp"></TextView>
         <TextView
+            android:id="@+id/tongammount"
             android:layout_width="wrap_content"
 
             android:text="2,000,000 đ"

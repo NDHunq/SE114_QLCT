@@ -33,29 +33,25 @@ public class Home_Wallet_Information extends AppCompatActivity {
     int chon2in=0;
     String currency;
     ListView listView;
-    GetAllWalletsEntity entity = (GetAllWalletsEntity) getIntent().getSerializableExtra("walletEntity");
-   ArrayList<Home_The_member> theMemberList;
+    String exname ;
+    String exammount;
+    String excurrency;
+    String create;
+    String exupdate;
+
+
   Home_The_Member_Adapter theMemberAdap;
-    private  void Anhxa()
-    {
-
-        theMemberList = new ArrayList<>();
-        theMemberList.add(new Home_The_member(R.drawable.wallet,"username1","username1@gmail.com"));
-        theMemberList.add(new Home_The_member(R.drawable.wallet,"username1","username1@gmail.com"));
-        theMemberList.add(new Home_The_member(R.drawable.wallet,"username1","username1@gmail.com"));
-        theMemberList.add(new Home_The_member(R.drawable.wallet,"username1","username1@gmail.com"));
-        theMemberList.add(new Home_The_member(R.drawable.wallet,"username1","username1@gmail.com"));
-        theMemberList.add(new Home_The_member(R.drawable.wallet,"username1","username1@gmail.com"));
-        theMemberList.add(new Home_The_member(R.drawable.wallet,"username1","username1@gmail.com"));
-        theMemberList.add(new Home_The_member(R.drawable.wallet,"username1","username1@gmail.com"));
-        theMemberList.add(new Home_The_member(R.drawable.wallet,"username1","username1@gmail.com"));
-        theMemberList.add(new Home_The_member(R.drawable.wallet,"username1","username1@gmail.com"));
-
-    }
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Intent intent = getIntent();
+       exname= intent.getStringExtra("name");
+         exammount = intent.getStringExtra("ammount");
+            excurrency = intent.getStringExtra("currency");
+            create = intent.getStringExtra("start");
+            exupdate = intent.getStringExtra("update");
+
         super.onCreate(savedInstanceState);
 
         EdgeToEdge.enable(this);
@@ -65,7 +61,22 @@ public class Home_Wallet_Information extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        TextView name= findViewById(R.id.namewallet);
+        TextView nameview= findViewById(R.id.namewallet);
+        nameview.setText(exname);
+        TextView ammountview = findViewById(R.id.ammountinf);
+ammountview.setText(exammount);
+
+        TextView txt1 = findViewById(R.id.txt);
+        txt1.setText(excurrency);
+
+
+
+        TextView startview = findViewById(R.id.start);
+        startview.setText("Start day: "+create);
+        TextView updateview = findViewById(R.id.update);
+        updateview.setText("Last update: "+exupdate);
+
+
 
 
 
@@ -92,6 +103,7 @@ public class Home_Wallet_Information extends AppCompatActivity {
         });
 
 
+
     }
     private  void showDialog()
     {
@@ -108,19 +120,19 @@ public class Home_Wallet_Information extends AppCompatActivity {
         LinearLayout bo3 = dialog.findViewById(R.id.bo3);
         LinearLayout bo4 = dialog.findViewById(R.id.bo4);
         TextView txt1 = findViewById(R.id.txt);
-        if(txt1.getText().toString().equals("$"))
+        if(txt1.getText().toString().equals("USD"))
         {
             bo1.setBackgroundResource(R.drawable.nenluachon);
         }
-        else if(txt1.getText().toString().equals("đ"))
+        else if(txt1.getText().toString().equals("VND"))
         {
             bo2.setBackgroundResource(R.drawable.nenluachon);
         }
-        else if(txt1.getText().toString().equals("€"))
+        else if(txt1.getText().toString().equals("EUR"))
         {
             bo3.setBackgroundResource(R.drawable.nenluachon);
         }
-        else if(txt1.getText().toString().equals("¥"))
+        else if(txt1.getText().toString().equals("CNY"))
         {
             bo4.setBackgroundResource(R.drawable.nenluachon);
         }
@@ -128,7 +140,7 @@ public class Home_Wallet_Information extends AppCompatActivity {
         bo1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               currency = "$";
+               currency = "USD";
                 bo1.setBackgroundResource(R.drawable.nenluachon);
                 bo2.setBackgroundResource(0);
                 bo3.setBackgroundResource(0);
@@ -139,7 +151,7 @@ public class Home_Wallet_Information extends AppCompatActivity {
         bo2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                currency = "đ";
+                currency = "VND";
                 bo2.setBackgroundResource(R.drawable.nenluachon);
                 bo1.setBackgroundResource(0);
                 bo3.setBackgroundResource(0);
@@ -150,7 +162,7 @@ public class Home_Wallet_Information extends AppCompatActivity {
         bo3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                currency = "€";
+                currency = "EUR";
                 bo3.setBackgroundResource(R.drawable.nenluachon);
                 bo2.setBackgroundResource(0);
                 bo1.setBackgroundResource(0);
@@ -160,7 +172,7 @@ public class Home_Wallet_Information extends AppCompatActivity {
         bo4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                currency = "¥";
+                currency = "CNY";
                 bo4.setBackgroundResource(R.drawable.nenluachon);
                 bo2.setBackgroundResource(0);
                 bo3.setBackgroundResource(0);

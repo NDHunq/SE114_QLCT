@@ -5,6 +5,7 @@ package com.example.qlct;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.util.Log;
 import android.view.View;
 
 import android.graphics.Color;
@@ -20,14 +21,21 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.qlct.API_Entity.GetAllWalletsEntity;
+import com.example.qlct.API_Utils.WalletAPIUtil;
 import com.example.qlct.Fragment.Account_fragment;
 import com.example.qlct.Fragment.Analysis_fragment;
 import com.example.qlct.Fragment.Budget_fragment;
 import com.example.qlct.Fragment.Home_fragment;
 import com.example.qlct.databinding.ActivityMainBinding;
 
+import java.util.ArrayList;
+
 
 public class MainActivity extends AppCompatActivity {
+    String tenvi = "Ví chính";
+    double   ammount = 0;
+    String currency_unit = "đ";
     private void updateButtonBackgrounds(int selectedButtonId) {
         // Danh sách các button
         int[] buttonIds = new int[]{R.id.thehome, R.id.theanalysis, R.id.thebudget, R.id.theaccount};
@@ -42,6 +50,40 @@ public class MainActivity extends AppCompatActivity {
                 // Nếu button không được chọn, đặt background là màu trắng
                 button.setBackgroundColor(Color.parseColor("#F7F3F3"));
             }
+        }
+    }
+    double TongTien=0;
+    doitiente doitien = new doitiente(1/25455,1/27462.13,1/3522.40);
+    private void  setBlance()
+    {
+        try {
+
+            ArrayList<GetAllWalletsEntity> parseAPIList = new WalletAPIUtil().getAllWalletAPI();
+            //Chạy vòng lặp để lấy ra các field cần thiết cho hiển thị ra Views
+            for (GetAllWalletsEntity item : parseAPIList) {
+                String donvi = "";
+                double amount = Double.parseDouble(item.amount);
+                if(item.currency_unit.equals("VND"))
+                {donvi=" ₫";
+                    TongTien+= amount;}
+                if(item.currency_unit.equals("USD"))
+                {donvi=" $";
+                    TongTien += amount*doitien.getUSDtoVND();}
+                if(item.currency_unit.equals("EUR"))
+                {donvi=" €";
+                    TongTien += amount*doitien.getUERtoVND();}
+                if(item.currency_unit.equals("CNY"))
+                {donvi=" ¥";
+                    TongTien += amount*doitien.getCNYtoVND();}
+
+
+
+            }
+
+        }
+        catch (Exception e) {
+            //Thông báo lỗi, không thể kết nối đến server, co the hien mot notification ra app
+            e.printStackTrace();
         }
     }
 
@@ -60,6 +102,44 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        setBlance();
+        Bundle bundle = new Bundle();
+
+        tenvi = getIntent().getStringExtra("tenvi");
+        ammount = getIntent().getDoubleExtra("ammount",-1);
+currency_unit = getIntent().getStringExtra("currency_unit");
+
+        if(ammount == -1){
+            bundle.putString("tenvi", "Total");
+            bundle.putDouble("ammount", TongTien);
+            bundle.putString("currency_unit", " đ");
+            Log.d("Truyen du lieu", "loi roi");
+
+        }
+        else
+        {
+            Log.d("Truyen du lieu", String.valueOf(ammount));
+        bundle.putString("tenvi", tenvi);
+        bundle.putDouble("ammount", ammount);
+        if(currency_unit.equals("VND"))
+        {
+            bundle.putString("currency_unit", " ₫");
+        }
+        if(currency_unit.equals("USD"))
+        {
+            bundle.putString("currency_unit", " $");
+        }
+        if(currency_unit.equals("EUR"))
+        {
+            bundle.putString("currency_unit", " €");
+        }
+        if(currency_unit.equals("CNY"))
+        {
+            bundle.putString("currency_unit", " ¥");
+        }
+
+        }
+
 
         ConstraintLayout button = findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
@@ -76,6 +156,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Tạo một instance của HomeFragment
         Home_fragment homeFragment = new Home_fragment();
+        homeFragment.setArguments(bundle);
 
         // Sử dụng FragmentManager và FragmentTransaction để thêm HomeFragment vào FrameLayout container
         getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, homeFragment).commit();
