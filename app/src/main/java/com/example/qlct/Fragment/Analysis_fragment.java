@@ -1,28 +1,42 @@
 package com.example.qlct.Fragment;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.qlct.AddTransaction;
 import com.example.qlct.Analysis.AnalysisExpenseFragment;
 import com.example.qlct.Analysis.AnalysisIcomeFragment;
 import com.example.qlct.Analysis.AnalysisNetIncomeFragment;
+import com.example.qlct.MainActivity;
 import com.example.qlct.Notification.Notificaiton;
 import com.example.qlct.R;
+import com.example.qlct.SelectWallet_Adapter;
+import com.example.qlct.Wallet;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -44,9 +58,15 @@ public class Analysis_fragment extends Fragment {
     ImageView back,next ;
     TextView date;
     ImageView bell;
+    LinearLayout select_wallet;
     final Calendar calendar = Calendar.getInstance();
     final SimpleDateFormat monthFormat = new SimpleDateFormat("MM/yyyy", Locale.getDefault());
     final SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
+    private ListView walletListView;
+
+    private List<Wallet> walletList;
+    TextView wallet_name;
+
 
 
     public Analysis_fragment() {
@@ -117,6 +137,8 @@ public class Analysis_fragment extends Fragment {
         next.setVisibility(View.INVISIBLE);
         date = view.findViewById(R.id.date);
         bell = view.findViewById(R.id.bell);
+        select_wallet = view.findViewById(R.id.select_wallet);
+        wallet_name = view.findViewById(R.id.wallet_name);
 
         bell.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -184,5 +206,47 @@ public class Analysis_fragment extends Fragment {
                 next.setVisibility(View.VISIBLE);
             }
         });
+        select_wallet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showWalletDialog();
+            }
+        });
+    }
+    private void showWalletDialog(){
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.bottomsheet_select_wallet);
+
+        dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimationn;
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_bgh);
+        dialog.show();
+
+        walletListView = dialog.findViewById(R.id.select_wallet_listview);
+        AnhXaWallet();
+        SelectWallet_Adapter adapter = new SelectWallet_Adapter(getActivity(), R.layout.select_wallet_item_list, walletList);
+        walletListView.setAdapter(adapter);
+        walletListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Lấy item được chọn từ walletList
+                wallet_name.setText(walletList.get(position).getWalletName());
+                dialog.dismiss();
+            }
+        });
+    }
+    private void AnhXaWallet(){
+        walletList = new ArrayList<Wallet>();
+        walletList.add(new Wallet("Vi 1", "2000000 d", R.drawable.budget));
+        walletList.add(new Wallet("Vi 2", "2000000 d", R.drawable.budget));
+        walletList.add(new Wallet("Vi 3", "2000000 d", R.drawable.budget));
+        walletList.add(new Wallet("Vi 4", "2000000 d", R.drawable.budget));
+        walletList.add(new Wallet("Vi 5", "2000000 d", R.drawable.budget));
+        walletList.add(new Wallet("Vi 6", "2000000 d", R.drawable.budget));
+        walletList.add(new Wallet("Vi 7", "2000000 d", R.drawable.budget));
+        walletList.add(new Wallet("Vi 8", "2000000 d", R.drawable.budget));
     }
 }

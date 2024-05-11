@@ -168,7 +168,14 @@
             android:layout_marginBottom="15dp"
             android:src="@drawable/blue_calendar"></ImageView>
     </LinearLayout>
-
+    <TextView
+        android:id="@+id/type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:textStyle="bold"
+        android:text="No renew"
+        android:textSize="18dp"></TextView>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="55dp"
@@ -199,11 +206,11 @@
             android:textSize="14dp">
 
         </TextView>
+
         <Switch
+            android:id="@+id/switch1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
-        </Switch>
+            android:layout_height="match_parent"></Switch>
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"

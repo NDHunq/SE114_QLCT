@@ -4,16 +4,14 @@ import android.media.Image;
 
 public class Budget {
     private String category;
-    private String vi;
     private double max_money;
     private double curent_money;
     private String fromDate;
     private String toDate;
     private int Image;
 
-    public Budget(String category, String vi, double max_money, double curent_money, String fromDate, String toDate, int image) {
+    public Budget(String category, double max_money, double curent_money, String fromDate, String toDate, int image) {
         this.category = category;
-        this.vi = vi;
         this.max_money = max_money;
         this.curent_money = curent_money;
         this.fromDate = fromDate;
@@ -27,14 +25,6 @@ public class Budget {
 
     public void setCategory(String category) {
         this.category = category;
-    }
-
-    public String getVi() {
-        return vi;
-    }
-
-    public void setVi(String vi) {
-        this.vi = vi;
     }
 
     public double getMax_money() {
