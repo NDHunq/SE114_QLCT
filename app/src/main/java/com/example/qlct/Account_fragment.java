@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 
@@ -22,6 +23,7 @@ public class Account_fragment extends Fragment {
     LinearLayout mywallet;
     LinearLayout mycate;
     LinearLayout setting;
+    ImageButton editname;
 
 
     @Override
@@ -33,6 +35,7 @@ public class Account_fragment extends Fragment {
         mywallet=view.findViewById(R.id.mywallet);
         mycate=view.findViewById(R.id.mycates);
         setting=view.findViewById(R.id.setting);
+        editname=view.findViewById(R.id.editname);
         mywallet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
