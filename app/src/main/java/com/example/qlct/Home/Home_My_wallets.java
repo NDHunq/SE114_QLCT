@@ -130,7 +130,7 @@ public class Home_My_wallets extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 intent.putExtra("tenvi", "Total");
                 intent.putExtra("ammount", TongTien);
-                intent.putExtra("currency_unit", " đ");
+                intent.putExtra("currency_unit", "VND");
                 startActivity(intent);
             }
         });
