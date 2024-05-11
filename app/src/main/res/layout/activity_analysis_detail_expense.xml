@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".AnalysisDetailExpense">
+    tools:context=".Analysis.AnalysisDetailExpense">
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="All time"
+            android:text="2023"
             android:layout_marginLeft="10dp"
             android:textSize="18dp"
             android:textColor="@color/black">
@@ -67,12 +67,14 @@
 
     </TextView>
 
-    <ImageView
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/piechart"
         android:layout_width="match_parent"
-        android:layout_height="201dp"
-        android:src="@drawable/basic_piechart">
+        android:layout_height="188dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp">
 
-    </ImageView>
+    </com.github.mikephil.charting.charts.PieChart>
     <ListView
         android:id="@+id/listvieww"
         android:layout_width="match_parent"

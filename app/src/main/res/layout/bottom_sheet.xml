@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:src="@drawable/line"
+        android:layout_gravity="center">
+    </ImageView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:layout_marginStart="20dp"
+        android:textColor="@color/black">
+    </TextView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginStart="20dp"
+        android:backgroundTint="#ACACAC"
+        android:layout_marginEnd="20dp">
+
+        <TextView   android:id="@+id/no_renew"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@drawable/background_bo_trai"
+            android:gravity="center"
+            android:text="NO RENEW"
+            android:textStyle="bold"
+            android:textColor="@color/xanhnen"
+
+            android:textSize="18dp"></TextView>
+        <TextView
+            android:id="@+id/renew"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:text="RENEW"
+            android:background="@drawable/background_bo_phai"
+            android:textStyle="bold"
+            android:textSize="18dp"
+            android:textColor="@color/black"
+            android:backgroundTint="#ACACAC"
+            android:gravity="center">
+        </TextView>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/container_renew"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </FrameLayout>
+
+
+</LinearLayout>

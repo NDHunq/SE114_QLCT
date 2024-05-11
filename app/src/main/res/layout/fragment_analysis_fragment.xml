@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Analysis_fragment">
+    tools:context=".Fragment.Analysis_fragment"
+    android:background="@color/white">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
@@ -27,6 +28,7 @@
             </TextView>
 
             <ImageView
+                android:id="@+id/bell"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_marginEnd="15dp"
@@ -41,35 +43,51 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/gred_backgound">
+            android:background="@drawable/grey_background">
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp">
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:src="@drawable/blue_calendar">
+                android:layout_margin="15dp"
+                >
 
-                </ImageView>
-                <TextView
+                <RadioGroup
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="All time"
-                    android:layout_marginLeft="10dp"
-                    android:textSize="18dp"
-                    android:textColor="@color/black">
+                    android:orientation="horizontal"
 
-                </TextView>
+                    >
+                    <RadioButton
+                        android:id="@+id/month"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Month"
+                        android:textSize="16dp"
+                        android:textColor="@color/black"
+                        android:layout_marginLeft="0dp"
+                        android:buttonTint="#5CC2F2">
+
+                    </RadioButton>
+                    <RadioButton
+                        android:id="@+id/year"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Year"
+                        android:textSize="16dp"
+                        android:textColor="@color/black"
+                        android:layout_marginLeft="12dp"
+                        android:buttonTint="#5CC2F2">
+
+                    </RadioButton>
+
+                </RadioGroup>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="12dp"
+                android:layout_marginEnd="13dp"
                 android:layout_alignParentRight="true"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/gred_backgound"
+                android:layout_marginTop="13dp"
+                android:background="@drawable/grey_background"
                 android:backgroundTint="#D9D9D9">
                 <TextView
                     android:layout_width="90dp"
@@ -93,49 +111,42 @@
 
                 </ImageView>
             </LinearLayout>
-            <ImageView
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@drawable/more"
-                android:layout_marginBottom="7dp"
-                android:layout_marginEnd="5dp"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true">
 
-            </ImageView>
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="14dp"
-                android:layout_marginTop="14dp"
-                android:layout_marginStart="14dp"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginStart="15dp"
                 android:layout_alignParentBottom="true"
-                android:background="@drawable/gred_backgound"
-                android:backgroundTint="#5CC2F2">
-                <TextView
-                    android:layout_width="70dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="5dp"
+                android:layout_toLeftOf="@id/more"
+                >
+
+                <ImageView
+                    android:id="@+id/back"
+                    android:layout_width="40dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="All"
-                    android:textColor="@color/white"
-                    android:textSize="18dp"
-
-                    android:layout_marginStart="10dp"
-                    android:gravity="left">
-
-                </TextView>
+                    android:layout_marginStart="0dp"
+                    android:src="@drawable/back">
+                </ImageView>
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="X"
-                    android:textColor="@color/white"
-                    android:textSize="20dp"
-                    android:layout_margin="4dp"
-                    android:gravity="left">
-
+                    android:id="@+id/date"
+                    android:layout_width="80dp"
+                    android:text="03/2024"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"
+                    android:layout_height="match_parent">
                 </TextView>
+                <ImageView
+                    android:id="@+id/next"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/next">
+                </ImageView>
             </LinearLayout>
+
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
@@ -204,7 +215,7 @@
                 <FrameLayout
                     android:id="@+id/ChildFrag1"
                     android:layout_width="match_parent"
-                    android:layout_height="360dp">
+                    android:layout_height="wrap_content">
 
                 </FrameLayout>
                 <RelativeLayout
@@ -215,7 +226,7 @@
                 <FrameLayout
                     android:id="@+id/ChildFrag2"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp">
+                    android:layout_height="wrap_content">
 
                 </FrameLayout>
                 <RelativeLayout
@@ -226,7 +237,7 @@
                 <FrameLayout
                     android:id="@+id/ChildFrag3"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp">
+                    android:layout_height="wrap_content">
                 </FrameLayout>
             </LinearLayout>
         </ScrollView>

@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Budget_fragment">
+    tools:context=".Fragment.Budget_fragment"
+    android:background="@color/white">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
@@ -28,6 +29,7 @@
             </TextView>
 
             <ImageView
+                android:id="@+id/bell"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_marginEnd="15dp"
@@ -52,7 +54,7 @@
             android:layout_height="55dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            android:background="@drawable/gred_backgound"
+            android:background="@drawable/grey_background"
             >
             <com.google.android.material.imageview.ShapeableImageView
                 android:layout_width="40dp"
@@ -127,7 +129,7 @@
             android:layout_weight="9"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            android:background="@drawable/gred_backgound">
+            android:background="@drawable/grey_background">
 
             <FrameLayout
                 android:id="@+id/budget_container"
@@ -151,7 +153,7 @@
                 android:text="Create Budget"
                 android:textColor="@color/white"
                 android:layout_marginTop="4dp"
-                android:background="@drawable/gred_backgound"
+                android:background="@drawable/grey_background"
                 android:backgroundTint="@color/xanhnen"
                 >
 

@@ -1,4 +1,9 @@
 <resources>
+    <!--    Declare api server-->
+    <string name="SERVER">https://expense-management-backend-jslp.onrender.com</string>
+    <string name="API_VERSION">api/v1</string>
+    <string name="TEST_LOGIN_TOKEN">Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk5YTNiOWMxLTQ5YzQtNGM4ZS1hMTIxLWZmNTA0OGQzMTJjZiIsInBob25lX251bWJlciI6Iis4NDkzMzUxNjQzNCIsInBhc3N3b3JkIjoiaGFwaHV0aGluaCIsImlhdCI6MTcxNTIxOTg1OSwiZXhwIjoxNzE1OTM5ODU5fQ.3aYN_VqmLuTartGKvQKZUT-OPCpw6XXVIBa2yiCgx9E</string>
+
     <string name="app_name">QLCT</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
