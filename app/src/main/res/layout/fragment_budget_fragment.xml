@@ -98,14 +98,16 @@
             </TextView>
 
             <TextView
+                android:id="@+id/remaining"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="200,000 đ"
                 android:textColor="@color/xanhdam"
-                android:textSize="18dp"
+                android:textSize="22dp"
                 android:textStyle="bold"></TextView>
 
             <SeekBar
+                android:id="@+id/seekBar"
                 android:layout_width="match_parent"
                 android:layout_height="20dp">
 
@@ -131,12 +133,12 @@
                     </TextView>
 
                     <TextView
-
+                        android:id="@+id/total_spent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="200,000 đ"
                         android:textColor="@color/xanhdam"
-                        android:textSize="16dp"
+                        android:textSize="20dp"
                         android:textStyle="bold"></TextView>
                 </LinearLayout>
 
@@ -156,12 +158,12 @@
                     </TextView>
 
                     <TextView
-
+                        android:id="@+id/total_budget"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="200,000 đ"
                         android:textColor="@color/xanhdam"
-                        android:textSize="16dp"
+                        android:textSize="20dp"
                         android:textStyle="bold"></TextView>
                 </LinearLayout>
             </LinearLayout>

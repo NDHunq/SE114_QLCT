@@ -8,9 +8,9 @@ public class Budget {
     private double curent_money;
     private String fromDate;
     private String toDate;
-    private int Image;
+    private String Image;
 
-    public Budget(String category, double max_money, double curent_money, String fromDate, String toDate, int image) {
+    public Budget(String category, double max_money, double curent_money, String fromDate, String toDate, String image) {
         this.category = category;
         this.max_money = max_money;
         this.curent_money = curent_money;
@@ -71,11 +71,11 @@ public class Budget {
         this.toDate = toDate;
     }
 
-    public int getImage() {
+    public String getImage() {
         return Image;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         Image = image;
     }
 }

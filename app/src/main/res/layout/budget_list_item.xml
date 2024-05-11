@@ -19,7 +19,7 @@
             app:shapeAppearanceOverlay="@style/circle"
             android:src="@color/black"
             android:layout_gravity="center"
-            android:layout_marginLeft="10dp">
+            android:layout_marginLeft="7dp">
 
         </com.google.android.material.imageview.ShapeableImageView>
 
@@ -35,11 +35,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="11dp"
                 android:fontFamily="@font/inter_semibold"
                 android:text="Food"
                 android:textColor="@color/black"
-                android:textSize="18dp">
+                android:textSize="20dp">
 
             </TextView>
         </LinearLayout>
@@ -50,7 +50,7 @@
 
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="7dp"
                 android:layout_alignParentRight="true"
                 android:orientation="vertical">
 
@@ -87,11 +87,12 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp">
         <SeekBar
+            android:id="@+id/seekBar"
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:layout_marginTop="5dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="0dp"
             android:allowClickWhenDisabled="true"
            >
 
@@ -107,8 +108,8 @@
                 android:fontFamily="@font/inter"
                 android:text="Expense"
                 android:textColor="#FF0000"
-                android:layout_marginStart="10dp"
-                android:textSize="13dp">
+                android:layout_marginStart="7dp"
+                android:textSize="14dp">
 
             </TextView>
             <TextView
@@ -119,9 +120,9 @@
                 android:fontFamily="@font/inter"
                 android:text="300000 đ"
                 android:layout_alignParentRight="true"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="7dp"
                 android:textColor="#FF0000"
-                android:textSize="13dp">
+                android:textSize="15dp">
 
             </TextView>
         </RelativeLayout>
@@ -137,8 +138,8 @@
                 android:fontFamily="@font/inter"
                 android:text="Budget"
                 android:textColor="@color/black"
-                android:layout_marginStart="10dp"
-                android:textSize="13dp">
+                android:layout_marginStart="7dp"
+                android:textSize="14dp">
 
             </TextView>
             <TextView
@@ -149,9 +150,9 @@
                 android:fontFamily="@font/inter"
                 android:text="2000000 đ"
                 android:layout_alignParentRight="true"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="7dp"
                 android:textColor="@color/black"
-                android:textSize="13dp">
+                android:textSize="15dp">
 
             </TextView>
         </RelativeLayout>
