@@ -48,6 +48,7 @@ public class Budget_adapter extends BaseAdapter {
         TextView fromday=convertView.findViewById(R.id.fromday);
         TextView today=convertView.findViewById(R.id.today);
         TextView maxmoney=convertView.findViewById(R.id.maxmoney);
+        TextView expense=convertView.findViewById(R.id.expense);
         //gán giá trị
         Budget budget=listBudget.get(position);
         image.setImageResource(budget.getImage());
@@ -55,6 +56,7 @@ public class Budget_adapter extends BaseAdapter {
         fromday.setText(budget.getFromDate());
         today.setText(budget.getToDate());
         maxmoney.setText( String.valueOf(budget.getMax_money()));
+        expense.setText(String.valueOf(budget.getCurent_money()));
 
         return convertView;
     }

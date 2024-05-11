@@ -19,6 +19,18 @@ public class Budget {
         Image = image;
     }
 
+    @Override
+    public String toString() {
+        return "Budget{" +
+                "category='" + category + '\'' +
+                ", max_money=" + max_money +
+                ", curent_money=" + curent_money +
+                ", fromDate='" + fromDate + '\'' +
+                ", toDate='" + toDate + '\'' +
+                ", Image=" + Image +
+                '}';
+    }
+
     public String getCategory() {
         return category;
     }

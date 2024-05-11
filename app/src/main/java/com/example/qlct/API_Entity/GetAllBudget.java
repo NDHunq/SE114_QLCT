@@ -12,14 +12,14 @@ String budget_type;
 String no_renew_date_unit;
 String no_renew_date;
 String renew_date_unit;
-Date custom_renew_date;
+String custom_renew_date;
 Boolean is_active;
 Boolean enable_notification;
 String create_at;
 String user_id;
 GetAllCategoryy category;
 
-    public GetAllBudget(String id, String category_id, String limit_amount, String expensed_amount, String currency_unit, String budget_type, String no_renew_date_unit, String no_renew_date, String renew_date_unit, Date custom_renew_date, Boolean is_active, Boolean enable_notification, String create_at, String user_id, GetAllCategoryy category) {
+        public GetAllBudget(String id, String category_id, String limit_amount, String expensed_amount, String currency_unit, String budget_type, String no_renew_date_unit, String no_renew_date, String renew_date_unit, String custom_renew_date, Boolean is_active, Boolean enable_notification, String create_at, String user_id, GetAllCategoryy category) {
         this.id = id;
         this.category_id = category_id;
         this.limit_amount = limit_amount;
@@ -109,11 +109,11 @@ GetAllCategoryy category;
         this.renew_date_unit = renew_date_unit;
     }
 
-    public Date getCustom_renew_date() {
+    public String getCustom_renew_date() {
         return custom_renew_date;
     }
 
-    public void setCustom_renew_date(Date custom_renew_date) {
+    public void setCustom_renew_date(String custom_renew_date) {
         this.custom_renew_date = custom_renew_date;
     }
 

@@ -72,6 +72,11 @@ public class Budget_fragment extends Fragment {
         running_budget=view.findViewById(R.id.running_budget);
         //CALL API
             allBudgets=new BudgetAPIUtil().getAllBudgets();
+            if(allBudgets==null){
+               Log.d("Budget","null");
+            }
+            else
+                Log.d("Budget",allBudgets.size()+"");
         bell.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

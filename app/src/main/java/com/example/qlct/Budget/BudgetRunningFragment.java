@@ -75,12 +75,12 @@ public class BudgetRunningFragment extends Fragment {
 //        list.add(new Budget("Food",2000000,5000,"21, March 2024","25 March 2024",R.drawable.dish));
 //        list.add(new Budget("Food",2000000,5000,"21, March 2024","25 March 2024",R.drawable.dish));
 //        list.add(new Budget("Food",2000000,5000,"21, March 2024","25 March 2024",R.drawable.dish));
+        String from="";
+        String to="";
         if(allBudgets != null)
             for(int i=0;i<allBudgets.size();i++){
-                String from="";
-                String to="";
-                if(allBudgets.get(i).getBudget_type()=="NO_RENEW") {
-                    if (allBudgets.get(i).getNo_renew_date_unit() == "DAY") {
+                if(allBudgets.get(i).getBudget_type().equals("NO_RENEW")) {
+                    if (allBudgets.get(i).getNo_renew_date_unit().equals("DAY") ) {
                         from = "";
                         to = allBudgets.get(i).getNo_renew_date();
                     }
@@ -93,10 +93,10 @@ public class BudgetRunningFragment extends Fragment {
                     }
                 }
                 else {
-                    if(allBudgets.get(i).getRenew_date_unit()=="Custom")
+                    if(allBudgets.get(i).getRenew_date_unit().equals("Custom"))
                     {
-                        from="From: "+allBudgets.get(i).getCreate_at().substring(0,10);
-                        to="Renew at "+allBudgets.get(i).getCustom_renew_date();
+                        from="Renew at "+"\n"+allBudgets.get(i).getCustom_renew_date().substring(0,10);
+                        to="";
                     }
                     else {
                         from="From: "+allBudgets.get(i).getCreate_at().substring(0,10);
@@ -104,7 +104,8 @@ public class BudgetRunningFragment extends Fragment {
                     }
 
                 }
-                    list.add(new Budget(GetNameCategory(allBudgets.get(i).getCategory_id()),Double.valueOf(allBudgets.get(i).getLimit_amount()) ,Double.valueOf(allBudgets.get(i).getExpensed_amount()) ,from,to,R.drawable.dish));
+                Budget budget = new Budget(GetNameCategory(allBudgets.get(i).getCategory_id()),Double.valueOf(allBudgets.get(i).getLimit_amount()) ,Double.valueOf(allBudgets.get(i).getExpensed_amount()) ,from,to,R.drawable.dish);
+                    list.add(budget);
             }
         else{
             Log.d("BudgetRunningFragment", "allBudgets is null");

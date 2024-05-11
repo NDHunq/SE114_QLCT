@@ -8,7 +8,6 @@ import com.example.qlct.API_Config;
 import com.example.qlct.API_Entity.CreateNoRenewBudgetEntity;
 import com.example.qlct.API_Entity.CreateRenewBudgetEntity;
 import com.example.qlct.API_Entity.GetAllBudget;
-import com.example.qlct.API_Entity.GetAllWalletsEntity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

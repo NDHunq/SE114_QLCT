@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:layout_marginTop="14dp"
+                android:layout_marginTop="12dp"
                 android:fontFamily="@font/inter_semibold"
                 android:text="Food"
                 android:textColor="@color/black"
@@ -62,18 +62,18 @@
                     android:fontFamily="@font/inter"
                     android:text="Today, 21 March 2024"
                     android:textColor="@color/black"
-                    android:textSize="15dp">
+                    android:textSize="14dp">
 
                 </TextView>
                 <TextView
                     android:id="@+id/today"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="left"
+                    android:layout_gravity="right"
                     android:fontFamily="@font/inter"
                     android:text="-Tuesday 26, March 2024"
                     android:textColor="@color/black"
-                    android:textSize="15dp">
+                    android:textSize="14dp">
 
                 </TextView>
             </LinearLayout>
@@ -89,6 +89,7 @@
         <SeekBar
             android:layout_width="match_parent"
             android:layout_height="20dp"
+            android:layout_marginTop="5dp"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
             android:allowClickWhenDisabled="true"
