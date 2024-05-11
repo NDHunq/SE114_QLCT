@@ -32,14 +32,13 @@ ImageButton backsetting;
         backsetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myintent=new Intent(Setting.this,Account_fragment.class);
-                startActivity(myintent);
+               finish();
             }
         });
         changemail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myintent=new Intent(Setting.this, verificaiton.class);
+                Intent myintent=new Intent(Setting.this, verification.class);
                 startActivity(myintent);
             }
         });

@@ -41,6 +41,7 @@
             </TextView>
 
             <Button
+                android:id="@+id/addnew"
                 android:layout_width="90dp"
                 android:layout_height="40dp"
                 android:layout_marginRight="20dp"
@@ -58,6 +59,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
+                android:id="@+id/income"
                 android:layout_width="140dp"
                 android:layout_height="40dp"
                 android:layout_marginLeft="20dp"
@@ -81,6 +83,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/expense"
                 android:layout_width="140dp"
                 android:layout_height="40dp"
                 android:layout_marginLeft="20dp"

@@ -92,6 +92,9 @@
             >
 
             <EditText
+                android:paddingLeft="20dp"
+                android:textSize="40dp"
+                android:id="@+id/enterpass"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -99,6 +102,7 @@
                 >
             </EditText>
             <ImageButton
+                android:id="@+id/showpass"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginRight="20dp"

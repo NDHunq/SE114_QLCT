@@ -1,12 +1,13 @@
 package com.example.qlct;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.Editable;
+import android.os.Bundle;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,29 +15,28 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class email_login extends AppCompatActivity {
-Button next;
+public class verification extends AppCompatActivity {
+Button nextrequired;
     private int lastEditTextIndex = 0;
     // Tạo một mảng chứa tất cả các EditText
     EditText[] editTexts = new EditText[6];
+
+
+    // Tạo một TextWatcher duy nhất
+
+ImageButton backverification;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_email_login);
+        setContentView(R.layout.activity_verificaiton);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        next=findViewById(R.id.next);
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myintent=new Intent(email_login.this,select_currency.class);
-                startActivity(myintent);
-            }
-        });
+        nextrequired=findViewById(R.id.nextrequired);
+        backverification=findViewById(R.id.backverification);
         editTexts[0] = findViewById(R.id.editText1);
         editTexts[1] = findViewById(R.id.editText2);
         editTexts[2] = findViewById(R.id.editText3);
@@ -70,5 +70,20 @@ Button next;
         for (EditText editText : editTexts) {
             editText.addTextChangedListener(textWatcher);
         }
+        nextrequired.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myintent=new Intent(verification.this, New_email.class);
+                startActivity(myintent);
+            }
+        });
+        backverification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myintent = new Intent(verification.this, Setting.class);
+                myintent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(myintent);
+            }
+        });
     }
 }

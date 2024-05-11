@@ -7,9 +7,10 @@
 <ImageView
     android:id="@+id/circle_black"
     android:layout_margin="10dp"
-    android:layout_width="50dp"
-    android:layout_height="50dp"
-    android:background="@drawable/hinhtronden"
+    android:layout_width="40dp"
+    android:layout_height="40dp"
+    android:src="@drawable/hinhtronden"
+    android:scaleType="centerCrop"
  >
 </ImageView>
     <TextView
@@ -32,8 +33,8 @@
         android:id="@+id/delete"
       android:layout_marginRight="10dp"
         android:background="@drawable/delete"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true">
     </ImageView>

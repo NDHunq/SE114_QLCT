@@ -23,6 +23,7 @@ public class Account_fragment extends Fragment {
     LinearLayout mycate;
     LinearLayout setting;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -35,7 +36,7 @@ public class Account_fragment extends Fragment {
         mywallet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myintent=new Intent(getActivity(),Notificaiton.class);
+                Intent myintent=new Intent(getActivity(),Home_My_wallets.class);
                 startActivity(myintent);
             }
         });
@@ -56,9 +57,7 @@ public class Account_fragment extends Fragment {
             }
         });
 
-
-
-        return inflater.inflate(R.layout.fragment_account_fragment, container, false);
+        return view;
     }
 
 

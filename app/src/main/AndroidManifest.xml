@@ -34,7 +34,7 @@
             android:name=".email_confirm_save"
             android:exported="false" />
         <activity
-            android:name=".verificaiton"
+            android:name=".verification"
             android:exported="false" />
         <activity
             android:name=".New_email"

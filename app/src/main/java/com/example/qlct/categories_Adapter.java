@@ -50,8 +50,17 @@ public class categories_Adapter extends BaseAdapter {
         ImageView imagedelete= (ImageView) view.findViewById(R.id.delete);
         cate_item cateItem=listcase.get(i);
         imagecate.setImageResource(cateItem.getImagecate());
-       imagecate.setImageResource(cateItem.getImagedelete());
+        imagedelete.setImageResource(cateItem.getImagedelete());
         textname.setText(cateItem.getName());
+
+        imagedelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listcase.remove(i);
+                notifyDataSetChanged();
+            }
+        });
+
         return  view;
     }
 

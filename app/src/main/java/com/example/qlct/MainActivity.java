@@ -1,23 +1,11 @@
 package com.example.qlct;
 
 
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
-
-import android.graphics.Color;
-
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-
 import android.widget.LinearLayout;
-
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,15 +13,16 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
 import com.example.qlct.databinding.ActivityMainBinding;
 
 
 public class MainActivity extends AppCompatActivity {
     private void updateButtonBackgrounds(int selectedButtonId) {
         // Danh sách các button
-        int[] buttonIds;
 
-        buttonIds = new int[]{R.id.thehome, R.id.theanalysis, R.id.thebudget, R.id.theaccount};
+        int[] buttonIds = new int[]{R.id.thehome, R.id.theanalysis, R.id.thebudget, R.id.theaccount};
+
 
         // Duyệt qua từng button
         for (int id : buttonIds) {

@@ -37,7 +37,7 @@ ImageButton backnewemail;
         backnewemail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myintent=new Intent(New_email.this, verificaiton.class);
+                Intent myintent=new Intent(New_email.this, verification.class);
                 startActivity(myintent);
             }
         });

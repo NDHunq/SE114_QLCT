@@ -3,6 +3,7 @@ package com.example.qlct;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
@@ -19,6 +20,7 @@ public class My_categories extends AppCompatActivity {
     ListView lvcate;
     ArrayList<cate_item> arraycate;
     categories_Adapter adapter;
+    Button addnew;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +33,14 @@ public class My_categories extends AppCompatActivity {
        backmycate.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-               Intent myintent=new Intent(My_categories.this,Account_fragment.class);
+              finish();
+           }
+       });
+       addnew=findViewById(R.id.addnew);
+       addnew.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               Intent myintent=new Intent(My_categories.this,Category_Add.class);
                startActivity(myintent);
            }
        });
@@ -47,4 +56,5 @@ public class My_categories extends AppCompatActivity {
         arraycate.add(new cate_item(R.drawable.circle_black,"Clothing",R.drawable.delete));
 
     }
+
 }
