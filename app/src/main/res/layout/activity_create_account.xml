@@ -21,6 +21,7 @@
             >
 
             <ImageButton
+                android:id="@+id/back"
                 android:layout_marginLeft="20dp"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
@@ -46,7 +47,7 @@
 
             android:textColor="@color/black"
             android:textSize="25dp"
-            android:text="Email">
+            android:text="Phone">
         </TextView>
 
         <LinearLayout
@@ -61,19 +62,14 @@
             >
 
             <EditText
+                android:textSize="40dp"
+                android:paddingLeft="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
                 >
             </EditText>
-            <ImageButton
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginRight="20dp"
-                android:background="@drawable/show">
-
-            </ImageButton>
 
         </LinearLayout>
         <TextView
@@ -98,19 +94,14 @@
             >
 
             <EditText
+                android:textSize="40dp"
+                android:paddingLeft="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
                 >
             </EditText>
-            <ImageButton
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginRight="20dp"
-                android:background="@drawable/show">
-
-            </ImageButton>
         </LinearLayout>
         <TextView
             android:layout_marginTop="10dp"

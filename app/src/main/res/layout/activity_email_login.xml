@@ -21,7 +21,7 @@
             >
 
             <ImageButton
-                android:id="@+id/backemailconfirm_next"
+                android:id="@+id/back"
                 android:layout_marginLeft="20dp"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
@@ -33,7 +33,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Confirm Email"
+                android:text="Confirm Phone"
                 android:textColor="@color/black"
                 android:textSize="30dp">
 

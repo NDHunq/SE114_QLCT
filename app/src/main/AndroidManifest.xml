@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -15,11 +15,16 @@
         android:theme="@style/Theme.QLCT"
         tools:targetApi="31">
         <activity
-            android:name=".email_login"
+            android:name=".forget_setpass"
             android:exported="false" />
-<!--        <activity-->
-<!--            android:name=".Email_confirm_login"-->
-<!--            android:exported="false" />-->
+        <activity
+            android:name=".forget_pass"
+            android:exported="false" />
+        <activity
+            android:name=".email_login"
+            android:exported="false" /> <!-- <activity -->
+        <!-- android:name=".Email_confirm_login" -->
+        <!-- android:exported="false" /> -->
         <activity
             android:name=".select_currency"
             android:exported="false" />
@@ -28,7 +33,13 @@
             android:exported="true" />
         <activity
             android:name=".Login_Signin"
-            android:exported="false" />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".My_categories"
             android:exported="true" />
@@ -52,8 +63,13 @@
             android:exported="false" />
         <activity
             android:name=".Fragment.Account_fragment"
-            android:exported="true">
-        </activity>
+            android:exported="true" />
+        <activity
+            android:name=".TransactionDetail"
+            android:exported="false" />
+        <activity
+            android:name=".AddTransaction"
+            android:exported="false" />
         <activity
             android:name=".Analysis.AnalysisDetailExpense"
             android:exported="false" />
@@ -83,21 +99,23 @@
             android:name=".Home.Home_New_wallet"
             android:exported="false" />
         <activity
-
             android:name=".Home.Home_My_wallets"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:exported="false">
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
+
 </manifest>

@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.example.qlct.API_Entity.GetAllBudget;
+import com.example.qlct.API_Entity.GetAllCategoryy;
+import com.example.qlct.API_Utils.CategoryAPIUntill;
 import com.example.qlct.R;
 
 import java.util.ArrayList;
@@ -31,9 +34,14 @@ public class BudgetFinishFragment extends Fragment {
     private String mParam2;
     ListView listView;
     List<Budget> list;
-
+    ArrayList<GetAllBudget> allBudgets = new ArrayList<>();
+    ArrayList<GetAllCategoryy> listCate;
     public BudgetFinishFragment() {
         // Required empty public constructor
+    }
+
+    public BudgetFinishFragment( ArrayList<GetAllBudget> allBudgets) {
+        this.allBudgets = allBudgets;
     }
 
     /**
@@ -69,6 +77,7 @@ public class BudgetFinishFragment extends Fragment {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_budget_finish, container, false);
         listView=view.findViewById(R.id.listviewFinish);
+        GetAllCategory();
         Anhxa();
         Budget_adapter adapter=new Budget_adapter(getContext(),R.layout.budget_list_item,list);
         listView.setAdapter(adapter);
@@ -77,11 +86,26 @@ public class BudgetFinishFragment extends Fragment {
     void Anhxa()
     {
         list=new ArrayList<>();
-        list.add(new Budget("Food","Vi1",2000000,5000,"21, March 2024","25 March 2024",R.drawable.dish));
-        list.add(new Budget("Food","Vi1",2000000,5000,"21, March 2024","25 March 2024",R.drawable.dish));
-        list.add(new Budget("Food","Vi1",2000000,5000,"21, March 2024","25 March 2024",R.drawable.dish));
-        list.add(new Budget("Food","Vi1",2000000,5000,"21, March 2024","25 March 2024",R.drawable.dish));
-        list.add(new Budget("Food","Vi1",2000000,5000,"21, March 2024","25 March 2024",R.drawable.dish));
+        list.add(new Budget("Food",2000000,5000,"21, March 2024","25 March 2024",R.drawable.dish));
+        list.add(new Budget("Food",2000000,5000,"21, March 2024","25 March 2024",R.drawable.dish));
+        list.add(new Budget("Food",2000000,5000,"21, March 2024","25 March 2024",R.drawable.dish));
+        list.add(new Budget("Food",2000000,5000,"21, March 2024","25 March 2024",R.drawable.dish));
+        list.add(new Budget("Food",2000000,5000,"21, March 2024","25 March 2024",R.drawable.dish));
 
+    }
+    void GetAllCategory()
+    {
+        listCate=new CategoryAPIUntill().getAllCategoryys();
+    }
+    String GetIDCategory(String name)
+    {
+        for(int i=0;i<listCate.size();i++)
+        {
+            if(listCate.get(i).getName().equals(name))
+            {
+                return listCate.get(i).getId();
+            }
+        }
+        return "";
     }
 }

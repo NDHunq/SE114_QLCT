@@ -20,6 +20,7 @@ Button nextcreateaccount;
     EditText repeatpass;
     ImageButton showpass;
     ImageButton showpass1;
+    ImageButton back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +39,7 @@ Button nextcreateaccount;
                 startActivity(myintent);
             }
         });
+        back=findViewById(R.id.back);
         enterpass=findViewById(R.id.enterpass);
         enterpass.setTransformationMethod(new PasswordTransformationMethod());
 
@@ -64,6 +66,12 @@ Button nextcreateaccount;
                 } else {
                     repeatpass.setTransformationMethod(new PasswordTransformationMethod());
                 }
+            }
+        });
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }

@@ -13,17 +13,23 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.qlct.API_Entity.GetAllBudget;
+import com.example.qlct.API_Utils.BudgetAPIUtil;
 import com.example.qlct.Budget.AddBudget;
 import com.example.qlct.Budget.BudgetFinishFragment;
 import com.example.qlct.Budget.BudgetRunningFragment;
 import com.example.qlct.Notification.Notificaiton;
 import com.example.qlct.R;
+
+import java.util.ArrayList;
 
 public class Budget_fragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
@@ -32,6 +38,8 @@ public class Budget_fragment extends Fragment {
     private String mParam2;
     private TextView create_bud_butt, running, finish;
     ImageView bell;
+    LinearLayout running_budget;
+    ArrayList<GetAllBudget> allBudgets = new ArrayList<>();
 
     public Budget_fragment() {
         // Required empty public constructor
@@ -61,7 +69,14 @@ public class Budget_fragment extends Fragment {
         running=view.findViewById(R.id.running);
         finish=view.findViewById(R.id.finish);
         bell = view.findViewById(R.id.bell);
-
+        running_budget=view.findViewById(R.id.running_budget);
+        //CALL API
+            allBudgets=new BudgetAPIUtil().getAllBudgets();
+            if(allBudgets==null){
+               Log.d("Budget","null");
+            }
+            else
+                Log.d("Budget",allBudgets.size()+"");
         bell.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,7 +92,7 @@ public class Budget_fragment extends Fragment {
         });
         FragmentManager fragmentManager=getChildFragmentManager();
         FragmentTransaction transaction=fragmentManager.beginTransaction();
-        Fragment child=new BudgetRunningFragment();
+        Fragment child=new BudgetRunningFragment(allBudgets);
         transaction.replace(R.id.budget_container,child);
         transaction.commit();
         running.setOnClickListener(new View.OnClickListener() {
@@ -89,10 +104,11 @@ public class Budget_fragment extends Fragment {
                 finish.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#ACACAC")));
                 running.setTextColor(Color.parseColor("#1EABED"));
                 finish.setTextColor(Color.BLACK);
+                running_budget.setVisibility(View.VISIBLE);
 
                 FragmentManager fragmentManager2=getChildFragmentManager();
                 FragmentTransaction transaction2=fragmentManager2.beginTransaction();
-                Fragment child1=new BudgetRunningFragment();
+                Fragment child1=new BudgetRunningFragment(allBudgets);
                 transaction2.replace(R.id.budget_container,child1);
                 transaction2.commit();
             }
@@ -106,10 +122,11 @@ public class Budget_fragment extends Fragment {
                 running.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#ACACAC")));
                 finish.setTextColor(Color.parseColor("#1EABED"));
                 running.setTextColor(Color.BLACK);
+                running_budget.setVisibility(View.GONE);
 
                 FragmentManager fragmentManager3=getChildFragmentManager();
                 FragmentTransaction transaction3=fragmentManager3.beginTransaction();
-                Fragment child2=new BudgetFinishFragment();
+                Fragment child2=new BudgetFinishFragment(allBudgets);
                 transaction3.replace(R.id.budget_container,child2);
                 transaction3.commit();
             }
