@@ -17,10 +17,12 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.qlct.API_Entity.Category;
 import com.example.qlct.API_Entity.GetAllTransactionsEntity;
 import com.example.qlct.API_Entity.GetAllWalletsEntity;
 import com.example.qlct.API_Utils.TransactionAPIUtil;
 import com.example.qlct.API_Utils.WalletAPIUtil;
+import com.example.qlct.Category_Add;
 import com.example.qlct.Home.Home_My_wallets;
 import com.example.qlct.Home.Home_New_wallet;
 import com.example.qlct.Home.Home_TheGiaoDich;
@@ -130,6 +132,15 @@ public class Home_fragment extends Fragment {
         {
             textView.setTextColor(Color.GRAY);
         }
+        //add category test
+        TextView category = view.findViewById(R.id.seerp);
+        category.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), Category_Add.class);
+                startActivity(intent);
+            }
+        });
 
         TextView totalbalance = view.findViewById(R.id.total_blance);
         totalbalance.setText(doitien.formatValue(ammount)+ currency_unit);

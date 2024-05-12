@@ -38,6 +38,26 @@ public class doitiente {
         DecimalFormat df = new DecimalFormat("0.###");
         return df.format(value) + units[unitIndex];
     }
+    public Double converttoVND( String currency_unit,Double amount)
+    {
+        if(currency_unit.equals("VND"))
+        {
+            return amount;
+        }
+        if(currency_unit.equals("USD"))
+        {
+            return amount*USDtoVND;
+        }
+        if(currency_unit.equals("EUR"))
+        {
+            return amount*UERtoVND;
+        }
+        if(currency_unit.equals("CNY"))
+        {
+            return amount*CNYtoVND;
+        }
+        return 0.0;
+    }
     public void setUSDtoVND(double USDtoVND) {
         this.USDtoVND = USDtoVND;
     }

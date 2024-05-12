@@ -7,11 +7,14 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -38,6 +41,8 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -61,6 +66,7 @@ public class Home_My_wallets extends AppCompatActivity {
 
     private  void Anhxa()
     {
+
         TongTien=0;
         try {
             theViList = new ArrayList<>();
@@ -81,17 +87,33 @@ public class Home_My_wallets extends AppCompatActivity {
                 if(item.currency_unit.equals("CNY"))
                 {donvi=" ¥";
                     TongTien += amount*doitien.getCNYtoVND();}
+                EditText searchbar = findViewById(R.id.searchbar);
 
-                if(item.name.equals(viduocchon) )
-                {
-                    theViList.add(new Home_TheVi(item.id, R.drawable.wallet, item.name, item.amount+donvi,item,1,viduocchon));
-                    tienduocchon=Double.parseDouble(item.amount);
-                    currencyduocchon=item.currency_unit;
+
+                if(searchbar.getText().toString().equals("")) {
+                    if (item.name.equals(viduocchon)) {
+                        theViList.add(new Home_TheVi(item.id, R.drawable.wallet, item.name, item.amount + donvi, item, 1, viduocchon));
+                        tienduocchon = Double.parseDouble(item.amount);
+                        currencyduocchon = item.currency_unit;
+                    } else {
+                        theViList.add(new Home_TheVi(item.id, R.drawable.wallet, item.name, item.amount + donvi, item, 0, viduocchon));
+                    }
                 }
-               else
-                {
-                    theViList.add(new Home_TheVi(item.id, R.drawable.wallet, item.name, item.amount+donvi,item,0,viduocchon));
+                else {
+
+                    if(item.name.toLowerCase().contains(searchbar.getText().toString())) {
+                        if (item.name.equals(viduocchon)) {
+                            theViList.add(new Home_TheVi(item.id, R.drawable.wallet, item.name, item.amount + donvi, item, 1, viduocchon));
+                            tienduocchon = Double.parseDouble(item.amount);
+                            currencyduocchon = item.currency_unit;
+                        } else {
+                            theViList.add(new Home_TheVi(item.id, R.drawable.wallet, item.name, item.amount + donvi, item, 0, viduocchon));
+                        }
+                    }
+                    else {}
                 }
+
+
 
             }
             Log.d("Get_wallet_data_object", theViList.toString());
@@ -101,7 +123,9 @@ public class Home_My_wallets extends AppCompatActivity {
             e.printStackTrace();
         }
         TextView tongtien = findViewById(R.id.tongammount);
-        tongtien.setText(String.valueOf(TongTien)+ " ₫");
+        tongtien.setText(doitien.formatValue(TongTien)+ " ₫");
+        // Sort theViList by item.name in ascending order
+
     }
 
 
@@ -116,6 +140,8 @@ public class Home_My_wallets extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+         EditText searchbar = findViewById(R.id.searchbar);
+
         viduocchon= getIntent().getStringExtra("viduocchon");
         if(viduocchon==null)
         {
@@ -162,9 +188,8 @@ public class Home_My_wallets extends AppCompatActivity {
         });
        listView = this.<ListView>findViewById(R.id.listView_wallets);
 
-        String strTongTien = String.valueOf(TongTien);
-        tongtien.setText(strTongTien+ " ₫");
 
+        Collections.sort(theViList, nameComparator);
         Home_TheVi_Adapter theViAdap = new Home_TheVi_Adapter(this,R.layout.home_dong_vi,theViList);
         listView.setAdapter(theViAdap);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -186,7 +211,38 @@ public class Home_My_wallets extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+ImageView search = findViewById(R.id.search);
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+            Anhxa();
+                Home_TheVi_Adapter theViAdap = new Home_TheVi_Adapter(Home_My_wallets.this, R.layout.home_dong_vi, theViList);
+                listView.setAdapter(theViAdap);
+
+
+            }
+        });
+        searchbar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Do nothing
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Do nothing
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.toString().equals("")) {
+                    Anhxa();
+                    Home_TheVi_Adapter theViAdap = new Home_TheVi_Adapter(Home_My_wallets.this, R.layout.home_dong_vi, theViList);
+                    listView.setAdapter(theViAdap);
+                }
+            }
+        });
         ImageView backArrow = findViewById(R.id.backarrow);
 
         // Đặt OnClickListener cho backarrow
@@ -220,7 +276,32 @@ public class Home_My_wallets extends AppCompatActivity {
             }
         });
     }
+
     int upin=1;
+    Comparator<Home_TheVi> nameComparator = new Comparator<Home_TheVi>() {
+        @Override
+        public int compare(Home_TheVi o1, Home_TheVi o2) {
+            return o1.item.name.compareTo(o2.item.name);
+        }
+    };
+
+    Comparator<Home_TheVi> totalBalanceComparator = new Comparator<Home_TheVi>() {
+        @Override
+        public int compare(Home_TheVi o1, Home_TheVi o2) {
+            return Double.compare(
+                    doitien.converttoVND(o1.item.currency_unit, Double.parseDouble(o1.item.amount)),
+                    doitien.converttoVND(o2.item.currency_unit, Double.parseDouble(o2.item.amount))
+            );
+        }
+    };
+
+    Comparator<Home_TheVi> recentlyUsedComparator = new Comparator<Home_TheVi>() {
+        @Override
+        public int compare(Home_TheVi o1, Home_TheVi o2) {
+            // Assuming there is a 'lastUsed' field in the 'item' object that stores the last used date as a long
+            return o1.item.currency_unit.compareTo(o2.item.currency_unit);
+        }
+    };
     private  void showDialog()
     {
         upin=up;
@@ -264,7 +345,7 @@ public class Home_My_wallets extends AppCompatActivity {
              namelayout.setBackgroundResource(R.drawable.nenluachon);
 
          }
-         else if(txt2=="Recently Used")
+         else if(txt2=="Currency unit")
          {
              recentlayout.setBackgroundResource(R.drawable.nenluachon);
              namelayout.setBackgroundResource(0);
@@ -297,6 +378,7 @@ public class Home_My_wallets extends AppCompatActivity {
                     upin=0;
 
                 }
+
             }
         });
 
@@ -316,10 +398,7 @@ public class Home_My_wallets extends AppCompatActivity {
 
 
                 }
-                else
-                {
-                    up=0;
-                }
+
 
 
             }
@@ -339,7 +418,7 @@ public class Home_My_wallets extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 TextView textView = findViewById(R.id.sortbutton_text);
-               txt2 = "Recently Used";
+               txt2 = "Currency unit";
 
                 recentlayout.setBackgroundResource(R.drawable.nenluachon);
                 totallayout.setBackgroundResource(0);
@@ -374,8 +453,60 @@ public class Home_My_wallets extends AppCompatActivity {
                 {
                     upDownImage.setBackgroundResource(R.drawable.arrow_down);
                 }
+                if(txt2.equals("Name"))
+                {  Log.d("asdf",String.valueOf(up));
+
+                    if(up==0)
+
+                    {
+                        Collections.sort(theViList, nameComparator);
+                    }
+                    else
+                    {
+
+                        Collections.sort(theViList, Collections.reverseOrder(nameComparator));
+                    }
+
+                    Home_TheVi_Adapter theViAdap = new Home_TheVi_Adapter(Home_My_wallets.this, R.layout.home_dong_vi, theViList);
+                    listView.setAdapter(theViAdap);
+
+
+                }
+                else if(txt2.equals("Currency unit"))
+                {
+                    if(up==0)
+                    {
+                        Collections.sort(theViList, recentlyUsedComparator);
+                    }
+                    else
+                    {
+                        Collections.sort(theViList, Collections.reverseOrder(recentlyUsedComparator));
+                    }
+
+                    Home_TheVi_Adapter theViAdap = new Home_TheVi_Adapter(Home_My_wallets.this, R.layout.home_dong_vi, theViList);
+                    listView.setAdapter(theViAdap);
+
+                }
+
+                else if(txt2.equals("Total Balance"))
+                {
+                    if(up==0)
+                    {
+                        Collections.sort(theViList, totalBalanceComparator);
+                    }
+                    else
+                    {
+                        Collections.sort(theViList, Collections.reverseOrder(totalBalanceComparator));
+                    }
+
+                    Home_TheVi_Adapter theViAdap = new Home_TheVi_Adapter(Home_My_wallets.this, R.layout.home_dong_vi, theViList);
+                    listView.setAdapter(theViAdap);
+
+                }
             }
+
         });
+
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
