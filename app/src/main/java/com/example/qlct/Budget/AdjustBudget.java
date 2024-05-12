@@ -1,19 +1,13 @@
 package com.example.qlct.Budget;
 
 import android.app.Dialog;
-import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.Window;
-import android.widget.AdapterView;
-import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -29,9 +23,6 @@ import com.example.qlct.API_Entity.CreateRenewBudgetEntity;
 import com.example.qlct.API_Entity.GetAllCategoryy;
 import com.example.qlct.API_Utils.BudgetAPIUtil;
 import com.example.qlct.API_Utils.CategoryAPIUntill;
-import com.example.qlct.Category2;
-import com.example.qlct.Category_Add;
-import com.example.qlct.Category_adapter2;
 import com.example.qlct.Fragment.MyDialogFragment;
 import com.example.qlct.OnDataPass;
 import com.example.qlct.R;
@@ -39,71 +30,98 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
-public class AddBudget extends AppCompatActivity implements OnDataPass {
-    ImageView date_picker;
-    TextView apply;
-    Dialog dialog ;
-    TextView renew;
-    TextView noRenew;
-    TextView crr;
-    FrameLayout frameLayout;
-    EditText date;
+public class AdjustBudget extends AppCompatActivity implements OnDataPass {
     String currency;
+    String date_unit;
+    TextView exit_budget;
+    TextView Category_txt;
+    ImageButton xoa;
     ImageButton done;
     LinearLayout Select_category;
-    int sc=1;
-    int sb=1;
-    TextView Category;
-    TextInputEditText  amount;
-    private ListView categoryListView;
-    private List<Category2> categoryList;
-    ImageView hinhanh;
-    private TextView exit_budget;
+    TextView crr;
+    ImageView date_pickerr;
+    TextInputEditText Amount_txtbox;
+    TextInputEditText date;
     TextView type;
-    String date_unit="";
-    ArrayList<GetAllCategoryy> list;
     Switch switch1;
+    Budget budget;
+    ImageView hinhanh;
+    ArrayList<GetAllCategoryy> list;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_budget_add);
+        setContentView(R.layout.activity_budget_adjust);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        date_picker=this.findViewById(R.id.date_pickerr);
-        exit_budget=this.findViewById(R.id.exit_budget);
-        date=this.findViewById(R.id.date);
-        crr=this.findViewById(R.id.crr);
-        done=this.findViewById(R.id.done);
-        Category=this.findViewById(R.id.Category_txt);
-        amount=this.findViewById(R.id.Amount_txtbox);
-        Select_category=this.findViewById(R.id.Select_category);
-        hinhanh=this.findViewById(R.id.hinhanh);
-        type=this.findViewById(R.id.type);
-        switch1 = this.findViewById(R.id.switch1);
+        budget = (Budget) getIntent().getSerializableExtra("budget");
         GetAllCategory();
+        AnhXa();
+        Init();
+    }
+    void Init(){
+        if(budget != null){
+            Category_txt.setText(budget.getCategory());
+            Amount_txtbox.setText(String.valueOf(budget.getMax_money()));
+            type.setText(budget.getType());
+            Glide.with(this)
+                    .load(budget.getImage())
+                    .into(hinhanh);
+        }
+
+    }
+    void AnhXa(){
+        exit_budget = findViewById(R.id.exit_budget);
+        Category_txt = findViewById(R.id.Category_txt);
+        xoa = findViewById(R.id.xoa);
+        done = findViewById(R.id.done);
+        Select_category = findViewById(R.id.Select_category);
+        crr = findViewById(R.id.crr);
+        date_pickerr = findViewById(R.id.date_pickerr);
+        Amount_txtbox = findViewById(R.id.Amount_txtbox);
+        date = findViewById(R.id.date);
+        type = findViewById(R.id.type);
+        switch1 = findViewById(R.id.switch1);
+        hinhanh = findViewById(R.id.hinhanh);
+        exit_budget.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        xoa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 BudgetAPIUtil budgetAPIUtil = new BudgetAPIUtil();
-                Boolean enable_notification= switch1.isChecked();
-                if(type.getText()=="Renew") {
-                    if(String.valueOf(date.getText())=="Daily"||String.valueOf(date.getText())=="Weekly" || String.valueOf(date.getText())=="Monthly" || String.valueOf(date.getText())=="Yearly")
+                if(type.getText().equals("NO_RENEW"))
+                {
+                    CreateNoRenewBudgetEntity createNoRenewBudgetEntity = new CreateNoRenewBudgetEntity(GetIDCategory(Category_txt.getText().toString()), Double.parseDouble(Amount_txtbox.getText().toString()), date_unit.toUpperCase(), date.getText().toString(), switch1.isChecked());
+                    budgetAPIUtil.updateNoRenewBudget(budget.getId(),createNoRenewBudgetEntity);
+                }
+                else
+                {
+                    if((date.getText().equals("Daily")||date.getText().equals("Weekly")||date.getText().equals("Monthly")||date.getText().equals("Yearly")))
                     {
-                        CreateRenewBudgetEntity createRenewBudgetEntity = new CreateRenewBudgetEntity(GetIDCategory(Category.getText().toString()), Double.parseDouble(amount.getText().toString()), date.getText().toString(), enable_notification);
-                        budgetAPIUtil.createRenewBudget(createRenewBudgetEntity);
+                        CreateRenewBudgetEntity createRenewBudgetEntity = new CreateRenewBudgetEntity(GetIDCategory(Category_txt.getText().toString()), Double.parseDouble(Amount_txtbox.getText().toString()), date.getText().toString(), switch1.isChecked());
+                        budgetAPIUtil.updateRenewBudget(budget.getId(),createRenewBudgetEntity);
                     }
                     else
                     {
-                        String realDate=date.getText().toString();;
+                        String realDate=date.getText().toString();
                         SimpleDateFormat originalFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
                         SimpleDateFormat targetFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
                         try {
@@ -112,29 +130,18 @@ public class AddBudget extends AppCompatActivity implements OnDataPass {
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
-
-
-                        CreateRenewBudgetEntity createRenewBudgetEntity = new CreateRenewBudgetEntity(GetIDCategory(Category.getText().toString()), Double.parseDouble(amount.getText().toString()),"Custom", realDate+" 00:00:00", enable_notification);
-                        budgetAPIUtil.createRenewBudget(createRenewBudgetEntity);
+                        CreateRenewBudgetEntity createRenewBudgetEntity = new CreateRenewBudgetEntity(GetIDCategory(Category_txt.getText().toString()), Double.parseDouble(Amount_txtbox.getText().toString()), date_unit, realDate, switch1.isChecked());
+                        budgetAPIUtil.updateRenewBudget(budget.getId(),createRenewBudgetEntity);
                     }
                 }
-                else {
-                    String realDate=date.getText().toString();;
-                    if(date_unit!="Day")
-                    {
-                        realDate=realDate.replace(" - ", " ");
-                    }
-                    SimpleDateFormat originalFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-                    SimpleDateFormat targetFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-                    try {
-                        Date date = originalFormat.parse(realDate);
-                        realDate = targetFormat.format(date);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    CreateNoRenewBudgetEntity createNoRenewBudgetEntity = new CreateNoRenewBudgetEntity(GetIDCategory(Category.getText().toString()), Double.parseDouble(amount.getText().toString()), date_unit.toUpperCase(), realDate, enable_notification);
-                    budgetAPIUtil.createNoRenewBudget(createNoRenewBudgetEntity);
-                }
+                finish();
+            }
+        });
+        xoa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BudgetAPIUtil budgetAPIUtil = new BudgetAPIUtil();
+                budgetAPIUtil.deleteBudget(budget.getId());
                 finish();
             }
         });
@@ -144,29 +151,20 @@ public class AddBudget extends AppCompatActivity implements OnDataPass {
                 showDialog1();
             }
         });
-
-        exit_budget.setOnClickListener(new View.OnClickListener() {
+        date_pickerr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
-            }
-        });
-        date_picker.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ShowDialog();
+                try {
+                    ShowDialog();
+                } catch (Exception e) {
+                    Log.d("aaaaaaaaaaaaaaaaaaaa", e.toString());
+                }
             }
         });
         date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ShowDialog();
-            }
-        });
-        Select_category.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ShowDialogSelectCate();
             }
         });
     }
@@ -185,56 +183,11 @@ public class AddBudget extends AppCompatActivity implements OnDataPass {
         }
         return "";
     }
-    void ShowDialogSelectCate()
-    {
-        final Dialog dialog = new Dialog(AddBudget.this);
-
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.bottomsheet_select_category);
-
-        dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimationn;
-        dialog.getWindow().setGravity(Gravity.BOTTOM);
-                dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_bgh);
-        dialog.show();
-
-        categoryListView = dialog.findViewById(R.id.select_category_listview);
-        AnhXaCategory();
-        Category_adapter2 categoryAdapter = new Category_adapter2(dialog.getContext(), R.layout.category_list_item, categoryList);
-        categoryListView.setAdapter(categoryAdapter);
-
-        TextView addnew = dialog.findViewById(R.id.select_category_addnew_btn);
-        addnew.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent AddCategoryIntent = new Intent(dialog.getContext(), Category_Add.class);
-                startActivity(AddCategoryIntent);
-            }
-        });
-        categoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Category2 clickedCategory = categoryList.get(position);
-                Category.setText(clickedCategory.getCategory_name());
-                //hinhanh.setImageResource(clickedCategory.getImage());
-                Glide.with(AddBudget.this).load(clickedCategory.getImage()).into(hinhanh);
-                dialog.dismiss();
-            }
-        });
-    }
-    private void AnhXaCategory(){
-        categoryList = new ArrayList<>();
-        ArrayList<GetAllCategoryy> list = new CategoryAPIUntill().getAllCategoryys();
-        for (int i = 0; i < list.size(); i++) {
-            categoryList.add(new Category2(list.get(i).getName(), list.get(i).getPicture()));
-        }
-    }
     void ShowDialog()
     {
-           MyDialogFragment dialogFragment;
-           dialogFragment = new MyDialogFragment();
-           dialogFragment.show(getSupportFragmentManager(), "tag");
+        MyDialogFragment dialogFragment;
+        dialogFragment = new MyDialogFragment();
+        dialogFragment.show(getSupportFragmentManager(), "tag");
     }
     private void showDialog1()
     { final Dialog dialog = new Dialog(this);
@@ -320,6 +273,7 @@ public class AddBudget extends AppCompatActivity implements OnDataPass {
             }
         });
     }
+
     public void SetData(String data)
     {
         date.setText(data);
@@ -335,5 +289,4 @@ public class AddBudget extends AppCompatActivity implements OnDataPass {
     public void onDataPass(String data) {
         date.setText(data);
     }
-
 }

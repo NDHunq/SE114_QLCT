@@ -504,7 +504,15 @@ public class BugetNoRenewFragment extends Fragment {
                             grandpa.SetData(date.getText().toString());
 
                     } else {
-                        // Handle the case where the parent activity is not an instance of AddBudget
+
+                        AdjustBudget grandpa = (AdjustBudget) getActivity();
+                        grandpa.SetDateUnit(status);
+                        if(status=="time_span")
+                        {
+                            grandpa.SetData(from.getText().toString()+" - "+to.getText().toString());
+                        }
+                        else
+                            grandpa.SetData(date.getText().toString());
                     }dialogFragment.dismiss();
                 }
             }

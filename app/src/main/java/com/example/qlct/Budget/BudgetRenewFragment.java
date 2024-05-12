@@ -43,6 +43,7 @@ public class BudgetRenewFragment extends Fragment {
     ListView listView;
     TextView apply;
     String date;
+    String status;
 
     public BudgetRenewFragment() {
         // Required empty public constructor
@@ -120,6 +121,15 @@ public class BudgetRenewFragment extends Fragment {
                         AddBudget grandpa = (AddBudget) getActivity();
                         grandpa.SetData(date);
                         grandpa.SetType("Renew");
+                        grandpa.SetDateUnit(status);
+
+                    }
+                    else
+                    {
+                        AdjustBudget grandpa = (AdjustBudget) getActivity();
+                        grandpa.SetData(date);
+                        grandpa.SetType("Renew");
+                        grandpa.SetDateUnit(status);
                     }
                     // Đóng dialog
                     dialogFragment.dismiss();
@@ -130,8 +140,11 @@ public class BudgetRenewFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 date= arrayList.get(position);
-                if(parent.getItemAtPosition(position).toString().equals("Custom"))
+                status=arrayList.get(position);
+                String type=parent.getItemAtPosition(position).toString();
+                if(!(type.equals("Daily")||type.equals("Weekly")||type.equals("Monthly")||type.equals("Yearly")))
                 {
+                    status="Custom";
                     final Calendar c = Calendar.getInstance();
                     int year = c.get(Calendar.YEAR);
                     int month = c.get(Calendar.MONTH);

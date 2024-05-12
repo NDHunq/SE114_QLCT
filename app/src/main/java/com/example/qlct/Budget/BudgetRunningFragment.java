@@ -1,5 +1,6 @@
 package com.example.qlct.Budget;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -75,6 +77,17 @@ public class BudgetRunningFragment extends Fragment {
     {
         Budget_adapter adapter=new Budget_adapter(getContext(),R.layout.budget_list_item,listt);
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getContext(), AdjustBudget.class);
+                Budget budget = listt.get(position);
+                intent.putExtra("budget", budget);
+
+                startActivity(intent);
+
+            }
+        });
     }
     @RequiresApi(api = Build.VERSION_CODES.O)
     boolean CheckThisDayBetween(String from, String to) {
@@ -314,7 +327,16 @@ public class BudgetRunningFragment extends Fragment {
                 else {
                     if(allBudgets.get(i).getRenew_date_unit().equals("Custom"))
                     {
-                        from="Renew at "+"\n"+allBudgets.get(i).getCustom_renew_date().substring(0,10);
+                        String realDate = allBudgets.get(i).getCustom_renew_date().substring(0,10);
+                        SimpleDateFormat targetFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+                        SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                        try {
+                            Date date = originalFormat.parse(realDate);
+                            realDate = targetFormat.format(date);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        from="Renew at "+"\n"+realDate;
                         to="";
                     }
                     else {
@@ -323,7 +345,7 @@ public class BudgetRunningFragment extends Fragment {
                     }
 
                 }
-                Budget budget = new Budget(GetNameCategory(allBudgets.get(i).getCategory_id()),Double.valueOf(allBudgets.get(i).getLimit_amount()) ,Double.valueOf(allBudgets.get(i).getExpensed_amount()) ,from,to,allBudgets.get(i).getCategory().getPicture(),allBudgets.get(i).getBudget_type());
+                Budget budget = new Budget(GetNameCategory(allBudgets.get(i).getCategory_id()),Double.valueOf(allBudgets.get(i).getLimit_amount()) ,Double.valueOf(allBudgets.get(i).getExpensed_amount()) ,from,to,allBudgets.get(i).getCategory().getPicture(),allBudgets.get(i).getBudget_type(),allBudgets.get(i).getId());
                     list.add(budget);
             }
         else{
