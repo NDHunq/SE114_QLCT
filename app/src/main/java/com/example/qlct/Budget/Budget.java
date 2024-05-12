@@ -9,14 +9,24 @@ public class Budget {
     private String fromDate;
     private String toDate;
     private String Image;
+    String type;
 
-    public Budget(String category, double max_money, double curent_money, String fromDate, String toDate, String image) {
+    public Budget(String category, double max_money, double curent_money, String fromDate, String toDate, String image, String type) {
         this.category = category;
         this.max_money = max_money;
         this.curent_money = curent_money;
         this.fromDate = fromDate;
         this.toDate = toDate;
         Image = image;
+        this.type = type;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     @Override

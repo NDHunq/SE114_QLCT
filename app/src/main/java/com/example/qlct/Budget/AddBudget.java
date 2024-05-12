@@ -188,7 +188,7 @@ public class AddBudget extends AppCompatActivity implements OnDataPass {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimationn;
         dialog.getWindow().setGravity(Gravity.BOTTOM);
-        dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_bgh);
+                dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_bgh);
         dialog.show();
 
         categoryListView = dialog.findViewById(R.id.select_category_listview);

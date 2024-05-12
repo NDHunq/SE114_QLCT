@@ -735,19 +735,16 @@ public class BugetNoRenewFragment extends Fragment {
 
         return day + "-" + month + "-" + yearr;
     }
-    public String getFirstDayOfMonth(int month, int year) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR, year);
-        calendar.set(Calendar.MONTH, month - 1); // In Java Calendar, month starts from 0
-        calendar.set(Calendar.DAY_OF_MONTH, 1); // Set day to the first day of the month
+public String getFirstDayOfMonth(int month, int year) {
+    Calendar calendar = Calendar.getInstance();
+    calendar.set(Calendar.YEAR, year);
+    calendar.set(Calendar.MONTH, month - 1); // In Java Calendar, month starts from 0
+    calendar.set(Calendar.DAY_OF_MONTH, 1); // Set day to the first day of the month
 
-        // Now, calendar's time is set to the first day of the input month and year
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        int monthh = calendar.get(Calendar.MONTH) + 1; // Add 1 because month starts from 0
-        int yearr = calendar.get(Calendar.YEAR);
-
-        return day + "-" + monthh + "-" + yearr;
-    }
+    // Now, calendar's time is set to the first day of the input month and year
+    SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+    return format.format(calendar.getTime());
+}
     public String getLastDayOfMonth(int month, int year) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, year);
@@ -755,11 +752,8 @@ public class BugetNoRenewFragment extends Fragment {
         calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH)); // Set day to the last day of the month
 
         // Now, calendar's time is set to the last day of the input month and year
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        int monthh = calendar.get(Calendar.MONTH) + 1; // Add 1 because month starts from 0
-        int yearr = calendar.get(Calendar.YEAR);
-
-        return day + "-" + monthh + "-" + yearr;
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        return format.format(calendar.getTime());
     }
     public String getStartAndEndOfWeek(String inputDate) {
         String result = "";
