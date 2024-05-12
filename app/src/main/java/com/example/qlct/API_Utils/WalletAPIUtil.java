@@ -59,6 +59,42 @@ public class WalletAPIUtil extends AppCompatActivity {
             return null;
         }
     }
+    public int doesWalletExist(String walletname)
+    {
+        int doesExist = 0;
+        try {
+            OkHttpClient client = new OkHttpClient().newBuilder()
+                    .build();
+            Log.d("url", SERVER + "/" + API_VERSION + "/wallet/list");
+            Request request = new Request.Builder()
+                    .url( SERVER + "/" + API_VERSION + "/wallet/list")
+                    .method("GET", null)
+                    .addHeader("Authorization", LOGIN_TOKEN)
+                    .build();
+            Response response = client.newCall(request).execute();
+            String jsonData = response.body().string();
+            Log.d("Get_wallet", jsonData);
+            JSONObject json = new JSONObject(jsonData);
+
+            //Maping json to entity
+            Type listType = new TypeToken<ArrayList<GetAllWalletsEntity>>(){}.getType();
+            ArrayList<GetAllWalletsEntity> parseAPIList = new Gson().fromJson(json.getJSONObject("data").getJSONArray("rows").toString(), listType);
+            for (GetAllWalletsEntity wallet : parseAPIList) {
+                if (wallet.name.equals(walletname)) {
+                    doesExist = 1;
+                    break;
+                }
+            }
+        }
+        catch(Exception e) {
+            //Thông báo lỗi, không thể kết nối đến server, co the hien mot notification ra app
+            e.printStackTrace();
+
+
+        }
+        return doesExist;
+    }
+
     // Hàm gọi API:
     //walletId: id của wallet cần update
     public void updateWalletAPI(String walletId, UpdateWalletEntity updateWalletEntity) {

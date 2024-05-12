@@ -150,7 +150,7 @@
                             android:layout_gravity="center"
                             android:text="Vi 1"
                             android:textColor="@color/black"
-                            android:textSize="30dp"
+                            android:textSize="28dp"
                             android:textStyle="bold"
                             android:layout_marginStart="12dp"
                             android:layout_height="wrap_content"></TextView>

@@ -10,6 +10,7 @@ public class Home_TheVi {
     private String SoTien;
     GetAllWalletsEntity item;
     public int duocchon=0;
+    public String viduocchon;
     public Home_TheVi(String id, int hinhAnh, String tenVi, String soTien) {
         this.id = id;
         HinhAnh = hinhAnh;
@@ -17,13 +18,14 @@ public class Home_TheVi {
         SoTien = soTien;
     }
 
-    public Home_TheVi(String id, int hinhAnh, String tenVi, String soTien, GetAllWalletsEntity item,int duocchon) {
+    public Home_TheVi(String id, int hinhAnh, String tenVi, String soTien, GetAllWalletsEntity item,int duocchon,String viduocchon) {
         this.id = id;
         HinhAnh = hinhAnh;
         TenVi = tenVi;
         SoTien = soTien;
         this.item = item;
         this.duocchon=duocchon;
+        this.viduocchon=viduocchon;
     }
 
     public String getId() {

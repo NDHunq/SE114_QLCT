@@ -1,5 +1,8 @@
 package com.example.qlct;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormat;
+
 public class doitiente {
     double USDtoVND;
     double UERtoVND;
@@ -17,10 +20,24 @@ public class doitiente {
         this.CNYtoVND = 1 / VNDtoCNY;
     }
 
+
     public double getUSDtoVND() {
         return USDtoVND;
     }
 
+
+    public String formatValue(double value) {
+        String[] units = new String[] {"", "K", "M", "B", "T"};
+        int unitIndex = 0;
+
+        while (value >= 1000 && unitIndex < units.length - 1) {
+            value /= 1000;
+            unitIndex++;
+        }
+
+        DecimalFormat df = new DecimalFormat("0.###");
+        return df.format(value) + units[unitIndex];
+    }
     public void setUSDtoVND(double USDtoVND) {
         this.USDtoVND = USDtoVND;
     }

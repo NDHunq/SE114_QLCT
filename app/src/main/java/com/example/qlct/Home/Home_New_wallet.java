@@ -7,6 +7,8 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -29,6 +31,7 @@ import com.example.qlct.API_Entity.CreateWalletEntity;
 import com.example.qlct.API_Utils.WalletAPIUtil;
 import com.example.qlct.R;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 
 public class Home_New_wallet extends AppCompatActivity {
@@ -37,6 +40,9 @@ String getcurrency;
 
 int sc=1;
 int sb=1;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -49,17 +55,39 @@ int sb=1;
             return insets;
         });
 
+
         TextInputEditText ammount = findViewById(R.id.Amount_txtbox);
         TextInputEditText name =findViewById(R.id.Walletname_txtbox);
         ImageButton upload = findViewById(R.id.addnewbut);
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CreateWalletEntity createWalletEntity = new CreateWalletEntity(name.getText().toString(),Integer.parseInt(ammount.getText().toString()),getcurrency);
-                WalletAPIUtil WalletAPIUtil = new WalletAPIUtil();
-WalletAPIUtil.createWalletAPI(createWalletEntity);
-                setResult(Activity.RESULT_OK);
-                finish();
+                TextInputEditText walletname = findViewById(R.id.Walletname_txtbox);
+                TextInputEditText amount = findViewById(R.id.Amount_txtbox);
+                WalletAPIUtil test = new WalletAPIUtil();
+                if(walletname.getText().toString().isEmpty()||amount.getText().toString().isEmpty())
+                {
+
+                        if(walletname.getText().toString().isEmpty())
+                    walletname.setError("Please enter wallet name");
+                        if(amount.getText().toString().isEmpty())
+                    amount.setError("Please enter amount");
+                }
+
+            else if ( test.doesWalletExist(walletname.getText().toString()) == 1){
+                    // Show an error message if the wallet name is "Total" or if it already exists
+                    walletname.setError("Wallet name already exists");
+                } else if (walletname.getText().toString().equals("Total") ) {
+                    walletname.setError("Wallet name already exists");
+                } else
+                {
+                    CreateWalletEntity createWalletEntity = new CreateWalletEntity(name.getText().toString(),Integer.parseInt(ammount.getText().toString()),getcurrency);
+                    WalletAPIUtil WalletAPIUtil = new WalletAPIUtil();
+                    WalletAPIUtil.createWalletAPI(createWalletEntity);
+                    setResult(Activity.RESULT_OK);
+                    finish();
+                }
+
 
             }
         });

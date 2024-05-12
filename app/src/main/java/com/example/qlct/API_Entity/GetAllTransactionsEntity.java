@@ -14,4 +14,6 @@ public class GetAllTransactionsEntity {
     public String target_wallet_id;
     public Wallet wallet;
     public Category category;
+
+
 }

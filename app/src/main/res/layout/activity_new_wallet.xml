@@ -37,13 +37,25 @@
 
 
     </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:text="Wallet Name"
+        android:layout_marginStart="20dp"
+        android:textSize="23dp"
+        android:textStyle="bold"
+        android:textColor="@color/xanhnendam"
+        android:layout_marginTop="12dp"
+        android:layout_height="wrap_content">
+
+    </TextView>
 
     <LinearLayout
         android:layout_width="match_parent"
 
         android:layout_height="70dp"
-        android:layout_marginTop="7dp"
+
         android:theme="@style/Theme.MaterialComponents.Bridge">
+
 
 
 
@@ -52,6 +64,7 @@
 
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
 
+            android:id="@+id/walletlayout"
             android:layout_width="match_parent"
 
             android:layout_height="55dp"
@@ -72,11 +85,11 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/Walletname_txtbox"
-                android:layout_marginStart="12dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:layout_marginStart="12dp"
                 android:drawableTint="#5CC2F2"
+                android:singleLine="true"
 
                 android:textColor="#5CC2F2" />
 
@@ -85,8 +98,8 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:text="Select Currency"
-        android:layout_marginStart="15dp"
+        android:text="Ammount"
+        android:layout_marginStart="20dp"
         android:textSize="23dp"
         android:textStyle="bold"
         android:textColor="@color/xanhnendam"
@@ -102,7 +115,7 @@
         android:id="@+id/crr"
         android:layout_width="40dp"
         android:layout_marginStart="20dp"
-        android:text="$"
+        android:text="đ"
         android:textSize="30dp"
         android:textAlignment="center"
         android:textStyle="bold"
@@ -114,7 +127,7 @@
 <TextView
     android:id="@+id/txtCurrency"
     android:layout_width="wrap_content"
-    android:text="United States Dollar"
+    android:text="Vietnamese Dong"
     android:textStyle="bold"
     android:textColor="@color/black"
     android:textSize="21dp"
@@ -164,9 +177,9 @@
                 android:layout_marginStart="12dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:inputType="number"
                 android:drawableTint="#5CC2F2"
-
+                android:singleLine="true"
                 android:textColor="#5CC2F2" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -177,12 +190,12 @@
         android:layout_weight="1"/>
     <androidx.constraintlayout.widget.ConstraintLayout
 
-        android:layout_width="70dp"
+        android:layout_width="60dp"
         android:background="@drawable/nenxanh7dp"
         android:layout_gravity="end"
         android:layout_marginEnd="12dp"
         android:layout_marginBottom="12dp"
-        android:layout_height="70dp">
+        android:layout_height="60dp">
 
 
         <ImageButton

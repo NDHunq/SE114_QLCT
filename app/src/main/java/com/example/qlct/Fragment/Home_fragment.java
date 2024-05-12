@@ -22,6 +22,7 @@ import com.example.qlct.API_Entity.GetAllWalletsEntity;
 import com.example.qlct.API_Utils.TransactionAPIUtil;
 import com.example.qlct.API_Utils.WalletAPIUtil;
 import com.example.qlct.Home.Home_My_wallets;
+import com.example.qlct.Home.Home_New_wallet;
 import com.example.qlct.Home.Home_TheGiaoDich;
 import com.example.qlct.Home.Home_TheGiaoDich_Adapter;
 import com.example.qlct.Home.Home_TheVi;
@@ -90,9 +91,11 @@ public class Home_fragment extends Fragment {
     String TenVi ="Total";
     double ammount = 0;
     String currency_unit = "đ";
+    double tongsovi =0;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
 
         Anhxa();
         Anhxa2();
@@ -103,16 +106,16 @@ public class Home_fragment extends Fragment {
              TenVi = arguments.getString("tenvi");
              ammount = arguments.getDouble("ammount");
              currency_unit = arguments.getString("currency_unit");
+             tongsovi = arguments.getDouble("tongsovi");
+
             // Now you can use "tenvi" and "ammount" in your fragment
         }
-        else
-        {
 
-
-        }
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home_fragment, container, false);
         listView = view.findViewById(R.id.listView);
+        ImageView imageView = view.findViewById(R.id.optionsVi);
+        imageView.setVisibility(View.VISIBLE);
         // Tìm ImageView unseen
         ImageView unseen = view.findViewById(R.id.unseen);
         TextView text = view.findViewById(R.id.total_blance);
@@ -129,7 +132,7 @@ public class Home_fragment extends Fragment {
         }
 
         TextView totalbalance = view.findViewById(R.id.total_blance);
-        totalbalance.setText(String.valueOf(ammount)+ currency_unit);
+        totalbalance.setText(doitien.formatValue(ammount)+ currency_unit);
         noti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -153,7 +156,7 @@ public class Home_fragment extends Fragment {
                 if(text.getText().equals("**********"))
                 {
                     unseen.setBackgroundResource(R.drawable.eye);
-                    text.setText(String.valueOf(ammount)+ " đ");
+                    text.setText(doitien.formatValue(ammount)+ " đ");
                 }
 
                else
@@ -198,17 +201,27 @@ public class Home_fragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                // Tạo một Intent mới để mở MyWalletsActivity
-                Intent event;
+                if(seeAll.getText().toString().equals("See all"))
+                {
+                    Intent event;
 
 
-                Intent intent = new Intent(getActivity(), Home_My_wallets.class);
+                    Intent intent = new Intent(getActivity(), Home_My_wallets.class);
 
-                TextView vi = view.findViewById(R.id.tenVi);
-                Log.d("adfdf",vi.getText().toString());
-                intent.putExtra("viduocchon",vi.getText());
-                // Bắt đầu Activity mới
-                startActivity(intent);
+                    TextView vi = view.findViewById(R.id.tenVi);
+                    Log.d("adfdf",vi.getText().toString());
+                    intent.putExtra("viduocchon",vi.getText());
+                    // Bắt đầu Activity mới
+                    startActivity(intent);
+                }
+                else
+                {
+                    Intent event;
+
+                    Intent intent = new Intent(getActivity(), Home_New_wallet.class);
+                    startActivityForResult(intent, 1);
+                }
+
             }
         });
        theGiaoDichAdap= new Home_TheGiaoDich_Adapter(getContext(),R.layout.home_dong_giao_dich,theGiaoDichList);
@@ -218,11 +231,70 @@ public class Home_fragment extends Fragment {
         theTopSpentAdap = new Home_TheTopSpent_Adapter(getContext(),R.layout.home_dong_topspent,theTopSpentList);
         listView2.setAdapter(theTopSpentAdap);
         setListViewHeightBasedOnChildren(listView2);
+        if(tongsovi==0)
+        {
+            TextView tenvi = view.findViewById(R.id.tenVi);
+            tenvi.setText("No wallet");
+            tenvi.setTextColor(Color.GRAY);
+            TextView seeall = view.findViewById(R.id.Seeall);
+            seeall.setText("ADD NEW");
+            ImageView op = view.findViewById(R.id.optionsVi);
+            op.setVisibility(View.INVISIBLE);
+        }
+
 
         return view;
 
 
 
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        TextView tenvi = getView().findViewById(R.id.tenVi);
+        TextView totalbalance = getView().findViewById(R.id.total_blance);
+
+        // Check if the request code is the same as the one used in startActivityForResult()
+        if (requestCode == 1) {
+
+            try {
+
+                ArrayList<GetAllWalletsEntity> parseAPIList = new WalletAPIUtil().getAllWalletAPI();
+                //Chạy vòng lặp để lấy ra các field cần thiết cho hiển thị ra Views
+                for (GetAllWalletsEntity item : parseAPIList) {
+                        tenvi.setText(item.name);
+                        if(item.currency_unit.equals("VND"))
+                        {
+                            totalbalance.setText(doitien.formatValue(Double.parseDouble(item.amount))+ " đ");
+                        }
+                        else if(item.currency_unit.equals("USD"))
+                        {
+                            totalbalance.setText(doitien.formatValue(Double.parseDouble(item.amount))+ " $");
+                        }
+                        else if(item.currency_unit.equals("EUR"))
+                        {
+                            totalbalance.setText(doitien.formatValue(Double.parseDouble(item.amount))+ " €");
+                        }
+                        else if(item.currency_unit.equals("CNY"))
+                        {
+                            totalbalance.setText(doitien.formatValue(Double.parseDouble(item.amount))+ " ¥");
+                        }
+
+                    break;
+                }
+
+            }
+            catch (Exception e) {
+                //Thông báo lỗi, không thể kết nối đến server, co the hien mot notification ra app
+                e.printStackTrace();
+            }
+TextView seeall = getView().findViewById(R.id.Seeall);
+            seeall.setText("See all");
+            ImageView op = getView().findViewById(R.id.optionsVi);
+            op.setVisibility(View.VISIBLE);
+
+
+        }
     }
     public static void setListViewHeightBasedOnChildren(ListView listView) {
         ListAdapter listAdapter = listView.getAdapter();

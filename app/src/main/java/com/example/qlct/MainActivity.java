@@ -34,7 +34,9 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     String tenvi = "Ví chính";
+    Home_fragment homeFragment = new Home_fragment();
     double   ammount = 0;
+    double tongsovi=0;
     String currency_unit = "đ";
     private void updateButtonBackgrounds(int selectedButtonId) {
         // Danh sách các button
@@ -59,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         try {
 
             ArrayList<GetAllWalletsEntity> parseAPIList = new WalletAPIUtil().getAllWalletAPI();
+            tongsovi = parseAPIList.size();
             //Chạy vòng lặp để lấy ra các field cần thiết cho hiển thị ra Views
             for (GetAllWalletsEntity item : parseAPIList) {
                 String donvi = "";
@@ -102,17 +105,20 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        setBlance();
-        Bundle bundle = new Bundle();
 
+        Bundle bundle = new Bundle();
+        setBlance();
         tenvi = getIntent().getStringExtra("tenvi");
         ammount = getIntent().getDoubleExtra("ammount",-1);
 currency_unit = getIntent().getStringExtra("currency_unit");
 
+
         if(ammount == -1){
             bundle.putString("tenvi", "Total");
+
             bundle.putDouble("ammount", TongTien);
             bundle.putString("currency_unit", " đ");
+            bundle.putDouble("tongsovi", tongsovi);
             Log.d("Truyen du lieu", "loi roi");
 
         }
@@ -137,7 +143,7 @@ currency_unit = getIntent().getStringExtra("currency_unit");
         {
             bundle.putString("currency_unit", " ¥");
         }
-
+            bundle.putDouble("tongsovi", tongsovi);
         }
 
 
@@ -155,7 +161,7 @@ currency_unit = getIntent().getStringExtra("currency_unit");
         setContentView(binding.getRoot());
 
         // Tạo một instance của HomeFragment
-        Home_fragment homeFragment = new Home_fragment();
+
         homeFragment.setArguments(bundle);
 
         // Sử dụng FragmentManager và FragmentTransaction để thêm HomeFragment vào FrameLayout container
@@ -166,7 +172,8 @@ currency_unit = getIntent().getStringExtra("currency_unit");
             public void onClick(View v) {
                 updateButtonBackgrounds(R.id.thehome);
                 // Tạo một instance mới của HomeFragment
-                Home_fragment homeFragment = new Home_fragment();
+
+
 
                 // Sử dụng FragmentManager và FragmentTransaction để thay thế HomeFragment vào FrameLayout container
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, homeFragment).commit();

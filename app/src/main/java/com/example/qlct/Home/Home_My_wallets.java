@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -52,11 +53,15 @@ public class Home_My_wallets extends AppCompatActivity {
     ArrayList<Home_TheVi>  theViList;
     Home_TheVi theVi;
     String viduocchon;
+    double tienduocchon;
+    String currencyduocchon;
+
     double TongTien=0;
     doitiente doitien = new doitiente(1/25455,1/27462.13,1/3522.40);
 
     private  void Anhxa()
     {
+        TongTien=0;
         try {
             theViList = new ArrayList<>();
             ArrayList<GetAllWalletsEntity> parseAPIList = new WalletAPIUtil().getAllWalletAPI();
@@ -79,12 +84,13 @@ public class Home_My_wallets extends AppCompatActivity {
 
                 if(item.name.equals(viduocchon) )
                 {
-                    theViList.add(new Home_TheVi(item.id, R.drawable.wallet, item.name, item.amount+donvi,item,1));
-
+                    theViList.add(new Home_TheVi(item.id, R.drawable.wallet, item.name, item.amount+donvi,item,1,viduocchon));
+                    tienduocchon=Double.parseDouble(item.amount);
+                    currencyduocchon=item.currency_unit;
                 }
                else
                 {
-                    theViList.add(new Home_TheVi(item.id, R.drawable.wallet, item.name, item.amount+donvi,item,0));
+                    theViList.add(new Home_TheVi(item.id, R.drawable.wallet, item.name, item.amount+donvi,item,0,viduocchon));
                 }
 
             }
@@ -94,6 +100,8 @@ public class Home_My_wallets extends AppCompatActivity {
             //Thông báo lỗi, không thể kết nối đến server, co the hien mot notification ra app
             e.printStackTrace();
         }
+        TextView tongtien = findViewById(R.id.tongammount);
+        tongtien.setText(String.valueOf(TongTien)+ " ₫");
     }
 
 
@@ -113,6 +121,8 @@ public class Home_My_wallets extends AppCompatActivity {
         {
             viduocchon="Total";
         }
+
+
         if(viduocchon.equals("Total"))
         {
            LinearLayout total_layout = findViewById(R.id.total_layout);
@@ -131,6 +141,7 @@ public class Home_My_wallets extends AppCompatActivity {
                 intent.putExtra("tenvi", "Total");
                 intent.putExtra("ammount", TongTien);
                 intent.putExtra("currency_unit", "VND");
+                intent.putExtra("tongsovi", theViList.size());
                 startActivity(intent);
             }
         });
@@ -182,8 +193,23 @@ public class Home_My_wallets extends AppCompatActivity {
         backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("tenvi", viduocchon);
+                if(viduocchon.equals("Total"))
+                {
+                    bundle.putDouble("ammount", TongTien);
+                    bundle.putString("currency_unit", "VND");
+                }
+                else
+                {
+                    bundle.putDouble("ammount", tienduocchon);
+                    bundle.putString("currency_unit", currencyduocchon);
+                }
+
                 // Kết thúc Activity hiện tại và quay lại Activity cũ
-                finish();
+                Intent intent = new Intent(Home_My_wallets.this, MainActivity.class);
+                intent.putExtras(bundle);
+               startActivity(intent);
             }
         });
         linearLayout = findViewById(R.id.sortbutton);
@@ -319,10 +345,10 @@ public class Home_My_wallets extends AppCompatActivity {
                 totallayout.setBackgroundResource(0);
                 namelayout.setBackgroundResource(0);
 
-
             }
         });
-        totallayout.setOnClickListener(new View.OnClickListener() {
+        totallayout.setOnClickListener(new View.OnClickListener()
+ {
             @Override
             public void onClick(View v) {
                 TextView textView = findViewById(R.id.sortbutton_text);

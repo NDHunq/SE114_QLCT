@@ -1,8 +1,11 @@
 package com.example.qlct.Home;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +16,17 @@ import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.qlct.API_Entity.GetAllWalletsEntity;
+import com.example.qlct.API_Entity.UpdateWalletEntity;
+import com.example.qlct.API_Utils.WalletAPIUtil;
 import com.example.qlct.R;
 import com.example.qlct.Share_Wallet;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 
@@ -34,10 +41,12 @@ public class Home_Wallet_Information extends AppCompatActivity {
     String currency;
     ListView listView;
     String exname ;
+    String exid;
     String exammount;
     String excurrency;
     String create;
     String exupdate;
+    String exduochon;
 
 
   Home_The_Member_Adapter theMemberAdap;
@@ -46,11 +55,13 @@ public class Home_Wallet_Information extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Intent intent = getIntent();
+        exid = intent.getStringExtra("id");
        exname= intent.getStringExtra("name");
          exammount = intent.getStringExtra("ammount");
             excurrency = intent.getStringExtra("currency");
             create = intent.getStringExtra("start");
             exupdate = intent.getStringExtra("update");
+            exduochon = intent.getStringExtra("duocchon");
 
         super.onCreate(savedInstanceState);
 
@@ -61,9 +72,62 @@ public class Home_Wallet_Information extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        TextView nameview= findViewById(R.id.namewallet);
+        //save
+        TextView save = findViewById(R.id.save);
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextInputEditText nameview= findViewById(R.id.namewallet);
+                TextInputEditText ammountview = findViewById(R.id.ammountinf);
+                WalletAPIUtil walletAPIUtil = new WalletAPIUtil();
+                UpdateWalletEntity updateWalletEntity = new UpdateWalletEntity( nameview.getText().toString(), Double.parseDouble(ammountview.getText().toString()),currency);
+
+                walletAPIUtil.updateWalletAPI(exid,updateWalletEntity);
+                Intent intent = new Intent(Home_Wallet_Information.this, Home_My_wallets.class);
+                intent.putExtra("viduocchon",exduochon);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
+            }
+        });
+        ConstraintLayout delete = findViewById(R.id.delete);
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(Home_Wallet_Information.this)
+                        .setTitle("Delete Wallet")
+                        .setMessage("Are you sure you want to delete this wallet?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                WalletAPIUtil walletAPIUtil = new WalletAPIUtil();
+                                walletAPIUtil.deleteWallet(exid);
+                                Intent intent = new Intent(Home_Wallet_Information.this, Home_My_wallets.class);
+                                TextInputEditText nameview= findViewById(R.id.namewallet);
+                                if(exduochon.equals(nameview.getText().toString()))
+                                {
+                                    exduochon = "Total";
+                                }
+                                intent.putExtra("viduocchon",exduochon);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+
+                                // Finish the activity
+                               finish();
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Dismiss the dialog
+                                dialog.dismiss();
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+            }
+        });
+        TextInputEditText nameview= findViewById(R.id.namewallet);
         nameview.setText(exname);
-        TextView ammountview = findViewById(R.id.ammountinf);
+        TextInputEditText ammountview = findViewById(R.id.ammountinf);
 ammountview.setText(exammount);
 
         TextView txt1 = findViewById(R.id.txt);

@@ -1,5 +1,6 @@
 package com.example.qlct.Home;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -20,12 +21,16 @@ public class Home_TheVi_Adapter extends BaseAdapter {
     private Context context;
     private int layout;
     private ArrayList<Home_TheVi> theViList;
+    private Activity activity;
+
 
     public Home_TheVi_Adapter(Context context, int layout, ArrayList<Home_TheVi> theViList) {
         this.context = context;
         this.layout = layout;
         this.theViList = theViList;
+
     }
+
 
     @Override
     public int getCount() {
@@ -68,9 +73,10 @@ public class Home_TheVi_Adapter extends BaseAdapter {
                 intent.putExtra("name",theViItem.item.name);
               intent.putExtra("ammount",theViItem.item.amount);
                 intent.putExtra("currency",theViItem.item.currency_unit);
-
+                intent.putExtra("id",theViItem.item.id);
                 intent.putExtra("start",theViItem.item.create_at);
                 intent.putExtra("update",theViItem.item.update_at);
+                intent.putExtra("duocchon",theViItem.viduocchon);
                 context.startActivity(intent);
             }
         });
