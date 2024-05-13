@@ -18,7 +18,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 public class Category_Add extends AppCompatActivity {
     int sb=1;
     int sc=1;
@@ -86,6 +87,11 @@ public class Category_Add extends AppCompatActivity {
         }
     }
 
+
+int kq=1;
+
+
+
     private  void showDialog() {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(dialog.getWindow().FEATURE_NO_TITLE);
@@ -96,176 +102,554 @@ public class Category_Add extends AppCompatActivity {
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimationn;
         dialog.getWindow().setGravity(Gravity.BOTTOM);
         ConstraintLayout bo1 = dialog.findViewById(R.id.bo1);
+
+
         ConstraintLayout bo2 = dialog.findViewById(R.id.bo2);
         ConstraintLayout bo3 = dialog.findViewById(R.id.bo3);
         ConstraintLayout bo4 = dialog.findViewById(R.id.bo4);
         ConstraintLayout bo5 = dialog.findViewById(R.id.bo5);
         ConstraintLayout bo6 = dialog.findViewById(R.id.bo6);
+        ConstraintLayout bo7 = dialog.findViewById(R.id.bo7);
+        ConstraintLayout bo8 = dialog.findViewById(R.id.bo8);
+        ConstraintLayout bo9 = dialog.findViewById(R.id.bo9);
+        ConstraintLayout bo10 = dialog.findViewById(R.id.bo10);
+        ConstraintLayout bo11 = dialog.findViewById(R.id.bo11);
+        ConstraintLayout bo12 = dialog.findViewById(R.id.bo12);
+        ConstraintLayout bo13 = dialog.findViewById(R.id.bo13);
+        ConstraintLayout bo14 = dialog.findViewById(R.id.bo14);
+        ConstraintLayout bo15 = dialog.findViewById(R.id.bo15);
+        ConstraintLayout bo16 = dialog.findViewById(R.id.bo16);
+        ConstraintLayout bo17 = dialog.findViewById(R.id.bo17);
+        ConstraintLayout bo18 = dialog.findViewById(R.id.bo18);
+
 
         bo1.setOnClickListener(v -> {
          bo1.setBackgroundResource(R.drawable.nenluachon);
+
+            kq=1;
             bo2.setBackgroundResource(0);
             bo3.setBackgroundResource(0);
             bo4.setBackgroundResource(0);
             bo5.setBackgroundResource(0);
             bo6.setBackgroundResource(0);
+            bo7.setBackgroundResource(0);
+            bo8.setBackgroundResource(0);
+            bo9.setBackgroundResource(0);
+            bo10.setBackgroundResource(0);
+            bo11.setBackgroundResource(0);
+            bo12.setBackgroundResource(0);
+            bo13.setBackgroundResource(0);
+            bo14.setBackgroundResource(0);
+            bo15.setBackgroundResource(0);
+            bo16.setBackgroundResource(0);
+            bo17.setBackgroundResource(0);
+            bo18.setBackgroundResource(0);
+
+
 
 
         });
         bo2.setOnClickListener(v -> {
+            kq=2;
             bo2.setBackgroundResource(R.drawable.nenluachon);
             bo1.setBackgroundResource(0);
             bo3.setBackgroundResource(0);
             bo4.setBackgroundResource(0);
             bo5.setBackgroundResource(0);
             bo6.setBackgroundResource(0);
+            bo7.setBackgroundResource(0);
+            bo8.setBackgroundResource(0);
+            bo9.setBackgroundResource(0);
+            bo10.setBackgroundResource(0);
+            bo11.setBackgroundResource(0);
+            bo12.setBackgroundResource(0);
+            bo13.setBackgroundResource(0);
+            bo14.setBackgroundResource(0);
+            bo15.setBackgroundResource(0);
+            bo16.setBackgroundResource(0);
+            bo17.setBackgroundResource(0);
+            bo18.setBackgroundResource(0);
+
 
         });
         bo3.setOnClickListener(v -> {
+            kq=3;
             bo3.setBackgroundResource(R.drawable.nenluachon);
             bo2.setBackgroundResource(0);
             bo1.setBackgroundResource(0);
             bo4.setBackgroundResource(0);
             bo5.setBackgroundResource(0);
             bo6.setBackgroundResource(0);
+            bo7.setBackgroundResource(0);
+            bo8.setBackgroundResource(0);
+            bo9.setBackgroundResource(0);
+            bo10.setBackgroundResource(0);
+            bo11.setBackgroundResource(0);
+            bo12.setBackgroundResource(0);
+            bo13.setBackgroundResource(0);
+            bo14.setBackgroundResource(0);
+            bo15.setBackgroundResource(0);
+            bo16.setBackgroundResource(0);
+            bo17.setBackgroundResource(0);
+            bo18.setBackgroundResource(0);
+
+
 
         });
         bo4.setOnClickListener(v -> {
+            kq=4;
             bo4.setBackgroundResource(R.drawable.nenluachon);
             bo2.setBackgroundResource(0);
             bo3.setBackgroundResource(0);
             bo1.setBackgroundResource(0);
             bo5.setBackgroundResource(0);
             bo6.setBackgroundResource(0);
+            bo7.setBackgroundResource(0);
+            bo8.setBackgroundResource(0);
+            bo9.setBackgroundResource(0);
+            bo10.setBackgroundResource(0);
+            bo11.setBackgroundResource(0);
+            bo12.setBackgroundResource(0);
+            bo13.setBackgroundResource(0);
+            bo14.setBackgroundResource(0);
+            bo15.setBackgroundResource(0);
+            bo16.setBackgroundResource(0);
+            bo17.setBackgroundResource(0);
+            bo18.setBackgroundResource(0);
+
+
 
         });
         bo5.setOnClickListener(v -> {
+            kq=5;
             bo5.setBackgroundResource(R.drawable.nenluachon);
             bo2.setBackgroundResource(0);
             bo3.setBackgroundResource(0);
             bo4.setBackgroundResource(0);
             bo1.setBackgroundResource(0);
             bo6.setBackgroundResource(0);
+            bo7.setBackgroundResource(0);
+            bo8.setBackgroundResource(0);
+            bo9.setBackgroundResource(0);
+            bo10.setBackgroundResource(0);
+            bo11.setBackgroundResource(0);
+            bo12.setBackgroundResource(0);
+            bo13.setBackgroundResource(0);
+            bo14.setBackgroundResource(0);
+            bo15.setBackgroundResource(0);
+            bo16.setBackgroundResource(0);
+            bo17.setBackgroundResource(0);
+            bo18.setBackgroundResource(0);
 
         });
         bo6.setOnClickListener(v -> {
+            kq=6;
             bo6.setBackgroundResource(R.drawable.nenluachon);
             bo2.setBackgroundResource(0);
             bo3.setBackgroundResource(0);
             bo4.setBackgroundResource(0);
             bo5.setBackgroundResource(0);
             bo1.setBackgroundResource(0);
+            bo7.setBackgroundResource(0);
+            bo8.setBackgroundResource(0);
+            bo9.setBackgroundResource(0);
+            bo10.setBackgroundResource(0);
+            bo11.setBackgroundResource(0);
+            bo12.setBackgroundResource(0);
+            bo13.setBackgroundResource(0);
+            bo14.setBackgroundResource(0);
+            bo15.setBackgroundResource(0);
+            bo16.setBackgroundResource(0);
+            bo17.setBackgroundResource(0);
+            bo18.setBackgroundResource(0);
+
+        });
+        bo7.setOnClickListener(v -> {
+            kq=7;
+            bo7.setBackgroundResource(R.drawable.nenluachon);
+            bo2.setBackgroundResource(0);
+            bo3.setBackgroundResource(0);
+            bo4.setBackgroundResource(0);
+            bo5.setBackgroundResource(0);
+            bo6.setBackgroundResource(0);
+            bo1.setBackgroundResource(0);
+            bo8.setBackgroundResource(0);
+            bo9.setBackgroundResource(0);
+            bo10.setBackgroundResource(0);
+            bo11.setBackgroundResource(0);
+            bo12.setBackgroundResource(0);
+            bo13.setBackgroundResource(0);
+            bo14.setBackgroundResource(0);
+            bo15.setBackgroundResource(0);
+            bo16.setBackgroundResource(0);
+            bo17.setBackgroundResource(0);
+            bo18.setBackgroundResource(0);
+
+        });
+        bo8.setOnClickListener(v -> {
+            kq=8;
+            bo8.setBackgroundResource(R.drawable.nenluachon);
+            bo2.setBackgroundResource(0);
+            bo3.setBackgroundResource(0);
+            bo4.setBackgroundResource(0);
+            bo5.setBackgroundResource(0);
+            bo6.setBackgroundResource(0);
+            bo7.setBackgroundResource(0);
+            bo1.setBackgroundResource(0);
+            bo9.setBackgroundResource(0);
+            bo10.setBackgroundResource(0);
+            bo11.setBackgroundResource(0);
+            bo12.setBackgroundResource(0);
+            bo13.setBackgroundResource(0);
+            bo14.setBackgroundResource(0);
+            bo15.setBackgroundResource(0);
+            bo16.setBackgroundResource(0);
+            bo17.setBackgroundResource(0);
+            bo18.setBackgroundResource(0);
+
+        });
+        bo9.setOnClickListener(v -> {
+            kq=9;
+            bo9.setBackgroundResource(R.drawable.nenluachon);
+            bo2.setBackgroundResource(0);
+            bo3.setBackgroundResource(0);
+            bo4.setBackgroundResource(0);
+            bo5.setBackgroundResource(0);
+            bo6.setBackgroundResource(0);
+            bo7.setBackgroundResource(0);
+            bo8.setBackgroundResource(0);
+            bo1.setBackgroundResource(0);
+            bo10.setBackgroundResource(0);
+            bo11.setBackgroundResource(0);
+            bo12.setBackgroundResource(0);
+            bo13.setBackgroundResource(0);
+            bo14.setBackgroundResource(0);
+            bo15.setBackgroundResource(0);
+            bo16.setBackgroundResource(0);
+            bo17.setBackgroundResource(0);
+            bo18.setBackgroundResource(0);
+
+        });
+        bo10.setOnClickListener(v -> {
+            kq=10;
+            bo10.setBackgroundResource(R.drawable.nenluachon);
+            bo2.setBackgroundResource(0);
+            bo3.setBackgroundResource(0);
+            bo4.setBackgroundResource(0);
+            bo5.setBackgroundResource(0);
+            bo6.setBackgroundResource(0);
+            bo7.setBackgroundResource(0);
+            bo8.setBackgroundResource(0);
+            bo9.setBackgroundResource(0);
+            bo1.setBackgroundResource(0);
+            bo11.setBackgroundResource(0);
+            bo12.setBackgroundResource(0);
+            bo13.setBackgroundResource(0);
+            bo14.setBackgroundResource(0);
+            bo15.setBackgroundResource(0);
+            bo16.setBackgroundResource(0);
+            bo17.setBackgroundResource(0);
+            bo18.setBackgroundResource(0);
+
+        });
+        bo11.setOnClickListener(v -> {
+            kq=11;
+            bo11.setBackgroundResource(R.drawable.nenluachon);
+            bo2.setBackgroundResource(0);
+            bo3.setBackgroundResource(0);
+            bo4.setBackgroundResource(0);
+            bo5.setBackgroundResource(0);
+            bo6.setBackgroundResource(0);
+            bo7.setBackgroundResource(0);
+            bo8.setBackgroundResource(0);
+            bo9.setBackgroundResource(0);
+            bo10.setBackgroundResource(0);
+            bo1.setBackgroundResource(0);
+            bo12.setBackgroundResource(0);
+            bo13.setBackgroundResource(0);
+            bo14.setBackgroundResource(0);
+            bo15.setBackgroundResource(0);
+            bo16.setBackgroundResource(0);
+            bo17.setBackgroundResource(0);
+            bo18.setBackgroundResource(0);
+
+        });
+        bo12.setOnClickListener(v -> {
+            kq=12;
+            bo12.setBackgroundResource(R.drawable.nenluachon);
+            bo2.setBackgroundResource(0);
+            bo3.setBackgroundResource(0);
+            bo4.setBackgroundResource(0);
+            bo5.setBackgroundResource(0);
+            bo6.setBackgroundResource(0);
+            bo7.setBackgroundResource(0);
+            bo8.setBackgroundResource(0);
+            bo9.setBackgroundResource(0);
+            bo10.setBackgroundResource(0);
+            bo11.setBackgroundResource(0);
+            bo1.setBackgroundResource(0);
+            bo13.setBackgroundResource(0);
+            bo14.setBackgroundResource(0);
+            bo15.setBackgroundResource(0);
+            bo16.setBackgroundResource(0);
+            bo17.setBackgroundResource(0);
+            bo18.setBackgroundResource(0);
+
+        });
+        bo13.setOnClickListener(v -> {
+            kq=13;
+            bo13.setBackgroundResource(R.drawable.nenluachon);
+            bo2.setBackgroundResource(0);
+            bo3.setBackgroundResource(0);
+            bo4.setBackgroundResource(0);
+            bo5.setBackgroundResource(0);
+            bo6.setBackgroundResource(0);
+            bo7.setBackgroundResource(0);
+            bo8.setBackgroundResource(0);
+            bo9.setBackgroundResource(0);
+            bo10.setBackgroundResource(0);
+            bo11.setBackgroundResource(0);
+            bo12.setBackgroundResource(0);
+            bo1.setBackgroundResource(0);
+            bo14.setBackgroundResource(0);
+            bo15.setBackgroundResource(0);
+            bo16.setBackgroundResource(0);
+            bo17.setBackgroundResource(0);
+            bo18.setBackgroundResource(0);
+
+        });
+        bo14.setOnClickListener(v -> {
+            kq=14;
+            bo14.setBackgroundResource(R.drawable.nenluachon);
+            bo2.setBackgroundResource(0);
+            bo3.setBackgroundResource(0);
+            bo4.setBackgroundResource(0);
+            bo5.setBackgroundResource(0);
+            bo6.setBackgroundResource(0);
+            bo7.setBackgroundResource(0);
+            bo8.setBackgroundResource(0);
+            bo9.setBackgroundResource(0);
+            bo10.setBackgroundResource(0);
+            bo11.setBackgroundResource(0);
+            bo12.setBackgroundResource(0);
+            bo13.setBackgroundResource(0);
+            bo1.setBackgroundResource(0);
+            bo15.setBackgroundResource(0);
+            bo16.setBackgroundResource(0);
+            bo17.setBackgroundResource(0);
+            bo18.setBackgroundResource(0);
+
+        });
+        bo15.setOnClickListener(v -> {
+            kq=15;
+            bo15.setBackgroundResource(R.drawable.nenluachon);
+            bo2.setBackgroundResource(0);
+            bo3.setBackgroundResource(0);
+            bo4.setBackgroundResource(0);
+            bo5.setBackgroundResource(0);
+            bo6.setBackgroundResource(0);
+            bo7.setBackgroundResource(0);
+            bo8.setBackgroundResource(0);
+            bo9.setBackgroundResource(0);
+            bo10.setBackgroundResource(0);
+            bo11.setBackgroundResource(0);
+            bo12.setBackgroundResource(0);
+            bo13.setBackgroundResource(0);
+            bo14.setBackgroundResource(0);
+            bo1.setBackgroundResource(0);
+            bo16.setBackgroundResource(0);
+            bo17.setBackgroundResource(0);
+            bo18.setBackgroundResource(0);
+
+        });
+        bo16.setOnClickListener(v -> {
+            kq=16;
+            bo16.setBackgroundResource(R.drawable.nenluachon);
+            bo2.setBackgroundResource(0);
+            bo3.setBackgroundResource(0);
+            bo4.setBackgroundResource(0);
+            bo5.setBackgroundResource(0);
+            bo6.setBackgroundResource(0);
+            bo7.setBackgroundResource(0);
+            bo8.setBackgroundResource(0);
+            bo9.setBackgroundResource(0);
+            bo10.setBackgroundResource(0);
+            bo11.setBackgroundResource(0);
+            bo12.setBackgroundResource(0);
+            bo13.setBackgroundResource(0);
+            bo14.setBackgroundResource(0);
+            bo15.setBackgroundResource(0);
+            bo1.setBackgroundResource(0);
+            bo17.setBackgroundResource(0);
+            bo18.setBackgroundResource(0);
+
+        });
+        bo17.setOnClickListener(v -> {
+            kq=17;
+            bo17.setBackgroundResource(R.drawable.nenluachon);
+            bo2.setBackgroundResource(0);
+            bo3.setBackgroundResource(0);
+            bo4.setBackgroundResource(0);
+            bo5.setBackgroundResource(0);
+            bo6.setBackgroundResource(0);
+            bo7.setBackgroundResource(0);
+            bo8.setBackgroundResource(0);
+            bo9.setBackgroundResource(0);
+            bo10.setBackgroundResource(0);
+            bo11.setBackgroundResource(0);
+            bo12.setBackgroundResource(0);
+            bo13.setBackgroundResource(0);
+            bo14.setBackgroundResource(0);
+            bo15.setBackgroundResource(0);
+            bo16.setBackgroundResource(0);
+            bo1.setBackgroundResource(0);
+            bo18.setBackgroundResource(0);
+
+        });
+        bo18.setOnClickListener(v -> {
+            kq=18;
+            bo18.setBackgroundResource(R.drawable.nenluachon);
+            bo2.setBackgroundResource(0);
+            bo3.setBackgroundResource(0);
+            bo4.setBackgroundResource(0);
+            bo5.setBackgroundResource(0);
+            bo6.setBackgroundResource(0);
+            bo7.setBackgroundResource(0);
+            bo8.setBackgroundResource(0);
+            bo9.setBackgroundResource(0);
+            bo10.setBackgroundResource(0);
+            bo11.setBackgroundResource(0);
+            bo12.setBackgroundResource(0);
+            bo13.setBackgroundResource(0);
+            bo14.setBackgroundResource(0);
+            bo15.setBackgroundResource(0);
+            bo16.setBackgroundResource(0);
+            bo17.setBackgroundResource(0);
+            bo1.setBackgroundResource(0);
 
         });
 
-        ConstraintLayout co1 = dialog.findViewById(R.id.co1);
-        ConstraintLayout co2 = dialog.findViewById(R.id.co2);
-        ConstraintLayout co3 = dialog.findViewById(R.id.co3);
-        ConstraintLayout co4 = dialog.findViewById(R.id.co4);
-        ConstraintLayout co5 = dialog.findViewById(R.id.co5);
-        ConstraintLayout co6 = dialog.findViewById(R.id.co6);
-        co1.setOnClickListener(
-                v -> {
-                    sc=1;
-                    co1.setBackgroundResource(R.drawable.nenluachon);
-                    co2.setBackgroundResource(0);
-                    co3.setBackgroundResource(0);
-                    co4.setBackgroundResource(0);
-                    co5.setBackgroundResource(0);
-                    co6.setBackgroundResource(0);
-                }
-        );
-        co2.setOnClickListener(
-                v -> {
-                    sc=2;
-                    co2.setBackgroundResource(R.drawable.nenluachon);
-                    co1.setBackgroundResource(0);
-                    co3.setBackgroundResource(0);
-                    co4.setBackgroundResource(0);
-                    co5.setBackgroundResource(0);
-                    co6.setBackgroundResource(0);
-                }
-        );
-        co3.setOnClickListener(
-                v -> {
-                    sc=3;
-                    co3.setBackgroundResource(R.drawable.nenluachon);
-                    co2.setBackgroundResource(0);
-                    co1.setBackgroundResource(0);
-                    co4.setBackgroundResource(0);
-                    co5.setBackgroundResource(0);
-                    co6.setBackgroundResource(0);
-                }
-        );
 
-        co4.setOnClickListener(
-                v -> {
-                    sc=4;
-                    co4.setBackgroundResource(R.drawable.nenluachon);
-                    co2.setBackgroundResource(0);
-                    co3.setBackgroundResource(0);
-                    co1.setBackgroundResource(0);
-                    co5.setBackgroundResource(0);
-                    co6.setBackgroundResource(0);
-                }
-        );
-        co5.setOnClickListener(
-                v -> {
-                    sc=5;
-                    co5.setBackgroundResource(R.drawable.nenluachon);
-                    co2.setBackgroundResource(0);
-                    co3.setBackgroundResource(0);
-                    co4.setBackgroundResource(0);
-                    co1.setBackgroundResource(0);
-                    co6.setBackgroundResource(0);
-                }
-        );
-        co6.setOnClickListener(
-                v -> {
-                    sc=6;
-                    co6.setBackgroundResource(R.drawable.nenluachon);
-                    co2.setBackgroundResource(0);
-                    co3.setBackgroundResource(0);
-                    co4.setBackgroundResource(0);
-                    co5.setBackgroundResource(0);
-                    co1.setBackgroundResource(0);
-                }
-        );
+
         bo1.setBackgroundResource(R.drawable.nenluachon);
-        co1.setBackgroundResource(R.drawable.nenluachon);
+
         TextView apply = dialog.findViewById(R.id.apply);
+
         apply.setOnClickListener(v -> {
-            if(sc==1)
+            if(kq==1)
             {
-                CardView ic = findViewById(R.id.icon);
-                ic.setCardBackgroundColor(Color.parseColor("#FF0000"));
+                ImageView img = findViewById(R.id.hinhanh);
+
+                img.setBackgroundResource(R.drawable.anh1);
             }
-            if (sc==2)
+            if(kq==2)
             {
-                CardView ic = findViewById(R.id.icon);
-                ic.setCardBackgroundColor(Color.parseColor("#FF7A00"));
+                ImageView img = findViewById(R.id.hinhanh);
+
+                img.setBackgroundResource(R.drawable.anh2);
             }
-            if (sc==3)
+            if(kq==3)
             {
-                CardView ic = findViewById(R.id.icon);
-                ic.setCardBackgroundColor(Color.parseColor("#FFF500"));
+                ImageView img = findViewById(R.id.hinhanh);
+
+                img.setBackgroundResource(R.drawable.anh3);
             }
-            if (sc==4)
+            if(kq==4)
             {
-                CardView ic = findViewById(R.id.icon);
-                ic.setCardBackgroundColor(Color.parseColor("#5CC2F2"));
+                ImageView img = findViewById(R.id.hinhanh);
+
+                img.setBackgroundResource(R.drawable.anh4);
             }
-            if (sc==5)
+            if(kq==5)
             {
-                CardView ic = findViewById(R.id.icon);
-                ic.setCardBackgroundColor(Color.parseColor("#177715"));
+                ImageView img = findViewById(R.id.hinhanh);
+
+                img.setBackgroundResource(R.drawable.anh5);
             }
-            if (sc==6)
+            if(kq==6)
             {
-                CardView ic = findViewById(R.id.icon);
-                ic.setCardBackgroundColor(Color.parseColor("#890AEC"));
+                ImageView img = findViewById(R.id.hinhanh);
+
+                img.setBackgroundResource(R.drawable.anh6);
+            }
+            if(kq==7)
+            {
+                ImageView img = findViewById(R.id.hinhanh);
+
+                img.setBackgroundResource(R.drawable.anh7);
+            }
+            if(kq==8)
+            {
+                ImageView img = findViewById(R.id.hinhanh);
+
+                img.setBackgroundResource(R.drawable.anh8);
+            }
+            if(kq==9)
+            {
+                ImageView img = findViewById(R.id.hinhanh);
+
+                img.setBackgroundResource(R.drawable.anh9);
+            }
+            if(kq==10)
+            {
+                ImageView img = findViewById(R.id.hinhanh);
+
+                img.setBackgroundResource(R.drawable.anh10);
+            }
+            if(kq==11)
+            {
+                ImageView img = findViewById(R.id.hinhanh);
+
+                img.setBackgroundResource(R.drawable.anh11);
+            }
+            if(kq==12)
+            {
+                ImageView img = findViewById(R.id.hinhanh);
+
+                img.setBackgroundResource(R.drawable.anh12);
+            }
+            if(kq==13)
+            {
+                ImageView img = findViewById(R.id.hinhanh);
+
+                img.setBackgroundResource(R.drawable.anh13);
+            }
+
+            if(kq==14)
+            {
+                ImageView img = findViewById(R.id.hinhanh);
+
+                img.setBackgroundResource(R.drawable.anh14);
+            }
+            if(kq==15)
+            {
+                ImageView img = findViewById(R.id.hinhanh);
+
+                img.setBackgroundResource(R.drawable.anh15);
+            }
+            if(kq==16)
+            {
+                ImageView img = findViewById(R.id.hinhanh);
+
+                img.setBackgroundResource(R.drawable.anh16);
+            }
+
+            if(kq==17)
+            {
+                ImageView img = findViewById(R.id.hinhanh);
+
+                img.setBackgroundResource(R.drawable.anh17);
+            }
+            if(kq==18)
+            {
+                ImageView img = findViewById(R.id.hinhanh);
+
+                img.setBackgroundResource(R.drawable.anh18);
             }
             dialog.dismiss();
+
+
+
         });
         TextView upload = dialog.findViewById(R.id.upload);
         upload.setOnClickListener(v -> {
@@ -276,6 +660,21 @@ public class Category_Add extends AppCompatActivity {
 
 
 
+    }
+    private Bitmap createColoredBitmap(Bitmap originalBitmap, int color) {
+        // Create a mutable bitmap with the same dimensions as the original bitmap
+        Bitmap coloredBitmap = Bitmap.createBitmap(originalBitmap.getWidth(), originalBitmap.getHeight(), originalBitmap.getConfig());
+
+        // Create a canvas to draw on the new bitmap
+        Canvas canvas = new Canvas(coloredBitmap);
+
+        // Draw the color
+        canvas.drawColor(color);
+
+        // Draw the original bitmap on top of the color
+        canvas.drawBitmap(originalBitmap, 0, 0, null);
+
+        return coloredBitmap;
     }
 
 

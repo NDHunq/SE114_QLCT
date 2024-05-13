@@ -4,15 +4,10 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
-import android.view.Window;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -31,7 +26,6 @@ import com.example.qlct.API_Entity.CreateWalletEntity;
 import com.example.qlct.API_Utils.WalletAPIUtil;
 import com.example.qlct.R;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 
 
 public class Home_New_wallet extends AppCompatActivity {
@@ -648,87 +642,16 @@ bo17.setOnClickListener(v -> {
         });
 
 
-        ConstraintLayout co1 = dialog.findViewById(R.id.co1);
-        ConstraintLayout co2 = dialog.findViewById(R.id.co2);
-        ConstraintLayout co3 = dialog.findViewById(R.id.co3);
-        ConstraintLayout co4 = dialog.findViewById(R.id.co4);
-        ConstraintLayout co5 = dialog.findViewById(R.id.co5);
-        ConstraintLayout co6 = dialog.findViewById(R.id.co6);
-        co1.setOnClickListener(
-                v -> {
-                    sc=1;
-                    co1.setBackgroundResource(R.drawable.nenluachon);
-                    co2.setBackgroundResource(0);
-                    co3.setBackgroundResource(0);
-                    co4.setBackgroundResource(0);
-                    co5.setBackgroundResource(0);
-                    co6.setBackgroundResource(0);
-                }
-        );
-        co2.setOnClickListener(
-                v -> {
-                    sc=2;
-                    co2.setBackgroundResource(R.drawable.nenluachon);
-                    co1.setBackgroundResource(0);
-                    co3.setBackgroundResource(0);
-                    co4.setBackgroundResource(0);
-                    co5.setBackgroundResource(0);
-                    co6.setBackgroundResource(0);
-                }
-        );
-        co3.setOnClickListener(
-                v -> {
-                    sc=3;
-                    co3.setBackgroundResource(R.drawable.nenluachon);
-                    co2.setBackgroundResource(0);
-                    co1.setBackgroundResource(0);
-                    co4.setBackgroundResource(0);
-                    co5.setBackgroundResource(0);
-                    co6.setBackgroundResource(0);
-                }
-        );
 
-        co4.setOnClickListener(
-                v -> {
-                    sc=4;
-                    co4.setBackgroundResource(R.drawable.nenluachon);
-                    co2.setBackgroundResource(0);
-                    co3.setBackgroundResource(0);
-                    co1.setBackgroundResource(0);
-                    co5.setBackgroundResource(0);
-                    co6.setBackgroundResource(0);
-                }
-        );
-        co5.setOnClickListener(
-                v -> {
-                    sc=5;
-                    co5.setBackgroundResource(R.drawable.nenluachon);
-                    co2.setBackgroundResource(0);
-                    co3.setBackgroundResource(0);
-                    co4.setBackgroundResource(0);
-                    co1.setBackgroundResource(0);
-                    co6.setBackgroundResource(0);
-                }
-        );
-        co6.setOnClickListener(
-                v -> {
-                    sc=6;
-                    co6.setBackgroundResource(R.drawable.nenluachon);
-                    co2.setBackgroundResource(0);
-                    co3.setBackgroundResource(0);
-                    co4.setBackgroundResource(0);
-                    co5.setBackgroundResource(0);
-                    co1.setBackgroundResource(0);
-                }
-        );
+
         bo1.setBackgroundResource(R.drawable.nenluachon);
-        co1.setBackgroundResource(R.drawable.nenluachon);
+
         TextView apply = dialog.findViewById(R.id.apply);
         apply.setOnClickListener(v -> {
             if(sb==1)
             {
                 ImageView ic = findViewById(R.id.hinhanh);
-                ic.setBackgroundResource(R.drawable.food_cate);
+                ic.setBackgroundResource(R.drawable.anh1);
             }
             if(sc==1)
             {
