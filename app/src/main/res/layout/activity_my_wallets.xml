@@ -7,7 +7,7 @@
     android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Home_My_wallets">
+    tools:context=".Home.Home_My_wallets">
     <LinearLayout
         android:layout_marginTop="12dp"
         android:layout_width="match_parent"

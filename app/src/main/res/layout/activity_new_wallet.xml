@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Home_New_wallet">
+    tools:context=".Home.Home_New_wallet">
     <LinearLayout
         android:layout_marginTop="12dp"
         android:layout_width="match_parent"

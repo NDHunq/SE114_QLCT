@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BudgetRunningFragment"
+    tools:context=".Budget.BudgetRunningFragment"
     android:background="@drawable/background_item"
     android:backgroundTint="#F2F2F2">
 
