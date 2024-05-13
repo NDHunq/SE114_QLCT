@@ -4,11 +4,15 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.example.qlct.API_Entity.GetAllBudget;
+import com.example.qlct.API_Entity.GetAllCategoryy;
+import com.example.qlct.API_Utils.CategoryAPIUntill;
 import com.example.qlct.R;
 
 import java.util.ArrayList;
@@ -31,9 +35,14 @@ public class BudgetFinishFragment extends Fragment {
     private String mParam2;
     ListView listView;
     List<Budget> list;
-
+    ArrayList<GetAllBudget> allBudgets = new ArrayList<>();
+    ArrayList<GetAllCategoryy> listCate;
     public BudgetFinishFragment() {
         // Required empty public constructor
+    }
+
+    public BudgetFinishFragment( ArrayList<GetAllBudget> allBudgets) {
+        this.allBudgets = allBudgets;
     }
 
     /**
@@ -69,6 +78,7 @@ public class BudgetFinishFragment extends Fragment {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_budget_finish, container, false);
         listView=view.findViewById(R.id.listviewFinish);
+        GetAllCategory();
         Anhxa();
         Budget_adapter adapter=new Budget_adapter(getContext(),R.layout.budget_list_item,list);
         listView.setAdapter(adapter);
@@ -77,11 +87,64 @@ public class BudgetFinishFragment extends Fragment {
     void Anhxa()
     {
         list=new ArrayList<>();
-        list.add(new Budget("Food","Vi1",2000000,5000,"21, March 2024","25 March 2024",R.drawable.dish));
-        list.add(new Budget("Food","Vi1",2000000,5000,"21, March 2024","25 March 2024",R.drawable.dish));
-        list.add(new Budget("Food","Vi1",2000000,5000,"21, March 2024","25 March 2024",R.drawable.dish));
-        list.add(new Budget("Food","Vi1",2000000,5000,"21, March 2024","25 March 2024",R.drawable.dish));
-        list.add(new Budget("Food","Vi1",2000000,5000,"21, March 2024","25 March 2024",R.drawable.dish));
+        String from="";
+        String to="";
+        if(allBudgets != null)
+            for(int i=0;i<allBudgets.size();i++){
+                if(allBudgets.get(i).getBudget_type().equals("NO_RENEW")) {
+                    if (allBudgets.get(i).getNo_renew_date_unit().equals("DAY") ) {
+                        from = "";
+                        to = allBudgets.get(i).getNo_renew_date();
+                    }
+                    else {
+                        String[] dates = allBudgets.get(i).getNo_renew_date().split(" ");
+                        if(dates.length == 2) {
+                            from ="From: "+ dates[0];
+                            to = "To: "+dates[1];
+                        }
+                    }
+                }
+                else {
+                    if(allBudgets.get(i).getRenew_date_unit().equals("Custom"))
+                    {
+                        from="Renew at "+"\n"+allBudgets.get(i).getCustom_renew_date().substring(0,10);
+                        to="";
+                    }
+                    else {
+                        from="From: "+allBudgets.get(i).getCreate_at().substring(0,10);
+                        to="Renew "+allBudgets.get(i).getRenew_date_unit();
+                    }
 
+                }
+                Budget budget = new Budget(GetNameCategory(allBudgets.get(i).getCategory_id()),Double.valueOf(allBudgets.get(i).getLimit_amount()) ,Double.valueOf(allBudgets.get(i).getExpensed_amount()) ,from,to,allBudgets.get(i).getCategory().getPicture(),allBudgets.get(i).getBudget_type(),allBudgets.get(i).getId());
+                list.add(budget);
+            }
+        else{
+            Log.d("BudgetRunningFragment", "allBudgets is null");
+        }
     }
+    void GetAllCategory()
+    {
+        listCate=new CategoryAPIUntill().getAllCategoryys();
+    }
+    String GetNameCategory(String id) {
+        for(int i = 0; i < listCate.size(); i++) {
+            if(listCate.get(i).getId().equals(id)) {
+                return listCate.get(i).getName();
+            }
+        }
+        return "";
+    }
+    String GetIDCategory(String name)
+    {
+        for(int i=0;i<listCate.size();i++)
+        {
+            if(listCate.get(i).getName().equals(name))
+            {
+                return listCate.get(i).getId();
+            }
+        }
+        return "";
+    }
+
 }

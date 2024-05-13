@@ -196,6 +196,7 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent">
 
+
                         </TextView>
 
                     </LinearLayout>
@@ -203,6 +204,7 @@
                     <ListView
                         android:id="@+id/listView"
                         android:scrollbars="none"
+
                         android:layout_marginStart="12dp"
                         android:layout_marginEnd="12dp"
                         android:layout_width="match_parent"
@@ -216,6 +218,7 @@
                         android:layout_height="50dp">
 
                         <TextView
+                            android:id="@+id/showmore"
                             android:layout_gravity="center"
                             android:textAlignment="center"
                             android:layout_width="245dp"

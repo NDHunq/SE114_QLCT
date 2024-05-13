@@ -33,7 +33,11 @@ import com.example.qlct.Home_TheTopSpent;
 import com.example.qlct.Home_TheTopSpent_Adapter;
 import com.example.qlct.Notification.Notificaiton;
 import com.example.qlct.R;
+
 import com.example.qlct.doitiente;
+
+import com.example.qlct.TransactionDetail;
+
 
 import java.util.ArrayList;
 
@@ -233,6 +237,19 @@ public class Home_fragment extends Fragment {
                     startActivityForResult(intent, 1);
                 }
 
+            }
+        });
+
+
+        TextView showmore = view.findViewById(R.id.showmore);
+        showmore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Tao intent show more
+                Intent ShowMoreIntent = new Intent(getActivity(), TransactionDetail.class);
+
+                // Mo activity transaction details
+                startActivity(ShowMoreIntent);
             }
         });
        theGiaoDichAdap= new Home_TheGiaoDich_Adapter(getContext(),R.layout.home_dong_giao_dich,theGiaoDichList);

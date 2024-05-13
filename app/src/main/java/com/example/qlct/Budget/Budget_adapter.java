@@ -6,10 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.qlct.R;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class Budget_adapter extends BaseAdapter {
@@ -42,22 +45,27 @@ public class Budget_adapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater= (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         convertView=inflater.inflate(layout,null);
+        DecimalFormat df = new DecimalFormat("#,###");
         //ánh xạ view
         ImageView image=convertView.findViewById(R.id.image);
         TextView category=convertView.findViewById(R.id.category);
-        TextView vi=convertView.findViewById(R.id.vi);
         TextView fromday=convertView.findViewById(R.id.fromday);
         TextView today=convertView.findViewById(R.id.today);
         TextView maxmoney=convertView.findViewById(R.id.maxmoney);
+        TextView expense=convertView.findViewById(R.id.expense);
+        SeekBar seekBar=convertView.findViewById(R.id.seekBar);
         //gán giá trị
         Budget budget=listBudget.get(position);
-        image.setImageResource(budget.getImage());
+        //image.setImageResource(budget.getImage());
+        Glide.with(convertView).load(budget.getImage()).into(image);
         category.setText(budget.getCategory());
-        vi.setText(budget.getVi());
         fromday.setText(budget.getFromDate());
         today.setText(budget.getToDate());
-        maxmoney.setText( String.valueOf(budget.getMax_money()));
-
+        maxmoney.setText(df.format((budget.getMax_money())) );
+        expense.setText(df.format((budget.getCurent_money())) );
+        seekBar.setMax((int) budget.getMax_money());
+        seekBar.setProgress((int) budget.getCurent_money());
+        seekBar.setEnabled(false);
         return convertView;
     }
 }

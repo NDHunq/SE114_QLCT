@@ -120,7 +120,7 @@ public class BugetNoRenewFragment extends Fragment {
         int dayy = calendar.get(Calendar.DAY_OF_MONTH);
         int monthh = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0 nên cần cộng thêm 1
         int yearr = calendar.get(Calendar.YEAR);
-        date.setText(dayy + "/" + monthh + "/" + yearr);
+        date.setText(dayy + "-" + monthh + "-" + yearr);
         day.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,7 +130,7 @@ public class BugetNoRenewFragment extends Fragment {
                 int dayy = calendar.get(Calendar.DAY_OF_MONTH);
                 int monthh = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0 nên cần cộng thêm 1
                 int yearr = calendar.get(Calendar.YEAR);
-                date.setText(dayy + "/" + monthh + "/" + yearr);
+                date.setText(dayy + "-" + monthh + "-" + yearr);
                 v.setBackground(getResources().getDrawable(R.drawable.grey_background));
                 week.setBackground(null);
                 month.setBackground(null);
@@ -147,7 +147,7 @@ public class BugetNoRenewFragment extends Fragment {
                 status="month";
                 int monthh = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0 nên cần cộng thêm 1
                 int yearr = calendar.get(Calendar.YEAR);
-                date.setText( monthh + "/" + yearr);
+                date.setText(getFirstDayOfMonth(monthh,yearr) + " - " + getLastDayOfMonth(monthh,yearr));
                 v.setBackground(getResources().getDrawable(R.drawable.grey_background));
                 week.setBackground(null);
                 day.setBackground(null);
@@ -162,7 +162,7 @@ public class BugetNoRenewFragment extends Fragment {
             public void onClick(View v) {
                 status="year";
                 int yearr = calendar.get(Calendar.YEAR);
-                date.setText(yearr+"");
+                date.setText(getFirstDayOfYear(yearr) + " - " + getLastDayOfYear(yearr));
                 v.setBackground(getResources().getDrawable(R.drawable.grey_background));
                 week.setBackground(null);
                 month.setBackground(null);
@@ -181,7 +181,7 @@ public class BugetNoRenewFragment extends Fragment {
                 int dayy = calendar.get(Calendar.DAY_OF_MONTH);
                 int monthh = calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0 nên cần cộng thêm 1
                 int yearr = calendar.get(Calendar.YEAR);
-                date.setText(getStartAndEndOfWeek(dayy + "/" + monthh + "/" + yearr));
+                date.setText(getStartAndEndOfWeek(dayy + "-" + monthh + "-" + yearr));
                 v.setBackground(getResources().getDrawable(R.drawable.grey_background));
                 day.setBackground(null);
                 month.setBackground(null);
@@ -195,7 +195,7 @@ public class BugetNoRenewFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                status="timespan";
+                status="time_span";
                 v.setBackground(getResources().getDrawable(R.drawable.grey_background));
                 week.setBackground(null);
                 month.setBackground(null);
@@ -221,7 +221,7 @@ public class BugetNoRenewFragment extends Fragment {
                                         // Định dạng ngày được chọn và đặt nó vào TextView
                                         Calendar calendar = Calendar.getInstance();
                                         calendar.set(year, monthOfYear, dayOfMonth);
-                                        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                                        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
                                         from.setText(format.format(calendar.getTime()));
                                     }
                                 }, year, month, day);
@@ -245,7 +245,7 @@ public class BugetNoRenewFragment extends Fragment {
                                         // Định dạng ngày được chọn và đặt nó vào TextView
                                         Calendar calendar = Calendar.getInstance();
                                         calendar.set(year, monthOfYear, dayOfMonth);
-                                        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                                        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
                                         if(compareDates(from.getText().toString(),format.format(calendar.getTime()))==1 || compareDates(from.getText().toString(),format.format(calendar.getTime()))==0)
                                         {
                                             Toast.makeText(getContext(), "Ngày kết thúc không được nhỏ hơn hoặc bằng ngày bắt đầu", Toast.LENGTH_LONG).show();
@@ -272,7 +272,7 @@ public class BugetNoRenewFragment extends Fragment {
                     case "day":
                     {
                         Calendar calendar = Calendar.getInstance();
-                        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
                         try {
                             // Phân tích ngày từ TextView
                             calendar.setTime(format.parse(date.getText().toString()));
@@ -286,47 +286,57 @@ public class BugetNoRenewFragment extends Fragment {
                         // Định dạng ngày mới và đặt nó vào TextView
                         date.setText(format.format(calendar.getTime()));
                     }
-                        break;
-                    case "month":
-                    {
-                        Calendar calendar = Calendar.getInstance();
-                        SimpleDateFormat format = new SimpleDateFormat("MM/yyyy", Locale.getDefault());
+                    case "month": {
+                        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
                         try {
-                            // Phân tích tháng từ TextView
-                            calendar.setTime(format.parse(date.getText().toString()));
+                            // Tách chuỗi ngày thành hai chuỗi riêng biệt
+                            String[] dates = date.getText().toString().split(" - ");
+                            // Chuyển đổi chuỗi ngày thứ nhất thành đối tượng Date
+                            Date startDate = format.parse(dates[0]);
+
+                            // Tạo một đối tượng Calendar từ ngày bắt đầu
+                            Calendar calendar = Calendar.getInstance();
+                            calendar.setTime(startDate);
+
+                            // Tăng tháng lên 1
+                            calendar.add(Calendar.MONTH, 1);
+
+                            // Định dạng tháng mới và đặt nó vào TextView
+                            String newStartDate = getFirstDayOfMonth(calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR));
+                            String newEndDate = getLastDayOfMonth(calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR));
+                            date.setText(newStartDate + " - " + newEndDate);
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
-
-                        // Tăng tháng lên 1
-                        calendar.add(Calendar.MONTH, 1);
-
-                        // Định dạng tháng mới và đặt nó vào TextView
-                        date.setText(format.format(calendar.getTime()));
-                    }
                         break;
-                    case "year":
-                    {
-                        Calendar calendar = Calendar.getInstance();
-                        SimpleDateFormat format = new SimpleDateFormat("yyyy", Locale.getDefault());
+                    }
+                    case "year": {
+                        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
                         try {
-                            // Phân tích năm từ TextView
-                            calendar.setTime(format.parse(date.getText().toString()));
+                            // Tách chuỗi ngày thành hai chuỗi riêng biệt
+                            String[] dates = date.getText().toString().split(" - ");
+                            // Chuyển đổi chuỗi ngày thứ nhất thành đối tượng Date
+                            Date startDate = format.parse(dates[0]);
+
+                            // Tạo một đối tượng Calendar từ ngày bắt đầu
+                            Calendar calendar = Calendar.getInstance();
+                            calendar.setTime(startDate);
+
+                            // Tăng năm lên 1
+                            calendar.add(Calendar.YEAR, 1);
+
+                            // Định dạng năm mới và đặt nó vào TextView
+                            String newStartDate = getFirstDayOfYear(calendar.get(Calendar.YEAR));
+                            String newEndDate = getLastDayOfYear(calendar.get(Calendar.YEAR));
+                            date.setText(newStartDate + " - " + newEndDate);
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
-
-                        // Tăng năm lên 1
-                        calendar.add(Calendar.YEAR, 1);
-
-                        // Định dạng năm mới và đặt nó vào TextView
-                        date.setText(format.format(calendar.getTime()));
-
-                    }
                         break;
+                    }
                     case "week":
                     {
-                        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
                         Calendar calendarStart = Calendar.getInstance();
                         Calendar calendarEnd = Calendar.getInstance();
                         try {
@@ -347,7 +357,7 @@ public class BugetNoRenewFragment extends Fragment {
 
                     }
                         break;
-                    case "timespan":
+                    case "time_span":
                     {
 
 
@@ -363,7 +373,7 @@ public class BugetNoRenewFragment extends Fragment {
                     case "day":
                     {
                         Calendar calendar = Calendar.getInstance();
-                        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
                         try {
                             // Phân tích ngày từ TextView
                             calendar.setTime(format.parse(date.getText().toString()));
@@ -383,54 +393,71 @@ public class BugetNoRenewFragment extends Fragment {
                             date.setText(format.format(calendar.getTime()));
                     }
                     break;
-                    case "month":
-                    {
-                        Calendar calendar = Calendar.getInstance();
-                        SimpleDateFormat format = new SimpleDateFormat("MM/yyyy", Locale.getDefault());
+                    case "month": {
+                        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
                         try {
-                            // Phân tích tháng từ TextView
-                            calendar.setTime(format.parse(date.getText().toString()));
+                            // Tách chuỗi ngày thành hai chuỗi riêng biệt
+                            String[] dates = date.getText().toString().split(" - ");
+                            // Chuyển đổi chuỗi ngày thứ nhất thành đối tượng Date
+                            Date startDate = format.parse(dates[0]);
+
+                            // Tạo một đối tượng Calendar từ ngày bắt đầu
+                            Calendar calendar = Calendar.getInstance();
+                            calendar.setTime(startDate);
+
+                            // Giảm tháng đi 1
+                            calendar.add(Calendar.MONTH, -1);
+
+                            // Kiểm tra xem tháng có nhỏ hơn tháng hiện tại không
+                            if (!isDateLessThanCurrent(format.format(calendar.getTime()))) {
+                                Toast.makeText(getContext(), "Tháng không được nhỏ hơn hiện tại", Toast.LENGTH_LONG).show();
+                                // Nếu tháng nhỏ hơn tháng hiện tại, tăng tháng lên 1 để quay lại tháng ban đầu
+                                calendar.add(Calendar.MONTH, 1);
+                            } else {
+                                // Định dạng tháng mới và đặt nó vào TextView
+                                String newStartDate = getFirstDayOfMonth(calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR));
+                                String newEndDate = getLastDayOfMonth(calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR));
+                                date.setText(newStartDate + " - " + newEndDate);
+                            }
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
-
-                        // Giảm tháng đi 1
-                        calendar.add(Calendar.MONTH, -1);
-                        if(!isDateLessThanCurrent(format.format(calendar.getTime())))
-                        {
-                            Toast.makeText(getContext(), "Tháng không được nhỏ hơn hiện tại", Toast.LENGTH_LONG).show();
-                            calendar.add(Calendar.MONTH, 1);
-                        }
-                        else
-                            date.setText(format.format(calendar.getTime()));
+                        break;
                     }
-                    break;
-                    case "year":
-                    {
-                        Calendar calendar = Calendar.getInstance();
-                        SimpleDateFormat format = new SimpleDateFormat("yyyy", Locale.getDefault());
+                    case "year": {
+                        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
                         try {
-                            // Phân tích năm từ TextView
-                            calendar.setTime(format.parse(date.getText().toString()));
+                            // Tách chuỗi ngày thành hai chuỗi riêng biệt
+                            String[] dates = date.getText().toString().split(" - ");
+                            // Chuyển đổi chuỗi ngày thứ nhất thành đối tượng Date
+                            Date startDate = format.parse(dates[0]);
+
+                            // Tạo một đối tượng Calendar từ ngày bắt đầu
+                            Calendar calendar = Calendar.getInstance();
+                            calendar.setTime(startDate);
+
+                            // Giảm năm đi 1
+                            calendar.add(Calendar.YEAR, -1);
+
+                            // Kiểm tra xem năm có nhỏ hơn năm hiện tại không
+                            if (!isYearLessThanCurrent(String.valueOf(calendar.get(Calendar.YEAR)))) {
+                                Toast.makeText(getContext(), "Năm không được nhỏ hơn hiện tại", Toast.LENGTH_LONG).show();
+                                // Nếu năm nhỏ hơn năm hiện tại, tăng năm lên 1 để quay lại năm ban đầu
+                                calendar.add(Calendar.YEAR, 1);
+                            } else {
+                                // Định dạng năm mới và đặt nó vào TextView
+                                String newStartDate = getFirstDayOfYear(calendar.get(Calendar.YEAR));
+                                String newEndDate = getLastDayOfYear(calendar.get(Calendar.YEAR));
+                                date.setText(newStartDate + " - " + newEndDate);
+                            }
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
-
-                        // Giảm năm đi 1
-                        calendar.add(Calendar.YEAR, -1);
-                        if(!isYearLessThanCurrent(format.format(calendar.getTime())))
-                        {
-                            Toast.makeText(getContext(), "Năm không được nhỏ hơn hiện tại", Toast.LENGTH_LONG).show();
-                            calendar.add(Calendar.YEAR, 1);
-                        }
-                        else
-                            date.setText(format.format(calendar.getTime()));
-
+                        break;
                     }
-                    break;
                     case "week":
                     {
-                        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
                         Calendar calendarStart = Calendar.getInstance();
                         Calendar calendarEnd = Calendar.getInstance();
                         try {
@@ -468,7 +495,8 @@ public class BugetNoRenewFragment extends Fragment {
                 if (dialogFragment != null) {
                     if (getActivity() instanceof AddBudget) {
                         AddBudget grandpa = (AddBudget) getActivity();
-                        if(status=="timespan")
+                        grandpa.SetDateUnit(status);
+                        if(status=="time_span")
                         {
                             grandpa.SetData(from.getText().toString()+" - "+to.getText().toString());
                         }
@@ -476,7 +504,15 @@ public class BugetNoRenewFragment extends Fragment {
                             grandpa.SetData(date.getText().toString());
 
                     } else {
-                        // Handle the case where the parent activity is not an instance of AddBudget
+
+                        AdjustBudget grandpa = (AdjustBudget) getActivity();
+                        grandpa.SetDateUnit(status);
+                        if(status=="time_span")
+                        {
+                            grandpa.SetData(from.getText().toString()+" - "+to.getText().toString());
+                        }
+                        else
+                            grandpa.SetData(date.getText().toString());
                     }dialogFragment.dismiss();
                 }
             }
@@ -500,7 +536,7 @@ public class BugetNoRenewFragment extends Fragment {
                                         // Định dạng ngày được chọn và đặt nó vào TextView
                                         Calendar calendar = Calendar.getInstance();
                                         calendar.set(year, monthOfYear, dayOfMonth);
-                                        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                                        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
                                         if(isEndDateLessThanCurrent(". - "+format.format(calendar.getTime()))==true)
                                         {
                                             Toast.makeText(getContext(), "Ngày không được nhỏ hơn hiện tại", Toast.LENGTH_LONG).show();
@@ -564,7 +600,7 @@ public class BugetNoRenewFragment extends Fragment {
                             public void onClick(View v) {
                                 String inputDate = month_lbl.getText().toString()+" "+year_lbl.getText().toString();
                                 SimpleDateFormat inputFormat = new SimpleDateFormat("MMM yyyy", Locale.ENGLISH);
-                                SimpleDateFormat outputFormat = new SimpleDateFormat("M/yyyy", Locale.ENGLISH);
+                                SimpleDateFormat outputFormat = new SimpleDateFormat("MM-yyyy", Locale.ENGLISH);
 
                                 try {
                                     Date daTe = inputFormat.parse(inputDate);
@@ -574,7 +610,7 @@ public class BugetNoRenewFragment extends Fragment {
                                         Toast.makeText(getContext(), "Tháng không được nhỏ hơn hiện tại", Toast.LENGTH_LONG).show();
                                     }
                                     else
-                                        date.setText(outputDate);
+                                        date.setText(getFirstDayOfMonth(Integer.parseInt(outputDate.substring(0, 2)),Integer.parseInt(outputDate.substring(outputDate.length()-4)))+" - "+getLastDayOfMonth(Integer.parseInt(outputDate.substring(0, 2)),Integer.parseInt(outputDate.substring(outputDate.length()-4))));
                                 } catch (ParseException e) {
                                     e.printStackTrace();
                                 }
@@ -637,7 +673,7 @@ public class BugetNoRenewFragment extends Fragment {
                                     Toast.makeText(getContext(), "Năm không được nhỏ hơn hiện tại", Toast.LENGTH_LONG).show();
                                 }
                                 else
-                                    date.setText(year_lbl.getText().toString());
+                                    date.setText(getFirstDayOfYear(Integer.parseInt(year_lbl.getText().toString()))+" - "+getLastDayOfYear(Integer.parseInt(year_lbl.getText().toString())));
                                 dialog.dismiss();
                             }
                         });
@@ -658,7 +694,7 @@ public class BugetNoRenewFragment extends Fragment {
                                         // Định dạng ngày được chọn và đặt nó vào TextView
                                         Calendar calendar = Calendar.getInstance();
                                         calendar.set(year, monthOfYear, dayOfMonth);
-                                        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                                        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
                                         if(isEndDateLessThanCurrent(getStartAndEndOfWeek(format.format(calendar.getTime())))==true)
                                         {
                                             Toast.makeText(getContext(), "Ngày kết thúc không được nhỏ hơn hiện tại", Toast.LENGTH_LONG).show();
@@ -671,7 +707,7 @@ public class BugetNoRenewFragment extends Fragment {
                         datePickerDialog.show();
                     }
                         break;
-                    case "timespan":
+                    case "time_span":
                     {}
                         break;
                 }
@@ -680,9 +716,56 @@ public class BugetNoRenewFragment extends Fragment {
         });
         return view;
     }
+    public String getFirstDayOfYear(int year) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, Calendar.JANUARY);
+        calendar.set(Calendar.DAY_OF_MONTH, 1); // Set day to the first day of the year
+
+        // Now, calendar's time is set to the first day of the input year
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH) + 1; // Add 1 because month starts from 0
+        int yearr = calendar.get(Calendar.YEAR);
+
+        return day + "-" + month + "-" + yearr;
+    }
+
+    public String getLastDayOfYear(int year) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, Calendar.DECEMBER);
+        calendar.set(Calendar.DAY_OF_MONTH, 31); // Set day to the last day of the year
+
+        // Now, calendar's time is set to the last day of the input year
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH) + 1; // Add 1 because month starts from 0
+        int yearr = calendar.get(Calendar.YEAR);
+
+        return day + "-" + month + "-" + yearr;
+    }
+public String getFirstDayOfMonth(int month, int year) {
+    Calendar calendar = Calendar.getInstance();
+    calendar.set(Calendar.YEAR, year);
+    calendar.set(Calendar.MONTH, month - 1); // In Java Calendar, month starts from 0
+    calendar.set(Calendar.DAY_OF_MONTH, 1); // Set day to the first day of the month
+
+    // Now, calendar's time is set to the first day of the input month and year
+    SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+    return format.format(calendar.getTime());
+}
+    public String getLastDayOfMonth(int month, int year) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month - 1); // In Java Calendar, month starts from 0
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH)); // Set day to the last day of the month
+
+        // Now, calendar's time is set to the last day of the input month and year
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        return format.format(calendar.getTime());
+    }
     public String getStartAndEndOfWeek(String inputDate) {
         String result = "";
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
         Calendar calendar = Calendar.getInstance();
         try {
             // Phân tích ngày từ input
@@ -707,7 +790,7 @@ public class BugetNoRenewFragment extends Fragment {
         return result;
     }
     public boolean isEndDateLessThanCurrent(String dateString) {
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
         try {
             // Tách chuỗi ngày thành hai chuỗi riêng biệt
             String[] dates = dateString.split(" - ");
@@ -724,7 +807,7 @@ public class BugetNoRenewFragment extends Fragment {
         }
     }
     public int compareDates(String date1, String date2) {
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
         try {
             Date d1 = format.parse(date1);
             Date d2 = format.parse(date2);
@@ -743,7 +826,7 @@ public class BugetNoRenewFragment extends Fragment {
 
     }
     public boolean isDateLessThanCurrent(String dateString) {
-        SimpleDateFormat format = new SimpleDateFormat("M/yyyy");
+        SimpleDateFormat format = new SimpleDateFormat("MM-yyyy");
         try {
             // Phân tích chuỗi ngày thành đối tượng Date
             Date inputDate = format.parse(dateString);

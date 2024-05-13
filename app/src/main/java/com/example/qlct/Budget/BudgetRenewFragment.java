@@ -1,5 +1,6 @@
 package com.example.qlct.Budget;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,13 +10,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.qlct.Fragment.MyDialogFragment;
 import com.example.qlct.R;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,6 +43,7 @@ public class BudgetRenewFragment extends Fragment {
     ListView listView;
     TextView apply;
     String date;
+    String status;
 
     public BudgetRenewFragment() {
         // Required empty public constructor
@@ -66,7 +75,23 @@ public class BudgetRenewFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
+    public boolean isEndDateLessThanCurrent(String dateString) {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        try {
+            // Tách chuỗi ngày thành hai chuỗi riêng biệt
+            String[] dates = dateString.split(" - ");
+            // Chuyển đổi chuỗi ngày thứ hai thành đối tượng Date
+            Date endDate = format.parse(dates[1]);
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.DAY_OF_MONTH, -1);
+            Date currentDate = calendar.getTime();
+            // So sánh ngày thứ hai với ngày hiện tại
+            return endDate.before(currentDate) ;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -95,6 +120,16 @@ public class BudgetRenewFragment extends Fragment {
                     if (getActivity() instanceof AddBudget) {
                         AddBudget grandpa = (AddBudget) getActivity();
                         grandpa.SetData(date);
+                        grandpa.SetType("Renew");
+                        grandpa.SetDateUnit(status);
+
+                    }
+                    else
+                    {
+                        AdjustBudget grandpa = (AdjustBudget) getActivity();
+                        grandpa.SetData(date);
+                        grandpa.SetType("Renew");
+                        grandpa.SetDateUnit(status);
                     }
                     // Đóng dialog
                     dialogFragment.dismiss();
@@ -104,7 +139,41 @@ public class BudgetRenewFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               date= arrayList.get(position);
+                date= arrayList.get(position);
+                status=arrayList.get(position);
+                String type=parent.getItemAtPosition(position).toString();
+                if(!(type.equals("Daily")||type.equals("Weekly")||type.equals("Monthly")||type.equals("Yearly")))
+                {
+                    status="Custom";
+                    final Calendar c = Calendar.getInstance();
+                    int year = c.get(Calendar.YEAR);
+                    int month = c.get(Calendar.MONTH);
+                    int day = c.get(Calendar.DAY_OF_MONTH);
+
+                    // Tạo một DatePickerDialog mới
+                    DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
+                            new DatePickerDialog.OnDateSetListener() {
+                                @Override
+                                public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                                    // Định dạng ngày được chọn và đặt nó vào TextView
+                                    Calendar calendar = Calendar.getInstance();
+                                    calendar.set(year, monthOfYear, dayOfMonth);
+                                    SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+                                    if(isEndDateLessThanCurrent(". - "+format.format(calendar.getTime()))==true)
+                                    {
+                                        Toast.makeText(getContext(), "Ngày không được nhỏ hơn hiện tại", Toast.LENGTH_LONG).show();
+                                    }
+                                    else
+                                    {
+                                        arrayList.set(position, format.format(calendar.getTime()));
+                                        adapter.notifyDataSetChanged();
+                                        date= arrayList.get(position);
+                                    }
+                                }
+                            }, year, month, day);
+                    // Hiển thị DatePickerDialog
+                    datePickerDialog.show();
+                }
             }
         });
         return view;
