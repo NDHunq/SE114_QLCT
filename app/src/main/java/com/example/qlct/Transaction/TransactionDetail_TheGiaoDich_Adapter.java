@@ -1,4 +1,4 @@
-package com.example.qlct;
+package com.example.qlct.Transaction;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,6 +7,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.qlct.R;
+import com.example.qlct.Transaction.TransactionDetail_TheGiaoDich;
 
 import java.util.ArrayList;
 

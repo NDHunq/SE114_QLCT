@@ -1,4 +1,4 @@
-package com.example.qlct;
+package com.example.qlct.Transaction;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -24,23 +24,24 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.qlct.Category.Category;
+import com.example.qlct.Category.Category_Add;
+import com.example.qlct.Category.Category_adapter;
+import com.example.qlct.R;
+import com.example.qlct.SelectWallet_Adapter;
+import com.example.qlct.Wallet;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 public class AddTransaction extends AppCompatActivity {
 

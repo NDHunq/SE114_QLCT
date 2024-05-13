@@ -1,7 +1,6 @@
-package com.example.qlct;
+package com.example.qlct.Transaction;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +8,8 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.time.LocalDate;
+import com.example.qlct.R;
+
 import java.util.HashMap;
 import java.util.List;
 

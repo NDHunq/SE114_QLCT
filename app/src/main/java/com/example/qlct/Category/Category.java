@@ -1,4 +1,4 @@
-package com.example.qlct;
+package com.example.qlct.Category;
 
 public class Category {
     private String category_name;

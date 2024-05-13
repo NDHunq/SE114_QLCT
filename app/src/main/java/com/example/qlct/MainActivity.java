@@ -20,10 +20,12 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.qlct.Category.Category_Add;
 import com.example.qlct.Fragment.Account_fragment;
 import com.example.qlct.Fragment.Analysis_fragment;
 import com.example.qlct.Fragment.Budget_fragment;
 import com.example.qlct.Fragment.Home_fragment;
+import com.example.qlct.Transaction.AddTransaction;
 import com.example.qlct.databinding.ActivityMainBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 

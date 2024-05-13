@@ -1,4 +1,4 @@
-package com.example.qlct;
+package com.example.qlct.Category;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -18,6 +18,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.example.qlct.R;
 
 public class Category_Add extends AppCompatActivity {
     int sb=1;

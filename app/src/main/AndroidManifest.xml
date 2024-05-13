@@ -27,7 +27,7 @@
             android:name=".Budget.AddBudget"
             android:exported="false" />
         <activity
-            android:name=".Category_Add"
+            android:name=".Category.Category_Add"
             android:exported="false" />
         <activity
             android:name=".Share_Wallet"

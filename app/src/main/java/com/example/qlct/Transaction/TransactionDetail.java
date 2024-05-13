@@ -1,4 +1,4 @@
-package com.example.qlct;
+package com.example.qlct.Transaction;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -26,13 +26,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.qlct.Category.Category;
+import com.example.qlct.R;
+import com.example.qlct.SelectWallet_Adapter;
+import com.example.qlct.Wallet;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;

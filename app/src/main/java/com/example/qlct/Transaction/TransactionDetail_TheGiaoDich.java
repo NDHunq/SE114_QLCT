@@ -1,4 +1,6 @@
-package com.example.qlct;
+package com.example.qlct.Transaction;
+
+import com.example.qlct.Category.Category;
 
 public class TransactionDetail_TheGiaoDich {
     private int HinhAnh;
