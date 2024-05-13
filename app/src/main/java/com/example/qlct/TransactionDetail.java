@@ -113,22 +113,8 @@ public class TransactionDetail extends AppCompatActivity {
         }
     }
 
-    private void setTransferBackground(MaterialButton transfer_btn){
-        if (transfer){
-            transfer_btn.setBackgroundColor(getResources().getColor(R.color.xanhnen));
-            transfer_btn.setTextColor(getResources().getColor(R.color.white));
-            transfer_btn.setIconTint(getColorStateList(R.color.white));
-            transfer_btn.setRippleColor(getColorStateList(R.color.xanhnennhat));
-        }else{
-            transfer_btn.setBackgroundColor(getResources().getColor(R.color.white));
-            transfer_btn.setTextColor(getResources().getColor(R.color.black));
-            transfer_btn.setIconTint(getColorStateList(R.color.black));
-            transfer_btn.setRippleColor(getColorStateList(R.color.xanhnen));
-        }
-    }
     private boolean income = true;
     private boolean expense = false;
-    private boolean transfer = false;
 
     private void setChips(Chip chip, Context context){
         chip.setChipStrokeColor(getColorStateList(R.color.black));
@@ -189,9 +175,6 @@ public class TransactionDetail extends AppCompatActivity {
                     }else if(expense){
                         chip1.setRippleColor(ColorStateList.valueOf(getResources().getColor(R.color.lightred, null)));
                         chip1.setChipBackgroundColor(ColorStateList.valueOf(getResources().getColor(R.color.red, null)));
-                    }else if(transfer){
-                        chip1.setRippleColor(ColorStateList.valueOf(getResources().getColor(R.color.xanhnennhat, null)));
-                        chip1.setChipBackgroundColor(ColorStateList.valueOf(getResources().getColor(R.color.xanhnen, null)));
                     }
                     chip1.setCheckedIconVisible(true);
                     chip1.setTextColor(getResources().getColor(R.color.white, null));
@@ -209,10 +192,8 @@ public class TransactionDetail extends AppCompatActivity {
             public void onClick(View view) {
                 income = true;
                 expense = false;
-                transfer = false;
                 setIncomeBackground(income_btn);
                 setExpenseBackground(expense_btn);
-                setTransferBackground(transfer_btn);
             }
         });
 
@@ -221,25 +202,10 @@ public class TransactionDetail extends AppCompatActivity {
             public void onClick(View view) {
                 income = false;
                 expense = true;
-                transfer = false;
                 setIncomeBackground(income_btn);
                 setExpenseBackground(expense_btn);
-                setTransferBackground(transfer_btn);
             }
         });
-
-        transfer_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                income = false;
-                expense = false;
-                transfer = true;
-                setIncomeBackground(income_btn);
-                setExpenseBackground(expense_btn);
-                setTransferBackground(transfer_btn);
-            }
-        });
-
     }
 
     private void showDateDialog(){

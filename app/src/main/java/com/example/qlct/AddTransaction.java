@@ -45,7 +45,7 @@ import java.util.ListIterator;
 public class AddTransaction extends AppCompatActivity {
 
     private ListView categoryListView;
-    private List<Category> categoryList;
+    private List<Category> categoryList = new ArrayList<>();
 
     private List<Category> renderCategoryList;
 
@@ -54,6 +54,10 @@ public class AddTransaction extends AppCompatActivity {
     private ListView walletListView;
 
     private List<Wallet> walletList;
+
+    private TextView select_category_txtview;
+
+    private TextView select_wallet_txtview;
 
     //Unfocus EditText khi click ra ngoai
     public boolean dispatchTouchEvent(MotionEvent event) {
@@ -72,13 +76,12 @@ public class AddTransaction extends AppCompatActivity {
         return super.dispatchTouchEvent( event );
     }
     private void AnhXaCategory(){
-        categoryList = new ArrayList<Category>();
         categoryList.add(new Category("Food", R.drawable.dish, 1));
         categoryList.add(new Category("Food", R.drawable.dish, 2));
-        categoryList.add(new Category("Food", R.drawable.dish, 3));
+        categoryList.add(new Category("Food", R.drawable.dish, 2));
         categoryList.add(new Category("Food", R.drawable.dish, 1));
         categoryList.add(new Category("Food", R.drawable.dish, 2));
-        categoryList.add(new Category("Food", R.drawable.dish, 3));
+        categoryList.add(new Category("Food", R.drawable.dish, 1));
         categoryList.add(new Category("Food", R.drawable.dish, 1));
     }
 
@@ -99,14 +102,7 @@ public class AddTransaction extends AppCompatActivity {
                         renderCategoryList.add(category);
                     }
                 }
-            }
-            else if(transfer){
-                renderCategoryList = new ArrayList<Category>();
-                for (Category category : categoryList){
-                    if(category.getCategory_type() == 3){
-                        renderCategoryList.add(category);
-                    }
-                }
+            } else if (transfer) {
 
             }
         }
@@ -338,7 +334,6 @@ public class AddTransaction extends AppCompatActivity {
             }
         });
 
-        setRemind();
 
         MaterialButton income_btn = findViewById(R.id.income_button);
         MaterialButton expense_btn = findViewById(R.id.expense_button);
@@ -358,8 +353,14 @@ public class AddTransaction extends AppCompatActivity {
                 setIncomeBackground(income_btn);
                 setExpenseBackground(expense_btn);
                 setTransferBackground(transfer_btn);
-                setRemind();
                 RenderCategoryList();
+
+                select_category_txtview = findViewById(R.id.select_category_txtview);
+                select_category_txtview.setText("Select Category");
+                select_wallet_txtview = findViewById(R.id.select_wallet_txtview);
+                select_wallet_txtview.setText("Select Wallet");
+
+
             }
         });
 
@@ -372,8 +373,14 @@ public class AddTransaction extends AppCompatActivity {
                 setIncomeBackground(income_btn);
                 setExpenseBackground(expense_btn);
                 setTransferBackground(transfer_btn);
-                setRemind();
                 RenderCategoryList();
+
+                select_category_txtview = findViewById(R.id.select_category_txtview);
+                select_category_txtview.setText("Select Category");
+                select_wallet_txtview = findViewById(R.id.select_wallet_txtview);
+                select_wallet_txtview.setText("Select Wallet");
+
+
             }
         });
 
@@ -386,8 +393,12 @@ public class AddTransaction extends AppCompatActivity {
                 setIncomeBackground(income_btn);
                 setExpenseBackground(expense_btn);
                 setTransferBackground(transfer_btn);
-                setRemind();
                 RenderCategoryList();
+
+                select_category_txtview = findViewById(R.id.select_category_txtview);
+                select_category_txtview.setText("From Wallet");
+                select_wallet_txtview = findViewById(R.id.select_wallet_txtview);
+                select_wallet_txtview.setText("To Wallet");
             }
         });
 
@@ -395,7 +406,12 @@ public class AddTransaction extends AppCompatActivity {
         selectCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showCategoryDialog();
+                if(transfer){
+                    showWalletDialog();
+                }
+                else{
+                    showCategoryDialog();
+                }
             }
         });
 
@@ -464,15 +480,4 @@ public class AddTransaction extends AppCompatActivity {
             }
         });
     }
-
-    public void setRemind(){
-        LinearLayout layout = findViewById(R.id.remind_layout);
-        if(!transfer){
-            layout.setVisibility(View.VISIBLE);
-        }
-        else{
-            layout.setVisibility(View.INVISIBLE);
-        }
-    }
-
 }

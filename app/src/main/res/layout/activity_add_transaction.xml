@@ -200,11 +200,12 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/select_category_txtview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginTop="245dp"
-        android:text="Select category"
+        android:text="Select Category"
         android:textColor="@color/xanhnen"
         android:textStyle="bold"
         android:textSize="16sp"
@@ -266,11 +267,12 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/select_wallet_txtview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginTop="340dp"
-        android:text="Select wallet"
+        android:text="Select Wallet"
         android:textColor="@color/xanhnen"
         android:textStyle="bold"
         android:textSize="16sp"
@@ -416,7 +418,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginTop="595dp"
-        android:text="Add image (Optional)"
+        android:text="Add Image (Optional)"
         android:textColor="@color/xanhnen"
         android:textStyle="bold"
         android:textSize="16sp"
