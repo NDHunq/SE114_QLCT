@@ -5,26 +5,34 @@ package com.example.qlct;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.util.Log;
 import android.view.View;
 
 import android.graphics.Color;
 
 
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.qlct.API_Entity.UpdateDeviceTokenEntity;
+import com.example.qlct.API_Utils.DeviceTokenAPIUtil;
 import com.example.qlct.Fragment.Account_fragment;
 import com.example.qlct.Fragment.Analysis_fragment;
 import com.example.qlct.Fragment.Budget_fragment;
 import com.example.qlct.Fragment.Home_fragment;
 import com.example.qlct.databinding.ActivityMainBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -60,6 +68,27 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        //Get device token and send to backend for notification service in the future
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w("Error_firebase_messaging", "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
+
+                        // Get new FCM registration token
+                        String token = task.getResult();
+
+                        // Log and toast
+                        //String msg = getString(R.string.msg_token_fmt, token);
+                        Log.d("DEVICE_TOKEN", token);
+
+                        new DeviceTokenAPIUtil().updateDeviceTokenAPI(new UpdateDeviceTokenEntity(token));
+                    }
+                });
 
         ConstraintLayout button = findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
