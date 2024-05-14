@@ -2,22 +2,22 @@ package com.example.qlct.Category;
 
 public class Category {
     private String category_name;
-    private int image;
+    private String image;
 
-    private int category_type; //1: Income, 2: Expense, 3: Transfer
+    private String category_type; //1: Income, 2: Expense
 
 //    public Category(String category_name, int image){
 //        this.category_name = category_name;
 //        this.image = image;
 //    }
 
-    public Category(String category_name, int image, int category_type){
+    public Category(String category_name, String image, String category_type){
         this.category_name = category_name;
         this.image = image;
         this.category_type = category_type;
     }
 
-    public Category(String category_name, int category_type){
+    public Category(String category_name, String category_type){
         this.category_name = category_name;
         this.category_type = category_type;
     }
@@ -26,7 +26,7 @@ public class Category {
         return category_name;
     }
 
-    public int getImage() {
+    public String getImageURL() {
         return image;
     }
 
@@ -34,15 +34,15 @@ public class Category {
         this.category_name = category_name;
     }
 
-    public void setImage(int image) {
+    public void setImageURL(String image) {
         this.image = image;
     }
 
-    public int getCategory_type() {
+    public String getCategory_type() {
         return category_type;
     }
 
-    public void setCategory_type(int category_type) {
+    public void setCategory_type(String category_type) {
         this.category_type = category_type;
     }
 }

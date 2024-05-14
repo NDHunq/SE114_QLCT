@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -29,9 +30,15 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.bumptech.glide.Glide;
+import com.example.qlct.API_Entity.GetAllCategoryEntity;
+import com.example.qlct.API_Entity.GetAllWalletsEntity;
+import com.example.qlct.API_Utils.CategoryAPIUtil;
+import com.example.qlct.API_Utils.WalletAPIUtil;
 import com.example.qlct.Category.Category;
 import com.example.qlct.Category.Category_Add;
 import com.example.qlct.Category.Category_adapter;
+import com.example.qlct.Home.Home_TheVi;
 import com.example.qlct.R;
 import com.example.qlct.SelectWallet_Adapter;
 import com.example.qlct.Wallet;
@@ -42,6 +49,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class AddTransaction extends AppCompatActivity {
 
@@ -77,13 +85,12 @@ public class AddTransaction extends AppCompatActivity {
         return super.dispatchTouchEvent( event );
     }
     private void AnhXaCategory(){
-        categoryList.add(new Category("Food", R.drawable.dish, 1));
-        categoryList.add(new Category("Food", R.drawable.dish, 2));
-        categoryList.add(new Category("Food", R.drawable.dish, 2));
-        categoryList.add(new Category("Food", R.drawable.dish, 1));
-        categoryList.add(new Category("Food", R.drawable.dish, 2));
-        categoryList.add(new Category("Food", R.drawable.dish, 1));
-        categoryList.add(new Category("Food", R.drawable.dish, 1));
+        categoryList = new ArrayList<Category>();
+        ArrayList<GetAllCategoryEntity> parseAPIList = new CategoryAPIUtil().getAllCategory();
+        for(GetAllCategoryEntity category : parseAPIList){
+            categoryList.add(new Category(category.getName(), category.getPicture(), category.getType()));
+        }
+        Log.d("Get_wallet_data_object", categoryList.toString());
     }
 
     private void RenderCategoryList(){
@@ -91,7 +98,7 @@ public class AddTransaction extends AppCompatActivity {
             if(income){
                 renderCategoryList = new ArrayList<Category>();
                 for (Category category : categoryList){
-                    if(category.getCategory_type() == 1){
+                    if(category.getCategory_type().equals("INCOME")){
                         renderCategoryList.add(category);
                     }
                 }
@@ -99,7 +106,7 @@ public class AddTransaction extends AppCompatActivity {
             else if(expense){
                 renderCategoryList = new ArrayList<Category>();
                 for (Category category : categoryList){
-                    if(category.getCategory_type() == 2){
+                    if(category.getCategory_type().equals("EXPENSE")){
                         renderCategoryList.add(category);
                     }
                 }
@@ -110,15 +117,17 @@ public class AddTransaction extends AppCompatActivity {
     }
 
     private void AnhXaWallet(){
-        walletList = new ArrayList<Wallet>();
-        walletList.add(new Wallet("Vi 1", "2000000 d", R.drawable.budget));
-        walletList.add(new Wallet("Vi 2", "2000000 d", R.drawable.budget));
-        walletList.add(new Wallet("Vi 3", "2000000 d", R.drawable.budget));
-        walletList.add(new Wallet("Vi 4", "2000000 d", R.drawable.budget));
-        walletList.add(new Wallet("Vi 5", "2000000 d", R.drawable.budget));
-        walletList.add(new Wallet("Vi 6", "2000000 d", R.drawable.budget));
-        walletList.add(new Wallet("Vi 7", "2000000 d", R.drawable.budget));
-        walletList.add(new Wallet("Vi 8", "2000000 d", R.drawable.budget));
+        try{
+            walletList = new ArrayList<Wallet>();
+            ArrayList<GetAllWalletsEntity> parseAPIList = new WalletAPIUtil().getAllWalletAPI();
+            //Chạy vòng lặp để lấy ra các field cần thiết cho hiển thị ra Views
+            for (GetAllWalletsEntity item : parseAPIList) {
+                walletList.add(new Wallet(item.id, item.name, item.amount, R.drawable.wallet));
+            }
+            Log.d("Get_wallet_data_object", walletList.toString());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     private void showCategoryDialog(){
@@ -139,6 +148,23 @@ public class AddTransaction extends AppCompatActivity {
         RenderCategoryList();
         Category_adapter categoryAdapter = new Category_adapter(dialog.getContext(), R.layout.category_list_item, renderCategoryList);
         categoryListView.setAdapter(categoryAdapter);
+
+        categoryListView.setOnItemClickListener((parent, view, position, id) -> {
+            Category category = renderCategoryList.get(position);
+            if(income){
+                TextView categoryTxtView = findViewById(R.id.income_category_txtview);
+                categoryTxtView.setText(category.getCategory_name());
+                ImageView categoryIcon = findViewById(R.id.income_category_icon);
+                Glide.with(dialog.getContext()).load(category.getImageURL()).into(categoryIcon);
+            }
+            else if(expense){
+                TextView categoryTxtView = findViewById(R.id.expense_category_txtview);
+                categoryTxtView.setText(category.getCategory_name());
+                ImageView categoryIcon = findViewById(R.id.expense_category_icon);
+                Glide.with(dialog.getContext()).load(category.getImageURL()).into(categoryIcon);
+            }
+            dialog.dismiss();
+        });
 
         TextView addnew = dialog.findViewById(R.id.select_category_addnew_btn);
         addnew.setOnClickListener(new View.OnClickListener() {
@@ -345,6 +371,20 @@ public class AddTransaction extends AppCompatActivity {
         income_btn.setIconTint(getColorStateList(R.color.white));
         income_btn.setRippleColor(getColorStateList(R.color.xanhnhat));
 
+        LinearLayout income_category_layout = findViewById(R.id.income_category_layout);
+        income_category_layout.setVisibility(View.VISIBLE);
+        LinearLayout expense_category_layout = findViewById(R.id.expense_category_layout);
+        expense_category_layout.setVisibility(View.GONE);
+        LinearLayout transfer_category_layout = findViewById(R.id.from_wallet_layout);
+        transfer_category_layout.setVisibility(View.GONE);
+
+        LinearLayout income_wallet_layout = findViewById(R.id.income_wallet_layout);
+        income_wallet_layout.setVisibility(View.VISIBLE);
+        LinearLayout expense_wallet_layout = findViewById(R.id.expense_wallet_layout);
+        expense_wallet_layout.setVisibility(View.GONE);
+        LinearLayout transfer_wallet_layout = findViewById(R.id.target_wallet_layout);
+        transfer_wallet_layout.setVisibility(View.GONE);
+
         income_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -361,7 +401,19 @@ public class AddTransaction extends AppCompatActivity {
                 select_wallet_txtview = findViewById(R.id.select_wallet_txtview);
                 select_wallet_txtview.setText("Select Wallet");
 
+                LinearLayout income_category_layout = findViewById(R.id.income_category_layout);
+                income_category_layout.setVisibility(View.VISIBLE);
+                LinearLayout expense_category_layout = findViewById(R.id.expense_category_layout);
+                expense_category_layout.setVisibility(View.GONE);
+                LinearLayout transfer_category_layout = findViewById(R.id.from_wallet_layout);
+                transfer_category_layout.setVisibility(View.GONE);
 
+                LinearLayout income_wallet_layout = findViewById(R.id.income_wallet_layout);
+                income_wallet_layout.setVisibility(View.VISIBLE);
+                LinearLayout expense_wallet_layout = findViewById(R.id.expense_wallet_layout);
+                expense_wallet_layout.setVisibility(View.GONE);
+                LinearLayout transfer_wallet_layout = findViewById(R.id.target_wallet_layout);
+                transfer_wallet_layout.setVisibility(View.GONE);
             }
         });
 
@@ -381,7 +433,19 @@ public class AddTransaction extends AppCompatActivity {
                 select_wallet_txtview = findViewById(R.id.select_wallet_txtview);
                 select_wallet_txtview.setText("Select Wallet");
 
+                LinearLayout income_category_layout = findViewById(R.id.income_category_layout);
+                income_category_layout.setVisibility(View.GONE);
+                LinearLayout expense_category_layout = findViewById(R.id.expense_category_layout);
+                expense_category_layout.setVisibility(View.VISIBLE);
+                LinearLayout transfer_category_layout = findViewById(R.id.from_wallet_layout);
+                transfer_category_layout.setVisibility(View.GONE);
 
+                LinearLayout income_wallet_layout = findViewById(R.id.income_wallet_layout);
+                income_wallet_layout.setVisibility(View.GONE);
+                LinearLayout expense_wallet_layout = findViewById(R.id.expense_wallet_layout);
+                expense_wallet_layout.setVisibility(View.VISIBLE);
+                LinearLayout transfer_wallet_layout = findViewById(R.id.target_wallet_layout);
+                transfer_wallet_layout.setVisibility(View.GONE);
             }
         });
 
@@ -400,24 +464,65 @@ public class AddTransaction extends AppCompatActivity {
                 select_category_txtview.setText("From Wallet");
                 select_wallet_txtview = findViewById(R.id.select_wallet_txtview);
                 select_wallet_txtview.setText("To Wallet");
+
+                LinearLayout income_category_layout = findViewById(R.id.income_category_layout);
+                income_category_layout.setVisibility(View.GONE);
+                LinearLayout expense_category_layout = findViewById(R.id.expense_category_layout);
+                expense_category_layout.setVisibility(View.GONE);
+                LinearLayout transfer_category_layout = findViewById(R.id.from_wallet_layout);
+                transfer_category_layout.setVisibility(View.VISIBLE);
+
+                LinearLayout income_wallet_layout = findViewById(R.id.income_wallet_layout);
+                income_wallet_layout.setVisibility(View.GONE);
+                LinearLayout expense_wallet_layout = findViewById(R.id.expense_wallet_layout);
+                expense_wallet_layout.setVisibility(View.GONE);
+                LinearLayout transfer_wallet_layout = findViewById(R.id.target_wallet_layout);
+                transfer_wallet_layout.setVisibility(View.VISIBLE);
             }
         });
 
-        TextView selectCategory = findViewById(R.id.add_trans_select_category);
-        selectCategory.setOnClickListener(new View.OnClickListener() {
+        TextView selectIncomeCategory = findViewById(R.id.add_trans_select_income_category);
+        selectIncomeCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(transfer){
-                    showWalletDialog();
-                }
-                else{
-                    showCategoryDialog();
-                }
+                showCategoryDialog();
             }
         });
 
-        TextView selectWallet = findViewById(R.id.add_trans_select_wallet);
-        selectWallet.setOnClickListener(new View.OnClickListener() {
+        TextView selectExpenseCategory = findViewById(R.id.add_trans_select_expense_category);
+        selectExpenseCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showCategoryDialog();
+            }
+        });
+
+        TextView selectFromWallet = findViewById(R.id.add_trans_select_from_wallet);
+        selectFromWallet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showWalletDialog();
+            }
+        });
+
+        TextView selectIncomeWallet = findViewById(R.id.add_trans_select_income_wallet);
+        selectIncomeWallet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showWalletDialog();
+            }
+        });
+
+        TextView selectExpenseWallet = findViewById(R.id.add_trans_select_expense_wallet);
+        selectExpenseWallet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showWalletDialog();
+            }
+        });
+
+        TextView selectTargetWallet = findViewById(R.id.add_trans_select_target_wallet);
+        selectTargetWallet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showWalletDialog();
@@ -454,30 +559,6 @@ public class AddTransaction extends AppCompatActivity {
                             }
                         }, year, month, day);
                 datePickerDialog.show();
-            }
-        });
-
-        ImageView remindIcon = findViewById(R.id.remind_btn);
-        remindIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Lấy thời gian hiện tại làm thời gian mặc định cho TimePickerDialog
-                final Calendar c = Calendar.getInstance();
-                int hour = c.get(Calendar.HOUR_OF_DAY);
-                int minute = c.get(Calendar.MINUTE);
-
-                // Tạo và hiển thị TimePickerDialog
-                TimePickerDialog timePickerDialog = new TimePickerDialog(AddTransaction.this,
-                        new TimePickerDialog.OnTimeSetListener() {
-                            @Override
-                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                // Người dùng đã chọn thời gian, cập nhật select_date_txtbox
-                                String selectedTime = hourOfDay + ":" + minute;
-                                TextView timeTextBox = findViewById(R.id.remind_txt);
-                                timeTextBox.setText(selectedTime);
-                            }
-                        }, hour, minute, true);
-                timePickerDialog.show();
             }
         });
     }

@@ -1,13 +1,16 @@
 package com.example.qlct.Category;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.qlct.Category.Category;
 import com.example.qlct.R;
 import com.google.android.material.card.MaterialCardView;
@@ -51,27 +54,8 @@ public class Category_adapter extends BaseAdapter {
         MaterialCardView cardView = convertView.findViewById(R.id.category_icon_cardview);
 
         Category category = categoryList.get(position);
-        categoryIcon.setImageResource(category.getImage());
+        Glide.with(context).load(category.getImageURL()).into(categoryIcon);
         categoryName.setText(category.getCategory_name());
-        switch (category.getCategory_type()){
-            case 1:
-            {
-                categoryName.setTextColor(context.getResources().getColor(R.color.xanhdam));
-                categoryIcon.setColorFilter(context.getResources().getColor(R.color.xanhdam));
-                cardView.setStrokeColor(context.getResources().getColor(R.color.xanhdam));
-            }break;
-            case 2: {
-                categoryName.setTextColor(context.getResources().getColor(R.color.red));
-                categoryIcon.setColorFilter(context.getResources().getColor(R.color.red));
-                cardView.setStrokeColor(context.getResources().getColor(R.color.red));
-            }break;
-            case 3: {
-                categoryName.setTextColor(context.getResources().getColor(R.color.xanhnen));
-                categoryIcon.setColorFilter(context.getResources().getColor(R.color.xanhnen));
-                cardView.setStrokeColor(context.getResources().getColor(R.color.xanhnen));
-            }break;
-        }
-
         return convertView;
     }
 }

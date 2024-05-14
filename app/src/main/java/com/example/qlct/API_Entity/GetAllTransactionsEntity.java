@@ -3,7 +3,7 @@ package com.example.qlct.API_Entity;
 public class GetAllTransactionsEntity {
     public String id;
     public String user_id;
-    public Integer amount;
+    public String amount;
     public String category_id;
     public String wallet_id;
     public String notes;

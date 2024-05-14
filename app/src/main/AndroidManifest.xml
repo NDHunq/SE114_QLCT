@@ -46,6 +46,12 @@
             android:name=".Home.Home_My_wallets"
             android:exported="false" />
         <activity
+            android:name=".Transaction.TransactionDetail"
+            android:exported="false" />
+        <activity
+            android:name=".Transaction.AddTransaction"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

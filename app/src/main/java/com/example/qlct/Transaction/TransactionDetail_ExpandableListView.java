@@ -97,15 +97,15 @@ public class TransactionDetail_ExpandableListView extends BaseExpandableListAdap
         vitien.setText(item.getViTien());
         try{
             switch (item.getGiaoDich().getCategory_type()){
-                case 1:
+                case "INCOME":
                 {
                     sotien.setTextColor(context.getResources().getColor(R.color.xanhdam));
                 }break;
-                case 2:
+                case "EXPENSE":
                 {
                     sotien.setTextColor(context.getResources().getColor(R.color.red));
                 }break;
-                case 3:
+                default:
                 {
                     sotien.setTextColor(context.getResources().getColor(R.color.xanhnen));
                 }break;

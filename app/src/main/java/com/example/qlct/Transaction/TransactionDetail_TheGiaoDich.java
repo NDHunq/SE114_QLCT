@@ -55,7 +55,7 @@ public class TransactionDetail_TheGiaoDich {
         return GiaoDich.getCategory_name();
     }
 
-    public int getLoaiGiaoDich() {
+    public String getLoaiGiaoDich() {
         return GiaoDich.getCategory_type();
     }
 
