@@ -3,10 +3,8 @@ package com.example.qlct.API_Utils;
 import android.util.Log;
 
 import com.example.qlct.API_Config;
-import com.example.qlct.API_Entity.CreateCategoryEntity;
-import com.example.qlct.API_Entity.CreateWalletEntity;
+import com.example.qlct.API_Entity.CreateCategoryEntity_quyen;
 import com.example.qlct.API_Entity.GetAllCategoryy;
-import com.example.qlct.API_Entity.GetAllWalletsEntity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -87,7 +85,7 @@ public class CategoryAPIUntill {
         }
         return doesExist;
     }
-    public void createCategoryAPI( CreateCategoryEntity createCategoryEntity) {
+    public void createCategoryAPI( CreateCategoryEntity_quyen createCategoryEntity) {
         try {
             OkHttpClient client = new OkHttpClient().newBuilder()
                     .build();

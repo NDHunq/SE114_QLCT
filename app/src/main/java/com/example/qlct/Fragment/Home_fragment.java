@@ -4,13 +4,11 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +17,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.qlct.API_Entity.Category;
-import com.example.qlct.API_Entity.GetAllTransactionsEntity;
+import com.example.qlct.API_Entity.GetAllTransactionsEntity_quyen;
 import com.example.qlct.API_Entity.GetAllWalletsEntity;
 import com.example.qlct.API_Utils.TransactionAPIUtil;
 import com.example.qlct.API_Utils.WalletAPIUtil;
@@ -29,7 +26,6 @@ import com.example.qlct.Home.Home_My_wallets;
 import com.example.qlct.Home.Home_New_wallet;
 import com.example.qlct.Home.Home_TheGiaoDich;
 import com.example.qlct.Home.Home_TheGiaoDich_Adapter;
-import com.example.qlct.Home.Home_TheVi;
 import com.example.qlct.Home.Home_Wallet_Information;
 import com.example.qlct.Home_TheTopSpent;
 import com.example.qlct.Home_TheTopSpent_Adapter;
@@ -68,9 +64,9 @@ public class Home_fragment extends Fragment {
         try {
             theGiaoDichList = new ArrayList<>();
             int i=0;
-            ArrayList<GetAllTransactionsEntity> parseAPIList = new TransactionAPIUtil().getAllTransactionsAPI();
+            ArrayList<GetAllTransactionsEntity_quyen> parseAPIList = new TransactionAPIUtil().getAllTransactionsAPI();
             //Chạy vòng lặp để lấy ra các field cần thiết cho hiển thị ra Views
-            for (GetAllTransactionsEntity item : parseAPIList) {
+            for (GetAllTransactionsEntity_quyen item : parseAPIList) {
                 i++;
                 if(i>3)
                 {

@@ -1,12 +1,12 @@
 package com.example.qlct.API_Entity;
 
-public class CreateCategoryEntity {
+public class CreateCategoryEntity_quyen {
     String name;
     String picture;
     String type;
     String user_id;
 
-    public CreateCategoryEntity(String name, String picture, String type, String user_id) {
+    public CreateCategoryEntity_quyen(String name, String picture, String type, String user_id) {
         this.name = name;
         this.picture = picture;
         this.type = type;

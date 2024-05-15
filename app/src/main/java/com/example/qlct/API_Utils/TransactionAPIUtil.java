@@ -5,10 +5,7 @@ import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.qlct.API_Config;
-import com.example.qlct.API_Entity.CreateWalletEntity;
-import com.example.qlct.API_Entity.GetAllTransactionsEntity;
-import com.example.qlct.API_Entity.GetAllWalletsEntity;
-import com.example.qlct.API_Entity.UpdateWalletEntity;
+import com.example.qlct.API_Entity.GetAllTransactionsEntity_quyen;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -17,10 +14,8 @@ import org.json.JSONObject;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class TransactionAPIUtil extends AppCompatActivity {
@@ -32,7 +27,7 @@ public class TransactionAPIUtil extends AppCompatActivity {
      */
     private String LOGIN_TOKEN = API_Config.TEST_LOGIN_TOKEN;
 
-    public ArrayList<GetAllTransactionsEntity> getAllTransactionsAPI (){
+    public ArrayList<GetAllTransactionsEntity_quyen> getAllTransactionsAPI (){
         try {
             OkHttpClient client = new OkHttpClient().newBuilder()
                     .build();
@@ -48,8 +43,8 @@ public class TransactionAPIUtil extends AppCompatActivity {
             JSONObject json = new JSONObject(jsonData);
 
             //Maping json to entity
-            Type listType = new TypeToken<ArrayList<GetAllTransactionsEntity>>(){}.getType();
-            ArrayList<GetAllTransactionsEntity> parseAPIList = new Gson().fromJson(json.getJSONObject("data").getJSONArray("rows").toString(), listType);
+            Type listType = new TypeToken<ArrayList<GetAllTransactionsEntity_quyen>>(){}.getType();
+            ArrayList<GetAllTransactionsEntity_quyen> parseAPIList = new Gson().fromJson(json.getJSONObject("data").getJSONArray("rows").toString(), listType);
 
             return parseAPIList;
         }

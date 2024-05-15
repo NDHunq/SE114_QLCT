@@ -9,7 +9,6 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Base64;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageButton;
@@ -28,10 +27,8 @@ import androidx.core.view.WindowInsetsCompat;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
-import com.example.qlct.API_Entity.CreateCategoryEntity;
-import com.example.qlct.API_Entity.CreateWalletEntity;
+import com.example.qlct.API_Entity.CreateCategoryEntity_quyen;
 import com.example.qlct.API_Utils.CategoryAPIUntill;
-import com.example.qlct.API_Utils.WalletAPIUtil;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.ByteArrayOutputStream;
@@ -86,7 +83,7 @@ public class Category_Add extends AppCompatActivity {
                     byte[] byteArray = baos.toByteArray();
                     String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
 
-                    CreateCategoryEntity create = new CreateCategoryEntity(category_name.getText().toString(), encoded, ty, "aaea42e6-591e-45b3-8d4f-e0a4b80e3c69");
+                    CreateCategoryEntity_quyen create = new CreateCategoryEntity_quyen(category_name.getText().toString(), encoded, ty, "aaea42e6-591e-45b3-8d4f-e0a4b80e3c69");
                     CategoryAPIUntill CategoryAPIUntill = new CategoryAPIUntill();
                     CategoryAPIUntill.createCategoryAPI(create);
                     setResult(Activity.RESULT_OK);
