@@ -1,5 +1,6 @@
 package com.example.qlct.Fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +39,10 @@ import com.example.qlct.R;
 import com.example.qlct.doitiente;
 
 import com.example.qlct.TransactionDetail;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 
 
 import java.util.ArrayList;
@@ -88,7 +94,7 @@ public class Home_fragment extends Fragment {
 
     }
     double  TongTien=0;
-    doitiente doitien = new doitiente(1/25455,1/27462.13,1/3522.40);
+    doitiente doitien = new doitiente();
 
     public  void loadData()
     {
@@ -145,6 +151,43 @@ public class Home_fragment extends Fragment {
                 startActivity(intent);
             }
         });
+        /// data
+        BarChart barChart = view.findViewById(R.id.barChart);
+        barChart.setTouchEnabled(false);
+        barChart.setDragEnabled(false);
+        barChart.setScaleEnabled(false);
+        barChart.setPinchZoom(false);
+
+
+        ArrayList<BarEntry> dataValues1 = new ArrayList<>();
+        dataValues1.add(new BarEntry(0, 40f)); // Số liệu cho cột 1
+
+        ArrayList<BarEntry> dataValues2 = new ArrayList<>();
+        dataValues2.add(new BarEntry(1, 30f)); // Số liệu cho cột 2
+
+        BarDataSet barDataSet1 = new BarDataSet(dataValues1, "Last month");
+        barDataSet1.setColor(Color.RED);
+        BarDataSet barDataSet2 = new BarDataSet(dataValues2, "This month");
+        barDataSet2.setColor(Color.BLUE);
+
+
+
+        BarData data = new BarData(barDataSet1, barDataSet2);
+        float groupSpace = 0f; // Khoảng cách giữa các nhóm
+        float barSpace = 0.3f; // Không có khoảng cách giữa các cột trong cùng một nhóm
+        float barWidth = 0.7f; // Chiếm phần lớn không gian nhóm nhưng không toàn bộ
+
+        data.setBarWidth(barWidth);
+        barChart.setData(data);
+        barChart.groupBars(0, groupSpace, barSpace);
+        barChart.getXAxis().setAxisMinimum(0);
+        barChart.getXAxis().setAxisMaximum(2);
+        barChart.getAxisLeft().setAxisMinimum(0); // Đặt cột y bắt đầu từ số 0
+        barChart.getAxisRight().setAxisMinimum(0);
+
+
+        ///
+
 
         TextView totalbalance = view.findViewById(R.id.total_blance);
         totalbalance.setText(doitien.formatValue(ammount)+ currency_unit);
@@ -166,6 +209,7 @@ public class Home_fragment extends Fragment {
 
         // Đặt OnClickListener cho unseen
         unseen.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View v) {
                 if(text.getText().equals("**********"))
@@ -197,6 +241,40 @@ public class Home_fragment extends Fragment {
                 month.setBackgroundTintList(colorStateList);
                 ColorStateList colorStateList2= ColorStateList.valueOf(Color.parseColor("#ACACAC"));
                 year.setBackgroundTintList(colorStateList2);
+                BarChart barChart = view.findViewById(R.id.barChart);
+                barChart.setTouchEnabled(false);
+                barChart.setDragEnabled(false);
+                barChart.setScaleEnabled(false);
+                barChart.setPinchZoom(false);
+
+                // Tạo dữ liệu mới cho BarChart
+                ArrayList<BarEntry> dataValues1 = new ArrayList<>();
+                dataValues1.add(new BarEntry(0, 40f)); // Số liệu mới cho cột 1
+
+                ArrayList<BarEntry> dataValues2 = new ArrayList<>();
+                dataValues2.add(new BarEntry(1, 60f)); // Số liệu mới cho cột 2
+
+                BarDataSet barDataSet1 = new BarDataSet(dataValues1, "Last month");
+                barDataSet1.setColor(Color.RED);
+                BarDataSet barDataSet2 = new BarDataSet(dataValues2, "This month");
+                barDataSet2.setColor(Color.BLUE);
+
+                BarData data = new BarData(barDataSet1, barDataSet2);
+                float groupSpace = 0f; // Khoảng cách giữa các nhóm
+                float barSpace = 0.3f; // Không có khoảng cách giữa các cột trong cùng một nhóm
+                float barWidth = 0.7f; // Chiếm phần lớn không gian nhóm nhưng không toàn bộ
+
+                data.setBarWidth(barWidth);
+                barChart.setData(data);
+                barChart.groupBars(0, groupSpace, barSpace);
+                barChart.getXAxis().setAxisMinimum(0);
+                barChart.getXAxis().setAxisMaximum(2);
+                barChart.getAxisLeft().setAxisMinimum(0); // Đặt cột y bắt đầu từ số 0
+                barChart.getAxisRight().setAxisMinimum(0);
+
+                // Vẽ lại BarChart với dữ liệu mới
+                barChart.invalidate();
+
             }
         });
         year.setOnClickListener(new View.OnClickListener() {
@@ -206,6 +284,41 @@ public class Home_fragment extends Fragment {
                 year.setBackgroundTintList(colorStateList);
                 ColorStateList colorStateList2= ColorStateList.valueOf(Color.parseColor("#ACACAC"));
                 month.setBackgroundTintList(colorStateList2);
+
+                // Tìm BarChart và vô hiệu hóa tất cả các tương tác
+                BarChart barChart = view.findViewById(R.id.barChart);
+                barChart.setTouchEnabled(false);
+                barChart.setDragEnabled(false);
+                barChart.setScaleEnabled(false);
+                barChart.setPinchZoom(false);
+
+                // Tạo dữ liệu mới cho BarChart
+                ArrayList<BarEntry> dataValues1 = new ArrayList<>();
+                dataValues1.add(new BarEntry(0, 50f)); // Số liệu mới cho cột 1
+
+                ArrayList<BarEntry> dataValues2 = new ArrayList<>();
+                dataValues2.add(new BarEntry(1, 60f)); // Số liệu mới cho cột 2
+
+                BarDataSet barDataSet1 = new BarDataSet(dataValues1, "Last month");
+                barDataSet1.setColor(Color.RED);
+                BarDataSet barDataSet2 = new BarDataSet(dataValues2, "This month");
+                barDataSet2.setColor(Color.BLUE);
+
+                BarData data = new BarData(barDataSet1, barDataSet2);
+                float groupSpace = 0f; // Khoảng cách giữa các nhóm
+                float barSpace = 0.3f; // Không có khoảng cách giữa các cột trong cùng một nhóm
+                float barWidth = 0.7f; // Chiếm phần lớn không gian nhóm nhưng không toàn bộ
+
+                data.setBarWidth(barWidth);
+                barChart.setData(data);
+                barChart.groupBars(0, groupSpace, barSpace);
+                barChart.getXAxis().setAxisMinimum(0);
+                barChart.getXAxis().setAxisMaximum(2);
+                barChart.getAxisLeft().setAxisMinimum(0); // Đặt cột y bắt đầu từ số 0
+                barChart.getAxisRight().setAxisMinimum(0);
+
+                // Vẽ lại BarChart với dữ liệu mới
+                barChart.invalidate();
             }
         });
         // Tìm TextView Seeall
@@ -271,11 +384,13 @@ public class Home_fragment extends Fragment {
         }
 
 
+
         return view;
 
 
 
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -316,10 +431,15 @@ public class Home_fragment extends Fragment {
                 //Thông báo lỗi, không thể kết nối đến server, co the hien mot notification ra app
                 e.printStackTrace();
             }
-TextView seeall = getView().findViewById(R.id.Seeall);
-            seeall.setText("See all");
-            ImageView op = getView().findViewById(R.id.optionsVi);
-            op.setVisibility(View.VISIBLE);
+            if(tenvi.getText().toString().equals("No wallet")) {
+
+            }
+            else {
+                TextView seeall = getView().findViewById(R.id.Seeall);
+                seeall.setText("See all");
+                ImageView op = getView().findViewById(R.id.optionsVi);
+                op.setVisibility(View.VISIBLE);
+            }
 
 
         }

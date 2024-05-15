@@ -62,7 +62,8 @@ public class Home_My_wallets extends AppCompatActivity {
     String currencyduocchon;
 
     double TongTien=0;
-    doitiente doitien = new doitiente(1/25455,1/27462.13,1/3522.40);
+    doitiente doitien = new doitiente();
+    double tongsovi=0;
 
     private  void Anhxa()
     {
@@ -71,8 +72,10 @@ public class Home_My_wallets extends AppCompatActivity {
         try {
             theViList = new ArrayList<>();
             ArrayList<GetAllWalletsEntity> parseAPIList = new WalletAPIUtil().getAllWalletAPI();
+            tongsovi = parseAPIList.size();
             //Chạy vòng lặp để lấy ra các field cần thiết cho hiển thị ra Views
             for (GetAllWalletsEntity item : parseAPIList) {
+
                 String donvi = "";
                 double amount = Double.parseDouble(item.amount);
                 if(item.currency_unit.equals("VND"))
@@ -167,7 +170,7 @@ public class Home_My_wallets extends AppCompatActivity {
                 intent.putExtra("tenvi", "Total");
                 intent.putExtra("ammount", TongTien);
                 intent.putExtra("currency_unit", "VND");
-                intent.putExtra("tongsovi", theViList.size());
+                intent.putExtra("tongsovi", tongsovi);
                 startActivity(intent);
             }
         });
@@ -207,6 +210,7 @@ public class Home_My_wallets extends AppCompatActivity {
                 intent.putExtra("ammount",Double.parseDouble(clickedItem.item.amount));
 
                 intent.putExtra("currency_unit", clickedItem.item.currency_unit);
+                intent.putExtra("tongsovi", tongsovi);
                 // Start MainActivity
                 startActivity(intent);
             }
@@ -255,11 +259,17 @@ ImageView search = findViewById(R.id.search);
                 {
                     bundle.putDouble("ammount", TongTien);
                     bundle.putString("currency_unit", "VND");
+                    bundle.putDouble("tongsovi", tongsovi);
+
+
+
+
                 }
                 else
                 {
                     bundle.putDouble("ammount", tienduocchon);
                     bundle.putString("currency_unit", currencyduocchon);
+                    bundle.putDouble("tongsovi", tongsovi);
                 }
 
                 // Kết thúc Activity hiện tại và quay lại Activity cũ

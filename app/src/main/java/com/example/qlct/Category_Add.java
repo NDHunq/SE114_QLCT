@@ -1,11 +1,18 @@
 package com.example.qlct;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,9 +27,19 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+
+import com.example.qlct.API_Entity.CreateCategoryEntity;
+import com.example.qlct.API_Entity.CreateWalletEntity;
+import com.example.qlct.API_Utils.CategoryAPIUntill;
+import com.example.qlct.API_Utils.WalletAPIUtil;
+import com.google.android.material.textfield.TextInputEditText;
+
+import java.io.ByteArrayOutputStream;
+
 public class Category_Add extends AppCompatActivity {
     int sb=1;
     int sc=1;
+    int type=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +51,51 @@ public class Category_Add extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        ImageButton upload = findViewById(R.id.button);
+        upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextInputEditText category_name = findViewById(R.id.categoryname);
 
+                CategoryAPIUntill test = new CategoryAPIUntill();
+                if(category_name.getText().toString().isEmpty())
+                {
+
+
+                    category_name.setError("Please enter wallet name");
+
+                }
+
+                else if ( test.doesCategoryExist(category_name.getText().toString()) == 1){
+                    // Show an error message if the wallet name is "Total" or if it already exists
+                    category_name.setError("Wallet name already exists");
+                } else
+                {
+
+                    String ty="INCOME";
+                    if(type==1)
+                    {
+                        ty="EXPENSE";
+                    }
+                    ImageView img = findViewById(R.id.hinhanh);
+                    Drawable drawable = img.getBackground();
+                    Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                    byte[] byteArray = baos.toByteArray();
+                    String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+                    CreateCategoryEntity create = new CreateCategoryEntity(category_name.getText().toString(), encoded, ty, "aaea42e6-591e-45b3-8d4f-e0a4b80e3c69");
+                    CategoryAPIUntill CategoryAPIUntill = new CategoryAPIUntill();
+                    CategoryAPIUntill.createCategoryAPI(create);
+                    setResult(Activity.RESULT_OK);
+                    finish();
+                }
+
+
+            }
+        });
         CardView ic = findViewById(R.id.icon);
         ic.setOnClickListener(v -> {
        showDialog();
@@ -52,6 +113,8 @@ public class Category_Add extends AppCompatActivity {
             ImageView expenseimg = findViewById(R.id.expenseimg);
             incomeimg.setImageResource(R.drawable.downarrow_white);
             expenseimg.setImageResource(R.drawable.uparrow_black);
+            type=0;
+
         });
         expense.setOnClickListener(v -> {
             TextView incomeText = findViewById(R.id.incometxt);
@@ -65,6 +128,7 @@ public class Category_Add extends AppCompatActivity {
             ImageView expenseimg = findViewById(R.id.expenseimg);
             incomeimg.setImageResource(R.drawable.downarrow_black);
             expenseimg.setImageResource(R.drawable.uparrow_white);
+            type=1;
 
         });
         TextView cancel = findViewById(R.id.cancel);

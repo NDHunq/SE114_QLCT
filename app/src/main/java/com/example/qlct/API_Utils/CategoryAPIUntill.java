@@ -52,6 +52,41 @@ public class CategoryAPIUntill {
             return null;
         }
     }
+    public int doesCategoryExist(String catename)
+    {
+        int doesExist = 0;
+        try {
+            OkHttpClient client = new OkHttpClient().newBuilder()
+                    .build();
+            Log.d("url", SERVER + "/" + API_VERSION + "/category");
+            Request request = new Request.Builder()
+                    .url( SERVER + "/" + API_VERSION + "/category")
+                    .method("GET", null)
+                    .addHeader("Authorization", LOGIN_TOKEN)
+                    .build();
+            Response response = client.newCall(request).execute();
+            String jsonData = response.body().string();
+            Log.d("Get_wallet", jsonData);
+            JSONObject json = new JSONObject(jsonData);
+
+            //Maping json to entity
+            Type listType = new TypeToken<ArrayList<GetAllCategoryy>>(){}.getType();
+            ArrayList<GetAllCategoryy> parseAPIList = new Gson().fromJson(json.getJSONObject("data").getJSONArray("rows").toString(), listType);
+            for (GetAllCategoryy categoryy : parseAPIList) {
+                if (categoryy.getName().equals(catename)) {
+                    doesExist = 1;
+                    break;
+                }
+            }
+        }
+        catch(Exception e) {
+            //Thông báo lỗi, không thể kết nối đến server, co the hien mot notification ra app
+            e.printStackTrace();
+
+
+        }
+        return doesExist;
+    }
     public void createCategoryAPI( CreateCategoryEntity createCategoryEntity) {
         try {
             OkHttpClient client = new OkHttpClient().newBuilder()
@@ -66,7 +101,7 @@ public class CategoryAPIUntill {
                     .build();
             Response response = client.newCall(request).execute();
             String jsonData = response.body().string();
-            Log.d("Create_wallet", jsonData);
+            Log.d("Create_cate", jsonData);
         }catch (Exception e) {
             e.printStackTrace();
         }

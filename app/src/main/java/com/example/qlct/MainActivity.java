@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     double   ammount = 0;
     double tongsovi=0;
     String currency_unit = "đ";
+
     private void updateButtonBackgrounds(int selectedButtonId) {
         // Danh sách các button
         int[] buttonIds = new int[]{R.id.thehome, R.id.theanalysis, R.id.thebudget, R.id.theaccount};
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     double TongTien=0;
-    doitiente doitien = new doitiente(1/25455,1/27462.13,1/3522.40);
+    doitiente doitien = new doitiente();
     private void  setBlance()
     {
         try {
@@ -65,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
             tongsovi = parseAPIList.size();
             //Chạy vòng lặp để lấy ra các field cần thiết cho hiển thị ra Views
             for (GetAllWalletsEntity item : parseAPIList) {
+                Log.d("sdf",String.valueOf(TongTien));
                 String donvi = "";
                 double amount = Double.parseDouble(item.amount);
                 if(item.currency_unit.equals("VND"))
@@ -72,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
                     TongTien+= amount;}
                 if(item.currency_unit.equals("USD"))
                 {donvi=" $";
+                    String doi = String.valueOf(doitien.getUSDtoVND());
+                    Log.d("sdf",String.valueOf(doitien.USDtoVND));
                     TongTien += amount*doitien.getUSDtoVND();}
                 if(item.currency_unit.equals("EUR"))
                 {donvi=" €";
@@ -108,13 +112,17 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Bundle bundle = new Bundle();
-        setBlance();
+
         tenvi = getIntent().getStringExtra("tenvi");
         ammount = getIntent().getDoubleExtra("ammount",-1);
 currency_unit = getIntent().getStringExtra("currency_unit");
+tongsovi = getIntent().getDoubleExtra("tongsovi",0);
+
+        double tongsovi2 = getIntent().getDoubleExtra("tongsovi",0);
 
 
         if(ammount == -1){
+            setBlance();
             bundle.putString("tenvi", "Total");
 
             bundle.putDouble("ammount", TongTien);
@@ -128,6 +136,8 @@ currency_unit = getIntent().getStringExtra("currency_unit");
             Log.d("Truyen du lieu", String.valueOf(ammount));
         bundle.putString("tenvi", tenvi);
         bundle.putDouble("ammount", ammount);
+            bundle.putDouble("tongsovi", tongsovi2);
+
         if(currency_unit.equals("VND"))
         {
             bundle.putString("currency_unit", " ₫");
