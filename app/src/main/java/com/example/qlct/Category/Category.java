@@ -1,6 +1,7 @@
 package com.example.qlct.Category;
 
 public class Category {
+    private String category_id;
     private String category_name;
     private String image;
 
@@ -11,7 +12,8 @@ public class Category {
 //        this.image = image;
 //    }
 
-    public Category(String category_name, String image, String category_type){
+    public Category(String category_id,String category_name, String image, String category_type){
+        this.category_id = category_id;
         this.category_name = category_name;
         this.image = image;
         this.category_type = category_type;
@@ -20,6 +22,10 @@ public class Category {
     public Category(String category_name, String category_type){
         this.category_name = category_name;
         this.category_type = category_type;
+    }
+
+    public String getCategory_id() {
+        return category_id;
     }
 
     public String getCategory_name() {

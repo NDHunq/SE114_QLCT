@@ -73,7 +73,7 @@ public class TransactionDetail extends AppCompatActivity {
 
     private ListView walletListView;
 
-    private List<Wallet> walletList;
+    private ArrayList<Wallet> walletList;
 
     private TextView dateTxtView;
 

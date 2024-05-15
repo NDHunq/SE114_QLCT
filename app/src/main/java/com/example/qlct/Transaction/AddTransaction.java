@@ -5,6 +5,8 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -23,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,9 +34,12 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.bumptech.glide.Glide;
+import com.example.qlct.API_Entity.CreateTransactionEntity;
 import com.example.qlct.API_Entity.GetAllCategoryEntity;
 import com.example.qlct.API_Entity.GetAllWalletsEntity;
+import com.example.qlct.API_Entity.UpdateWalletEntity;
 import com.example.qlct.API_Utils.CategoryAPIUtil;
+import com.example.qlct.API_Utils.TransactionAPIUtil;
 import com.example.qlct.API_Utils.WalletAPIUtil;
 import com.example.qlct.Category.Category;
 import com.example.qlct.Category.Category_Add;
@@ -62,12 +68,28 @@ public class AddTransaction extends AppCompatActivity {
 
     private ListView walletListView;
 
-    private List<Wallet> walletList;
+    private ArrayList<Wallet> walletList;
 
     private TextView select_category_txtview;
 
     private TextView select_wallet_txtview;
 
+    private String fromWalletIdStorage = "";
+    private String targetWalletIdStorage = "";
+
+    private String incomeWalletIdStorage = "";
+
+    private String incomeCategoryStorage = "";
+
+    private String expenseWalletIdStorage = "";
+
+    private String expenseCategoryStorage = "";
+
+    private ArrayList<Wallet> fromWalletList;
+
+    private ArrayList<Wallet> targetWalletList;
+
+    private boolean from_to_flag = true; // true: from, false: to
     //Unfocus EditText khi click ra ngoai
     public boolean dispatchTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -88,7 +110,7 @@ public class AddTransaction extends AppCompatActivity {
         categoryList = new ArrayList<Category>();
         ArrayList<GetAllCategoryEntity> parseAPIList = new CategoryAPIUtil().getAllCategory();
         for(GetAllCategoryEntity category : parseAPIList){
-            categoryList.add(new Category(category.getName(), category.getPicture(), category.getType()));
+            categoryList.add(new Category(category.getId(), category.getName(), category.getPicture(), category.getType()));
         }
         Log.d("Get_wallet_data_object", categoryList.toString());
     }
@@ -110,8 +132,6 @@ public class AddTransaction extends AppCompatActivity {
                         renderCategoryList.add(category);
                     }
                 }
-            } else if (transfer) {
-
             }
         }
     }
@@ -122,12 +142,22 @@ public class AddTransaction extends AppCompatActivity {
             ArrayList<GetAllWalletsEntity> parseAPIList = new WalletAPIUtil().getAllWalletAPI();
             //Chạy vòng lặp để lấy ra các field cần thiết cho hiển thị ra Views
             for (GetAllWalletsEntity item : parseAPIList) {
-                walletList.add(new Wallet(item.id, item.name, item.amount, R.drawable.wallet));
+                walletList.add(new Wallet(item.id, item.name, item.amount, R.drawable.wallet, item.currency_unit));
             }
             Log.d("Get_wallet_data_object", walletList.toString());
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    private ArrayList<Wallet> setupFromToWallet(String walletId){
+        ArrayList<Wallet> fromToWallet = new ArrayList<Wallet>();
+        for(Wallet wallet : walletList){
+            if(!wallet.getId().equals(walletId)){
+                fromToWallet.add(wallet);
+            }
+        }
+        return fromToWallet;
     }
 
     private void showCategoryDialog(){
@@ -156,12 +186,14 @@ public class AddTransaction extends AppCompatActivity {
                 categoryTxtView.setText(category.getCategory_name());
                 ImageView categoryIcon = findViewById(R.id.income_category_icon);
                 Glide.with(dialog.getContext()).load(category.getImageURL()).into(categoryIcon);
+                incomeCategoryStorage = category.getCategory_id();
             }
             else if(expense){
                 TextView categoryTxtView = findViewById(R.id.expense_category_txtview);
                 categoryTxtView.setText(category.getCategory_name());
                 ImageView categoryIcon = findViewById(R.id.expense_category_icon);
                 Glide.with(dialog.getContext()).load(category.getImageURL()).into(categoryIcon);
+                expenseCategoryStorage = category.getCategory_id();
             }
             dialog.dismiss();
         });
@@ -190,9 +222,170 @@ public class AddTransaction extends AppCompatActivity {
         dialog.show();
 
         walletListView = dialog.findViewById(R.id.select_wallet_listview);
-        AnhXaWallet();
-        SelectWallet_Adapter adapter = new SelectWallet_Adapter(AddTransaction.this, R.layout.select_wallet_item_list, walletList);
-        walletListView.setAdapter(adapter);
+        if(transfer){
+            TextView fromWalletAmount = findViewById(R.id.from_wallet_amount_txtview);
+            TextView targetWalletName = findViewById(R.id.target_wallet_amount_txtview);
+            if(from_to_flag){
+                if(targetWalletName.getText().toString().equals("")){
+                    AnhXaWallet();
+                    SelectWallet_Adapter adapter = new SelectWallet_Adapter(AddTransaction.this, R.layout.select_wallet_item_list, walletList);
+                    walletListView.setAdapter(adapter);
+                }
+                else{
+                    fromWalletList = setupFromToWallet(targetWalletIdStorage);
+                    SelectWallet_Adapter adapter = new SelectWallet_Adapter(AddTransaction.this, R.layout.select_wallet_item_list, fromWalletList);
+                    walletListView.setAdapter(adapter);
+                }
+            }
+            else{
+                if(fromWalletAmount.getText().toString().equals("")){
+                    AnhXaWallet();
+                    SelectWallet_Adapter adapter = new SelectWallet_Adapter(AddTransaction.this, R.layout.select_wallet_item_list, walletList);
+                    walletListView.setAdapter(adapter);
+                }
+                else{
+                    targetWalletList = setupFromToWallet(fromWalletIdStorage);
+                    SelectWallet_Adapter adapter = new SelectWallet_Adapter(AddTransaction.this, R.layout.select_wallet_item_list, targetWalletList);
+                    walletListView.setAdapter(adapter);
+                }
+            }
+        }
+        else{
+            AnhXaWallet();
+            SelectWallet_Adapter adapter = new SelectWallet_Adapter(AddTransaction.this, R.layout.select_wallet_item_list, walletList);
+            walletListView.setAdapter(adapter);
+        }
+
+
+        walletListView.setOnItemClickListener((parent, view, position, id) -> {
+            Wallet wallet = new Wallet("", "", "", 0, "");
+            if(transfer){
+                if(from_to_flag){
+                    if(fromWalletList != null){
+                        wallet = fromWalletList.get(position);
+                    }
+                    else{
+                        wallet = walletList.get(position);
+                    }
+                }
+                else{
+                    if(targetWalletList != null){
+                        wallet = targetWalletList.get(position);
+                    }
+                }
+            }
+            else{
+                wallet = walletList.get(position);
+            }
+            if(income){
+                ImageView walletIcon = findViewById(R.id.income_wallet_icon);
+                walletIcon.setImageResource(wallet.getImage());
+                TextView walletTxtView = findViewById(R.id.income_wallet_name_txtview);
+                walletTxtView.setText(wallet.getWalletName());
+                TextView walletMoney = findViewById(R.id.income_amount_txtview);
+                String currencySymbol = "";
+                switch (wallet.getCurrency()){
+                    case "USD":
+                        currencySymbol = "$";
+                        break;
+                    case "VND":
+                        currencySymbol = "₫";
+                        break;
+                    case "EUR":
+                        currencySymbol = "€";
+                        break;
+                    case "CNY":
+                        currencySymbol = "¥";
+                        break;
+                }
+                String amount = wallet.getAmountMoney() + " " + currencySymbol;
+                walletMoney.setTextColor(getResources().getColor(R.color.xanhdam, null));
+                walletMoney.setText(amount);
+                incomeWalletIdStorage = wallet.getId();
+            }
+            else if(expense){
+                ImageView walletIcon = findViewById(R.id.expense_wallet_icon);
+                walletIcon.setImageResource(wallet.getImage());
+                TextView walletTxtView = findViewById(R.id.expense_wallet_name_txtview);
+                walletTxtView.setText(wallet.getWalletName());
+                TextView walletMoney = findViewById(R.id.expense_amount_txtview);
+                String currencySymbol = "";
+                switch (wallet.getCurrency()){
+                    case "USD":
+                        currencySymbol = "$";
+                        break;
+                    case "VND":
+                        currencySymbol = "₫";
+                        break;
+                    case "EUR":
+                        currencySymbol = "€";
+                        break;
+                    case "CNY":
+                        currencySymbol = "¥";
+                        break;
+                }
+                String amount = wallet.getAmountMoney() + " " + currencySymbol;
+                walletMoney.setTextColor(getResources().getColor(R.color.xanhdam, null));
+                walletMoney.setText(amount);
+                expenseWalletIdStorage = wallet.getId();
+            }
+            else if (transfer) {
+                if(from_to_flag){
+                    ImageView walletIcon = findViewById(R.id.from_wallet_icon);
+                    walletIcon.setImageResource(wallet.getImage());
+                    TextView walletTxtView = findViewById(R.id.from_wallet_txtview);
+                    walletTxtView.setText(wallet.getWalletName());
+                    TextView walletMoney = findViewById(R.id.from_wallet_amount_txtview);
+                    String currencySymbol = "";
+                    switch (wallet.getCurrency()){
+                        case "USD":
+                            currencySymbol = "$";
+                            break;
+                        case "VND":
+                            currencySymbol = "₫";
+                            break;
+                        case "EUR":
+                            currencySymbol = "€";
+                            break;
+                        case "CNY":
+                            currencySymbol = "¥";
+                            break;
+                    }
+                    String amount = wallet.getAmountMoney() + " " + currencySymbol;
+                    walletMoney.setText(amount);
+                    walletMoney.setTextColor(getResources().getColor(R.color.xanhdam, null));
+                    fromWalletIdStorage = wallet.getId();
+                }
+                else{
+                    ImageView walletIcon = findViewById(R.id.target_wallet_icon);
+                    walletIcon.setImageResource(wallet.getImage());
+                    TextView walletTxtView = findViewById(R.id.target_wallet_name_txtview);
+                    walletTxtView.setText(wallet.getWalletName());
+                    TextView walletMoney = findViewById(R.id.target_wallet_amount_txtview);
+                    String currencySymbol = "";
+                    switch (wallet.getCurrency()){
+                        case "USD":
+                            currencySymbol = "$";
+                            break;
+                        case "VND":
+                            currencySymbol = "₫";
+                            break;
+                        case "EUR":
+                            currencySymbol = "€";
+                            break;
+                        case "CNY":
+                            currencySymbol = "¥";
+                            break;
+                    }
+                    String amount = wallet.getAmountMoney() + " " + currencySymbol;
+                    walletMoney.setText(amount);
+                    walletMoney.setTextColor(getResources().getColor(R.color.xanhdam, null));
+                    targetWalletIdStorage = wallet.getId();
+                }
+
+            }
+            dialog.dismiss();
+        });
     }
 
     private void showCurrencyDialog(){
@@ -501,6 +694,7 @@ public class AddTransaction extends AppCompatActivity {
         selectFromWallet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                from_to_flag = true;
                 showWalletDialog();
             }
         });
@@ -525,7 +719,14 @@ public class AddTransaction extends AppCompatActivity {
         selectTargetWallet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showWalletDialog();
+                from_to_flag = false;
+                TextView fromWalletAmount = findViewById(R.id.from_wallet_amount_txtview);
+                if(fromWalletAmount.getText().toString().equals("")){
+                    Toast.makeText(AddTransaction.this, "Please select from wallet first", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    showWalletDialog();
+                }
             }
         });
 
@@ -561,5 +762,89 @@ public class AddTransaction extends AppCompatActivity {
                 datePickerDialog.show();
             }
         });
+
+        TextView saveButton = findViewById(R.id.save_button);
+
+        try {
+            saveButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    TextInputEditText amountEditText = findViewById(R.id.Amount_txtbox);
+                    TextInputEditText dateEditText = findViewById(R.id.select_date_txtbox);
+                    TextInputEditText noteEditText = findViewById(R.id.note_txtbox);
+                    String amount = amountEditText.getText().toString();
+                    String date = dateEditText.getText().toString();
+                    String note = noteEditText.getText().toString();
+                    TransactionAPIUtil transactionAPIUtil = new TransactionAPIUtil();
+                    if(amount.equals("") || date.equals("")){
+                        Toast.makeText(AddTransaction.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        if(income){
+                            CreateTransactionEntity createTransactionEntity = new CreateTransactionEntity(Integer.parseInt(amount), date, incomeCategoryStorage, incomeWalletIdStorage, note, null, "INCOME", currency, null);
+                            transactionAPIUtil.createTransactionAPI(createTransactionEntity);
+                            excuteIncome(incomeWalletIdStorage);
+                        }
+                        else if(expense){
+                            CreateTransactionEntity createTransactionEntity = new CreateTransactionEntity(Integer.parseInt(amount), date, expenseCategoryStorage, expenseWalletIdStorage, note, null, "EXPENSE", currency, null);
+                            transactionAPIUtil.createTransactionAPI(createTransactionEntity);
+                            excuteExpense(expenseWalletIdStorage);
+                        }
+                        else {
+                            CreateTransactionEntity createTransactionEntity = new CreateTransactionEntity(Integer.parseInt(amount), date, null, fromWalletIdStorage, note, null, null, currency, targetWalletIdStorage);
+                            transactionAPIUtil.createTransactionAPI(createTransactionEntity);
+                            excuteTransfer(fromWalletIdStorage, targetWalletIdStorage);
+                        }
+                        Toast.makeText(AddTransaction.this, "Transaction added successfully", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                }
+            });
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private void excuteIncome(String incomeID){
+        for(Wallet wallet : walletList){
+            if(wallet.getId().equals(incomeID)){
+                TextInputEditText amountEditText = findViewById(R.id.Amount_txtbox);
+                double newAmount = Double.parseDouble(wallet.getAmountMoney()) + Double.parseDouble(amountEditText.getText().toString());
+                wallet.setAmountMoney(String.valueOf(newAmount));
+                WalletAPIUtil walletAPIUtil = new WalletAPIUtil();
+                walletAPIUtil.updateWalletAPI(incomeID, new UpdateWalletEntity(wallet.getWalletName(), (int)newAmount, wallet.getCurrency()));
+            }
+        }
+    }
+
+    private void excuteExpense(String expenseID){
+        for(Wallet wallet : walletList){
+            if(wallet.getId().equals(expenseID)){
+                TextInputEditText amountEditText = findViewById(R.id.Amount_txtbox);
+                double newAmount = Double.parseDouble(wallet.getAmountMoney()) - Double.parseDouble(amountEditText.getText().toString());
+                wallet.setAmountMoney(String.valueOf(newAmount));
+                WalletAPIUtil walletAPIUtil = new WalletAPIUtil();
+                walletAPIUtil.updateWalletAPI(expenseID, new UpdateWalletEntity(wallet.getWalletName(), (int)newAmount, wallet.getCurrency()));
+            }
+        }
+    }
+
+    private void excuteTransfer(String fromID, String targetID){
+        for(Wallet wallet : walletList){
+            if(wallet.getId().equals(fromID)){
+                TextInputEditText amountEditText = findViewById(R.id.Amount_txtbox);
+                double newAmount = Double.parseDouble(wallet.getAmountMoney()) - Double.parseDouble(amountEditText.getText().toString());
+                wallet.setAmountMoney(String.valueOf(newAmount));
+                WalletAPIUtil walletAPIUtil = new WalletAPIUtil();
+                walletAPIUtil.updateWalletAPI(fromID, new UpdateWalletEntity(wallet.getWalletName(), (int)newAmount, wallet.getCurrency()));
+            }
+            if(wallet.getId().equals(targetID)){
+                TextInputEditText amountEditText = findViewById(R.id.Amount_txtbox);
+                double newAmount = Double.parseDouble(wallet.getAmountMoney()) + Double.parseDouble(amountEditText.getText().toString());
+                wallet.setAmountMoney(String.valueOf(newAmount));
+                WalletAPIUtil walletAPIUtil = new WalletAPIUtil();
+                walletAPIUtil.updateWalletAPI(targetID, new UpdateWalletEntity(wallet.getWalletName(), (int)newAmount, wallet.getCurrency()));
+            }
+        }
     }
 }

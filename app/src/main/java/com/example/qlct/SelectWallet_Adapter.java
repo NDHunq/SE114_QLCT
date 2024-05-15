@@ -8,15 +8,16 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SelectWallet_Adapter extends BaseAdapter {
 
     private Context context;
     private int layout;
-    private List<Wallet> walletList;
+    private ArrayList<Wallet> walletList;
 
-    public SelectWallet_Adapter(Context context, int layout, List<Wallet> walletList) {
+    public SelectWallet_Adapter(Context context, int layout, ArrayList<Wallet> walletList) {
         this.context = context;
         this.layout = layout;
         this.walletList = walletList;
@@ -48,7 +49,23 @@ public class SelectWallet_Adapter extends BaseAdapter {
 
         Wallet wallet = walletList.get(i);
         walletname.setText(wallet.getWalletName());
-        money.setText(wallet.getAmountMoney());
+        String currencySymbol = "";
+        switch (wallet.getCurrency()){
+            case "USD":
+                currencySymbol = "$";
+                break;
+            case "VND":
+                currencySymbol = "₫";
+                break;
+            case "EUR":
+                currencySymbol = "€";
+                break;
+            case "CNY":
+                currencySymbol = "¥";
+                break;
+        }
+        String amount = wallet.getAmountMoney() + " " + currencySymbol;
+        money.setText(amount);
         image.setImageResource(wallet.getImage());
 
         return view;
