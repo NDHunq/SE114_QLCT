@@ -23,7 +23,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.qlct.AddTransaction;
+import com.example.qlct.Transaction.AddTransaction;
 import com.example.qlct.Analysis.AnalysisExpenseFragment;
 import com.example.qlct.Analysis.AnalysisIcomeFragment;
 import com.example.qlct.Analysis.AnalysisNetIncomeFragment;
@@ -64,7 +64,7 @@ public class Analysis_fragment extends Fragment {
     final SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
     private ListView walletListView;
 
-    private List<Wallet> walletList;
+    private ArrayList<Wallet> walletList;
     TextView wallet_name;
 
 

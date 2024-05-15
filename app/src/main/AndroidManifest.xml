@@ -17,15 +17,17 @@
         android:theme="@style/Theme.QLCT"
         tools:targetApi="31">
         <activity
+
             android:name=".Budget.AdjustBudget"
             android:exported="false" />
         <activity
-            android:name=".TransactionDetail"
+            android:name=".Transaction.TransactionDetail"
             android:exported="false" />
         <activity
-            android:name=".AddTransaction"
+            android:name=".Transaction.AddTransaction"
             android:exported="false" />
         <activity
+
             android:name=".Analysis.AnalysisDetailExpense"
             android:exported="false" />
         <activity
@@ -38,7 +40,7 @@
             android:name=".Budget.AddBudget"
             android:exported="false" />
         <activity
-            android:name=".Category_Add"
+            android:name=".Category.Category_Add"
             android:exported="false" />
         <activity
             android:name=".Share_Wallet"
@@ -55,6 +57,12 @@
             android:exported="false" />
         <activity
             android:name=".Home.Home_My_wallets"
+            android:exported="false" />
+        <activity
+            android:name=".Transaction.TransactionDetail"
+            android:exported="false" />
+        <activity
+            android:name=".Transaction.AddTransaction"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

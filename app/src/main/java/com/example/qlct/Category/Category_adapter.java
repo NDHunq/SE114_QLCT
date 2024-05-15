@@ -1,19 +1,21 @@
-package com.example.qlct;
+package com.example.qlct.Category;
 
 import android.content.Context;
-import android.text.Layout;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.xmlpull.v1.XmlPullParser;
+import com.bumptech.glide.Glide;
+import com.example.qlct.Category.Category;
+import com.example.qlct.R;
+import com.google.android.material.card.MaterialCardView;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
 public class Category_adapter extends BaseAdapter {
     private Context context;
@@ -49,11 +51,11 @@ public class Category_adapter extends BaseAdapter {
         convertView = inflater.inflate(layout, null);
         ImageView categoryIcon = convertView.findViewById(R.id.category_icon);
         TextView categoryName = convertView.findViewById(R.id.category_txtview);
+        MaterialCardView cardView = convertView.findViewById(R.id.category_icon_cardview);
 
         Category category = categoryList.get(position);
-        categoryIcon.setImageResource(category.getImage());
+        Glide.with(context).load(category.getImageURL()).into(categoryIcon);
         categoryName.setText(category.getCategory_name());
-
         return convertView;
     }
 }

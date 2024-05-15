@@ -1,4 +1,4 @@
-package com.example.qlct;
+package com.example.qlct.Category;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -9,7 +9,6 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Base64;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageButton;
@@ -28,14 +27,13 @@ import androidx.core.view.WindowInsetsCompat;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
-import com.example.qlct.API_Entity.CreateCategoryEntity;
 import com.example.qlct.API_Entity.CreateCategoryEntity_quyen;
-import com.example.qlct.API_Entity.CreateWalletEntity;
 import com.example.qlct.API_Utils.CategoryAPIUntill;
-import com.example.qlct.API_Utils.WalletAPIUtil;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.ByteArrayOutputStream;
+
+import com.example.qlct.R;
 
 public class Category_Add extends AppCompatActivity {
     int sb=1;
@@ -99,7 +97,7 @@ public class Category_Add extends AppCompatActivity {
         });
         CardView ic = findViewById(R.id.icon);
         ic.setOnClickListener(v -> {
-            showDialog();
+       showDialog();
         });
         LinearLayout income= findViewById(R.id.incomeclick);
         LinearLayout expense= findViewById(R.id.expenseclick);
@@ -153,7 +151,7 @@ public class Category_Add extends AppCompatActivity {
     }
 
 
-    int kq=1;
+int kq=1;
 
 
 
@@ -189,7 +187,7 @@ public class Category_Add extends AppCompatActivity {
 
 
         bo1.setOnClickListener(v -> {
-            bo1.setBackgroundResource(R.drawable.nenluachon);
+         bo1.setBackgroundResource(R.drawable.nenluachon);
 
             kq=1;
             bo2.setBackgroundResource(0);
@@ -718,9 +716,9 @@ public class Category_Add extends AppCompatActivity {
         });
         TextView upload = dialog.findViewById(R.id.upload);
         upload.setOnClickListener(v -> {
-            Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(intent,3);
-            dialog.dismiss();
+          Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+          startActivityForResult(intent,3);
+          dialog.dismiss();
         });
 
 

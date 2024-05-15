@@ -34,10 +34,14 @@ import com.example.qlct.API_Utils.WalletAPIUtil;
 import com.example.qlct.API_Entity.UpdateDeviceTokenEntity;
 import com.example.qlct.API_Utils.DeviceTokenAPIUtil;
 
+
+import com.example.qlct.Category.Category_Add;
+
 import com.example.qlct.Fragment.Account_fragment;
 import com.example.qlct.Fragment.Analysis_fragment;
 import com.example.qlct.Fragment.Budget_fragment;
 import com.example.qlct.Fragment.Home_fragment;
+import com.example.qlct.Transaction.AddTransaction;
 import com.example.qlct.databinding.ActivityMainBinding;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;

@@ -4,12 +4,14 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormat;
 
 public class doitiente {
+
     public double USDtoVND;
     public double UERtoVND;
     public double CNYtoVND;
     public double VNDtoUER;
     public double VNDtoCNY;
     public double VNDtoUSD;
+
 
     public doitiente(double VNDtoUSD, double VNDtoUER, double VNDtoCNY) {
         this.VNDtoUSD = VNDtoUSD;
@@ -68,23 +70,56 @@ public class doitiente {
         return 0.0;
     }
 
+    public void setUSDtoVND(double USDtoVND) {
+        this.USDtoVND = USDtoVND;
+    }
+
+
     public double getUERtoVND() {
         return UERtoVND;
     }
+
+
+    public void setUERtoVND(double UERtoVND) {
+        this.UERtoVND = UERtoVND;
+    }
+
 
     public double getCNYtoVND() {
         return CNYtoVND;
     }
 
+
+    public void setCNYtoVND(double CNYtoVND) {
+        this.CNYtoVND = CNYtoVND;
+    }
+
+
     public double getVNDtoUER() {
         return VNDtoUER;
     }
+
+
+    public void setVNDtoUER(double VNDtoUER) {
+        this.VNDtoUER = VNDtoUER;
+    }
+
 
     public double getVNDtoCNY() {
         return VNDtoCNY;
     }
 
+
+    public void setVNDtoCNY(double VNDtoCNY) {
+        this.VNDtoCNY = VNDtoCNY;
+    }
+
     public double getVNDtoUSD() {
         return VNDtoUSD;
     }
+
+    public void setVNDtoUSD(double VNDtoUSD) {
+        this.VNDtoUSD = VNDtoUSD;
+    }
+
 }

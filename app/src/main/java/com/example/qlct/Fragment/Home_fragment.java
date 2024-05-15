@@ -31,10 +31,11 @@ import com.example.qlct.Home_TheTopSpent;
 import com.example.qlct.Home_TheTopSpent_Adapter;
 import com.example.qlct.Notification.Notificaiton;
 import com.example.qlct.R;
+import com.example.qlct.Transaction.*;
 
 import com.example.qlct.doitiente;
 
-import com.example.qlct.TransactionDetail;
+import com.example.qlct.Transaction.TransactionDetail;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;

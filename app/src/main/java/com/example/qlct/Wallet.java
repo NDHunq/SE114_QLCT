@@ -1,9 +1,12 @@
 package com.example.qlct;
 
 public class Wallet {
+    private String id;
     private String walletName;
     private String amountMoney;
     private int image;
+
+    private String currency;
 
 
     public Wallet(String walletName, String amountMoney, int image) {
@@ -12,6 +15,17 @@ public class Wallet {
         this.image = image;
     }
 
+    public Wallet(String id, String walletName, String amountMoney, int image, String currency) {
+        this.id = id;
+        this.walletName = walletName;
+        this.amountMoney = amountMoney;
+        this.image = image;
+        this.currency = currency;
+    }
+
+    public String getId() {
+        return id;
+    }
 
     public String getWalletName() {
         return walletName;
@@ -35,6 +49,14 @@ public class Wallet {
 
     public void setImage(int image){
         this.image = image;
+    }
+
+    public String getCurrency(){
+        return currency;
+    }
+
+    public void setCurrency(String currency){
+        this.currency = currency;
     }
 
 }
