@@ -1,16 +1,16 @@
 package com.example.qlct.Transaction;
 
-import com.example.qlct.Category.Category;
+import com.example.qlct.Category.Category_hdp;
 
 public class TransactionDetail_TheGiaoDich {
     private int HinhAnh;
-    private Category GiaoDich;
+    private Category_hdp GiaoDich;
     private String SoTien;
     private String NgayThang;
     private String GhiChu;
     private String ViTien;
 
-    public TransactionDetail_TheGiaoDich(int hinhAnh, Category GiaoDich, String soTien, String ngayThang, String ghiChu, String viTien) {
+    public TransactionDetail_TheGiaoDich(int hinhAnh, Category_hdp GiaoDich, String soTien, String ngayThang, String ghiChu, String viTien) {
         HinhAnh = hinhAnh;
         this.GiaoDich = GiaoDich;
         SoTien = soTien;
@@ -23,7 +23,7 @@ public class TransactionDetail_TheGiaoDich {
         HinhAnh = hinhAnh;
     }
 
-    public void setGiaoDich(Category GiaoDich) {
+    public void setGiaoDich(Category_hdp GiaoDich) {
         this.GiaoDich = GiaoDich;
     }
 
@@ -47,7 +47,7 @@ public class TransactionDetail_TheGiaoDich {
         return HinhAnh;
     }
 
-    public Category getGiaoDich() {
+    public Category_hdp getGiaoDich() {
         return GiaoDich;
     }
 

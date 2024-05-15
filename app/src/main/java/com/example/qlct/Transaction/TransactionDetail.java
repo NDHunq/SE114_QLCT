@@ -32,10 +32,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.qlct.Category.Category;
+import com.example.qlct.Category.Category_hdp;
 import com.example.qlct.R;
 import com.example.qlct.SelectWallet_Adapter;
-import com.example.qlct.Wallet;
+import com.example.qlct.Wallet_hdp;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
@@ -73,20 +73,20 @@ public class TransactionDetail extends AppCompatActivity {
 
     private ListView walletListView;
 
-    private ArrayList<Wallet> walletList;
+    private ArrayList<Wallet_hdp> walletList;
 
     private TextView dateTxtView;
 
     private void AnhXaWallet(){
-        walletList = new ArrayList<Wallet>();
-        walletList.add(new Wallet("Vi 1", "2000000 d", R.drawable.budget));
-        walletList.add(new Wallet("Vi 2", "2000000 d", R.drawable.budget));
-        walletList.add(new Wallet("Vi 3", "2000000 d", R.drawable.budget));
-        walletList.add(new Wallet("Vi 4", "2000000 d", R.drawable.budget));
-        walletList.add(new Wallet("Vi 5", "2000000 d", R.drawable.budget));
-        walletList.add(new Wallet("Vi 6", "2000000 d", R.drawable.budget));
-        walletList.add(new Wallet("Vi 7", "2000000 d", R.drawable.budget));
-        walletList.add(new Wallet("Vi 8", "2000000 d", R.drawable.budget));
+        walletList = new ArrayList<Wallet_hdp>();
+        walletList.add(new Wallet_hdp("Vi 1", "2000000 d", R.drawable.budget));
+        walletList.add(new Wallet_hdp("Vi 2", "2000000 d", R.drawable.budget));
+        walletList.add(new Wallet_hdp("Vi 3", "2000000 d", R.drawable.budget));
+        walletList.add(new Wallet_hdp("Vi 4", "2000000 d", R.drawable.budget));
+        walletList.add(new Wallet_hdp("Vi 5", "2000000 d", R.drawable.budget));
+        walletList.add(new Wallet_hdp("Vi 6", "2000000 d", R.drawable.budget));
+        walletList.add(new Wallet_hdp("Vi 7", "2000000 d", R.drawable.budget));
+        walletList.add(new Wallet_hdp("Vi 8", "2000000 d", R.drawable.budget));
     }
     private void setIncomeBackground(MaterialButton income_btn){
         if (income){
@@ -992,32 +992,32 @@ public class TransactionDetail extends AppCompatActivity {
         listDataHeader.add(new TransactionDetail_ExpandableListItems(LocalDate.parse("2022-07-05"), "200000d", "200000d"));
 
         List<TransactionDetail_TheGiaoDich> theGiaoDichList = new ArrayList<>();
-        theGiaoDichList.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", "EXPENSE"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", "EXPENSE"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "EXPENSE"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "EXPENSE"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
 
         List<TransactionDetail_TheGiaoDich> theGiaoDichList2 = new ArrayList<>();
-        theGiaoDichList2.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList2.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList2.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", "EXPENSE"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList2.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList2.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", "EXPENSE"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList2.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList2.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList2.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "EXPENSE"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList2.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList2.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "EXPENSE"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
 
         List<TransactionDetail_TheGiaoDich> theGiaoDichList3 = new ArrayList<>();
-        theGiaoDichList3.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList3.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", "EXPENSE"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList3.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", "EXPENSE"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList3.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList3.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList3.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList3.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "EXPENSE"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList3.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "EXPENSE"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList3.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList3.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
 
         List<TransactionDetail_TheGiaoDich> theGiaoDichList4 = new ArrayList<>();
-        theGiaoDichList4.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", "EXPENSE"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList4.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList4.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", "EXPENSE"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList4.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList4.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", "EXPENSE"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList4.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "EXPENSE"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList4.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList4.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "EXPENSE"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList4.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList4.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "EXPENSE"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
 
         listDataChild.put(listDataHeader.get(0), theGiaoDichList);
         listDataChild.put(listDataHeader.get(1), theGiaoDichList2);

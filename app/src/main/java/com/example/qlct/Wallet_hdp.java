@@ -1,6 +1,6 @@
 package com.example.qlct;
 
-public class Wallet {
+public class Wallet_hdp {
     private String id;
     private String walletName;
     private String amountMoney;
@@ -9,13 +9,13 @@ public class Wallet {
     private String currency;
 
 
-    public Wallet(String walletName, String amountMoney, int image) {
+    public Wallet_hdp(String walletName, String amountMoney, int image) {
         this.walletName = walletName;
         this.amountMoney = amountMoney;
         this.image = image;
     }
 
-    public Wallet(String id, String walletName, String amountMoney, int image, String currency) {
+    public Wallet_hdp(String id, String walletName, String amountMoney, int image, String currency) {
         this.id = id;
         this.walletName = walletName;
         this.amountMoney = amountMoney;

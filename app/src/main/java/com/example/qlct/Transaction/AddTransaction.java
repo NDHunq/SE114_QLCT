@@ -2,11 +2,8 @@ package com.example.qlct.Transaction;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -24,7 +21,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -41,34 +37,35 @@ import com.example.qlct.API_Entity.UpdateWalletEntity;
 import com.example.qlct.API_Utils.CategoryAPIUtil;
 import com.example.qlct.API_Utils.TransactionAPIUtil;
 import com.example.qlct.API_Utils.WalletAPIUtil;
-import com.example.qlct.Category.Category;
+import com.example.qlct.Category.Category_hdp;
 import com.example.qlct.Category.Category_Add;
 import com.example.qlct.Category.Category_adapter;
-import com.example.qlct.Home.Home_TheVi;
 import com.example.qlct.R;
 import com.example.qlct.SelectWallet_Adapter;
-import com.example.qlct.Wallet;
+import com.example.qlct.Wallet_hdp;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class AddTransaction extends AppCompatActivity {
 
     private ListView categoryListView;
-    private List<Category> categoryList = new ArrayList<>();
+    private List<Category_hdp> categoryList = new ArrayList<>();
 
-    private List<Category> renderCategoryList;
+    private List<Category_hdp> renderCategoryList;
 
     private String currency;
 
     private ListView walletListView;
 
-    private ArrayList<Wallet> walletList;
+    private ArrayList<Wallet_hdp> walletList;
 
     private TextView select_category_txtview;
 
@@ -85,9 +82,9 @@ public class AddTransaction extends AppCompatActivity {
 
     private String expenseCategoryStorage = "";
 
-    private ArrayList<Wallet> fromWalletList;
+    private ArrayList<Wallet_hdp> fromWalletList;
 
-    private ArrayList<Wallet> targetWalletList;
+    private ArrayList<Wallet_hdp> targetWalletList;
 
     private boolean from_to_flag = true; // true: from, false: to
     //Unfocus EditText khi click ra ngoai
@@ -107,10 +104,10 @@ public class AddTransaction extends AppCompatActivity {
         return super.dispatchTouchEvent( event );
     }
     private void AnhXaCategory(){
-        categoryList = new ArrayList<Category>();
+        categoryList = new ArrayList<Category_hdp>();
         ArrayList<GetAllCategoryEntity> parseAPIList = new CategoryAPIUtil().getAllCategory();
         for(GetAllCategoryEntity category : parseAPIList){
-            categoryList.add(new Category(category.getId(), category.getName(), category.getPicture(), category.getType()));
+            categoryList.add(new Category_hdp(category.getId(), category.getName(), category.getPicture(), category.getType()));
         }
         Log.d("Get_wallet_data_object", categoryList.toString());
     }
@@ -118,16 +115,16 @@ public class AddTransaction extends AppCompatActivity {
     private void RenderCategoryList(){
         if(!categoryList.isEmpty()){
             if(income){
-                renderCategoryList = new ArrayList<Category>();
-                for (Category category : categoryList){
+                renderCategoryList = new ArrayList<Category_hdp>();
+                for (Category_hdp category : categoryList){
                     if(category.getCategory_type().equals("INCOME")){
                         renderCategoryList.add(category);
                     }
                 }
             }
             else if(expense){
-                renderCategoryList = new ArrayList<Category>();
-                for (Category category : categoryList){
+                renderCategoryList = new ArrayList<Category_hdp>();
+                for (Category_hdp category : categoryList){
                     if(category.getCategory_type().equals("EXPENSE")){
                         renderCategoryList.add(category);
                     }
@@ -138,11 +135,11 @@ public class AddTransaction extends AppCompatActivity {
 
     private void AnhXaWallet(){
         try{
-            walletList = new ArrayList<Wallet>();
+            walletList = new ArrayList<Wallet_hdp>();
             ArrayList<GetAllWalletsEntity> parseAPIList = new WalletAPIUtil().getAllWalletAPI();
             //Chạy vòng lặp để lấy ra các field cần thiết cho hiển thị ra Views
             for (GetAllWalletsEntity item : parseAPIList) {
-                walletList.add(new Wallet(item.id, item.name, item.amount, R.drawable.wallet, item.currency_unit));
+                walletList.add(new Wallet_hdp(item.id, item.name, item.amount, R.drawable.wallet, item.currency_unit));
             }
             Log.d("Get_wallet_data_object", walletList.toString());
         }catch (Exception e){
@@ -150,9 +147,9 @@ public class AddTransaction extends AppCompatActivity {
         }
     }
 
-    private ArrayList<Wallet> setupFromToWallet(String walletId){
-        ArrayList<Wallet> fromToWallet = new ArrayList<Wallet>();
-        for(Wallet wallet : walletList){
+    private ArrayList<Wallet_hdp> setupFromToWallet(String walletId){
+        ArrayList<Wallet_hdp> fromToWallet = new ArrayList<Wallet_hdp>();
+        for(Wallet_hdp wallet : walletList){
             if(!wallet.getId().equals(walletId)){
                 fromToWallet.add(wallet);
             }
@@ -180,7 +177,7 @@ public class AddTransaction extends AppCompatActivity {
         categoryListView.setAdapter(categoryAdapter);
 
         categoryListView.setOnItemClickListener((parent, view, position, id) -> {
-            Category category = renderCategoryList.get(position);
+            Category_hdp category = renderCategoryList.get(position);
             if(income){
                 TextView categoryTxtView = findViewById(R.id.income_category_txtview);
                 categoryTxtView.setText(category.getCategory_name());
@@ -258,7 +255,7 @@ public class AddTransaction extends AppCompatActivity {
 
 
         walletListView.setOnItemClickListener((parent, view, position, id) -> {
-            Wallet wallet = new Wallet("", "", "", 0, "");
+            Wallet_hdp wallet = new Wallet_hdp("", "", "", 0, "");
             if(transfer){
                 if(from_to_flag){
                     if(fromWalletList != null){
@@ -773,7 +770,20 @@ public class AddTransaction extends AppCompatActivity {
                     TextInputEditText dateEditText = findViewById(R.id.select_date_txtbox);
                     TextInputEditText noteEditText = findViewById(R.id.note_txtbox);
                     String amount = amountEditText.getText().toString();
-                    String date = dateEditText.getText().toString();
+
+                    // Tạo một đối tượng SimpleDateFormat để parse chuỗi ngày ban đầu
+                    SimpleDateFormat originalFormat = new SimpleDateFormat("dd/MM/yyyy");
+                    Date date = null;
+                    try {
+                        date = originalFormat.parse(dateEditText.getText().toString());
+                    } catch (ParseException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    // Tạo một đối tượng SimpleDateFormat mới để định dạng ngày đã parse
+                    SimpleDateFormat targetFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    String formattedDate = targetFormat.format(date);
+
                     String note = noteEditText.getText().toString();
                     TransactionAPIUtil transactionAPIUtil = new TransactionAPIUtil();
                     if(amount.equals("") || date.equals("")){
@@ -781,17 +791,17 @@ public class AddTransaction extends AppCompatActivity {
                     }
                     else{
                         if(income){
-                            CreateTransactionEntity createTransactionEntity = new CreateTransactionEntity(Integer.parseInt(amount), date, incomeCategoryStorage, incomeWalletIdStorage, note, null, "INCOME", currency, null);
+                            CreateTransactionEntity createTransactionEntity = new CreateTransactionEntity(Integer.parseInt(amount), formattedDate, incomeCategoryStorage, incomeWalletIdStorage, note, null, "INCOME", currency, null);
                             transactionAPIUtil.createTransactionAPI(createTransactionEntity);
                             excuteIncome(incomeWalletIdStorage);
                         }
                         else if(expense){
-                            CreateTransactionEntity createTransactionEntity = new CreateTransactionEntity(Integer.parseInt(amount), date, expenseCategoryStorage, expenseWalletIdStorage, note, null, "EXPENSE", currency, null);
+                            CreateTransactionEntity createTransactionEntity = new CreateTransactionEntity(Integer.parseInt(amount), formattedDate, expenseCategoryStorage, expenseWalletIdStorage, note, null, "EXPENSE", currency, null);
                             transactionAPIUtil.createTransactionAPI(createTransactionEntity);
                             excuteExpense(expenseWalletIdStorage);
                         }
                         else {
-                            CreateTransactionEntity createTransactionEntity = new CreateTransactionEntity(Integer.parseInt(amount), date, null, fromWalletIdStorage, note, null, null, currency, targetWalletIdStorage);
+                            CreateTransactionEntity createTransactionEntity = new CreateTransactionEntity(Integer.parseInt(amount), formattedDate, null, fromWalletIdStorage, note, null, null, currency, targetWalletIdStorage);
                             transactionAPIUtil.createTransactionAPI(createTransactionEntity);
                             excuteTransfer(fromWalletIdStorage, targetWalletIdStorage);
                         }
@@ -806,7 +816,7 @@ public class AddTransaction extends AppCompatActivity {
     }
 
     private void excuteIncome(String incomeID){
-        for(Wallet wallet : walletList){
+        for(Wallet_hdp wallet : walletList){
             if(wallet.getId().equals(incomeID)){
                 TextInputEditText amountEditText = findViewById(R.id.Amount_txtbox);
                 double newAmount = Double.parseDouble(wallet.getAmountMoney()) + Double.parseDouble(amountEditText.getText().toString());
@@ -818,7 +828,7 @@ public class AddTransaction extends AppCompatActivity {
     }
 
     private void excuteExpense(String expenseID){
-        for(Wallet wallet : walletList){
+        for(Wallet_hdp wallet : walletList){
             if(wallet.getId().equals(expenseID)){
                 TextInputEditText amountEditText = findViewById(R.id.Amount_txtbox);
                 double newAmount = Double.parseDouble(wallet.getAmountMoney()) - Double.parseDouble(amountEditText.getText().toString());
@@ -830,7 +840,7 @@ public class AddTransaction extends AppCompatActivity {
     }
 
     private void excuteTransfer(String fromID, String targetID){
-        for(Wallet wallet : walletList){
+        for(Wallet_hdp wallet : walletList){
             if(wallet.getId().equals(fromID)){
                 TextInputEditText amountEditText = findViewById(R.id.Amount_txtbox);
                 double newAmount = Double.parseDouble(wallet.getAmountMoney()) - Double.parseDouble(amountEditText.getText().toString());

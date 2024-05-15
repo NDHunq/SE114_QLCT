@@ -69,7 +69,7 @@ public class Category_Add extends AppCompatActivity {
 
                 else if ( test.doesCategoryExist(category_name.getText().toString()) == 1){
                     // Show an error message if the wallet name is "Total" or if it already exists
-                    category_name.setError("Wallet name already exists");
+                    category_name.setError("Wallet_hdp name already exists");
                 } else
                 {
 

@@ -21,22 +21,18 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.qlct.Transaction.AddTransaction;
 import com.example.qlct.Analysis.AnalysisExpenseFragment;
 import com.example.qlct.Analysis.AnalysisIcomeFragment;
 import com.example.qlct.Analysis.AnalysisNetIncomeFragment;
-import com.example.qlct.MainActivity;
 import com.example.qlct.Notification.Notificaiton;
 import com.example.qlct.R;
 import com.example.qlct.SelectWallet_Adapter;
-import com.example.qlct.Wallet;
+import com.example.qlct.Wallet_hdp;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
 
 /**
@@ -64,7 +60,7 @@ public class Analysis_fragment extends Fragment {
     final SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
     private ListView walletListView;
 
-    private ArrayList<Wallet> walletList;
+    private ArrayList<Wallet_hdp> walletList;
     TextView wallet_name;
 
 
@@ -239,14 +235,14 @@ public class Analysis_fragment extends Fragment {
         });
     }
     private void AnhXaWallet(){
-        walletList = new ArrayList<Wallet>();
-        walletList.add(new Wallet("Vi 1", "2000000 d", R.drawable.budget));
-        walletList.add(new Wallet("Vi 2", "2000000 d", R.drawable.budget));
-        walletList.add(new Wallet("Vi 3", "2000000 d", R.drawable.budget));
-        walletList.add(new Wallet("Vi 4", "2000000 d", R.drawable.budget));
-        walletList.add(new Wallet("Vi 5", "2000000 d", R.drawable.budget));
-        walletList.add(new Wallet("Vi 6", "2000000 d", R.drawable.budget));
-        walletList.add(new Wallet("Vi 7", "2000000 d", R.drawable.budget));
-        walletList.add(new Wallet("Vi 8", "2000000 d", R.drawable.budget));
+        walletList = new ArrayList<Wallet_hdp>();
+        walletList.add(new Wallet_hdp("Vi 1", "2000000 d", R.drawable.budget));
+        walletList.add(new Wallet_hdp("Vi 2", "2000000 d", R.drawable.budget));
+        walletList.add(new Wallet_hdp("Vi 3", "2000000 d", R.drawable.budget));
+        walletList.add(new Wallet_hdp("Vi 4", "2000000 d", R.drawable.budget));
+        walletList.add(new Wallet_hdp("Vi 5", "2000000 d", R.drawable.budget));
+        walletList.add(new Wallet_hdp("Vi 6", "2000000 d", R.drawable.budget));
+        walletList.add(new Wallet_hdp("Vi 7", "2000000 d", R.drawable.budget));
+        walletList.add(new Wallet_hdp("Vi 8", "2000000 d", R.drawable.budget));
     }
 }
