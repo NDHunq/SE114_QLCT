@@ -770,6 +770,8 @@ public class AddTransaction extends AppCompatActivity {
                     TextInputEditText dateEditText = findViewById(R.id.select_date_txtbox);
                     TextInputEditText noteEditText = findViewById(R.id.note_txtbox);
                     String amount = amountEditText.getText().toString();
+                    String currencies = ((MaterialButton) findViewById(R.id.add_trans_currency_btn)).getText().toString();
+
 
                     // Tạo một đối tượng SimpleDateFormat để parse chuỗi ngày ban đầu
                     SimpleDateFormat originalFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -791,17 +793,17 @@ public class AddTransaction extends AppCompatActivity {
                     }
                     else{
                         if(income){
-                            CreateTransactionEntity createTransactionEntity = new CreateTransactionEntity(Integer.parseInt(amount), formattedDate, incomeCategoryStorage, incomeWalletIdStorage, note, null, "INCOME", currency, null);
+                            CreateTransactionEntity createTransactionEntity = new CreateTransactionEntity(Integer.parseInt(amount), formattedDate, incomeCategoryStorage, incomeWalletIdStorage, note, null, "INCOME", currencies, null);
                             transactionAPIUtil.createTransactionAPI(createTransactionEntity);
                             excuteIncome(incomeWalletIdStorage);
                         }
                         else if(expense){
-                            CreateTransactionEntity createTransactionEntity = new CreateTransactionEntity(Integer.parseInt(amount), formattedDate, expenseCategoryStorage, expenseWalletIdStorage, note, null, "EXPENSE", currency, null);
+                            CreateTransactionEntity createTransactionEntity = new CreateTransactionEntity(Integer.parseInt(amount), formattedDate, expenseCategoryStorage, expenseWalletIdStorage, note, null, "EXPENSE", currencies, null);
                             transactionAPIUtil.createTransactionAPI(createTransactionEntity);
                             excuteExpense(expenseWalletIdStorage);
                         }
                         else {
-                            CreateTransactionEntity createTransactionEntity = new CreateTransactionEntity(Integer.parseInt(amount), formattedDate, null, fromWalletIdStorage, note, null, null, currency, targetWalletIdStorage);
+                            CreateTransactionEntity createTransactionEntity = new CreateTransactionEntity(Integer.parseInt(amount), formattedDate, null, fromWalletIdStorage, note, null, "TRANSFER", currencies, targetWalletIdStorage);
                             transactionAPIUtil.createTransactionAPI(createTransactionEntity);
                             excuteTransfer(fromWalletIdStorage, targetWalletIdStorage);
                         }
