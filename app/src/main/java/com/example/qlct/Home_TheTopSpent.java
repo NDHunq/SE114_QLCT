@@ -6,11 +6,11 @@ public class Home_TheTopSpent {
     private String soTien;
     private String percent;
 
-    public Home_TheTopSpent(int hinhAnh, String tenCategory, String soTien, String percent) {
+    public Home_TheTopSpent(int hinhAnh, String tenCategory, String soTien) {
         HinhAnh = hinhAnh;
         this.tenCategory = tenCategory;
         this.soTien = soTien;
-        this.percent = percent;
+
     }
 
     public int getHinhAnh() {

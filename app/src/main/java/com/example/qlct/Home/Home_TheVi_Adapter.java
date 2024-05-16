@@ -3,6 +3,7 @@ package com.example.qlct.Home;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,6 +57,11 @@ public class Home_TheVi_Adapter extends BaseAdapter {
         TextView ten = (TextView) view.findViewById(R.id.tenVi_theVi);
         TextView sotien = (TextView) view.findViewById(R.id.tienVi_theVi);
         Home_TheVi theVi = theViList.get(i);
+        if (theVi.getSoTien().startsWith("-")) {
+            // Đổi màu text thành màu đỏ
+            // textView là một đối tượng TextView mà bạn muốn thay đổi màu
+            sotien.setTextColor(Color.RED);
+        }
         imageView.setImageResource(theVi.getHinhAnh());
         ten.setText(theVi.getTenVi());
         sotien.setText(theVi.getSoTien());
@@ -64,6 +70,7 @@ public class Home_TheVi_Adapter extends BaseAdapter {
             LinearLayout main = (LinearLayout) view.findViewById(R.id.main);
             main.setBackgroundResource(R.drawable.the12dpvienxanh);
         }
+
         ImageView optionsVi = (ImageView) view.findViewById(R.id.optionsVi); // Assuming you have optionsVi ImageView in your item layout
         optionsVi.setOnClickListener(new View.OnClickListener() {
             @Override

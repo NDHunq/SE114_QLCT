@@ -49,9 +49,19 @@ public class Home_TheGiaoDich_Adapter extends BaseAdapter {
         TextView ghichu = (TextView) view.findViewById(R.id.GhiChu);
         TextView vitien = (TextView) view.findViewById(R.id.tenvi);
         Home_TheGiaoDich theGiaoDich = theGiaoDichList.get(i);
+        if(theGiaoDich.Typee.equals("EXPENSE")){
+            sotien.setTextColor(context.getResources().getColor(R.color.red));
+        }
+        else if(theGiaoDich.Typee.equals("INCOME")){
+            sotien.setTextColor(context.getResources().getColor(R.color.xanhdam));
+        }
+        else if(theGiaoDich.Typee.equals("TRANSFER")){
+            sotien.setTextColor(context.getResources().getColor(R.color.xanhnendam));
+
+        }
         imageView.setImageResource(theGiaoDich.getHinhAnh());
         ten.setText(theGiaoDich.getTenGiaoDich());
-        sotien.setText(theGiaoDich.getSoTien());
+        sotien.setText(theGiaoDich.getSoTien()+""+theGiaoDich.getCurrencyUnit());
         ngaythang.setText(theGiaoDich.getNgayThang());
         ghichu.setText(theGiaoDich.getGhiChu());
         vitien.setText(theGiaoDich.getViTien());
