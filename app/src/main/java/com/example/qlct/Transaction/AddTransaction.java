@@ -43,6 +43,7 @@ import com.example.qlct.Category.Category_adapter;
 import com.example.qlct.R;
 import com.example.qlct.SelectWallet_Adapter;
 import com.example.qlct.Wallet_hdp;
+import com.example.qlct.doitiente;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -793,17 +794,17 @@ public class AddTransaction extends AppCompatActivity {
                     }
                     else{
                         if(income){
-                            CreateTransactionEntity createTransactionEntity = new CreateTransactionEntity(Integer.parseInt(amount), formattedDate, incomeCategoryStorage, incomeWalletIdStorage, note, null, "INCOME", currencies, null);
+                            CreateTransactionEntity createTransactionEntity = new CreateTransactionEntity(Double.parseDouble(amount), formattedDate, incomeCategoryStorage, incomeWalletIdStorage, note, null, "INCOME", currencies, null);
                             transactionAPIUtil.createTransactionAPI(createTransactionEntity);
                             excuteIncome(incomeWalletIdStorage);
                         }
                         else if(expense){
-                            CreateTransactionEntity createTransactionEntity = new CreateTransactionEntity(Integer.parseInt(amount), formattedDate, expenseCategoryStorage, expenseWalletIdStorage, note, null, "EXPENSE", currencies, null);
+                            CreateTransactionEntity createTransactionEntity = new CreateTransactionEntity(Double.parseDouble(amount), formattedDate, expenseCategoryStorage, expenseWalletIdStorage, note, null, "EXPENSE", currencies, null);
                             transactionAPIUtil.createTransactionAPI(createTransactionEntity);
                             excuteExpense(expenseWalletIdStorage);
                         }
                         else {
-                            CreateTransactionEntity createTransactionEntity = new CreateTransactionEntity(Integer.parseInt(amount), formattedDate, null, fromWalletIdStorage, note, null, "TRANSFER", currencies, targetWalletIdStorage);
+                            CreateTransactionEntity createTransactionEntity = new CreateTransactionEntity(Double.parseDouble(amount), formattedDate, null, fromWalletIdStorage, note, null, "TRANSFER", currencies, targetWalletIdStorage);
                             transactionAPIUtil.createTransactionAPI(createTransactionEntity);
                             excuteTransfer(fromWalletIdStorage, targetWalletIdStorage);
                         }
@@ -818,44 +819,103 @@ public class AddTransaction extends AppCompatActivity {
     }
 
     private void excuteIncome(String incomeID){
+        doitiente doi_tien_te = new doitiente();
         for(Wallet_hdp wallet : walletList){
             if(wallet.getId().equals(incomeID)){
+                String currencies = ((MaterialButton) findViewById(R.id.add_trans_currency_btn)).getText().toString();
                 TextInputEditText amountEditText = findViewById(R.id.Amount_txtbox);
-                double newAmount = Double.parseDouble(wallet.getAmountMoney()) + Double.parseDouble(amountEditText.getText().toString());
-                wallet.setAmountMoney(String.valueOf(newAmount));
+                double vndAmount = doi_tien_te.converttoVND(wallet.getCurrency(), Double.parseDouble(wallet.getAmountMoney())) + doi_tien_te.converttoVND(currencies, Double.parseDouble(amountEditText.getText().toString()));
+                switch (wallet.getCurrency()){
+                    case "USD":
+                        wallet.setAmountMoney(String.valueOf(vndAmount / doi_tien_te.getUSDtoVND()));
+                        break;
+                    case "VND":
+                        wallet.setAmountMoney(String.valueOf(vndAmount));
+                        break;
+                    case "EUR":
+                        wallet.setAmountMoney(String.valueOf(vndAmount / doi_tien_te.getUERtoVND()));
+                        break;
+                    case "CNY":
+                        wallet.setAmountMoney(String.valueOf(vndAmount / doi_tien_te.getCNYtoVND()));
+                        break;
+                }
                 WalletAPIUtil walletAPIUtil = new WalletAPIUtil();
-                walletAPIUtil.updateWalletAPI(incomeID, new UpdateWalletEntity(wallet.getWalletName(), (double)newAmount, wallet.getCurrency()));
+                walletAPIUtil.updateWalletAPI(incomeID, new UpdateWalletEntity(wallet.getWalletName(), Double.parseDouble(wallet.getAmountMoney()), wallet.getCurrency()));
             }
         }
     }
 
     private void excuteExpense(String expenseID){
+        doitiente doi_tien_te = new doitiente();
         for(Wallet_hdp wallet : walletList){
             if(wallet.getId().equals(expenseID)){
+                String currencies = ((MaterialButton) findViewById(R.id.add_trans_currency_btn)).getText().toString();
                 TextInputEditText amountEditText = findViewById(R.id.Amount_txtbox);
-                double newAmount = Double.parseDouble(wallet.getAmountMoney()) - Double.parseDouble(amountEditText.getText().toString());
-                wallet.setAmountMoney(String.valueOf(newAmount));
+                double vndAmount = doi_tien_te.converttoVND(wallet.getCurrency(), Double.parseDouble(wallet.getAmountMoney())) - doi_tien_te.converttoVND(currencies, Double.parseDouble(amountEditText.getText().toString()));
+                switch (wallet.getCurrency()){
+                    case "USD":
+                        wallet.setAmountMoney(String.valueOf(vndAmount / doi_tien_te.getUSDtoVND()));
+                        break;
+                    case "VND":
+                        wallet.setAmountMoney(String.valueOf(vndAmount));
+                        break;
+                    case "EUR":
+                        wallet.setAmountMoney(String.valueOf(vndAmount / doi_tien_te.getUERtoVND()));
+                        break;
+                    case "CNY":
+                        wallet.setAmountMoney(String.valueOf(vndAmount / doi_tien_te.getCNYtoVND()));
+                        break;
+                }
                 WalletAPIUtil walletAPIUtil = new WalletAPIUtil();
-                walletAPIUtil.updateWalletAPI(expenseID, new UpdateWalletEntity(wallet.getWalletName(), (double)newAmount, wallet.getCurrency()));
+                walletAPIUtil.updateWalletAPI(expenseID, new UpdateWalletEntity(wallet.getWalletName(), Double.parseDouble(wallet.getAmountMoney()), wallet.getCurrency()));
             }
         }
     }
 
     private void excuteTransfer(String fromID, String targetID){
+        doitiente doi_tien_te = new doitiente();
         for(Wallet_hdp wallet : walletList){
             if(wallet.getId().equals(fromID)){
+                String currencies = ((MaterialButton) findViewById(R.id.add_trans_currency_btn)).getText().toString();
                 TextInputEditText amountEditText = findViewById(R.id.Amount_txtbox);
-                double newAmount = Double.parseDouble(wallet.getAmountMoney()) - Double.parseDouble(amountEditText.getText().toString());
-                wallet.setAmountMoney(String.valueOf(newAmount));
+                double vndAmount = doi_tien_te.converttoVND(wallet.getCurrency(), Double.parseDouble(wallet.getAmountMoney())) - doi_tien_te.converttoVND(currencies, Double.parseDouble(amountEditText.getText().toString()));
+                switch (wallet.getCurrency()){
+                    case "USD":
+                        wallet.setAmountMoney(String.valueOf(vndAmount / doi_tien_te.getUSDtoVND()));
+                        break;
+                    case "VND":
+                        wallet.setAmountMoney(String.valueOf(vndAmount));
+                        break;
+                    case "EUR":
+                        wallet.setAmountMoney(String.valueOf(vndAmount / doi_tien_te.getUERtoVND()));
+                        break;
+                    case "CNY":
+                        wallet.setAmountMoney(String.valueOf(vndAmount / doi_tien_te.getCNYtoVND()));
+                        break;
+                }
                 WalletAPIUtil walletAPIUtil = new WalletAPIUtil();
-                walletAPIUtil.updateWalletAPI(fromID, new UpdateWalletEntity(wallet.getWalletName(), (double)newAmount, wallet.getCurrency()));
+                walletAPIUtil.updateWalletAPI(fromID, new UpdateWalletEntity(wallet.getWalletName(), Double.parseDouble(wallet.getAmountMoney()), wallet.getCurrency()));
             }
             if(wallet.getId().equals(targetID)){
+                String currencies = ((MaterialButton) findViewById(R.id.add_trans_currency_btn)).getText().toString();
                 TextInputEditText amountEditText = findViewById(R.id.Amount_txtbox);
-                double newAmount = Double.parseDouble(wallet.getAmountMoney()) + Double.parseDouble(amountEditText.getText().toString());
-                wallet.setAmountMoney(String.valueOf(newAmount));
+                double vndAmount = doi_tien_te.converttoVND(wallet.getCurrency(), Double.parseDouble(wallet.getAmountMoney())) + doi_tien_te.converttoVND(currencies, Double.parseDouble(amountEditText.getText().toString()));
+                switch (wallet.getCurrency()){
+                    case "USD":
+                        wallet.setAmountMoney(String.valueOf(vndAmount / doi_tien_te.getUSDtoVND()));
+                        break;
+                    case "VND":
+                        wallet.setAmountMoney(String.valueOf(vndAmount));
+                        break;
+                    case "EUR":
+                        wallet.setAmountMoney(String.valueOf(vndAmount / doi_tien_te.getUERtoVND()));
+                        break;
+                    case "CNY":
+                        wallet.setAmountMoney(String.valueOf(vndAmount / doi_tien_te.getCNYtoVND()));
+                        break;
+                }
                 WalletAPIUtil walletAPIUtil = new WalletAPIUtil();
-                walletAPIUtil.updateWalletAPI(targetID, new UpdateWalletEntity(wallet.getWalletName(), (double)newAmount, wallet.getCurrency()));
+                walletAPIUtil.updateWalletAPI(targetID, new UpdateWalletEntity(wallet.getWalletName(), Double.parseDouble(wallet.getAmountMoney()), wallet.getCurrency()));
             }
         }
     }
