@@ -137,9 +137,9 @@
                 <ImageView
                     android:id="@+id/hinhanh"
                     android:background="@drawable/question"
-                    android:layout_width="51dp"
+                    android:layout_width="35dp"
 
-                    android:layout_height="51dp"
+                    android:layout_height="35dp"
 
                     android:layout_gravity="center">
 

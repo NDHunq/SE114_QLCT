@@ -1,6 +1,7 @@
 package com.example.qlct;
 
 import android.content.Context;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,6 +66,8 @@ public class SelectWallet_Adapter extends BaseAdapter {
         }
         String amount = wallet.getAmountMoney() + " " + currencySymbol;
         money.setText(amount);
+        // Tạo một đối tượng LayoutParams mới với chiều rộng và chiều cao mong muốn
+
         image.setImageResource(wallet.getImage());
 
         return view;

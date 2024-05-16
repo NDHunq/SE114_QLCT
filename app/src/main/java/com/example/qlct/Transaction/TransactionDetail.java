@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +33,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.qlct.API_Entity.GetAllWalletsEntity;
+import com.example.qlct.API_Utils.WalletAPIUtil;
 import com.example.qlct.Category.Category_hdp;
 import com.example.qlct.R;
 import com.example.qlct.SelectWallet_Adapter;
@@ -78,15 +81,19 @@ public class TransactionDetail extends AppCompatActivity {
     private TextView dateTxtView;
 
     private void AnhXaWallet(){
-        walletList = new ArrayList<Wallet_hdp>();
-        walletList.add(new Wallet_hdp("Vi 1", "2000000 d", R.drawable.budget));
-        walletList.add(new Wallet_hdp("Vi 2", "2000000 d", R.drawable.budget));
-        walletList.add(new Wallet_hdp("Vi 3", "2000000 d", R.drawable.budget));
-        walletList.add(new Wallet_hdp("Vi 4", "2000000 d", R.drawable.budget));
-        walletList.add(new Wallet_hdp("Vi 5", "2000000 d", R.drawable.budget));
-        walletList.add(new Wallet_hdp("Vi 6", "2000000 d", R.drawable.budget));
-        walletList.add(new Wallet_hdp("Vi 7", "2000000 d", R.drawable.budget));
-        walletList.add(new Wallet_hdp("Vi 8", "2000000 d", R.drawable.budget));
+        try{
+            walletList = new ArrayList<Wallet_hdp>();
+            ArrayList<GetAllWalletsEntity> parseAPIList = new WalletAPIUtil().getAllWalletAPI();
+            //Chạy vòng lặp để lấy ra các field cần thiết cho hiển thị ra Views
+            for (GetAllWalletsEntity item : parseAPIList) {
+                walletList.add(new Wallet_hdp(item.id, item.name, item.amount, R.drawable.wallet, item.currency_unit));
+            }
+            walletList.add(new Wallet_hdp("total", "TOTAL", "", R.drawable.wallet, ""));
+            Log.d("Get_wallet_data_object", walletList.toString());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
     private void setIncomeBackground(MaterialButton income_btn){
         if (income){
@@ -165,7 +172,7 @@ public class TransactionDetail extends AppCompatActivity {
         chip1.setId(0);
 
 
-        ChipGroup chipGroup = dialog.findViewById(R.id.trans_type_chipgroup);
+        ChipGroup chipGroup = dialog.findViewById(R.id.income_chipgroup);
         chipGroup.addView(chip1);
 
         chip1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -208,6 +215,34 @@ public class TransactionDetail extends AppCompatActivity {
                 setIncomeBackground(income_btn);
                 setExpenseBackground(expense_btn);
             }
+        });
+    }
+
+    private void showWalletDialog(){
+        final Dialog dialog = new Dialog(TransactionDetail.this);
+
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.bottomsheet_select_wallet);
+
+        dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimationn;
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_bgh);
+
+        dialog.show();
+
+        walletListView = dialog.findViewById(R.id.select_wallet_listview);
+        AnhXaWallet();
+        SelectWallet_Adapter adapter = new SelectWallet_Adapter(TransactionDetail.this, R.layout.select_wallet_item_list, walletList);
+        walletListView.setAdapter(adapter);
+
+        walletListView.setOnItemClickListener((parent, view, position, id) -> {
+            Wallet_hdp wallet = new Wallet_hdp("", "", "", 0, "");
+            wallet = walletList.get(position);
+            TextView walletName = findViewById(R.id.wallet_name_txtview);
+            walletName.setText(wallet.getWalletName());
+            dialog.dismiss();
         });
     }
 
@@ -830,23 +865,7 @@ public class TransactionDetail extends AppCompatActivity {
         walletbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final Dialog dialog = new Dialog(TransactionDetail.this);
-
-                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dialog.setContentView(R.layout.bottomsheet_select_wallet);
-
-                dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-                dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimationn;
-                dialog.getWindow().setGravity(Gravity.BOTTOM);
-                dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_bgh);
-
-                dialog.show();
-
-                walletListView = dialog.findViewById(R.id.select_wallet_listview);
-                AnhXaWallet();
-                SelectWallet_Adapter adapter = new SelectWallet_Adapter(TransactionDetail.this, R.layout.select_wallet_item_list, walletList);
-                walletListView.setAdapter(adapter);
+                showWalletDialog();
             }
         });
 

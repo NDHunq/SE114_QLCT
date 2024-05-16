@@ -35,15 +35,6 @@
             android:textSize="26sp"
             android:textStyle="bold"
             android:layout_weight="6"/>
-
-        <ImageButton
-            android:id="@+id/trans_detail_search_btn"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/search_icon"
-            android:background="@color/white"
-            android:layout_gravity="center"
-            android:layout_weight="1"/>
     </LinearLayout>
 
     <LinearLayout
@@ -96,6 +87,7 @@
                 android:weightSum="6">
 
                 <TextView
+                    android:id="@+id/wallet_name_txtview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Total"

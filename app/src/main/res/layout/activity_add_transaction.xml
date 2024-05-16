@@ -120,7 +120,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/Amount_txtbox_layout"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_weight="9"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:hint="Amount"
@@ -141,8 +141,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number"
-                android:textColor="@color/xanhnen"
-                />
+                android:textColor="@color/xanhnen" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -156,7 +155,6 @@
             android:textColor="@color/xanhnen"
             android:textSize="12sp"
             android:textStyle="bold"
-            android:layout_gravity="center"
             app:strokeColor="@color/xanhnen"
             app:rippleColor="@color/xanhnennhat"
             app:cornerRadius="5dp" />
@@ -179,16 +177,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/calendar_icon"
-            android:layout_gravity="center"
-            android:layout_marginEnd="10dp" />
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="12dp"/>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/select_date_txtbox_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:hint="Selected Date"
             android:textColorHint="@color/black"
+            app:errorEnabled="true"
             app:boxStrokeColor="@color/black"
             app:boxStrokeWidth="1dp"
             app:endIconMode="clear_text">
@@ -197,7 +197,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
-                android:enabled="false"/>
+                android:enabled="false" />
         </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
@@ -243,6 +243,7 @@
                     android:layout_height="40dp"
                     android:layout_gravity="center"
                     app:cardCornerRadius="20dp"
+                    app:cardBackgroundColor="@color/white"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:layout_marginStart="10dp"
@@ -250,10 +251,10 @@
 
                     <ImageView
                         android:id="@+id/income_category_icon"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:background="@drawable/circle_icon"
-                        android:backgroundTint="@color/black"
+                        android:backgroundTint="@color/white"
                         android:layout_gravity="center"/>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -292,6 +293,7 @@
                     android:layout_height="40dp"
                     android:layout_gravity="center"
                     app:cardCornerRadius="20dp"
+                    app:cardBackgroundColor="@color/white"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:layout_marginStart="10dp"
@@ -299,10 +301,10 @@
 
                     <ImageView
                         android:id="@+id/expense_category_icon"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:background="@drawable/circle_icon"
-                        android:backgroundTint="@color/black"
+                        android:backgroundTint="@color/white"
                         android:layout_gravity="center"/>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -341,6 +343,7 @@
                     android:layout_height="40dp"
                     android:layout_gravity="center"
                     app:cardCornerRadius="20dp"
+                    app:cardBackgroundColor="@color/white"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:layout_marginStart="10dp"
@@ -348,10 +351,10 @@
 
                     <ImageView
                         android:id="@+id/from_wallet_icon"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:background="@drawable/circle_icon"
-                        android:backgroundTint="@color/black"
+                        android:backgroundTint="@color/white"
                         android:layout_gravity="center"/>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -436,6 +439,7 @@
                     android:layout_height="40dp"
                     android:layout_gravity="center"
                     app:cardCornerRadius="20dp"
+                    app:cardBackgroundColor="@color/white"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:layout_marginStart="10dp"
@@ -443,10 +447,10 @@
 
                     <ImageView
                         android:id="@+id/income_wallet_icon"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:background="@drawable/circle_icon"
-                        android:backgroundTint="@color/black"
+                        android:backgroundTint="@color/white"
                         android:layout_gravity="center"/>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -497,6 +501,7 @@
                     android:layout_height="40dp"
                     android:layout_gravity="center"
                     app:cardCornerRadius="20dp"
+                    app:cardBackgroundColor="@color/white"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:layout_marginStart="10dp"
@@ -504,10 +509,10 @@
 
                     <ImageView
                         android:id="@+id/expense_wallet_icon"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:background="@drawable/circle_icon"
-                        android:backgroundTint="@color/black"
+                        android:backgroundTint="@color/white"
                         android:layout_gravity="center"/>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -558,6 +563,7 @@
                     android:layout_height="40dp"
                     android:layout_gravity="center"
                     app:cardCornerRadius="20dp"
+                    app:cardBackgroundColor="@color/white"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:layout_marginStart="10dp"
@@ -565,10 +571,10 @@
 
                     <ImageView
                         android:id="@+id/target_wallet_icon"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:background="@drawable/circle_icon"
-                        android:backgroundTint="@color/black"
+                        android:backgroundTint="@color/white"
                         android:layout_gravity="center"/>
                 </com.google.android.material.card.MaterialCardView>
 
