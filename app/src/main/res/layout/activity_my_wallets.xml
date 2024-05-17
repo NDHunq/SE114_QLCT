@@ -53,19 +53,23 @@ android:layout_marginStart="12dp"
         android:layout_marginEnd="12dp"
         android:background="@drawable/the12dp"
         android:layout_height="50dp">
-     <EditText
-         android:background="@null"
-         android:textSize="20dp"
+
+        <EditText
+            android:id="@+id/searchbar"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
 
 
-         android:layout_marginStart="5dp"
-         android:layout_width="0dp"
-         android:layout_weight="1"
-         android:maxLines="1"
-         android:layout_height="match_parent">
+            android:layout_marginStart="5dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:maxLines="1"
+            android:textSize="20dp">
 
-     </EditText>
+        </EditText>
+
         <ImageButton
+            android:id="@+id/search"
             android:layout_width="26dp"
 
             android:layout_gravity="center"
@@ -79,6 +83,7 @@ android:layout_marginStart="12dp"
 
     </LinearLayout>
 <LinearLayout
+    android:id="@+id/total_layout"
     android:layout_width="match_parent"
     android:layout_marginTop="10dp"
     android:layout_marginStart="12dp"
@@ -133,6 +138,7 @@ android:layout_marginStart="12dp"
             android:layout_marginStart="12dp"
             android:layout_height="0dp"></TextView>
         <TextView
+            android:id="@+id/tongammount"
             android:layout_width="wrap_content"
 
             android:text="2,000,000 đ"

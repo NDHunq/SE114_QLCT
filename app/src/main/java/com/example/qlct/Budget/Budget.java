@@ -2,21 +2,43 @@ package com.example.qlct.Budget;
 
 import android.media.Image;
 
-public class Budget {
+import java.io.Serializable;
+
+public class Budget implements Serializable {
+    String id;
     private String category;
     private double max_money;
     private double curent_money;
     private String fromDate;
     private String toDate;
-    private int Image;
+    private String Image;
+    String type;
 
-    public Budget(String category, double max_money, double curent_money, String fromDate, String toDate, int image) {
+    public Budget(String category, double max_money, double curent_money, String fromDate, String toDate, String image, String type, String id) {
         this.category = category;
         this.max_money = max_money;
         this.curent_money = curent_money;
         this.fromDate = fromDate;
         this.toDate = toDate;
         Image = image;
+        this.type = type;
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     @Override
@@ -71,11 +93,11 @@ public class Budget {
         this.toDate = toDate;
     }
 
-    public int getImage() {
+    public String getImage() {
         return Image;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         Image = image;
     }
 }

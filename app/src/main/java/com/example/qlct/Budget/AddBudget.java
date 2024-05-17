@@ -72,7 +72,7 @@ public class AddBudget extends AppCompatActivity implements OnDataPass {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_add_budget);
+        setContentView(R.layout.activity_budget_add);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -114,7 +114,7 @@ public class AddBudget extends AppCompatActivity implements OnDataPass {
                         }
 
 
-                        CreateRenewBudgetEntity createRenewBudgetEntity = new CreateRenewBudgetEntity(GetIDCategory(Category.getText().toString()), Double.parseDouble(amount.getText().toString()),"Custom", realDate, enable_notification);
+                        CreateRenewBudgetEntity createRenewBudgetEntity = new CreateRenewBudgetEntity(GetIDCategory(Category.getText().toString()), Double.parseDouble(amount.getText().toString()),"Custom", realDate+" 00:00:00", enable_notification);
                         budgetAPIUtil.createRenewBudget(createRenewBudgetEntity);
                     }
                 }
@@ -123,6 +123,14 @@ public class AddBudget extends AppCompatActivity implements OnDataPass {
                     if(date_unit!="Day")
                     {
                         realDate=realDate.replace(" - ", " ");
+                    }
+                    SimpleDateFormat originalFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+                    SimpleDateFormat targetFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                    try {
+                        Date date = originalFormat.parse(realDate);
+                        realDate = targetFormat.format(date);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
                     }
                     CreateNoRenewBudgetEntity createNoRenewBudgetEntity = new CreateNoRenewBudgetEntity(GetIDCategory(Category.getText().toString()), Double.parseDouble(amount.getText().toString()), date_unit.toUpperCase(), realDate, enable_notification);
                     budgetAPIUtil.createNoRenewBudget(createNoRenewBudgetEntity);
@@ -188,7 +196,7 @@ public class AddBudget extends AppCompatActivity implements OnDataPass {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimationn;
         dialog.getWindow().setGravity(Gravity.BOTTOM);
-        dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_bgh);
+                dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_bgh);
         dialog.show();
 
         categoryListView = dialog.findViewById(R.id.select_category_listview);

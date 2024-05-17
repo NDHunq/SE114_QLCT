@@ -1,4 +1,5 @@
 package com.example.qlct.API_Entity;
+import java.io.Serializable;
 
 public class GetAllWalletsEntity {
     public String id;

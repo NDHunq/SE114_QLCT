@@ -40,8 +40,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/grey_background">
             <LinearLayout
@@ -54,7 +54,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-
+                    android:layout_marginTop="-7dp"
                     >
                     <RadioButton
                         android:id="@+id/month"
@@ -122,7 +122,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="5dp"
-                android:layout_toLeftOf="@id/more"
+
                 >
 
                 <ImageView
@@ -205,8 +205,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="15dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
             android:layout_marginBottom="5dp"
             >
             <LinearLayout

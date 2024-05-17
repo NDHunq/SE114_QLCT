@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,16 +87,53 @@ public class BudgetFinishFragment extends Fragment {
     void Anhxa()
     {
         list=new ArrayList<>();
-        list.add(new Budget("Food",2000000,5000,"21, March 2024","25 March 2024",R.drawable.dish));
-        list.add(new Budget("Food",2000000,5000,"21, March 2024","25 March 2024",R.drawable.dish));
-        list.add(new Budget("Food",2000000,5000,"21, March 2024","25 March 2024",R.drawable.dish));
-        list.add(new Budget("Food",2000000,5000,"21, March 2024","25 March 2024",R.drawable.dish));
-        list.add(new Budget("Food",2000000,5000,"21, March 2024","25 March 2024",R.drawable.dish));
+        String from="";
+        String to="";
+        if(allBudgets != null)
+            for(int i=0;i<allBudgets.size();i++){
+                if(allBudgets.get(i).getBudget_type().equals("NO_RENEW")) {
+                    if (allBudgets.get(i).getNo_renew_date_unit().equals("DAY") ) {
+                        from = "";
+                        to = allBudgets.get(i).getNo_renew_date();
+                    }
+                    else {
+                        String[] dates = allBudgets.get(i).getNo_renew_date().split(" ");
+                        if(dates.length == 2) {
+                            from ="From: "+ dates[0];
+                            to = "To: "+dates[1];
+                        }
+                    }
+                }
+                else {
+                    if(allBudgets.get(i).getRenew_date_unit().equals("Custom"))
+                    {
+                        from="Renew at "+"\n"+allBudgets.get(i).getCustom_renew_date().substring(0,10);
+                        to="";
+                    }
+                    else {
+                        from="From: "+allBudgets.get(i).getCreate_at().substring(0,10);
+                        to="Renew "+allBudgets.get(i).getRenew_date_unit();
+                    }
 
+                }
+                Budget budget = new Budget(GetNameCategory(allBudgets.get(i).getCategory_id()),Double.valueOf(allBudgets.get(i).getLimit_amount()) ,Double.valueOf(allBudgets.get(i).getExpensed_amount()) ,from,to,allBudgets.get(i).getCategory().getPicture(),allBudgets.get(i).getBudget_type(),allBudgets.get(i).getId());
+                list.add(budget);
+            }
+        else{
+            Log.d("BudgetRunningFragment", "allBudgets is null");
+        }
     }
     void GetAllCategory()
     {
         listCate=new CategoryAPIUntill().getAllCategoryys();
+    }
+    String GetNameCategory(String id) {
+        for(int i = 0; i < listCate.size(); i++) {
+            if(listCate.get(i).getId().equals(id)) {
+                return listCate.get(i).getName();
+            }
+        }
+        return "";
     }
     String GetIDCategory(String name)
     {
@@ -108,4 +146,5 @@ public class BudgetFinishFragment extends Fragment {
         }
         return "";
     }
+
 }
