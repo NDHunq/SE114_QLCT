@@ -33,7 +33,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Email confirm"
+            android:text="Phone confirm"
             android:textColor="@color/black"
             android:textSize="30dp">
 
@@ -46,13 +46,14 @@
             android:gravity="center"
             android:textColor="@color/black"
             android:textSize="30dp"
-            android:text="Enter the code we-ve have emailed to">
+            android:text="Enter the code we-ve have sent to">
         </TextView>
 
         <TextView
+            android:id="@+id/phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="t****@gmail.com"
+            android:text=""
             android:gravity="center"
             android:textColor="@color/black"
             android:textSize="30dp">
@@ -125,16 +126,7 @@
                 android:maxLength="1">
             </EditText>
         </LinearLayout>
-        <TextView
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:text="Resent Email"
-            android:textColor="@color/xanhnen"
-            android:gravity="center_vertical"
-            android:textSize="20dp">
-        </TextView>
+
 
         <RelativeLayout
             android:layout_width="match_parent"

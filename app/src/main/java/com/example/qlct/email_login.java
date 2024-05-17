@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,14 +17,21 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.qlct.API_Utils.UserAPiUtil;
+
 public class email_login extends AppCompatActivity {
 Button next;
 ImageButton back;
+String id;
+String phoneNumber;
+
     private int lastEditTextIndex = 0;
     // Tạo một mảng chứa tất cả các EditText
     EditText[] editTexts = new EditText[6];
+    TextView phone;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_email_login);
@@ -32,16 +40,28 @@ ImageButton back;
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        Log.d("phone","1");
+        phoneNumber=getIntent().getStringExtra("phone");
+        Log.d("phone","2");
+        Log.d("phone",phoneNumber);
         next=findViewById(R.id.next);
         back=findViewById(R.id.back);
+        phone=findViewById(R.id.phone);
+        phone.setText(phoneNumber);
 
         next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myintent=new Intent(email_login.this,select_currency.class);
-                startActivity(myintent);
-            }
-        });
+                                    @Override
+                                    public void onClick(View v) {
+                                        UserAPiUtil userAPiUtil = new UserAPiUtil();
+                                        userAPiUtil.verifyPhoneNumber(phoneNumber, id, new UserAPiUtil.OnTaskCompleted() {
+                                            @Override
+                                            public void onTaskCompleted(String result) {
+                                                // handle the result here
+                                                // for example, navigate to the next screen if the verification is successful
+                                            }
+                                        });
+                                    }
+                                });
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,6 +74,10 @@ ImageButton back;
         editTexts[3] = findViewById(R.id.editText4);
         editTexts[4] = findViewById(R.id.editText5);
         editTexts[5] = findViewById(R.id.editText6);
+        for(int i=0;i<6;i++)
+        {
+            id+=editTexts[i].getText();
+        }
         TextWatcher textWatcher = new TextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {

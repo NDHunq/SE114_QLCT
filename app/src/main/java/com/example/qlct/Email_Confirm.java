@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,8 +16,12 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.qlct.API_Entity.LoginResponse;
+import com.example.qlct.API_Entity.SharedDaTa;
+
 public class Email_Confirm extends AppCompatActivity {
 Button next;
+TextView phone;
 ImageButton backemmailconfirm_next;
     private int lastEditTextIndex = 0;
     // Tạo một mảng chứa tất cả các EditText
@@ -32,14 +37,19 @@ ImageButton backemmailconfirm_next;
             return insets;
         });
         next=findViewById(R.id.next);
+        phone=findViewById(R.id.phone);
+        LoginResponse loginResponse = SharedDaTa.getInstance().getLoginResponse();
+        String phoneNumber = loginResponse.getData().getUser().getPhone_number();
+        phoneNumber="0"+ phoneNumber.substring(3);
+        phone.setText(phoneNumber);
         backemmailconfirm_next=findViewById(R.id.backemailconfirm_next);
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myintent=new Intent(Email_Confirm.this, NewPassword.class);
-                startActivity(myintent);
-            }
-        });
+//        next.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent myintent=new Intent(Email_Confirm.this, NewPassword.class);
+//                startActivity(myintent);
+//            }
+//        });
         backemmailconfirm_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

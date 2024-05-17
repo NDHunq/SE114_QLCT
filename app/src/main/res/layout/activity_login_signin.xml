@@ -46,8 +46,9 @@
             android:layout_marginLeft="20dp"
             android:textColor="@color/black"
             android:textSize="25dp"
-            android:text="Phone or username">
+            android:text="Phone">
         </TextView>
+
 
         <LinearLayout
             android:layout_marginLeft="20dp"
@@ -74,7 +75,16 @@
 
         </LinearLayout>
         <TextView
-            android:layout_marginTop="20dp"
+            android:id="@+id/errorphone"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:textColor="@color/red"
+            android:textSize="20dp"
+            android:layout_marginLeft="20dp">
+        </TextView>
+
+        <TextView
+            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
@@ -114,6 +124,14 @@
             </ImageButton>
 
         </LinearLayout>
+        <TextView
+            android:id="@+id/errorinfo"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:textColor="@color/red"
+            android:textSize="20dp"
+            android:layout_marginLeft="20dp">
+        </TextView>
         <TextView
             android:id="@+id/forgetpass"
             android:layout_marginRight="20dp"

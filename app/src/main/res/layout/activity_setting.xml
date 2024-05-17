@@ -76,13 +76,14 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
-                        android:text="Email"
+                        android:text="Phone"
                         android:textColor="@color/black"
                         android:textSize="15dp">
 
                     </TextView>
 
                     <TextView
+                        android:id="@+id/phone"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:text="TranQuyen2132004@gmail.com"
@@ -90,34 +91,34 @@
 
                     </TextView>
                 </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/changemail"
-                    android:layout_width="100dp"
-                    android:layout_height="30dp"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/background_item"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+<!--                <LinearLayout-->
+<!--                    android:id="@+id/changemail"-->
+<!--                    android:layout_width="100dp"-->
+<!--                    android:layout_height="30dp"-->
+<!--                    android:layout_marginRight="10dp"-->
+<!--                    android:background="@drawable/background_item"-->
+<!--                    android:gravity="center_vertical"-->
+<!--                    android:orientation="horizontal">-->
 
-                    <ImageButton
+<!--                    <ImageButton-->
 
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:background="@drawable/change">
+<!--                        android:layout_width="20dp"-->
+<!--                        android:layout_height="20dp"-->
+<!--                        android:layout_marginLeft="10dp"-->
+<!--                        android:layout_marginRight="10dp"-->
+<!--                        android:background="@drawable/change">-->
 
-                    </ImageButton>
+<!--                    </ImageButton>-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Change"
-                        android:textColor="@color/black"
-                        android:textSize="15dp">
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Change"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:textSize="15dp">-->
 
-                    </TextView>
-                </LinearLayout>
+<!--                    </TextView>-->
+<!--                </LinearLayout>-->
             </LinearLayout>
 
             <LinearLayout
@@ -183,6 +184,7 @@
 
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/currency"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:gravity="center_vertical"
@@ -193,6 +195,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
+
                 android:layout_width="100dp"
                 android:layout_height="60dp"
                 android:layout_marginLeft="10dp"
@@ -209,9 +212,10 @@
                 </TextView>
 
                 <TextView
+                    android:id="@+id/currency1"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    android:text="VND-Viet Nam"
+                    android:text=""
                     android:textSize="15dp">
 
                 </TextView>

@@ -19,12 +19,15 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.qlct.API_Entity.LoginEntity;
 import com.example.qlct.API_Entity.LoginResponse;
+import com.example.qlct.API_Entity.SharedDaTa;
 import com.example.qlct.API_Utils.UserAPiUtil;
 import com.google.gson.Gson;
 
 public class Login_Signin extends AppCompatActivity {
 
 Button signin;
+    TextView errorinfo;
+TextView errorphone;
     EditText enterpass;
     EditText phone;
     Button login;
@@ -40,6 +43,8 @@ Button signin;
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        errorinfo=findViewById(R.id.errorinfo);
+        errorphone=findViewById(R.id.errorphone);
         signin=findViewById(R.id.signin);
         enterpass=findViewById(R.id.enterpass);
         enterpass.setTransformationMethod(new PasswordTransformationMethod());
@@ -76,30 +81,46 @@ Button signin;
             @Override
             public void onClick(View v) {
 
-                LoginEntity loginEntity = new LoginEntity(phone.getText().toString(), enterpass.getText().toString());
-                //Gọi API login
-                UserAPiUtil userAPiUtil = new UserAPiUtil();
-                try {
-                    String response = userAPiUtil.Login(loginEntity);
-                    // Parse the response
-                    Gson gson = new Gson();
-                    LoginResponse loginResponse = gson.fromJson(response, LoginResponse.class);
-                    Log.d("Login", "loginResponse: " + loginResponse.getStatus().getCode());
-
-                    // Check if login was successful
-                    if (loginResponse.getStatus().getCode() == 200) {
-                        Log.d("Login", "Login successful");
-                        // Login was successful, navigate to the main activity
-
-                        Intent intent = new Intent(Login_Signin.this, MainActivity.class);
-                        startActivity(intent);
-                    } else {
-                        // Login failed, show an error message
-                        Toast.makeText(Login_Signin.this, "Login failed", Toast.LENGTH_SHORT).show();
+                if(phone.length()>=10&&phone.length()<=11&&phone.getText().toString().matches("[0-9]+"))
+                {
+                    errorphone.setText("");
+                    String phone_convert = phone.getText().toString();
+                    if (phone_convert.startsWith("0")) {
+                        phone_convert = "+84" + phone_convert.substring(1);
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    LoginEntity loginEntity = new LoginEntity(phone_convert, enterpass.getText().toString());
+                    //Gọi API login
+                    UserAPiUtil userAPiUtil = new UserAPiUtil();
+
+                    userAPiUtil.Login(loginEntity, new UserAPiUtil.OnTaskCompleted() {
+                        @Override
+                        public void onTaskCompleted(String result) {
+                            // Handle the result here
+                            Log.d("Login", "response: " + result);
+                            Gson gson = new Gson();
+                            Log.d("Login", "excute login");
+                            LoginResponse loginResponse = gson.fromJson(result, LoginResponse.class);
+                            Log.d("Login", "loginResponse: " + loginResponse.getStatus().getCode());
+
+                            if (loginResponse.getStatus().getCode() == 200) {
+                                SharedDaTa.getInstance().setLoginResponse(loginResponse);
+
+                                Intent myintent = new Intent(Login_Signin.this, MainActivity.class);
+                                startActivity(myintent);
+                            } else {
+                                Log.d("login", "failed");
+                                errorinfo.setText("Invalid phone number or password");
+                            }
+                        }
+
+
+                    });
                 }
+                else {
+                    errorinfo.setText("");
+                    errorphone.setText("Invalid phone number");
+                }
+
             }
         });
 

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Account_fragment">
+    tools:context="Fragment.Account_fragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -71,10 +71,11 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="quyen213213@gmail.com"
+            android:text=""
             android:textSize="15dp"
             >
         </TextView>
@@ -197,6 +198,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/logout"
             android:layout_width="120dp"
             android:layout_height="40dp"
             android:orientation="horizontal"
