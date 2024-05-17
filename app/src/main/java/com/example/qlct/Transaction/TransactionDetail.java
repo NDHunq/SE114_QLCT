@@ -159,58 +159,6 @@ public class TransactionDetail extends AppCompatActivity {
 
         AnhXaCategoryToChip(incomeChipGroup, expenseChipGroup);
 
-        if(income){
-            for (int i = 0; i < incomeChipGroup.getChildCount(); i++) {
-                View view = incomeChipGroup.getChildAt(i);
-                if (view instanceof Chip) {
-                    Chip chip = (Chip) view;
-                    chip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                        @Override
-                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                            if (isChecked) {
-                                // Xử lý khi Chip được chọn
-                                chip.setRippleColor(ColorStateList.valueOf(getResources().getColor(R.color.xanhnhat, null)));
-                                chip.setChipBackgroundColor(ColorStateList.valueOf(getResources().getColor(R.color.xanhdam, null)));
-                                chip.setCheckedIconVisible(true);
-                                chip.setTextColor(getResources().getColor(R.color.white, null));
-                                chip.setCheckedIconTint(ColorStateList.valueOf(getResources().getColor(R.color.white, null)));
-                            } else {
-                                // Xử lý khi Chip bị bỏ chọn
-                                chip.setCheckedIconVisible(false);
-                                chip.setChipBackgroundColor(ColorStateList.valueOf(getResources().getColor(R.color.white, null)));
-                                chip.setTextColor(getResources().getColor(R.color.black, null));
-                            }
-                        }
-                    });
-                }
-            }
-        }
-        else if(expense){
-            for (int i = 0; i < expenseChipGroup.getChildCount(); i++) {
-                View view = expenseChipGroup.getChildAt(i);
-                if (view instanceof Chip) {
-                    Chip chip = (Chip) view;
-                    chip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                        @Override
-                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                            if (isChecked) {
-                                // Xử lý khi Chip được chọn
-                                chip.setRippleColor(ColorStateList.valueOf(getResources().getColor(R.color.lightred, null)));
-                                chip.setChipBackgroundColor(ColorStateList.valueOf(getResources().getColor(R.color.red, null)));
-                                chip.setCheckedIconVisible(true);
-                                chip.setTextColor(getResources().getColor(R.color.white, null));
-                                chip.setCheckedIconTint(ColorStateList.valueOf(getResources().getColor(R.color.white, null)));
-                            } else {
-                                // Xử lý khi Chip bị bỏ chọn
-                                chip.setCheckedIconVisible(false);
-                                chip.setChipBackgroundColor(ColorStateList.valueOf(getResources().getColor(R.color.white, null)));
-                                chip.setTextColor(getResources().getColor(R.color.black, null));
-                            }
-                        }
-                    });
-                }
-            }
-        }
 
         income_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1068,12 +1016,16 @@ public class TransactionDetail extends AppCompatActivity {
     }
 
     private void AnhXaCategory(){
-        categoryList = new ArrayList<Category_hdp>();
-        ArrayList<GetAllCategoryEntity> parseAPIList = new CategoryAPIUtil().getAllCategory();
-        for(GetAllCategoryEntity category : parseAPIList){
-            categoryList.add(new Category_hdp(category.getId(), category.getName(), category.getPicture(), category.getType()));
+        try{
+            categoryList = new ArrayList<Category_hdp>();
+            ArrayList<GetAllCategoryEntity> parseAPIList = new CategoryAPIUtil().getAllCategory();
+            for(GetAllCategoryEntity category : parseAPIList){
+                categoryList.add(new Category_hdp(category.getId(), category.getName(), category.getPicture(), category.getType()));
+            }
+            Log.d("Get_wallet_data_object", categoryList.toString());
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        Log.d("Get_wallet_data_object", categoryList.toString());
     }
 
     private void AnhXaCategoryToChip(ChipGroup incomeChipGroup, ChipGroup expenseChipGroup){
@@ -1085,10 +1037,48 @@ public class TransactionDetail extends AppCompatActivity {
             chip.setTextColor(getResources().getColor(R.color.black, null));
             chip.setCheckable(true);
             chip.setTag(category);
-            if(category.getCategory_type().equals("INCOME"))
+            if(category.getCategory_type().equals("INCOME")) {
+                chip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if (chip.isChecked()) {
+                            // Xử lý khi Chip được chọn
+                            chip.setRippleColor(ColorStateList.valueOf(getResources().getColor(R.color.xanhnhat, null)));
+                            chip.setChipBackgroundColor(ColorStateList.valueOf(getResources().getColor(R.color.xanhdam, null)));
+                            chip.setCheckedIconVisible(true);
+                            chip.setTextColor(getResources().getColor(R.color.white, null));
+                            chip.setCheckedIconTint(ColorStateList.valueOf(getResources().getColor(R.color.white, null)));
+                        } else {
+                            // Xử lý khi Chip bị bỏ chọn
+                            chip.setCheckedIconVisible(false);
+                            chip.setChipBackgroundColor(ColorStateList.valueOf(getResources().getColor(R.color.white, null)));
+                            chip.setTextColor(getResources().getColor(R.color.black, null));
+                        }
+                    }
+                });
                 incomeChipGroup.addView(chip);
-            else
+            }
+            else {
+                chip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if (chip.isChecked()) {
+                            // Xử lý khi Chip được chọn
+                            chip.setRippleColor(ColorStateList.valueOf(getResources().getColor(R.color.lightred, null)));
+                            chip.setChipBackgroundColor(ColorStateList.valueOf(getResources().getColor(R.color.red, null)));
+                            chip.setCheckedIconVisible(true);
+                            chip.setTextColor(getResources().getColor(R.color.white, null));
+                            chip.setCheckedIconTint(ColorStateList.valueOf(getResources().getColor(R.color.white, null)));
+                        } else {
+                            // Xử lý khi Chip bị bỏ chọn
+                            chip.setCheckedIconVisible(false);
+                            chip.setChipBackgroundColor(ColorStateList.valueOf(getResources().getColor(R.color.white, null)));
+                            chip.setTextColor(getResources().getColor(R.color.black, null));
+                        }
+                    }
+                });
                 expenseChipGroup.addView(chip);
+            }
         }
     }
 }
