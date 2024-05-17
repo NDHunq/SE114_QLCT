@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "894983015519",
+    "project_id": "expense-management-2e6d4",
+    "storage_bucket": "expense-management-2e6d4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:894983015519:android:c115c72e75a33feac19fea",
+        "android_client_info": {
+          "package_name": "com.example.qlct"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "894983015519-50pnbm02v29hsd196agai5uis152n1nc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3H1MfqB92b49dXHe-WG8Au-FY-CjOPEg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "894983015519-50pnbm02v29hsd196agai5uis152n1nc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:894983015519:android:07783312a2cec852c19fea",
+        "android_client_info": {
+          "package_name": "com.example.testnotification"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "894983015519-50pnbm02v29hsd196agai5uis152n1nc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3H1MfqB92b49dXHe-WG8Au-FY-CjOPEg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "894983015519-50pnbm02v29hsd196agai5uis152n1nc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

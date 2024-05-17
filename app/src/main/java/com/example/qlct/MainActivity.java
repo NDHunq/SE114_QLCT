@@ -3,32 +3,64 @@ package com.example.qlct;
 
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.util.Log;
 import android.view.View;
 
 import android.graphics.Color;
 
 
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+
+import com.example.qlct.API_Entity.GetAllWalletsEntity;
+import com.example.qlct.API_Utils.WalletAPIUtil;
+
+import com.example.qlct.API_Entity.UpdateDeviceTokenEntity;
+import com.example.qlct.API_Utils.DeviceTokenAPIUtil;
+
+
+import com.example.qlct.Category.Category_Add;
 
 import com.example.qlct.Fragment.Account_fragment;
 import com.example.qlct.Fragment.Analysis_fragment;
 import com.example.qlct.Fragment.Budget_fragment;
 import com.example.qlct.Fragment.Home_fragment;
+import com.example.qlct.Transaction.AddTransaction;
 import com.example.qlct.databinding.ActivityMainBinding;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
+
 
 
 public class MainActivity extends AppCompatActivity {
+    String tenvi = "Ví chính";
+    Home_fragment homeFragment = new Home_fragment();
+    double   ammount = 0;
+    double tongsovi=0;
+    String currency_unit = "đ";
+
     private void updateButtonBackgrounds(int selectedButtonId) {
         // Danh sách các button
         int[] buttonIds = new int[]{R.id.thehome, R.id.theanalysis, R.id.thebudget, R.id.theaccount};
@@ -43,6 +75,44 @@ public class MainActivity extends AppCompatActivity {
                 // Nếu button không được chọn, đặt background là màu trắng
                 button.setBackgroundColor(Color.parseColor("#F7F3F3"));
             }
+        }
+    }
+    double TongTien=0;
+    doitiente doitien = new doitiente();
+    private void  setBlance()
+    {
+        try {
+
+            ArrayList<GetAllWalletsEntity> parseAPIList = new WalletAPIUtil().getAllWalletAPI();
+            tongsovi = parseAPIList.size();
+            //Chạy vòng lặp để lấy ra các field cần thiết cho hiển thị ra Views
+            for (GetAllWalletsEntity item : parseAPIList) {
+                Log.d("sdf",String.valueOf(TongTien));
+                String donvi = "";
+                double amount = Double.parseDouble(item.amount);
+                if(item.currency_unit.equals("VND"))
+                {donvi=" ₫";
+                    TongTien+= amount;}
+                if(item.currency_unit.equals("USD"))
+                {donvi=" $";
+                    String doi = String.valueOf(doitien.getUSDtoVND());
+                    Log.d("sdf",String.valueOf(doitien.USDtoVND));
+                    TongTien += amount*doitien.getUSDtoVND();}
+                if(item.currency_unit.equals("EUR"))
+                {donvi=" €";
+                    TongTien += amount*doitien.getUERtoVND();}
+                if(item.currency_unit.equals("CNY"))
+                {donvi=" ¥";
+                    TongTien += amount*doitien.getCNYtoVND();}
+
+
+
+            }
+
+        }
+        catch (Exception e) {
+            //Thông báo lỗi, không thể kết nối đến server, co the hien mot notification ra app
+            e.printStackTrace();
         }
     }
 
@@ -62,6 +132,76 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+
+        Bundle bundle = new Bundle();
+
+        tenvi = getIntent().getStringExtra("tenvi");
+        ammount = getIntent().getDoubleExtra("ammount",-1);
+currency_unit = getIntent().getStringExtra("currency_unit");
+tongsovi = getIntent().getDoubleExtra("tongsovi",0);
+
+        double tongsovi2 = getIntent().getDoubleExtra("tongsovi",0);
+
+
+        if(ammount == -1){
+            setBlance();
+            bundle.putString("tenvi", "Total");
+
+            bundle.putDouble("ammount", TongTien);
+            bundle.putString("currency_unit", " đ");
+            bundle.putDouble("tongsovi", tongsovi);
+            Log.d("Truyen du lieu", "loi roi");
+
+        }
+        else
+        {
+            Log.d("Truyen du lieu", String.valueOf(ammount));
+        bundle.putString("tenvi", tenvi);
+        bundle.putDouble("ammount", ammount);
+            bundle.putDouble("tongsovi", tongsovi2);
+
+        if(currency_unit.equals("VND"))
+        {
+            bundle.putString("currency_unit", " ₫");
+        }
+        if(currency_unit.equals("USD"))
+        {
+            bundle.putString("currency_unit", " $");
+        }
+        if(currency_unit.equals("EUR"))
+        {
+            bundle.putString("currency_unit", " €");
+        }
+        if(currency_unit.equals("CNY"))
+        {
+            bundle.putString("currency_unit", " ¥");
+        }
+            bundle.putDouble("tongsovi", tongsovi);
+        }
+
+
+        //Get device token and send to backend for notification service in the future
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w("Error_firebase_messaging", "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
+
+                        // Get new FCM registration token
+                        String token = task.getResult();
+
+                        // Log and toast
+                        //String msg = getString(R.string.msg_token_fmt, token);
+                        Log.d("DEVICE_TOKEN", token);
+
+                        new DeviceTokenAPIUtil().updateDeviceTokenAPI(new UpdateDeviceTokenEntity(token));
+                    }
+                });
+
+
         ConstraintLayout button = findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,7 +216,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         // Tạo một instance của HomeFragment
-        Home_fragment homeFragment = new Home_fragment();
+
+        homeFragment.setArguments(bundle);
 
         // Sử dụng FragmentManager và FragmentTransaction để thêm HomeFragment vào FrameLayout container
         getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, homeFragment).commit();
@@ -86,7 +227,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 updateButtonBackgrounds(R.id.thehome);
                 // Tạo một instance mới của HomeFragment
-                Home_fragment homeFragment = new Home_fragment();
+
+
 
                 // Sử dụng FragmentManager và FragmentTransaction để thay thế HomeFragment vào FrameLayout container
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, homeFragment).commit();

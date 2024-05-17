@@ -12,4 +12,5 @@
     <color name="lightred">#F9AAAA</color>
     <color name="xam">#F2F2F2</color>
     <color name="xamplus">#C0C0C0</color>
+    <color name="errorColor">#B00020</color>
 </resources>

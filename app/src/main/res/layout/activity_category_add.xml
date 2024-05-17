@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Category_Add">
+    tools:context=".Category.Category_Add">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_marginTop="12dp"
         android:layout_width="match_parent"
@@ -137,9 +137,9 @@
                 <ImageView
                     android:id="@+id/hinhanh"
                     android:background="@drawable/question"
-                    android:layout_width="51dp"
+                    android:layout_width="35dp"
 
-                    android:layout_height="51dp"
+                    android:layout_height="35dp"
 
                     android:layout_gravity="center">
 
@@ -174,7 +174,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+android:id="@+id/categoryname"
                 android:drawableTint="#5CC2F2"
              
                 android:textColor="#5CC2F2" />
@@ -190,12 +190,12 @@
     </LinearLayout>
     <androidx.constraintlayout.widget.ConstraintLayout
 
-        android:layout_width="70dp"
+        android:layout_width="60dp"
         android:background="@drawable/nenxanh7dp"
         android:layout_gravity="end"
         android:layout_marginEnd="12dp"
         android:layout_marginBottom="12dp"
-        android:layout_height="70dp">
+        android:layout_height="60dp">
 
 
         <ImageButton

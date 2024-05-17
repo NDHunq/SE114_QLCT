@@ -1,7 +1,6 @@
-package com.example.qlct;
+package com.example.qlct.Category;
 
 import android.content.Context;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,20 +8,20 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.xmlpull.v1.XmlPullParser;
+import com.bumptech.glide.Glide;
+import com.example.qlct.R;
+import com.google.android.material.card.MaterialCardView;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
 public class Category_adapter extends BaseAdapter {
     private Context context;
 
     private int layout;
 
-    private List<Category> categoryList;
+    private List<Category_hdp> categoryList;
 
-    public Category_adapter(Context context, int layout, List<Category> categoryList) {
+    public Category_adapter(Context context, int layout, List<Category_hdp> categoryList) {
         this.context = context;
         this.layout = layout;
         this.categoryList = categoryList;
@@ -49,11 +48,11 @@ public class Category_adapter extends BaseAdapter {
         convertView = inflater.inflate(layout, null);
         ImageView categoryIcon = convertView.findViewById(R.id.category_icon);
         TextView categoryName = convertView.findViewById(R.id.category_txtview);
+        MaterialCardView cardView = convertView.findViewById(R.id.category_icon_cardview);
 
-        Category category = categoryList.get(position);
-        categoryIcon.setImageResource(category.getImage());
+        Category_hdp category = categoryList.get(position);
+        Glide.with(context).load(category.getImageURL()).into(categoryIcon);
         categoryName.setText(category.getCategory_name());
-
         return convertView;
     }
 }

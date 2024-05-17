@@ -38,202 +38,359 @@
 
                 </ImageButton>
             </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/total_blance"
-                android:textSize="40dp"
-                android:layout_marginStart="15dp"
-                android:textStyle="bold"
-                android:textColor="@color/xanhdam"
-                android:layout_width="wrap_content"
-                android:text="3,000,000 đ"
-                android:layout_height="wrap_content"></TextView>
-            <ImageView
-                android:id="@+id/unseen"
-                android:layout_width="34dp"
-
-                android:layout_marginStart="12dp"
-                android:layout_gravity="center"
-                android:background="@drawable/eye"
-                android:layout_height="34dp">
-
-            </ImageView>
-
-
-        </LinearLayout>
-            <TextView
-                android:layout_width="wrap_content"
-                android:text="Total Balance"
-                android:layout_marginStart="15dp"
-                android:textStyle="bold"
-android:textSize="17dp"
-                android:layout_height="wrap_content">
-
-            </TextView>
-
-            <LinearLayout
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_marginTop="5dp"
-                android:layout_height="120dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
-                android:background="@drawable/the12dp"
-                android:orientation="vertical">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="match_parent"
 
-                    android:orientation="horizontal">
-
+                    android:layout_height="wrap_content">
                     <TextView
-                        android:id="@+id/textView"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:layout_weight="1"
-                        android:text="My wallets"
-                        android:textColor="@color/black"
-                        android:textSize="30dp"
+                        android:id="@+id/total_blance"
+                        android:textSize="40dp"
+                        android:layout_marginStart="15dp"
                         android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                    </TextView>
-
-                    <TextView
-                        android:id="@+id/Seeall"
+                        android:textColor="@color/xanhdam"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="12dp"
-                        android:text="See all"
-                        android:textColor="@color/xanhnendam"
-                        android:textSize="23dp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                    </TextView>
-
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginEnd="12dp"
-                    android:background="@color/black">
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="70dp">
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="12dp"
-                        android:background="@drawable/hinhtrong"
-                        android:layout_height="50dp"></ImageView>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_gravity="center"
-                        android:text="Vi 1"
-                        android:textColor="@color/black"
-                        android:textSize="30dp"
-                        android:textStyle="bold"
-                        android:layout_marginStart="12dp"
+                        android:text="3,000,000 đ"
                         android:layout_height="wrap_content"></TextView>
                     <ImageView
-                        android:id="@+id/optionsVi"
-                        android:layout_width="37dp"
-                        android:layout_height="37dp"
-                        android:layout_marginEnd="3dp"
-                        android:background="@drawable/options"
-                        android:layout_gravity="center">
+                        android:id="@+id/unseen"
+                        android:layout_width="34dp"
+
+                        android:layout_marginStart="12dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/eye"
+                        android:layout_height="34dp">
 
                     </ImageView>
 
 
                 </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="Total Balance"
+                    android:layout_marginStart="15dp"
+                    android:textStyle="bold"
+                    android:textSize="17dp"
+                    android:layout_height="wrap_content">
 
+                </TextView>
 
-            </LinearLayout>
-            <LinearLayout
-android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_marginStart="12dp"
-                android:layout_marginEnd="12dp"
-                android:background="@drawable/the12dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="5dp"
-                android:layout_height="match_parent">
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView
-android:layout_marginTop="12dp"
-                        android:layout_marginBottom="1dp"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:layout_weight="1"
-                        android:text="Transaction"
-                        android:textColor="@color/black"
-                        android:textSize="30dp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                    android:layout_marginTop="5dp"
+                    android:layout_height="120dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:background="@drawable/the12dp"
+                    android:orientation="vertical">
 
-                    </TextView>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_weight="1"
+                            android:text="My wallets"
+                            android:textColor="@color/black"
+                            android:textSize="30dp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                        </TextView>
+
+                        <TextView
+                            android:id="@+id/Seeall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="12dp"
+                            android:text="See all"
+                            android:textColor="@color/xanhnendam"
+                            android:textSize="23dp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                        </TextView>
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginEnd="12dp"
+                        android:background="@color/black">
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp">
+
+                        <TextView
+                            android:id="@+id/tenVi"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:text="Vi 1"
+                            android:textColor="@color/black"
+                            android:textSize="28dp"
+                            android:textStyle="bold"
+                            android:layout_marginStart="12dp"
+                            android:layout_height="wrap_content"></TextView>
+                        <ImageView
+                            android:id="@+id/optionsVi"
+                            android:layout_width="37dp"
+                            android:layout_height="37dp"
+                            android:layout_marginEnd="3dp"
+                            android:background="@drawable/options"
+                            android:layout_gravity="center">
+
+                        </ImageView>
+
+
+                    </LinearLayout>
+
 
                 </LinearLayout>
-
-                <ListView
-                    android:id="@+id/listView"
-                    android:scrollbars="none"
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
                     android:layout_marginStart="12dp"
                     android:layout_marginEnd="12dp"
-                    android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    android:layout_height="0dp">
-                    
-                </ListView>
-                <LinearLayout
-                    android:layout_width="160dp"
-                    android:layout_gravity="center"
-                    android:layout_height="50dp">
+                    android:background="@drawable/the12dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_marginTop="12dp"
+                            android:layout_marginBottom="1dp"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_weight="1"
+                            android:text="Transaction"
+                            android:textColor="@color/black"
+                            android:textSize="30dp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
 
-                    <TextView
-                        android:id="@+id/show_more"
-                        android:layout_gravity="center"
-                        android:textAlignment="center"
-                        android:layout_width="245dp"
-                        android:layout_height="wrap_content"
+
+                        </TextView>
+
+                    </LinearLayout>
+
+                    <ListView
+                        android:id="@+id/listView"
+                        android:scrollbars="none"
+
                         android:layout_marginStart="12dp"
-                        android:layout_weight="1"
-                        android:text="Show more..."
-                        android:textColor="@color/xanhnendam"
-                        android:textSize="23dp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        android:layout_marginEnd="12dp"
+                        android:layout_width="match_parent"
 
-                    </TextView>
+                        android:layout_height="300dp">
+
+                    </ListView>
+                    <LinearLayout
+                        android:layout_width="160dp"
+                        android:layout_gravity="center"
+                        android:layout_height="50dp">
+
+                        <TextView
+                            android:id="@+id/showmore"
+                            android:layout_gravity="center"
+                            android:textAlignment="center"
+                            android:layout_width="245dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_weight="1"
+                            android:text="Show more..."
+                            android:textColor="@color/xanhnendam"
+                            android:textSize="23dp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                        </TextView>
+
+                    </LinearLayout>
+
 
                 </LinearLayout>
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginEnd="12dp"
+                        android:background="@drawable/the12dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_height="wrap_content">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="12dp"
+
+                            android:orientation="horizontal">
+
+                            <TextView
+
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="12dp"
+                                android:layout_weight="1"
+                                android:text=""
+                                android:textColor="@color/black"
+                                android:textSize="30dp"
+                                android:textStyle="bold"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                            </TextView>
 
 
-            </LinearLayout>
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginStart="12dp"
+                            android:layout_marginEnd="12dp">
+                            <TextView
+                                android:id="@+id/month"
+                                android:layout_width="0dp"
+                                android:backgroundTint="#ACACAC"
+                                android:layout_height="35dp"
+                                android:layout_weight="1"
+                                android:layout_gravity="center"
+                                android:text="Month"
+                                android:background="@drawable/background_bo_trai"
+                                android:textSize="18dp"
+                                android:textColor="@color/black"
+
+                                android:gravity="center">
+                            </TextView>
+                            <TextView
+                                android:id="@+id/year"
+                                android:layout_width="0dp"
+                                android:layout_height="35dp"
+                                android:layout_weight="1"
+                                android:layout_gravity="center"
+                                android:text="Week"
+                                android:background="@drawable/background_bo_phai"
+
+                                android:textSize="18dp"
+                                android:textColor="@color/black"
+
+                                android:gravity="center">
+                            </TextView>
+                        </LinearLayout>
+                        <TextView
+                            android:layout_marginStart="12dp"
+                            android:layout_marginTop="5dp"
+                            android:text="2.000.000 đ"
+
+                            android:textSize="35dp"
+                            android:textColor="@color/xanhdam"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                        </TextView>
+                        <TextView
+                            android:layout_marginStart="12dp"
+                            android:textStyle="bold"
+                            android:text="Total spent this month"
+
+                            android:textSize="15dp"
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                        </TextView>
+
+
+                        <com.github.mikephil.charting.charts.BarChart
+                            android:id="@+id/barChart"
+                            android:layout_marginTop="12dp"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginStart="12dp"
+                            android:layout_marginEnd="12dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="300dp"/>
+                        <TextView
+                            android:id="@+id/seerp"
+                            android:layout_gravity="right"
+                            android:layout_marginStart="12dp"
+                            android:layout_width="wrap_content"
+                            android:layout_marginTop="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="12dp"
+                            android:text="See reports"
+                            android:textColor="@color/xanhnendam"
+                            android:textSize="23dp"
+                            android:textStyle="bold"
+
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                        </TextView>
+
+
+                        <TextView
+                            android:layout_marginStart="12dp"
+                            android:textStyle="bold"
+                            android:text="Top spending"
+
+                            android:textSize="15dp"
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                        </TextView>
+                        <ListView
+
+                          android:id="@+id/listView2"
+                            android:scrollbars="none"
+                            android:layout_marginStart="12dp"
+                            android:layout_marginEnd="12dp"
+                            android:layout_width="match_parent"
+
+                            android:layout_height="wrap_content">
+
+                        </ListView>
+
+
+
+                    </LinearLayout>
+                </LinearLayout>
+
+            </ScrollView>
+
 
 
 
