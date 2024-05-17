@@ -84,7 +84,9 @@ Button signin;
                     // Parse the response
                     Gson gson = new Gson();
                     LoginResponse loginResponse = gson.fromJson(response, LoginResponse.class);
+                    Log.d("Login", "loginResponse: 1" );
                     Log.d("Login", "loginResponse: " + loginResponse.getStatus().getCode());
+                    Log.d("Login", "loginResponse:2");
 
                     // Check if login was successful
                     if (loginResponse.getStatus().getCode() == 200) {
