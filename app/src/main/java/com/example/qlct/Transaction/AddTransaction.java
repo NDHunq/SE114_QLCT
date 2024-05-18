@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -27,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -795,6 +797,7 @@ public class AddTransaction extends AppCompatActivity {
                     // Do nothing
                 }
 
+                @RequiresApi(api = Build.VERSION_CODES.O)
                 @Override
                 public void afterTextChanged(Editable s) {
                     validateDate();
@@ -808,6 +811,7 @@ public class AddTransaction extends AppCompatActivity {
 
         try {
             saveButton.setOnClickListener(new View.OnClickListener() {
+                @RequiresApi(api = Build.VERSION_CODES.O)
                 @Override
                 public void onClick(View view) {
                     TextInputEditText amountEditText = findViewById(R.id.Amount_txtbox);
@@ -1060,6 +1064,7 @@ public class AddTransaction extends AppCompatActivity {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private boolean validateDate() {
         TextInputLayout dateEditTextLayout = findViewById(R.id.select_date_txtbox_layout);
         TextInputEditText dateEditText = findViewById(R.id.select_date_txtbox);
@@ -1081,6 +1086,7 @@ public class AddTransaction extends AppCompatActivity {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private boolean validate(){
         boolean isListValid = true;
         if(income){

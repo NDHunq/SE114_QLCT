@@ -1,11 +1,11 @@
 package com.example.qlct.API_Entity;
 
 public class GetAllCategoryEntity {
-    String id;
-    String name;
-    String picture;
-    String type;
-    String user_id;
+    public String id;
+    public String name;
+    public String picture;
+    public String type;
+    public String user_id;
 
     public GetAllCategoryEntity(String id, String name, String picture, String type, String user_id) {
         this.id = id;

@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.qlct.API_Entity.GetAllCategoryEntity;
+import com.example.qlct.API_Entity.GetAllTransactionsEntity_quyen;
 import com.example.qlct.R;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -40,9 +42,19 @@ public class AnalysisNetIncomeFragment extends Fragment {
     private String mParam2;
     TextView see_detail;
     LineChart lineChart;
-
+    ArrayList<GetAllTransactionsEntity_quyen> listTransactions;
+    String id_wallet;
+    ArrayList<GetAllCategoryEntity> listCategory;
+    String currency;
     public AnalysisNetIncomeFragment() {
         // Required empty public constructor
+    }
+
+    public AnalysisNetIncomeFragment(ArrayList<GetAllTransactionsEntity_quyen> listTransactions, String id_wallet,ArrayList<GetAllCategoryEntity> listCategory,String currency) {
+        this.listTransactions = listTransactions;
+        this.id_wallet=id_wallet;
+        this.listCategory=listCategory;
+        this.currency=currency;
     }
 
     /**

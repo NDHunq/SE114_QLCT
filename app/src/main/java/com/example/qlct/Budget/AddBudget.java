@@ -2,8 +2,12 @@ package com.example.qlct.Budget;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -16,8 +20,10 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -35,10 +41,15 @@ import com.example.qlct.Category_adapter2;
 import com.example.qlct.Fragment.MyDialogFragment;
 import com.example.qlct.OnDataPass;
 import com.example.qlct.R;
+import com.example.qlct.doitiente;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -68,6 +79,8 @@ public class AddBudget extends AppCompatActivity implements OnDataPass {
     String date_unit="";
     ArrayList<GetAllCategoryy> list;
     Switch switch1;
+    TextInputLayout Amount_layout;
+    TextInputLayout date_layout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,21 +102,50 @@ public class AddBudget extends AppCompatActivity implements OnDataPass {
         hinhanh=this.findViewById(R.id.hinhanh);
         type=this.findViewById(R.id.type);
         switch1 = this.findViewById(R.id.switch1);
+        Amount_layout=this.findViewById(R.id.Amount_layout);
+        date_layout=this.findViewById(R.id.date_layout);
         GetAllCategory();
         done.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
-                BudgetAPIUtil budgetAPIUtil = new BudgetAPIUtil();
-                Boolean enable_notification= switch1.isChecked();
-                if(type.getText()=="Renew") {
-                    if(String.valueOf(date.getText())=="Daily"||String.valueOf(date.getText())=="Weekly" || String.valueOf(date.getText())=="Monthly" || String.valueOf(date.getText())=="Yearly")
-                    {
-                        CreateRenewBudgetEntity createRenewBudgetEntity = new CreateRenewBudgetEntity(GetIDCategory(Category.getText().toString()), Double.parseDouble(amount.getText().toString()), date.getText().toString(), enable_notification);
-                        budgetAPIUtil.createRenewBudget(createRenewBudgetEntity);
+                if(!validdate())
+                {
+                    Toast.makeText(AddBudget.this, "Error(s) has occured", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    BudgetAPIUtil budgetAPIUtil = new BudgetAPIUtil();
+                    Boolean enable_notification= switch1.isChecked();
+                    if(type.getText()=="Renew") {
+                        if(String.valueOf(date.getText())=="Daily"||String.valueOf(date.getText())=="Weekly" || String.valueOf(date.getText())=="Monthly" || String.valueOf(date.getText())=="Yearly")
+                        {
+                            CreateRenewBudgetEntity createRenewBudgetEntity = new CreateRenewBudgetEntity(GetIDCategory(Category.getText().toString()), Double.parseDouble(amount.getText().toString()), date.getText().toString(), enable_notification);
+                            budgetAPIUtil.createRenewBudget(createRenewBudgetEntity);
+                        }
+                        else
+                        {
+                            String realDate=date.getText().toString();;
+                            SimpleDateFormat originalFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+                            SimpleDateFormat targetFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                            try {
+                                Date date = originalFormat.parse(realDate);
+                                realDate = targetFormat.format(date);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+
+
+                            CreateRenewBudgetEntity createRenewBudgetEntity = new CreateRenewBudgetEntity(GetIDCategory(Category.getText().toString()), Double.parseDouble(amount.getText().toString()),"Custom", realDate+" 00:00:00", enable_notification);
+                            budgetAPIUtil.createRenewBudget(createRenewBudgetEntity);
+                        }
                     }
-                    else
-                    {
+                    else {
                         String realDate=date.getText().toString();;
+                        if(date_unit!="Day")
+                        {
+                            realDate=realDate.replace(" - ", " ");
+                        }
                         SimpleDateFormat originalFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
                         SimpleDateFormat targetFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
                         try {
@@ -112,39 +154,21 @@ public class AddBudget extends AppCompatActivity implements OnDataPass {
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
-
-
-                        CreateRenewBudgetEntity createRenewBudgetEntity = new CreateRenewBudgetEntity(GetIDCategory(Category.getText().toString()), Double.parseDouble(amount.getText().toString()),"Custom", realDate+" 00:00:00", enable_notification);
-                        budgetAPIUtil.createRenewBudget(createRenewBudgetEntity);
+                        CreateNoRenewBudgetEntity createNoRenewBudgetEntity = new CreateNoRenewBudgetEntity(GetIDCategory(Category.getText().toString()), Double.parseDouble(amount.getText().toString()), date_unit.toUpperCase(), realDate, enable_notification);
+                        budgetAPIUtil.createNoRenewBudget(createNoRenewBudgetEntity);
                     }
+                    finish();
                 }
-                else {
-                    String realDate=date.getText().toString();;
-                    if(date_unit!="Day")
-                    {
-                        realDate=realDate.replace(" - ", " ");
-                    }
-                    SimpleDateFormat originalFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-                    SimpleDateFormat targetFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-                    try {
-                        Date date = originalFormat.parse(realDate);
-                        realDate = targetFormat.format(date);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    CreateNoRenewBudgetEntity createNoRenewBudgetEntity = new CreateNoRenewBudgetEntity(GetIDCategory(Category.getText().toString()), Double.parseDouble(amount.getText().toString()), date_unit.toUpperCase(), realDate, enable_notification);
-                    budgetAPIUtil.createNoRenewBudget(createNoRenewBudgetEntity);
-                }
-                finish();
+
             }
         });
+
         crr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDialog1();
             }
         });
-
         exit_budget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -169,6 +193,50 @@ public class AddBudget extends AppCompatActivity implements OnDataPass {
                 ShowDialogSelectCate();
             }
         });
+        try{
+            amount.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    // Do nothing
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    // Do nothing
+                }
+
+                @RequiresApi(api = Build.VERSION_CODES.O)
+                @Override
+                public void afterTextChanged(Editable s) {
+                    validateAmount();
+                }
+            });
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        try{
+            date.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    // Do nothing
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    // Do nothing
+                }
+
+                @RequiresApi(api = Build.VERSION_CODES.O)
+                @Override
+                public void afterTextChanged(Editable s) {
+                    validateDate();
+                }
+            });
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
     }
     void GetAllCategory()
     {
@@ -316,6 +384,7 @@ public class AddBudget extends AppCompatActivity implements OnDataPass {
             public void onClick(View v) {
                 TextView txt = findViewById(R.id.crr);
                 txt.setText(currency);
+                Amount_layout.setPrefixText(currency);
                 dialog.dismiss();
             }
         });
@@ -334,6 +403,45 @@ public class AddBudget extends AppCompatActivity implements OnDataPass {
     }
     public void onDataPass(String data) {
         date.setText(data);
+    }
+    private boolean validateAmount() {
+
+        String amountInput = amount.getText().toString().replaceAll("[.,]", "").trim();
+
+
+        if(!amountInput.isEmpty()){
+            Amount_layout.setError(null);
+            amount.setTextColor(getResources().getColor(R.color.xanhnen, null));
+            Amount_layout.setPrefixTextColor(ColorStateList.valueOf(getResources().getColor(R.color.xanhnen, null)));
+            return true;
+        }
+        else{
+            Amount_layout.setError("Amount can't be empty!");
+            return false;
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private boolean validateDate() {
+        String dateInput = date.getText().toString().trim();
+
+        if (!dateInput.isEmpty()) {
+            date_layout.setError(null);
+            date.setTextColor(ColorStateList.valueOf(getResources().getColor(R.color.black, null)));
+            return true;
+        }
+        else{
+            date_layout.setError("Please press calendar icon to select a date!");
+            return false;
+        }
+    }
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    boolean validdate()
+    {
+        boolean a=validateAmount();
+        boolean b=validateDate();
+        return a&&b;
+
     }
 
 }

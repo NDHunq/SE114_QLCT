@@ -6,11 +6,16 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.qlct.API_Entity.GetAllCategoryEntity;
+import com.example.qlct.API_Entity.GetAllCategoryy;
+import com.example.qlct.API_Entity.GetAllTransactionsEntity_quyen;
 import com.example.qlct.R;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
@@ -19,6 +24,8 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,8 +44,21 @@ public class AnalysisIcomeFragment extends Fragment {
     private String mParam2;
     TextView detail;
     PieChart pieChart;
+    ArrayList<GetAllTransactionsEntity_quyen> listTransactions;
+    ArrayList<GetAllTransactionsEntity_quyen> listIncome;
+    ArrayList<GetAllCategoryEntity> listCategory;
+    String id_wallet;
+    TextView total_icome;
+    String currency;
+    Bundle bundle;
+    public AnalysisIcomeFragment(ArrayList<GetAllTransactionsEntity_quyen> listTransactions,String id_wallet,ArrayList<GetAllCategoryEntity> listCategory, String currency) {
+        this.listTransactions = listTransactions;
+        this.id_wallet=id_wallet;
+        this.listCategory=listCategory;
+         this.currency=currency;
+    }
+
     public AnalysisIcomeFragment() {
-        // Required empty public constructor
     }
 
     /**
@@ -75,19 +95,92 @@ public class AnalysisIcomeFragment extends Fragment {
         View view =inflater.inflate(R.layout.fragment_analysis_icome, container, false);
         detail=view.findViewById(R.id.detail_inc);
         pieChart=view.findViewById(R.id.piechart);
+        total_icome=view.findViewById(R.id.total_icome);
+        SetUpPieChart();
+        bundle=new Bundle();
+        bundle.putSerializable("listTransactions",listTransactions);
+        bundle.putSerializable("listCategory",listCategory);
+        bundle.putString("currency",currency);
+        bundle.putString("id_wallet",id_wallet);
         detail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getActivity(),AnalysisDetailIncome.class);
-                startActivity(intent);
+                try {
+                    Intent intent = new Intent(getActivity(), AnalysisDetailIncome.class);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+                catch (Exception e) {
+                    Log.d("Error", e.getMessage());
+                }
             }
         });
+
+        return view;
+    }
+    void SetUpPieChart()
+    {
+        try{
+            listIncome=new ArrayList<>();
+            if(id_wallet.equals("Total")){
+                for(GetAllTransactionsEntity_quyen transaction:listTransactions){
+                    if(transaction.transaction_type.equals("INCOME")){
+                        listIncome.add(transaction);
+                    }
+                }
+            }
+            else
+                for(GetAllTransactionsEntity_quyen transaction:listTransactions){
+                    if(transaction.transaction_type.equals("INCOME") && transaction.wallet_id.equals(id_wallet)){
+                        listIncome.add(transaction);
+                    }
+                    else
+                    if(transaction.transaction_type.equals("TRANSFER")&&transaction.target_wallet_id.equals(id_wallet)){
+                        listIncome.add(transaction);
+                    }
+                }
+            Toast.makeText(getContext(),listIncome.size()+"", Toast.LENGTH_SHORT).show();
+            Log.d("Income",listIncome.size()+"");
+        }
+        catch (Exception e){
+            Log.d("Error",e.getMessage());
+        }
+        Collections.sort(listIncome, new Comparator<GetAllTransactionsEntity_quyen>() {
+            @Override
+            public int compare(GetAllTransactionsEntity_quyen t1, GetAllTransactionsEntity_quyen t2) {
+                return Float.compare(Float.parseFloat(t2.amount), Float.parseFloat(t1.amount));
+            }
+        });
+        AdjustList(listIncome);
+        total_icome.setText(formatString(String.valueOf(TotalIncome(listIncome)))+" "+currency);
         ArrayList<PieEntry> categories=new ArrayList<>();
-        categories.add(new PieEntry(20,"Tiền lương"));
-        categories.add(new PieEntry(30,"Tiền thưởng"));
-        categories.add(new PieEntry(50,"Tiền lãi"));
-        categories.add(new PieEntry(40,"Tiền bán hàng"));
-        categories.add(new PieEntry(60,"Tiền khác"));
+        if(listIncome.size()==0)
+        {
+            categories.add(new PieEntry(100,"No income"));
+        } else if (listIncome.size()<=4) {
+            for(int i=0;i<listIncome.size();i++)
+            {
+                if(listIncome.get(i).category_id!=null)
+                    categories.add(new PieEntry(Float.parseFloat(listIncome.get(i).amount),getCategoryNameById(listIncome.get(i).category_id)));
+                else
+                    categories.add(new PieEntry(Float.parseFloat(listIncome.get(i).amount),"Transfer"));
+            }
+        }
+        else {
+            for(int i=0;i<4;i++)
+            {
+                if(listIncome.get(i).category_id!=null)
+                    categories.add(new PieEntry(Float.parseFloat(listIncome.get(i).amount),getCategoryNameById(listIncome.get(i).category_id)));
+                else
+                    categories.add(new PieEntry(Float.parseFloat(listIncome.get(i).amount),"Transfer"));
+            }
+            float sum=0;
+            for(int i=4;i<listIncome.size();i++)
+            {
+                sum+=Float.parseFloat(listIncome.get(i).amount);
+            }
+            categories.add(new PieEntry(sum,"Others"));
+        }
 
         ArrayList<Integer> colors = new ArrayList<>();
         colors.add(Color.parseColor("#FFFA8AA0"));
@@ -118,6 +211,58 @@ public class AnalysisIcomeFragment extends Fragment {
         legend.setFormSize(14f);
         legend.setTextSize(14f);
         legend.setDrawInside(false);
-        return view;
     }
+    void AdjustList(ArrayList<GetAllTransactionsEntity_quyen> listIncome)
+    {
+        for(int i=0;i<listIncome.size();i++)
+        {
+            if(listIncome.get(i).category_id!=null)
+                for(int j=i+1;j<listIncome.size();j++)
+                {
+                    if(listIncome.get(i).category_id.equals(listIncome.get(j).category_id))
+                    {
+                        listIncome.get(i).amount=String.valueOf(Float.parseFloat(listIncome.get(i).amount)+Float.parseFloat(listIncome.get(j).amount));
+                        listIncome.remove(j);
+                        j--;
+                    }
+                }
+            else
+                for(int j=i+1;j<listIncome.size();j++)
+                {
+                    if(listIncome.get(j).transaction_type.equals("TRANSFER"))
+                    {
+                        listIncome.get(i).amount=String.valueOf(Float.parseFloat(listIncome.get(i).amount)+Float.parseFloat(listIncome.get(j).amount));
+                        listIncome.remove(j);
+                        j--;
+                    }
+                }
+
+        }
+    }
+    Float TotalIncome(ArrayList<GetAllTransactionsEntity_quyen> listIncome)
+    {
+        float sum=0;
+        for(GetAllTransactionsEntity_quyen transaction:listIncome)
+        {
+            sum+=Float.parseFloat(transaction.amount);
+        }
+        return sum;
+    }
+    String getCategoryNameById(String id) {
+        for (GetAllCategoryEntity category : listCategory) {
+            if (category.id.equals(id)) {
+                return category.name;
+            }
+        }
+        return null;
+    }
+    public String formatString(String input) {
+        String[] parts = input.split("\\.");
+        StringBuilder sb = new StringBuilder(parts[0]);
+        for (int i = sb.length() - 3; i > 0; i -= 3) {
+            sb.insert(i, '.');
+        }
+        return sb.toString();
+    }
+
 }

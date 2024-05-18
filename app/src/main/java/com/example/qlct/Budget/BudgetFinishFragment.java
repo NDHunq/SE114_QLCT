@@ -101,7 +101,7 @@ public class BudgetFinishFragment extends Fragment {
                     if (allBudgets.get(i).getNo_renew_date_unit().equals("DAY") ) {
                         from = "";
                         to = allBudgets.get(i).getNo_renew_date();
-                        if(DayIsBeforeNow(to))
+                        if(!DayIsBeforeNow(to))
                             break;
                     }
                     else {
@@ -109,13 +109,13 @@ public class BudgetFinishFragment extends Fragment {
                         if(dates.length == 2) {
                             from ="From: "+ dates[0];
                             to = "To: "+dates[1];
-                            if(DayIsBeforeNow(dates[1]))
+                            if(!DayIsBeforeNow(dates[1]))
                                 break;
                         }
                     }
+                    Budget budget = new Budget(GetNameCategory(allBudgets.get(i).getCategory_id()),Double.valueOf(allBudgets.get(i).getLimit_amount()) ,Double.valueOf(allBudgets.get(i).getExpensed_amount()) ,from,to,allBudgets.get(i).getCategory().getPicture(),allBudgets.get(i).getBudget_type(),allBudgets.get(i).getId());
+                    list.add(budget);
                 }
-                Budget budget = new Budget(GetNameCategory(allBudgets.get(i).getCategory_id()),Double.valueOf(allBudgets.get(i).getLimit_amount()) ,Double.valueOf(allBudgets.get(i).getExpensed_amount()) ,from,to,allBudgets.get(i).getCategory().getPicture(),allBudgets.get(i).getBudget_type(),allBudgets.get(i).getId());
-                list.add(budget);
             }
         else{
             Log.d("BudgetRunningFragment", "allBudgets is null");
