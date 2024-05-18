@@ -8,6 +8,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +26,7 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -40,6 +43,7 @@ public class AnalysisDetailIncome extends AppCompatActivity {
     String id_wallet;
     TextView total_icome;
     String currency;
+    ArrayList<Integer> colors;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +61,10 @@ public class AnalysisDetailIncome extends AppCompatActivity {
             listCategory = (ArrayList<GetAllCategoryEntity>) bundle.getSerializable("listCategory");
             currency = bundle.getString("currency");
         }
+        total_icome=this.findViewById(R.id.total_income);
         exit=this.findViewById(R.id.exit_Income);
+        listView=this.findViewById(R.id.listvieww);
+        pieChart=this.findViewById(R.id.piechart);
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,21 +73,43 @@ public class AnalysisDetailIncome extends AppCompatActivity {
         });
 
         list=new ArrayList<>();
+        SetUpPieChart();
         AnhXa();
         Analysis_Expense_Adapter adapter=new Analysis_Expense_Adapter(list,this,R.layout.analysis_expense_list_item);
         listView.setAdapter(adapter);
-        SetUpPieChart();
+
+
     }
     void AnhXa(){
-        listView=this.findViewById(R.id.listvieww);
-        pieChart=this.findViewById(R.id.piechart);
-        total_icome=this.findViewById(R.id.total_income);
-        list.add(new AnalysisExpense(Color.BLACK,R.drawable.dish,"Food",20,2000000));
-        list.add(new AnalysisExpense(Color.YELLOW,R.drawable.dish,"Food",20,2000000));
-        list.add(new AnalysisExpense(Color.RED,R.drawable.dish,"Food",20,2000000));
-        list.add(new AnalysisExpense(Color.BLUE,R.drawable.dish,"Food",20,2000000));
-        list.add(new AnalysisExpense(Color.GREEN,R.drawable.dish,"Food",20,2000000));
-        list.add(new AnalysisExpense(Color.BLACK,R.drawable.dish,"Food",20,2000000));
+//        list.add(new AnalysisExpense(Color.BLACK,R.drawable.dish,"Food",20,2000000));
+//        list.add(new AnalysisExpense(Color.YELLOW,R.drawable.dish,"Food",20,2000000));
+//        list.add(new AnalysisExpense(Color.RED,R.drawable.dish,"Food",20,2000000));
+//        list.add(new AnalysisExpense(Color.BLUE,R.drawable.dish,"Food",20,2000000));
+//        list.add(new AnalysisExpense(Color.GREEN,R.drawable.dish,"Food",20,2000000));
+//        list.add(new AnalysisExpense(Color.BLACK,R.drawable.dish,"Food",20,2000000));
+        for(int i=0;i<listIncome.size();i++)
+        {
+            int color;
+            int hinh=R.drawable.dish;
+            if(i<=4)
+            {
+                color=colors.get(i);
+            }
+            else
+            {
+                color=colors.get(4);
+            }
+            if(listIncome.get(i).category_id!=null)
+            {
+                list.add(new AnalysisExpense(color,hinh,getCategoryNameById(listIncome.get(i).category_id),roundTwoDecimals(Float.parseFloat(listIncome.get(i).amount)/TotalIncome(listIncome)*100),formatString(listIncome.get(i).amount),currency));
+            }
+            else
+            {
+                list.add(new AnalysisExpense(color,hinh,"Transfer",roundTwoDecimals(Float.parseFloat(listIncome.get(i).amount)/TotalIncome(listIncome)*100),formatString(listIncome.get(i).amount),currency));
+            }
+        }
+
+
     }
     void SetUpPieChart()
     {
@@ -145,7 +174,7 @@ public class AnalysisDetailIncome extends AppCompatActivity {
             categories.add(new PieEntry(sum,"Others"));
         }
 
-        ArrayList<Integer> colors = new ArrayList<>();
+        colors = new ArrayList<>();
         colors.add(Color.parseColor("#FFFA8AA0"));
         colors.add(Color.parseColor("#FF5DC5E3"));
         colors.add(Color.parseColor("#FF65CBB6"));
@@ -227,5 +256,14 @@ public class AnalysisDetailIncome extends AppCompatActivity {
         }
         return sb.toString();
     }
-
+    public double roundTwoDecimals(double d) {
+        BigDecimal bd = new BigDecimal(Double.toString(d));
+        bd = bd.setScale(2, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+    }
+    public double convertStringToDouble(String input) {
+        String processedInput = input.replace(".", "");
+        double value = Double.parseDouble(processedInput);
+        return value / 1000;
+    }
 }

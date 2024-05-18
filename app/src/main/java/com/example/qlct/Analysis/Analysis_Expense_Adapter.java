@@ -44,18 +44,18 @@ public class Analysis_Expense_Adapter extends BaseAdapter {
         convertView=inflater.inflate(layout,null);
         AnalysisExpense analysisExpense=list.get(position);
         //ánh xạ
-        TextView color=convertView.findViewById(R.id.color);
+        ImageView color=convertView.findViewById(R.id.color);
         ImageView avt=convertView.findViewById(R.id.avt);
         TextView name=convertView.findViewById(R.id.name);
         TextView percent=convertView.findViewById(R.id.percent);
         TextView money=convertView.findViewById(R.id.money);
         //gán giá trị
-        color.setBackgroundResource(R.drawable.circle_shape);
+        color.setBackgroundColor(analysisExpense.getColor());
         //color.setBackgroundColor(analysisExpense.getColor());
         avt.setImageResource(analysisExpense.getAvt());
         name.setText(analysisExpense.getName());
         percent.setText(String.valueOf(analysisExpense.getPercent())+"%");
-        money.setText(String.valueOf(analysisExpense.getMoney())+" đ");
+        money.setText((analysisExpense.getMoney())+" "+analysisExpense.getCurrency());
         return convertView;
     }
 }

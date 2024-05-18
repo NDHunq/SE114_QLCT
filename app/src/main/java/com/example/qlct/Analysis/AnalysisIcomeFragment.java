@@ -52,10 +52,35 @@ public class AnalysisIcomeFragment extends Fragment {
     String currency;
     Bundle bundle;
     public AnalysisIcomeFragment(ArrayList<GetAllTransactionsEntity_quyen> listTransactions,String id_wallet,ArrayList<GetAllCategoryEntity> listCategory, String currency) {
+        bundle=new Bundle();
+        ArrayList<GetAllTransactionsEntity_quyen> listTransactionsCopy = new ArrayList<>();
+        for (GetAllTransactionsEntity_quyen transaction : listTransactions) {
+            GetAllTransactionsEntity_quyen transactionCopy = new GetAllTransactionsEntity_quyen(
+                    transaction.id,
+                    transaction.user_id,
+                    transaction.amount,
+                    transaction.category_id,
+                    transaction.wallet_id,
+                    transaction.notes,
+                    transaction.picture,
+                    transaction.transaction_date,
+                    transaction.transaction_type,
+                    transaction.currency_unit,
+                    transaction.target_wallet_id,
+                    transaction.wallet,
+                    transaction.category
+            );
+            listTransactionsCopy.add(transactionCopy);
+        }
+        bundle.putSerializable("listTransactions", listTransactionsCopy);
+        bundle.putSerializable("listCategory",listCategory);
+        bundle.putString("currency",currency);
+        bundle.putString("id_wallet",id_wallet);
         this.listTransactions = listTransactions;
         this.id_wallet=id_wallet;
         this.listCategory=listCategory;
          this.currency=currency;
+
     }
 
     public AnalysisIcomeFragment() {
@@ -97,11 +122,7 @@ public class AnalysisIcomeFragment extends Fragment {
         pieChart=view.findViewById(R.id.piechart);
         total_icome=view.findViewById(R.id.total_icome);
         SetUpPieChart();
-        bundle=new Bundle();
-        bundle.putSerializable("listTransactions",listTransactions);
-        bundle.putSerializable("listCategory",listCategory);
-        bundle.putString("currency",currency);
-        bundle.putString("id_wallet",id_wallet);
+
         detail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

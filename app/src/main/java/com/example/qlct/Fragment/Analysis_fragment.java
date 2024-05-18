@@ -129,21 +129,41 @@ public class Analysis_fragment extends Fragment {
     }
     public void Load(ArrayList<GetAllTransactionsEntity_quyen> listtrans,String id_wallet,ArrayList<GetAllCategoryEntity> listCategory)
     {
+        ArrayList<GetAllTransactionsEntity_quyen> listTransCopy = new ArrayList<>();
+        for (GetAllTransactionsEntity_quyen transaction : listtrans) {
+            GetAllTransactionsEntity_quyen transactionCopy = new GetAllTransactionsEntity_quyen(
+                    transaction.id,
+                    transaction.user_id,
+                    transaction.amount,
+                    transaction.category_id,
+                    transaction.wallet_id,
+                    transaction.notes,
+                    transaction.picture,
+                    transaction.transaction_date,
+                    transaction.transaction_type,
+                    transaction.currency_unit,
+                    transaction.target_wallet_id,
+                    transaction.wallet,
+                    transaction.category
+            );
+            listTransCopy.add(transactionCopy);
+        }
+
         FragmentManager fragmentManager=getChildFragmentManager();
         FragmentTransaction transaction=fragmentManager.beginTransaction();
-        Fragment child= new AnalysisNetIncomeFragment(listtrans,id_wallet,listCategory,getCurrencyUnitById(id_wallet));
+        Fragment child= new AnalysisNetIncomeFragment(listTransCopy,id_wallet,listCategory,getCurrencyUnitById(id_wallet));
         transaction.replace(R.id.ChildFrag1,child);
         transaction.commit();
 
         FragmentManager fragmentManager1=getChildFragmentManager();
         FragmentTransaction transaction1=fragmentManager1.beginTransaction();
-        Fragment child1= new AnalysisExpenseFragment(listtrans,id_wallet,listCategory,getCurrencyUnitById(id_wallet));
+        Fragment child1= new AnalysisExpenseFragment(listTransCopy,id_wallet,listCategory,getCurrencyUnitById(id_wallet));
         transaction1.replace(R.id.ChildFrag2,child1);
         transaction1.commit();
 
         FragmentManager fragmentManager2=getChildFragmentManager();
         FragmentTransaction transaction2=fragmentManager2.beginTransaction();
-        Fragment child2= new AnalysisIcomeFragment(listtrans,id_wallet,listCategory,getCurrencyUnitById(id_wallet));
+        Fragment child2= new AnalysisIcomeFragment(listTransCopy,id_wallet,listCategory,getCurrencyUnitById(id_wallet));
         transaction2.replace(R.id.ChildFrag3,child2);
         transaction2.commit();
     }

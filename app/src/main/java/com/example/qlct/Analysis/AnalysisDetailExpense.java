@@ -53,12 +53,12 @@ public class AnalysisDetailExpense extends AppCompatActivity {
     void AnhXa(){
         listView=this.findViewById(R.id.listvieww);
         pieChart=this.findViewById(R.id.piechart);
-        list.add(new AnalysisExpense(Color.BLACK,R.drawable.dish,"Food",20,2000000));
-        list.add(new AnalysisExpense(Color.YELLOW,R.drawable.dish,"Food",20,2000000));
-        list.add(new AnalysisExpense(Color.RED,R.drawable.dish,"Food",20,2000000));
-        list.add(new AnalysisExpense(Color.BLUE,R.drawable.dish,"Food",20,2000000));
-        list.add(new AnalysisExpense(Color.GREEN,R.drawable.dish,"Food",20,2000000));
-        list.add(new AnalysisExpense(Color.BLACK,R.drawable.dish,"Food",20,2000000));
+        list.add(new AnalysisExpense(Color.BLACK,R.drawable.dish,"Food",20,"2000000","đ"));
+        list.add(new AnalysisExpense(Color.YELLOW,R.drawable.dish,"Food",20,"2000000","đ"));
+        list.add(new AnalysisExpense(Color.RED,R.drawable.dish,"Food",20,"2000000","đ"));
+        list.add(new AnalysisExpense(Color.BLUE,R.drawable.dish,"Food",20,"2000000","đ"));
+        list.add(new AnalysisExpense(Color.GREEN,R.drawable.dish,"Food",20,"2000000",   "đ"));
+        list.add(new AnalysisExpense(Color.BLACK,R.drawable.dish,"Food",20,"2000000","đ"));
 
         ArrayList<PieEntry> categories=new ArrayList<>();
         categories.add(new PieEntry(2000,"Mua sắm"));

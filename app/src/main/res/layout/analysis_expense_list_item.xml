@@ -4,7 +4,7 @@
 
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <TextView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/color"
         android:layout_width="15dp"
         android:layout_height="15dp"
@@ -13,11 +13,10 @@
         android:textSize="25dp"
         android:textStyle="bold"
         android:layout_gravity="center_vertical"
-        android:background="@drawable/circle_shape"
-        android:backgroundTint="#FFEB3B"
-        >
+        app:shapeAppearanceOverlay="@style/circle"
+android:background="@color/xanhnen"        >
 
-    </TextView>
+    </com.google.android.material.imageview.ShapeableImageView>
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/avt"
         android:layout_width="40dp"
