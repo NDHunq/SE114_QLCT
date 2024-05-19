@@ -17,6 +17,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -64,9 +65,104 @@ public class Category_Add extends AppCompatActivity {
     int sb=1;
     int sc=1;
     int type=0;
-    ImageView review;
 
 
+    private ImageView review;
+    ActivityResultLauncher<Intent> resultLauncher;
+    private void registerResult () {
+        resultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        try {
+                            Uri imageUri = result.getData().getData();
+                            File test = new File(imageUri.getPath());
+                            review.setImageURI(imageUri);
+                            File file = new File(imageUri.getPath());
+
+                            //Đây là url của ảnh sau khi upload lên server
+                            //Sau khi có url này, thực hiện chèn vào các field API nào mà có "image"
+                            String response = uploadImageAPI(imageUri);
+                            Log.d("Response", response);
+                            JSONObject json = new JSONObject(response);
+                            String imageUrl = json.getJSONObject("data").getString("picture_url");
+
+                            //Log ra để xem url của ảnh
+                            Log.d("dtre", imageUrl);
+
+                        }catch (Exception e){
+                            e.printStackTrace();
+                            Log.d("dtre", e.getMessage());
+                        }
+                    }
+                }
+        );
+
+    }
+    private String uploadImageAPI(Uri imageUri) throws IOException, JSONException {
+
+        //Đường dẫn của server, cái này trong source chính đã để trong folder API_CONFIG
+        String SERVER = "https://expense-management-backend-jslp.onrender.com";
+        String API_VERSION = "api/v1";
+
+        //Dưới nãy giữ y chang, không cần suy nghĩ
+        OkHttpClient client = new OkHttpClient().newBuilder()
+                .build();
+        File file = getFileFromUri(this, imageUri);
+        RequestBody body = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                .addFormDataPart("image", file.getName(),
+                        RequestBody.create( file.getAbsoluteFile(),
+                                MediaType.parse("application/octet-stream")
+                        ))
+                .build();
+        Request request = new Request.Builder()
+                .url(SERVER+"/" + API_VERSION + "/media/upload")
+                .method("POST", body)
+                .build();
+        Response response = client.newCall(request).execute();
+
+        //Log.d("Response", response.body().string());
+        return  response.body().string();
+    }
+
+    private String getFileName(Context context, Uri uri) {
+        String result = null;
+        if (uri.getScheme().equals("content")) {
+            try (Cursor cursor = context.getContentResolver().query(uri, null, null, null, null)) {
+                if (cursor != null && cursor.moveToFirst()) {
+                    int index = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+                    if (index != -1) {
+                        result = cursor.getString(index);
+                    }
+                }
+            }
+        }
+        if (result == null) {
+            result = uri.getLastPathSegment();
+        }
+        return result;
+    }
+    private File getFileFromUri(Context context, Uri uri) {
+        File file = null;
+        try {
+            String fileName = getFileName(context, uri);
+            InputStream inputStream = context.getContentResolver().openInputStream(uri);
+            if (inputStream != null) {
+                file = new File(context.getCacheDir(), fileName);
+                FileOutputStream outputStream = new FileOutputStream(file);
+                byte[] buffer = new byte[1024];
+                int bytesRead;
+                while ((bytesRead = inputStream.read(buffer)) != -1) {
+                    outputStream.write(buffer, 0, bytesRead);
+                }
+                outputStream.close();
+                inputStream.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return file;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,9 +173,11 @@ public class Category_Add extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        //Disable strict mode
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-        review=findViewById(R.id.hinhanh);
+        review = findViewById(R.id.hinhanh);
+        registerResult();
 
         ImageButton upload = findViewById(R.id.button);
         upload.setOnClickListener(new View.OnClickListener() {
@@ -745,17 +843,10 @@ public class Category_Add extends AppCompatActivity {
 
 
         });
-        //Disable strict mode
-
-
-
-        review = findViewById(R.id.hinhanh);
         TextView upload = dialog.findViewById(R.id.upload);
         upload.setOnClickListener(v -> {
             Intent intent = new Intent(MediaStore.ACTION_PICK_IMAGES);
-
-
-
+            resultLauncher.launch(intent);
 
             dialog.dismiss();
         });
@@ -777,73 +868,6 @@ public class Category_Add extends AppCompatActivity {
         canvas.drawBitmap(originalBitmap, 0, 0, null);
 
         return coloredBitmap;
-    }
-
-
-    //API chính để upload ảnh
-    private String uploadImageAPI(Uri imageUri) throws IOException, JSONException {
-
-        //Đường dẫn của server, cái này trong source chính đã để trong folder API_CONFIG
-        String SERVER = "https://expense-management-backend-2tac.onrender.com";
-        String API_VERSION = "api/v1";
-
-        //Dưới nãy giữ y chang, không cần suy nghĩ
-        OkHttpClient client = new OkHttpClient().newBuilder()
-                .build();
-        File file = getFileFromUri(this, imageUri);
-        RequestBody body = new MultipartBody.Builder().setType(MultipartBody.FORM)
-                .addFormDataPart("image", file.getName(),
-                        RequestBody.create( file.getAbsoluteFile(),
-                                MediaType.parse("application/octet-stream")
-                        ))
-                .build();
-        Request request = new Request.Builder()
-                .url(SERVER+"/" + API_VERSION + "/media/upload")
-                .method("POST", body)
-                .build();
-        Response response = client.newCall(request).execute();
-
-        //Log.d("Response", response.body().string());
-        return  response.body().string();
-    }
-
-    private String getFileName(Context context, Uri uri) {
-        String result = null;
-        if (uri.getScheme().equals("content")) {
-            try (Cursor cursor = context.getContentResolver().query(uri, null, null, null, null)) {
-                if (cursor != null && cursor.moveToFirst()) {
-                    int index = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
-                    if (index != -1) {
-                        result = cursor.getString(index);
-                    }
-                }
-            }
-        }
-        if (result == null) {
-            result = uri.getLastPathSegment();
-        }
-        return result;
-    }
-    private File getFileFromUri(Context context, Uri uri) {
-        File file = null;
-        try {
-            String fileName = getFileName(context, uri);
-            InputStream inputStream = context.getContentResolver().openInputStream(uri);
-            if (inputStream != null) {
-                file = new File(context.getCacheDir(), fileName);
-                FileOutputStream outputStream = new FileOutputStream(file);
-                byte[] buffer = new byte[1024];
-                int bytesRead;
-                while ((bytesRead = inputStream.read(buffer)) != -1) {
-                    outputStream.write(buffer, 0, bytesRead);
-                }
-                outputStream.close();
-                inputStream.close();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return file;
     }
 
 
