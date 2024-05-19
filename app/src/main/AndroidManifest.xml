@@ -41,7 +41,9 @@
             android:exported="false" />
         <activity
             android:name=".Category.Category_Add"
-            android:exported="false" />
+            android:exported="false" >
+
+        </activity>
         <activity
             android:name=".Share_Wallet"
             android:exported="false"
@@ -58,12 +60,7 @@
         <activity
             android:name=".Home.Home_My_wallets"
             android:exported="false" />
-        <activity
-            android:name=".Transaction.TransactionDetail"
-            android:exported="false" />
-        <activity
-            android:name=".Transaction.AddTransaction"
-            android:exported="false" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">

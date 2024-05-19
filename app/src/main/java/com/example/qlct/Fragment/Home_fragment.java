@@ -58,6 +58,8 @@ public class Home_fragment extends Fragment {
     ArrayList<Home_TheGiaoDich>  theGiaoDichList2;
     Home_TheGiaoDich_Adapter theGiaoDichAdap;
     ArrayList<Home_TheTopSpent> theTopSpentList;
+    ArrayList<Home_TheTopSpent> theTopSpentList2;
+
     Home_TheTopSpent_Adapter theTopSpentAdap;
 
 
@@ -164,14 +166,28 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
 
 
         }
-
-        for(int i2=0;i2<theTopSpentList.size();i2++)
-
-        {double tienvi= Double.parseDouble(theTopSpentList.get(i2).getSoTien());
+        for(int i2=0;i2<theTopSpentList.size();i2++) {
+            double tienvi= Double.parseDouble(theTopSpentList.get(i2).getSoTien());
             theTopSpentList.get(i2).setSoTien(doitien.formatValue(Double.parseDouble(theTopSpentList.get(i2).getSoTien()))+" đ");
 
             double percent = (tienvi/sumtien)*100;
-            theTopSpentList.get(i2).setPercent(String.valueOf(percent)+"%");
+            theTopSpentList.get(i2).setPercent(String.format("%.2f", percent) + "%");
+        }
+
+        Collections.sort(theTopSpentList, new Comparator<Home_TheTopSpent>() {
+            @Override
+            public int compare(Home_TheTopSpent o1, Home_TheTopSpent o2) {
+                double percent1 = Double.parseDouble(o1.getPercent().replace("%", ""));
+                double percent2 = Double.parseDouble(o2.getPercent().replace("%", ""));
+                return Double.compare(percent2, percent1);
+            }
+        });
+
+        theTopSpentList2 =new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            if (i < theTopSpentList.size()) {
+                theTopSpentList2.add(theTopSpentList.get(i));
+            }
         }
     }
     private  void Anhxa3() throws ParseException {
@@ -279,14 +295,30 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
 
         }
 
-        for(int i2=0;i2<theTopSpentList.size();i2++)
-
-        {double tienvi= Double.parseDouble(theTopSpentList.get(i2).getSoTien());
+        for(int i2=0;i2<theTopSpentList.size();i2++) {
+            double tienvi= Double.parseDouble(theTopSpentList.get(i2).getSoTien());
             theTopSpentList.get(i2).setSoTien(doitien.formatValue(Double.parseDouble(theTopSpentList.get(i2).getSoTien()))+" đ");
 
             double percent = (tienvi/sumtien)*100;
-            theTopSpentList.get(i2).setPercent(String.valueOf(percent)+"%");
+            theTopSpentList.get(i2).setPercent(String.format("%.2f", percent) + "%");
         }
+
+        Collections.sort(theTopSpentList, new Comparator<Home_TheTopSpent>() {
+            @Override
+            public int compare(Home_TheTopSpent o1, Home_TheTopSpent o2) {
+                double percent1 = Double.parseDouble(o1.getPercent().replace("%", ""));
+                double percent2 = Double.parseDouble(o2.getPercent().replace("%", ""));
+                return Double.compare(percent2, percent1);
+            }
+        });
+
+        theTopSpentList2 =new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            if (i < theTopSpentList.size()) {
+                theTopSpentList2.add(theTopSpentList.get(i));
+            }
+        }
+
     }
 
     private  void Anhxa()
@@ -621,6 +653,9 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
                 } else {
                     unit = "";
                 }
+                ListView listView2 = view.findViewById(R.id.listView2);
+                theTopSpentAdap = new Home_TheTopSpent_Adapter(getContext(),R.layout.home_dong_topspent,theTopSpentList2);
+                listView2.setAdapter(theTopSpentAdap);
 
             }
         });
@@ -694,6 +729,9 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
                 } else {
                     unit = "";
                 }
+                ListView listView2 = view.findViewById(R.id.listView2);
+                theTopSpentAdap = new Home_TheTopSpent_Adapter(getContext(),R.layout.home_dong_topspent,theTopSpentList2);
+                listView2.setAdapter(theTopSpentAdap);
 
             }
 
@@ -740,7 +778,7 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
                     return;
                 }
                 // Tao intent show more
-                Intent ShowMoreIntent = new Intent(getActivity(), TransactionDetail.class);
+                Intent ShowMoreIntent = new Intent(getActivity(), Category_Add.class);
 
                 // Mo activity transaction details
                 startActivity(ShowMoreIntent);
@@ -758,7 +796,7 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
         listView.setAdapter(theGiaoDichAdap);}
         setListViewHeightBasedOnChildren(listView);
         ListView listView2 = view.findViewById(R.id.listView2);
-        theTopSpentAdap = new Home_TheTopSpent_Adapter(getContext(),R.layout.home_dong_topspent,theTopSpentList);
+        theTopSpentAdap = new Home_TheTopSpent_Adapter(getContext(),R.layout.home_dong_topspent,theTopSpentList2);
         listView2.setAdapter(theTopSpentAdap);
         setListViewHeightBasedOnChildren(listView2);
         if(tongsovi==0)

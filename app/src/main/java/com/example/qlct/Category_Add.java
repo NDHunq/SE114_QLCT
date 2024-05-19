@@ -2,12 +2,17 @@ package com.example.qlct;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
@@ -18,6 +23,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -35,12 +44,28 @@ import com.example.qlct.API_Utils.CategoryAPIUntill;
 import com.example.qlct.API_Utils.WalletAPIUtil;
 import com.google.android.material.textfield.TextInputEditText;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class Category_Add extends AppCompatActivity {
     int sb=1;
     int sc=1;
     int type=0;
+    ImageView review;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +77,10 @@ public class Category_Add extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        review=findViewById(R.id.hinhanh);
+
         ImageButton upload = findViewById(R.id.button);
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -716,10 +745,18 @@ public class Category_Add extends AppCompatActivity {
 
 
         });
+        //Disable strict mode
+
+
+
+        review = findViewById(R.id.hinhanh);
         TextView upload = dialog.findViewById(R.id.upload);
         upload.setOnClickListener(v -> {
-            Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(intent,3);
+            Intent intent = new Intent(MediaStore.ACTION_PICK_IMAGES);
+
+
+
+
             dialog.dismiss();
         });
 
@@ -740,6 +777,73 @@ public class Category_Add extends AppCompatActivity {
         canvas.drawBitmap(originalBitmap, 0, 0, null);
 
         return coloredBitmap;
+    }
+
+
+    //API chính để upload ảnh
+    private String uploadImageAPI(Uri imageUri) throws IOException, JSONException {
+
+        //Đường dẫn của server, cái này trong source chính đã để trong folder API_CONFIG
+        String SERVER = "https://expense-management-backend-2tac.onrender.com";
+        String API_VERSION = "api/v1";
+
+        //Dưới nãy giữ y chang, không cần suy nghĩ
+        OkHttpClient client = new OkHttpClient().newBuilder()
+                .build();
+        File file = getFileFromUri(this, imageUri);
+        RequestBody body = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                .addFormDataPart("image", file.getName(),
+                        RequestBody.create( file.getAbsoluteFile(),
+                                MediaType.parse("application/octet-stream")
+                        ))
+                .build();
+        Request request = new Request.Builder()
+                .url(SERVER+"/" + API_VERSION + "/media/upload")
+                .method("POST", body)
+                .build();
+        Response response = client.newCall(request).execute();
+
+        //Log.d("Response", response.body().string());
+        return  response.body().string();
+    }
+
+    private String getFileName(Context context, Uri uri) {
+        String result = null;
+        if (uri.getScheme().equals("content")) {
+            try (Cursor cursor = context.getContentResolver().query(uri, null, null, null, null)) {
+                if (cursor != null && cursor.moveToFirst()) {
+                    int index = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+                    if (index != -1) {
+                        result = cursor.getString(index);
+                    }
+                }
+            }
+        }
+        if (result == null) {
+            result = uri.getLastPathSegment();
+        }
+        return result;
+    }
+    private File getFileFromUri(Context context, Uri uri) {
+        File file = null;
+        try {
+            String fileName = getFileName(context, uri);
+            InputStream inputStream = context.getContentResolver().openInputStream(uri);
+            if (inputStream != null) {
+                file = new File(context.getCacheDir(), fileName);
+                FileOutputStream outputStream = new FileOutputStream(file);
+                byte[] buffer = new byte[1024];
+                int bytesRead;
+                while ((bytesRead = inputStream.read(buffer)) != -1) {
+                    outputStream.write(buffer, 0, bytesRead);
+                }
+                outputStream.close();
+                inputStream.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return file;
     }
 
 
