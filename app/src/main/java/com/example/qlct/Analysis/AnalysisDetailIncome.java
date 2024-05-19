@@ -81,12 +81,6 @@ public class AnalysisDetailIncome extends AppCompatActivity {
 
     }
     void AnhXa(){
-//        list.add(new AnalysisExpense(Color.BLACK,R.drawable.dish,"Food",20,2000000));
-//        list.add(new AnalysisExpense(Color.YELLOW,R.drawable.dish,"Food",20,2000000));
-//        list.add(new AnalysisExpense(Color.RED,R.drawable.dish,"Food",20,2000000));
-//        list.add(new AnalysisExpense(Color.BLUE,R.drawable.dish,"Food",20,2000000));
-//        list.add(new AnalysisExpense(Color.GREEN,R.drawable.dish,"Food",20,2000000));
-//        list.add(new AnalysisExpense(Color.BLACK,R.drawable.dish,"Food",20,2000000));
         for(int i=0;i<listIncome.size();i++)
         {
             int color;

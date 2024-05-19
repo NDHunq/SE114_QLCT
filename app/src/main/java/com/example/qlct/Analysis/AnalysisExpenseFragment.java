@@ -49,11 +49,36 @@ public class AnalysisExpenseFragment extends Fragment {
     String currency;
     TextView total_expense;
     ArrayList<GetAllTransactionsEntity_quyen> listExpense;
+    Bundle bundle;
     public AnalysisExpenseFragment() {
         // Required empty public constructor
     }
 
     public AnalysisExpenseFragment(ArrayList<GetAllTransactionsEntity_quyen> listTransactions,String id_wallet,ArrayList<GetAllCategoryEntity> listCategory,String currency) {
+        bundle=new Bundle();
+        ArrayList<GetAllTransactionsEntity_quyen> listTransactionsCopy = new ArrayList<>();
+        for (GetAllTransactionsEntity_quyen transaction : listTransactions) {
+            GetAllTransactionsEntity_quyen transactionCopy = new GetAllTransactionsEntity_quyen(
+                    transaction.id,
+                    transaction.user_id,
+                    transaction.amount,
+                    transaction.category_id,
+                    transaction.wallet_id,
+                    transaction.notes,
+                    transaction.picture,
+                    transaction.transaction_date,
+                    transaction.transaction_type,
+                    transaction.currency_unit,
+                    transaction.target_wallet_id,
+                    transaction.wallet,
+                    transaction.category
+            );
+            listTransactionsCopy.add(transactionCopy);
+        }
+        bundle.putSerializable("listTransactions", listTransactionsCopy);
+        bundle.putSerializable("listCategory",listCategory);
+        bundle.putString("currency",currency);
+        bundle.putString("id_wallet",id_wallet);
         this.listTransactions = listTransactions;
         this.id_wallet=id_wallet;
         this.listCategory=listCategory;
@@ -98,8 +123,14 @@ public class AnalysisExpenseFragment extends Fragment {
         detail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getActivity(), AnalysisDetailExpense.class);
-                startActivity(intent);
+                try {
+                    Intent intent = new Intent(getActivity(), AnalysisDetailExpense.class);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+                catch (Exception e) {
+                    Log.d("Error", e.getMessage());
+                }
             }
         });
         SetUpPieChart();

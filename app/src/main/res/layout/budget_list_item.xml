@@ -93,8 +93,10 @@
             android:layout_marginTop="5dp"
             android:layout_marginStart="0dp"
             android:layout_marginEnd="0dp"
-            android:allowClickWhenDisabled="true"
-           >
+            android:thumbTint="@color/xanhnendam"
+            android:progressTint="@color/xanhnendam"
+
+            >
 
         </SeekBar>
         <RelativeLayout
@@ -114,6 +116,7 @@
             </TextView>
             <TextView
                 android:id="@+id/expense"
+                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -137,13 +140,14 @@
                 android:layout_gravity="center"
                 android:fontFamily="@font/inter"
                 android:text="Budget"
-                android:textColor="@color/black"
+                android:textColor="@color/xanhnendam"
                 android:layout_marginStart="7dp"
                 android:textSize="14dp">
 
             </TextView>
             <TextView
                 android:id="@+id/maxmoney"
+                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -151,7 +155,7 @@
                 android:text="2000000 đ"
                 android:layout_alignParentRight="true"
                 android:layout_marginEnd="7dp"
-                android:textColor="@color/black"
+                android:textColor="@color/xanhnendam"
                 android:textSize="15dp">
 
             </TextView>

@@ -51,6 +51,7 @@
                 android:gravity="left">
             </TextView>
             <TextView
+                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -63,6 +64,7 @@
                 android:gravity="right">
             </TextView>
             <TextView
+                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -83,6 +85,7 @@
             android:background="@drawable/grey_background">
         </RelativeLayout>
         <TextView
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
