@@ -21,14 +21,11 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.qlct.Transaction.AddTransaction;
 import com.example.qlct.Analysis.AnalysisExpenseFragment;
 import com.example.qlct.Analysis.AnalysisIcomeFragment;
 import com.example.qlct.Analysis.AnalysisNetIncomeFragment;
-import com.example.qlct.MainActivity;
-import com.example.qlct.Notification.Notificaiton;
+import com.example.qlct.Notification.Notificaiton_activity;
 import com.example.qlct.R;
 import com.example.qlct.SelectWallet_Adapter;
 import com.example.qlct.Wallet;
@@ -36,7 +33,6 @@ import com.example.qlct.Wallet;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
 
 /**
@@ -143,7 +139,7 @@ public class Analysis_fragment extends Fragment {
         bell.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), Notificaiton.class);
+                Intent intent = new Intent(getActivity(), Notificaiton_activity.class);
                 startActivity(intent);
             }
         });

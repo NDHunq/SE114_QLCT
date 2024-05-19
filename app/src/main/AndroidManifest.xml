@@ -47,7 +47,7 @@
             android:exported="false"
             android:theme="@style/Theme.QLCT" />
         <activity
-            android:name=".Notification.Notificaiton"
+            android:name=".Notification.Notificaiton_activity"
             android:exported="false" />
         <activity
             android:name=".Home.Home_Wallet_Information"

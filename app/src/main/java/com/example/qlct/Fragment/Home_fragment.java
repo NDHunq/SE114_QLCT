@@ -6,7 +6,6 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -30,9 +29,8 @@ import com.example.qlct.Home.Home_TheGiaoDich_Adapter;
 import com.example.qlct.Home.Home_Wallet_Information;
 import com.example.qlct.Home_TheTopSpent;
 import com.example.qlct.Home_TheTopSpent_Adapter;
-import com.example.qlct.Notification.Notificaiton;
+import com.example.qlct.Notification.Notificaiton_activity;
 import com.example.qlct.R;
-import com.example.qlct.Transaction.*;
 
 import com.example.qlct.doitiente;
 
@@ -42,8 +40,6 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 
-
-import org.w3c.dom.Text;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -516,7 +512,7 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
         noti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), Notificaiton.class);
+                Intent intent = new Intent(getActivity(), Notificaiton_activity.class);
                 startActivity(intent);
             }
         });
