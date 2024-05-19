@@ -9,17 +9,21 @@ import android.widget.TextView;
 
 import com.example.qlct.R;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class Analysis_NetIncome_Adapter extends BaseAdapter {
     List<AnalysisNetIcome> list;
     Context context;
     int layout;
+    String currency;
 
-    public Analysis_NetIncome_Adapter(List<AnalysisNetIcome> list, Context context, int layout) {
+    public Analysis_NetIncome_Adapter(List<AnalysisNetIcome> list, Context context, int layout,String currency) {
         this.list = list;
         this.context = context;
         this.layout = layout;
+        this.currency=currency;
     }
 
     @Override
@@ -47,11 +51,14 @@ public class Analysis_NetIncome_Adapter extends BaseAdapter {
         TextView expense=convertView.findViewById(R.id.expense);
         TextView total=convertView.findViewById(R.id.total);
         //Gán giá trị
+        NumberFormat format = NumberFormat.getInstance(new Locale("vi", "VN"));
+
         AnalysisNetIcome netIcome=list.get(position);
         year.setText(String.valueOf(netIcome.getYear()));
-        income.setText(String.valueOf(netIcome.getIncome()));
-        expense.setText(String.valueOf(netIcome.getExpense()));
-        total.setText(String.valueOf(netIcome.getIncome()-netIcome.getExpense()) +" đ");
+        income.setText(format.format(netIcome.getIncome())+" "+currency);
+        expense.setText(format.format(netIcome.getExpense())+" "+currency);
+        double total1=netIcome.getIncome()-netIcome.getExpense();
+        total.setText(format.format(total1)+" "+currency);
         return convertView;
     }
 }
