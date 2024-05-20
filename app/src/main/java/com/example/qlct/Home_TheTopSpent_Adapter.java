@@ -9,6 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 public class Home_TheTopSpent_Adapter  extends BaseAdapter {
@@ -46,7 +48,9 @@ public class Home_TheTopSpent_Adapter  extends BaseAdapter {
         TextView sotien = view.findViewById(R.id.tienVi_Thetop);
         TextView percent = view.findViewById(R.id.phantramVi_Thetop);
         Home_TheTopSpent theTopSpent = theTopSpentList.get(i);
-        image.setImageResource(theTopSpent.getHinhAnh());
+        String url =theTopSpent.getHinhAnh();
+        Picasso.get().load(url).into(image);
+
         ten.setText(theTopSpent.getTenCategory());
         sotien.setText(theTopSpent.getSoTien());
         percent.setText(theTopSpent.getPercent());

@@ -40,14 +40,16 @@
             android:name=".Budget.AddBudget"
             android:exported="false" />
         <activity
-            android:name=".Category.Category_Add"
-            android:exported="false" />
+            android:name=".Category_Add"
+            android:exported="false" >
+
+        </activity>
         <activity
             android:name=".Share_Wallet"
             android:exported="false"
             android:theme="@style/Theme.QLCT" />
         <activity
-            android:name=".Notification.Notificaiton"
+            android:name=".Notification.Notificaiton_activity"
             android:exported="false" />
         <activity
             android:name=".Home.Home_Wallet_Information"
@@ -58,12 +60,7 @@
         <activity
             android:name=".Home.Home_My_wallets"
             android:exported="false" />
-        <activity
-            android:name=".Transaction.TransactionDetail"
-            android:exported="false" />
-        <activity
-            android:name=".Transaction.AddTransaction"
-            android:exported="false" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">

@@ -8,11 +8,12 @@
     <color name="xanhdam">#459244</color>
     <color name="xanhnhat">#A0E89F</color>
     <color name="xanhnendam">#1EABED</color>
-    <color name="red">#F45C5C</color>
+    <color name="red">#EA5656</color>
     <color name="lightred">#F9AAAA</color>
     <color name="xam">#F2F2F2</color>
     <color name="xamplus">#C0C0C0</color>
     <color name="errorColor">#B00020</color>
     <color name="Expense">#FF0000</color>
     <color name="Income">#00FF00</color>
+    <color name="xamdam">#2B2929</color>
 </resources>

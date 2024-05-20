@@ -17,6 +17,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.qlct.API_Entity.GetAllCategoryEntity;
 import com.example.qlct.API_Entity.GetAllTransactionsEntity_quyen;
 import com.example.qlct.R;
+import com.example.qlct.doitiente;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
@@ -47,6 +48,7 @@ public class AnalysisDetailExpense extends AppCompatActivity {
     ArrayList<Integer> colors;
     String date;
     TextView date_lbl;
+    doitiente doitiente=new doitiente();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,9 +81,58 @@ public class AnalysisDetailExpense extends AppCompatActivity {
         });
         list=new ArrayList<>();
         SetUpPieChart();
+        DoiDonVi();
         AnhXa();
         Analysis_Expense_Adapter adapter=new Analysis_Expense_Adapter(list,this,R.layout.analysis_expense_list_item);
         listView.setAdapter(adapter);
+
+    }
+    void DoiDonVi()
+    {
+        for(GetAllTransactionsEntity_quyen transaction:listExpense)
+        {
+            if(id_wallet.equals("Total"))
+            {
+                if(transaction.currency_unit.equals("VND"))
+                    transaction.amount=String.valueOf(Float.parseFloat(transaction.amount));
+                else if(transaction.currency_unit.equals("USD"))
+                    transaction.amount=String.valueOf(Float.parseFloat(transaction.amount)*doitiente.getUSDtoVND());
+                else if(transaction.currency_unit.equals("CNY"))
+                    transaction.amount=String.valueOf(Float.parseFloat(transaction.amount)*doitiente.getCNYtoVND());
+                else if(transaction.currency_unit.equals("EUR"))
+                    transaction.amount=String.valueOf(Float.parseFloat(transaction.amount)*doitiente.getUERtoVND());
+            }
+        }
+    }
+    Double TinhPhanTram(String a, String b) {
+        a=a.replace(",", ".");
+        b=b.replace(",", ".");
+        double valueA = convertStringToNumber(a);
+        double valueB = convertStringToNumber(b);
+
+        return (valueA * 100) / valueB;
+    }
+
+    double convertStringToNumber(String str) {
+        double value;
+        char lastChar = str.charAt(str.length() - 1);
+
+        switch (lastChar) {
+            case 'K':
+                value = Double.parseDouble(str.substring(0, str.length() - 1)) * 1;
+                break;
+            case 'B':
+                value = Double.parseDouble(str.substring(0, str.length() - 1)) * 1000000;
+                break;
+            case 'M':
+                value = Double.parseDouble(str.substring(0, str.length() - 1)) * 1000;
+                break;
+            default:
+                value = Double.parseDouble(str);
+                break;
+        }
+
+        return value;
     }
     void AnhXa(){
         for(int i = 0; i< listExpense.size(); i++)
@@ -96,13 +147,15 @@ public class AnalysisDetailExpense extends AppCompatActivity {
             {
                 color=colors.get(4);
             }
+            double kq=TinhPhanTram(String.valueOf(doitiente.formatValue(Double.parseDouble(listExpense.get(i).amount))) ,total_expense.getText().toString().substring(0,total_expense.getText().toString().length()-2));
             if(listExpense.get(i).category_id!=null)
             {
-                list.add(new AnalysisExpense(color,hinh,getCategoryNameById(listExpense.get(i).category_id),roundTwoDecimals(Float.parseFloat(listExpense.get(i).amount)/ TotalExpense(listExpense)*100),formatString(listExpense.get(i).amount),currency));
+                list.add(new AnalysisExpense(color,listExpense.get(i).category.picture,getCategoryNameById(listExpense.get(i).category_id),roundTwoDecimals(kq),doitiente.formatValue(Double.parseDouble((listExpense.get(i).amount))),currency));
+                Log.d("Expense",Double.parseDouble(listExpense.get(i).amount)+"/"+ TotalExpense(listExpense));
             }
             else
             {
-                list.add(new AnalysisExpense(color,hinh,"Transfer",roundTwoDecimals(Float.parseFloat(listExpense.get(i).amount)/ TotalExpense(listExpense)*100),formatString(listExpense.get(i).amount),currency));
+                list.add(new AnalysisExpense(color,listExpense.get(i).category.picture,"Transfer",roundTwoDecimals(kq),doitiente.formatValue(Double.parseDouble (listExpense.get(i).amount)),currency));
             }
         }
 
@@ -161,7 +214,7 @@ public class AnalysisDetailExpense extends AppCompatActivity {
             }
         });
         AdjustList(listExpense);
-        total_expense.setText(formatString(String.valueOf(TotalExpense(listExpense)))+" "+currency);
+        total_expense.setText(doitiente.formatValue(TotalExpense(listExpense))+" "+currency);
         ArrayList<PieEntry> categories=new ArrayList<>();
         if(listExpense.size()==0)
         {
@@ -248,12 +301,27 @@ public class AnalysisDetailExpense extends AppCompatActivity {
 
         }
     }
-    Float TotalExpense(ArrayList<GetAllTransactionsEntity_quyen> listExpense)
+    Double TotalExpense(ArrayList<GetAllTransactionsEntity_quyen> listExpense)
     {
-        float sum=0;
+        Double sum= (double) 0;
         for(GetAllTransactionsEntity_quyen transaction:listExpense)
         {
-            sum+=Float.parseFloat(transaction.amount);
+            if(id_wallet.equals("Total"))
+            {
+                if(transaction.currency_unit.equals("VND"))
+                    sum+=Float.parseFloat(transaction.amount);
+                else if(transaction.currency_unit.equals("USD"))
+                    sum+=Float.parseFloat(transaction.amount)*doitiente.getUSDtoVND();
+                else if(transaction.currency_unit.equals("CNY"))
+                    sum+=Float.parseFloat(transaction.amount)*doitiente.getCNYtoVND();
+                else if(transaction.currency_unit.equals("EUR"))
+                    sum+=Float.parseFloat(transaction.amount)*doitiente.getUERtoVND();
+            }
+            else
+            {
+                sum+=Float.parseFloat(transaction.amount);
+            }
+
         }
         return sum;
     }

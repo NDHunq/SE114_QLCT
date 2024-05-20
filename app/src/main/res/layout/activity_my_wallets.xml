@@ -106,11 +106,11 @@ android:layout_marginStart="12dp"
             android:layout_gravity="center">
             <ImageView
                 android:id="@+id/hinhanh"
-                android:layout_width="35dp"
-
+                android:layout_width="40dp"
+android:background="@drawable/global"
                 android:layout_gravity="center"
 
-                android:layout_height="35dp">
+                android:layout_height="40dp">
 
 
             </ImageView>

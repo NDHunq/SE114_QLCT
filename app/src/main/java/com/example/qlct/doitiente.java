@@ -38,6 +38,12 @@ public class doitiente {
 
 
     public String formatValue(double value) {
+        String sign = "";
+        if (value < 0) {
+            sign = "-";
+            value = Math.abs(value); // Lấy giá trị tuyệt đối của số
+        }
+
         String[] units = new String[] {"", "K", "M", "B", "T"};
         int unitIndex = 0;
 
@@ -47,7 +53,7 @@ public class doitiente {
         }
 
         DecimalFormat df = new DecimalFormat("0.###");
-        return df.format(value) + units[unitIndex];
+        return sign + df.format(value) + units[unitIndex]; // Thêm lại dấu vào kết quả
     }
     public Double converttoVND( String currency_unit,Double amount)
     {

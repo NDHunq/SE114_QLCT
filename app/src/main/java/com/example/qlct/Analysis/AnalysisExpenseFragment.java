@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.qlct.API_Entity.GetAllCategoryEntity;
 import com.example.qlct.API_Entity.GetAllTransactionsEntity_quyen;
 import com.example.qlct.R;
+import com.example.qlct.doitiente;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
@@ -54,6 +55,7 @@ public class AnalysisExpenseFragment extends Fragment {
     ArrayList<GetAllTransactionsEntity_quyen> listExpense;
     Bundle bundle;
     String date;
+    doitiente doitiente=new doitiente();
     public AnalysisExpenseFragment() {
         // Required empty public constructor
     }
@@ -196,7 +198,7 @@ public class AnalysisExpenseFragment extends Fragment {
             }
         });
         AdjustList(listExpense);
-        total_expense.setText(formatString(String.valueOf(TotalExpense(listExpense)))+" "+currency);
+        total_expense.setText(doitiente.formatValue(TotalExpense(listExpense))+" "+currency);
         ArrayList<PieEntry> categories=new ArrayList<>();
         if(listExpense.size()==0)
         {
@@ -283,12 +285,27 @@ public class AnalysisExpenseFragment extends Fragment {
 
         }
     }
-    Float TotalExpense(ArrayList<GetAllTransactionsEntity_quyen> listExpense)
+    Double TotalExpense(ArrayList<GetAllTransactionsEntity_quyen> listExpense)
     {
-        float sum=0;
+        Double sum= (double) 0;
         for(GetAllTransactionsEntity_quyen transaction:listExpense)
         {
-            sum+=Float.parseFloat(transaction.amount);
+            if(id_wallet.equals("Total"))
+            {
+                if(transaction.currency_unit.equals("VND"))
+                    sum+=Float.parseFloat(transaction.amount);
+                else if(transaction.currency_unit.equals("USD"))
+                    sum+=Float.parseFloat(transaction.amount)*doitiente.getUSDtoVND();
+                else if(transaction.currency_unit.equals("CNY"))
+                    sum+=Float.parseFloat(transaction.amount)*doitiente.getCNYtoVND();
+                else if(transaction.currency_unit.equals("EUR"))
+                    sum+=Float.parseFloat(transaction.amount)*doitiente.getUERtoVND();
+            }
+            else
+            {
+                sum+=Float.parseFloat(transaction.amount);
+            }
+
         }
         return sum;
     }

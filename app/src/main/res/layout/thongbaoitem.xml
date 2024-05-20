@@ -40,6 +40,7 @@
             </TextView>
 
 
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
@@ -54,46 +55,45 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
-                android:id="@+id/seenicon"
-                android:layout_width="10dp"
-                android:background="@drawable/hinhtrong"
-                android:layout_marginEnd="12dp"
-                android:layout_height="10dp"
+            <TextView
+                android:id="@+id/ngaythang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="29dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="25/2/2005"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:orientation="horizontal">
+                app:layout_constraintTop_toBottomOf="@+id/noticontent">
 
-            </LinearLayout>
+            </TextView>
 
             <TextView
+                android:textStyle="bold"
                 android:id="@+id/notiheader"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-              android:layout_marginStart="75dp"
-                android:layout_marginEnd="39dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="35dp"
-                android:text="dsfasdfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+                android:layout_marginStart="80dp"
+                android:layout_marginTop="17dp"
+                android:text="ffffffffffff"
 
                 android:textAlignment="textStart"
                 android:textColor="@color/black"
-                app:layout_constraintBottom_toBottomOf="parent"
 
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"></TextView>
 
             <TextView
-
                 android:id="@+id/noticontent"
+                android:textColor="@color/xamdam"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="12dp"
+                android:layout_marginStart="80dp"
                 android:text="20/11/2024"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"></TextView>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"></TextView>
 
 
             <androidx.cardview.widget.CardView

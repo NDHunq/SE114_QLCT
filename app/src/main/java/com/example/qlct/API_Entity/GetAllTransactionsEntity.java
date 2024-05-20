@@ -12,8 +12,10 @@ public class GetAllTransactionsEntity implements Serializable {
     public String picture;
     public String transaction_date;
     public String transaction_type;
+
     public String currency_unit;
     public String target_wallet_id;
     public CreateWalletEntity wallet;
     public CreateCategoryEntity category;
+
 }
