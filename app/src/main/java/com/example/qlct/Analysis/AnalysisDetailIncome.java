@@ -44,6 +44,7 @@ public class AnalysisDetailIncome extends AppCompatActivity {
     TextView total_icome;
     String currency;
     ArrayList<Integer> colors;
+    String date;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +61,7 @@ public class AnalysisDetailIncome extends AppCompatActivity {
             id_wallet = bundle.getString("id_wallet");
             listCategory = (ArrayList<GetAllCategoryEntity>) bundle.getSerializable("listCategory");
             currency = bundle.getString("currency");
+            date = bundle.getString("date");
         }
         total_icome=this.findViewById(R.id.total_income);
         exit=this.findViewById(R.id.exit_Income);

@@ -50,11 +50,12 @@ public class AnalysisExpenseFragment extends Fragment {
     TextView total_expense;
     ArrayList<GetAllTransactionsEntity_quyen> listExpense;
     Bundle bundle;
+    String date;
     public AnalysisExpenseFragment() {
         // Required empty public constructor
     }
 
-    public AnalysisExpenseFragment(ArrayList<GetAllTransactionsEntity_quyen> listTransactions,String id_wallet,ArrayList<GetAllCategoryEntity> listCategory,String currency) {
+    public AnalysisExpenseFragment(ArrayList<GetAllTransactionsEntity_quyen> listTransactions,String id_wallet,ArrayList<GetAllCategoryEntity> listCategory,String currency,String date) {
         bundle=new Bundle();
         ArrayList<GetAllTransactionsEntity_quyen> listTransactionsCopy = new ArrayList<>();
         for (GetAllTransactionsEntity_quyen transaction : listTransactions) {
@@ -79,10 +80,12 @@ public class AnalysisExpenseFragment extends Fragment {
         bundle.putSerializable("listCategory",listCategory);
         bundle.putString("currency",currency);
         bundle.putString("id_wallet",id_wallet);
+        bundle.putString("date",date);
         this.listTransactions = listTransactions;
         this.id_wallet=id_wallet;
         this.listCategory=listCategory;
         this.currency=currency;
+        this.date=date;
     }
 
     /**

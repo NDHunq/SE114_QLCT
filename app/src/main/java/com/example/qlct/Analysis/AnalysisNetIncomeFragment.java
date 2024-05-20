@@ -66,8 +66,26 @@ public class AnalysisNetIncomeFragment extends Fragment {
     }
 
     public AnalysisNetIncomeFragment(ArrayList<GetAllTransactionsEntity_quyen> listTransactions, String id_wallet,ArrayList<GetAllCategoryEntity> listCategory,String currency,String date) {
-
-        this.listTransactions = listTransactions;
+        ArrayList<GetAllTransactionsEntity_quyen> lisrI = new ArrayList<>();
+        for (GetAllTransactionsEntity_quyen transaction : listTransactions) {
+            GetAllTransactionsEntity_quyen transactionCopy = new GetAllTransactionsEntity_quyen(
+                    transaction.id,
+                    transaction.user_id,
+                    transaction.amount,
+                    transaction.category_id,
+                    transaction.wallet_id,
+                    transaction.notes,
+                    transaction.picture,
+                    transaction.transaction_date,
+                    transaction.transaction_type,
+                    transaction.currency_unit,
+                    transaction.target_wallet_id,
+                    transaction.wallet,
+                    transaction.category
+            );
+            lisrI.add(transactionCopy);
+        }
+        this.listTransactions = lisrI;
         this.id_wallet=id_wallet;
         this.listCategory=listCategory;
         this.currency=currency;

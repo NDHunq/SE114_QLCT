@@ -135,6 +135,8 @@ public class Analysis_fragment extends Fragment {
     public void Load(ArrayList<GetAllTransactionsEntity_quyen> listtrans,String id_wallet,ArrayList<GetAllCategoryEntity> listCategory,String Date)
     {
         ArrayList<GetAllTransactionsEntity_quyen> listTransCopy = new ArrayList<>();
+        ArrayList<GetAllTransactionsEntity_quyen> listTransCopy1 = new ArrayList<>();
+        ArrayList<GetAllTransactionsEntity_quyen> listTransCopy2 = new ArrayList<>();
         for (GetAllTransactionsEntity_quyen transaction : listtrans) {
             GetAllTransactionsEntity_quyen transactionCopy = new GetAllTransactionsEntity_quyen(
                     transaction.id,
@@ -152,8 +154,12 @@ public class Analysis_fragment extends Fragment {
                     transaction.category
             );
             listTransCopy.add(transactionCopy);
+            listTransCopy1.add(transactionCopy);
+            listTransCopy2.add(transactionCopy);
         }
-
+        Log.d("ListTransCopy", listTransCopy.size()+"");
+        Log.d("ListTransCopy1", listTransCopy1.size()+"");
+        Log.d("ListTransCopy2", listTransCopy2.size()+"");
         FragmentManager fragmentManager=getChildFragmentManager();
         FragmentTransaction transaction=fragmentManager.beginTransaction();
         Fragment child= new AnalysisNetIncomeFragment(listTransCopy,id_wallet,listCategory,getCurrencyUnitById(id_wallet),Date);
@@ -162,13 +168,13 @@ public class Analysis_fragment extends Fragment {
 
         FragmentManager fragmentManager1=getChildFragmentManager();
         FragmentTransaction transaction1=fragmentManager1.beginTransaction();
-        Fragment child1= new AnalysisExpenseFragment(listTransCopy,id_wallet,listCategory,getCurrencyUnitById(id_wallet));
+        Fragment child1= new AnalysisExpenseFragment(listTransCopy1,id_wallet,listCategory,getCurrencyUnitById(id_wallet),Date);
         transaction1.replace(R.id.ChildFrag2,child1);
         transaction1.commit();
 
         FragmentManager fragmentManager2=getChildFragmentManager();
         FragmentTransaction transaction2=fragmentManager2.beginTransaction();
-        Fragment child2= new AnalysisIcomeFragment(listTransCopy,id_wallet,listCategory,getCurrencyUnitById(id_wallet));
+        Fragment child2= new AnalysisIcomeFragment(listTransCopy2,id_wallet,listCategory,getCurrencyUnitById(id_wallet),Date);
         transaction2.replace(R.id.ChildFrag3,child2);
         transaction2.commit();
     }
@@ -273,11 +279,30 @@ public class Analysis_fragment extends Fragment {
 
                 @Override
                 public void afterTextChanged(Editable s) {
+                    ArrayList<GetAllTransactionsEntity_quyen> lisrI = new ArrayList<>();
+                    for (GetAllTransactionsEntity_quyen transaction : listTransactions) {
+                        GetAllTransactionsEntity_quyen transactionCopy = new GetAllTransactionsEntity_quyen(
+                                transaction.id,
+                                transaction.user_id,
+                                transaction.amount,
+                                transaction.category_id,
+                                transaction.wallet_id,
+                                transaction.notes,
+                                transaction.picture,
+                                transaction.transaction_date,
+                                transaction.transaction_type,
+                                transaction.currency_unit,
+                                transaction.target_wallet_id,
+                                transaction.wallet,
+                                transaction.category
+                        );
+                        lisrI.add(transactionCopy);
+                    }
                     if (wallet_name.getText().toString().equals("Total")) {
-                        Load(listTransactions, "Total", listCategory, date.getText().toString());
+                        Load(lisrI, "Total", listCategory, date.getText().toString());
                     } else {
                         id_wallet = getWalletIdByName(wallet_name.getText().toString());
-                        Load(listTransactions, id_wallet, listCategory, date.getText().toString());
+                        Load(lisrI, id_wallet, listCategory, date.getText().toString());
                     }
                 }
             });
@@ -297,11 +322,30 @@ public class Analysis_fragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
+                ArrayList<GetAllTransactionsEntity_quyen> lisrI = new ArrayList<>();
+                for (GetAllTransactionsEntity_quyen transaction : listTransactions) {
+                    GetAllTransactionsEntity_quyen transactionCopy = new GetAllTransactionsEntity_quyen(
+                            transaction.id,
+                            transaction.user_id,
+                            transaction.amount,
+                            transaction.category_id,
+                            transaction.wallet_id,
+                            transaction.notes,
+                            transaction.picture,
+                            transaction.transaction_date,
+                            transaction.transaction_type,
+                            transaction.currency_unit,
+                            transaction.target_wallet_id,
+                            transaction.wallet,
+                            transaction.category
+                    );
+                    lisrI.add(transactionCopy);
+                }
                 if (wallet_name.getText().toString().equals("Total")) {
-                    Load(listTransactions, "Total", listCategory, date.getText().toString());
+                    Load(lisrI, "Total", listCategory, date.getText().toString());
                 } else {
                     id_wallet = getWalletIdByName(wallet_name.getText().toString());
-                    Load(listTransactions, id_wallet, listCategory, date.getText().toString());
+                    Load(lisrI, id_wallet, listCategory, date.getText().toString());
                 }
             }
         });

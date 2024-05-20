@@ -42,6 +42,7 @@ public class AnalysisDetailExpense extends AppCompatActivity {
     TextView total_expense;
     String currency;
     ArrayList<Integer> colors;
+    String date;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +59,7 @@ public class AnalysisDetailExpense extends AppCompatActivity {
             id_wallet = bundle.getString("id_wallet");
             listCategory = (ArrayList<GetAllCategoryEntity>) bundle.getSerializable("listCategory");
             currency = bundle.getString("currency");
+            date = bundle.getString("date");
         }
         exit=this.findViewById(R.id.exit_expense);
         listView=this.findViewById(R.id.listvieww);
