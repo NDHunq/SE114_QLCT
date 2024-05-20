@@ -25,9 +25,12 @@ import com.github.mikephil.charting.data.PieEntry;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 public class AnalysisDetailExpense extends AppCompatActivity {
@@ -43,6 +46,7 @@ public class AnalysisDetailExpense extends AppCompatActivity {
     String currency;
     ArrayList<Integer> colors;
     String date;
+    TextView date_lbl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +69,8 @@ public class AnalysisDetailExpense extends AppCompatActivity {
         listView=this.findViewById(R.id.listvieww);
         total_expense=this.findViewById(R.id.total_expense);
         pieChart=this.findViewById(R.id.piechart);
+        date_lbl=this.findViewById(R.id.date_lbl);
+        date_lbl.setText(date);
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,21 +111,41 @@ public class AnalysisDetailExpense extends AppCompatActivity {
     void SetUpPieChart()
     {
         try{
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Calendar calendar = Calendar.getInstance();
+            String[] dateParts = date.split("-");
+            int month=-1,year;
+            if(date.length()==4)
+                year=Integer.parseInt(date);
+            else
+            {
+                month=Integer.parseInt(dateParts[0]);
+                year=Integer.parseInt(dateParts[1]);
+            }
+
             listExpense =new ArrayList<>();
             if(id_wallet.equals("Total")){
                 for(GetAllTransactionsEntity_quyen transaction:listTransactions){
-                    if(transaction.transaction_type.equals("EXPENSE")){
+                    Date transactionDate = format.parse(transaction.transaction_date);
+                    calendar.setTime(transactionDate);
+                    int transactionYear = calendar.get(Calendar.YEAR);
+                    int transactionMonth = calendar.get(Calendar.MONTH) + 1;
+                    if(transaction.transaction_type.equals("EXPENSE") && transactionYear==year && (month==-1 || transactionMonth==month)){
                         listExpense.add(transaction);
                     }
                 }
             }
             else
                 for(GetAllTransactionsEntity_quyen transaction:listTransactions){
-                    if(transaction.transaction_type.equals("EXPENSE") && transaction.wallet_id.equals(id_wallet)){
+                    Date transactionDate = format.parse(transaction.transaction_date);
+                    calendar.setTime(transactionDate);
+                    int transactionYear = calendar.get(Calendar.YEAR);
+                    int transactionMonth = calendar.get(Calendar.MONTH) + 1;
+                    if(transaction.transaction_type.equals("EXPENSE") && transaction.wallet_id.equals(id_wallet) && transactionYear==year && (month==-1 || transactionMonth==month)){
                         listExpense.add(transaction);
                     }
                     else
-                    if(transaction.transaction_type.equals("TRANSFER")&&transaction.wallet_id.equals(id_wallet)){
+                    if(transaction.transaction_type.equals("TRANSFER")&&transaction.wallet_id.equals(id_wallet) && transactionYear==year && (month==-1 || transactionMonth==month)){
                         listExpense.add(transaction);
                     }
                 }

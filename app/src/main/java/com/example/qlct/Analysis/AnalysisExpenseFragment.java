@@ -22,9 +22,12 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -143,25 +146,44 @@ public class AnalysisExpenseFragment extends Fragment {
     void SetUpPieChart()
     {
         try{
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Calendar calendar = Calendar.getInstance();
+            String[] dateParts = date.split("-");
+            int month=-1,year;
+            if(date.length()==4)
+                year=Integer.parseInt(date);
+            else
+            {
+                month=Integer.parseInt(dateParts[0]);
+                year=Integer.parseInt(dateParts[1]);
+            }
+
             listExpense=new ArrayList<>();
             if(id_wallet.equals("Total")){
                 for(GetAllTransactionsEntity_quyen transaction:listTransactions){
-                    if(transaction.transaction_type.equals("EXPENSE")){
+                    Date transactionDate = format.parse(transaction.transaction_date);
+                    calendar.setTime(transactionDate);
+                    int transactionYear = calendar.get(Calendar.YEAR);
+                    int transactionMonth = calendar.get(Calendar.MONTH) + 1;
+                    if(transaction.transaction_type.equals("EXPENSE") && transactionYear==year && (month==-1 || transactionMonth==month)){
                         listExpense.add(transaction);
                     }
                 }
             }
             else
                 for(GetAllTransactionsEntity_quyen transaction:listTransactions){
-                    if(transaction.transaction_type.equals("EXPENSE") && transaction.wallet_id.equals(id_wallet)){
+                    Date transactionDate = format.parse(transaction.transaction_date);
+                    calendar.setTime(transactionDate);
+                    int transactionYear = calendar.get(Calendar.YEAR);
+                    int transactionMonth = calendar.get(Calendar.MONTH) + 1;
+                    if(transaction.transaction_type.equals("EXPENSE") && transaction.wallet_id.equals(id_wallet) && transactionYear==year && (month==-1 || transactionMonth==month)){
                         listExpense.add(transaction);
                     }
                     else
-                    if(transaction.transaction_type.equals("TRANSFER")&&transaction.wallet_id.equals(id_wallet)){
+                    if(transaction.transaction_type.equals("TRANSFER")&&transaction.wallet_id.equals(id_wallet) && transactionYear==year && (month==-1 || transactionMonth==month)){
                         listExpense.add(transaction);
                     }
                 }
-            Toast.makeText(getContext(),listExpense.size()+"", Toast.LENGTH_SHORT).show();
             Log.d("Expense",listExpense.size()+"");
         }
         catch (Exception e){
