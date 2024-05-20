@@ -3,8 +3,6 @@ package com.example.qlct;
 
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -14,15 +12,12 @@ import android.graphics.Color;
 
 
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -34,8 +29,6 @@ import com.example.qlct.API_Utils.WalletAPIUtil;
 import com.example.qlct.API_Entity.UpdateDeviceTokenEntity;
 import com.example.qlct.API_Utils.DeviceTokenAPIUtil;
 
-
-import com.example.qlct.Category.Category_Add;
 
 import com.example.qlct.Fragment.Account_fragment;
 import com.example.qlct.Fragment.Analysis_fragment;

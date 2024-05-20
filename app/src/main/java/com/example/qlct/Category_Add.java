@@ -66,6 +66,7 @@ public class Category_Add extends AppCompatActivity {
     int sb=1;
     int sc=1;
     int type=0;
+    int coanh=0;
     String url;
 
 
@@ -209,6 +210,11 @@ public class Category_Add extends AppCompatActivity {
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(coanh==0)
+                {
+                    Log.d("dtre", "da co anh");
+                    covertAnh(R.drawable.question);
+                }
                 TextInputEditText category_name = findViewById(R.id.categoryname);
 
                 CategoryAPIUntill test = new CategoryAPIUntill();
@@ -749,6 +755,7 @@ public class Category_Add extends AppCompatActivity {
         TextView apply = dialog.findViewById(R.id.apply);
 
         apply.setOnClickListener(v -> {
+            coanh=1;
             if(kq==1)
             {
                 ImageView img = findViewById(R.id.hinhanh);
@@ -867,6 +874,7 @@ public class Category_Add extends AppCompatActivity {
         });
         TextView upload = dialog.findViewById(R.id.upload);
         upload.setOnClickListener(v -> {
+
             Intent intent = new Intent(MediaStore.ACTION_PICK_IMAGES);
             resultLauncher.launch(intent);
 

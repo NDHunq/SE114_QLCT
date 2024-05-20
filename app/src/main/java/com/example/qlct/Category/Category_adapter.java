@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.example.qlct.Category.Category;
 import com.example.qlct.R;
 import com.google.android.material.card.MaterialCardView;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -54,7 +55,8 @@ public class Category_adapter extends BaseAdapter {
         MaterialCardView cardView = convertView.findViewById(R.id.category_icon_cardview);
 
         Category category = categoryList.get(position);
-        Glide.with(context).load(category.getImageURL()).into(categoryIcon);
+        Picasso.get().load(category.getImageURL()).into(categoryIcon);
+
         categoryName.setText(category.getCategory_name());
         return convertView;
     }
