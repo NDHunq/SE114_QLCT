@@ -342,22 +342,14 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
 
                 }
                 if (item.transaction_type.equals("TRANSFER") ) {
-                    if(TenVi.equals("Total")||TenVi.equals(item.wallet.name)) {
-                        theGiaoDichList.add(new Home_TheGiaoDich(item.category.picture, item.wallet.name, item.amount,dv, item.transaction_date, item.notes, "vi chuyenn toi", item.transaction_type));
-
-                        for(GetAllWalletsEntity wallet : walletsEntities) {
-                            Log.d("textt", wallet.id + " " + item.target_wallet_id);
-                            if(wallet.id.equals(item.target_wallet_id)) {
-                                theGiaoDichList.get(i).setTenGiaoDich(wallet.name);
-                                break;
-                            }
-                        }
-                    }
 
 
 
-                } else {
-                    if(TenVi.equals("Total")||TenVi.equals(item.wallet.name)) {
+                }
+                else
+                {
+                    if(TenVi.equals("Total")||TenVi.equals(item.wallet.name))
+                    {
                     theGiaoDichList.add(new Home_TheGiaoDich(item.category.picture, item.category.name, item.amount, dv, item.transaction_date, item.notes, item.wallet.name, item.transaction_type));
                 }
                     }
@@ -382,7 +374,7 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
                 Collections.sort(theGiaoDichList, new Comparator<Home_TheGiaoDich>() {
                     public int compare(Home_TheGiaoDich o1, Home_TheGiaoDich o2) {
                         try {
-                            return sdf.parse(o1.getNgayThang()).compareTo(sdf.parse(o2.getNgayThang()));
+                            return sdf.parse(o2.getNgayThang()).compareTo(sdf.parse(o1.getNgayThang()));
                         } catch (ParseException e) {
                             throw new IllegalArgumentException(e);
                         }

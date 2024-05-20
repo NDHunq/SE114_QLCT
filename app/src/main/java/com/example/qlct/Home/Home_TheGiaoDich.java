@@ -8,10 +8,12 @@ public class Home_TheGiaoDich {
     private String GhiChu;
     private String ViTien;
     public   String Typee;
+    private int img;
     public String currency_unit;
 
     public Home_TheGiaoDich(String hinhAnh, String tenGiaoDich, String soTien,String dv, String ngayThang, String ghiChu, String viTien,String Type) {
         HinhAnh = hinhAnh;
+
         TenGiaoDich = tenGiaoDich;
         SoTien = soTien;
         NgayThang = ngayThang;
@@ -19,6 +21,17 @@ public class Home_TheGiaoDich {
         GhiChu = ghiChu;
         ViTien = viTien;
         this.Typee = Type;
+    }
+
+    public Home_TheGiaoDich(int img,String tenGiaoDich, String soTien, String ngayThang, String ghiChu, String viTien, String typee, String currency_unit) {
+        TenGiaoDich = tenGiaoDich;
+        SoTien = soTien;
+        NgayThang = ngayThang;
+        GhiChu = ghiChu;
+        ViTien = viTien;
+        Typee = typee;
+        this.img = img;
+        this.currency_unit = currency_unit;
     }
 
     public String getCurrencyUnit()
