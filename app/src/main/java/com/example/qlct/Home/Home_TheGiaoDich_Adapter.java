@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.qlct.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -59,7 +60,8 @@ public class Home_TheGiaoDich_Adapter extends BaseAdapter {
             sotien.setTextColor(context.getResources().getColor(R.color.xanhnendam));
 
         }
-        imageView.setImageResource(theGiaoDich.getHinhAnh());
+       String url=theGiaoDich.getHinhAnh();
+        Picasso.get().load(url).into(imageView);
         ten.setText(theGiaoDich.getTenGiaoDich());
         sotien.setText(theGiaoDich.getSoTien()+""+theGiaoDich.getCurrencyUnit());
         ngaythang.setText(theGiaoDich.getNgayThang());

@@ -1,7 +1,7 @@
 package com.example.qlct.Home;
 
 public class Home_TheGiaoDich {
-    private int HinhAnh;
+    private String HinhAnh;
     private String TenGiaoDich;
     private String SoTien;
     private String NgayThang;
@@ -10,7 +10,7 @@ public class Home_TheGiaoDich {
     public   String Typee;
     public String currency_unit;
 
-    public Home_TheGiaoDich(int hinhAnh, String tenGiaoDich, String soTien,String dv, String ngayThang, String ghiChu, String viTien,String Type) {
+    public Home_TheGiaoDich(String hinhAnh, String tenGiaoDich, String soTien,String dv, String ngayThang, String ghiChu, String viTien,String Type) {
         HinhAnh = hinhAnh;
         TenGiaoDich = tenGiaoDich;
         SoTien = soTien;
@@ -25,7 +25,7 @@ public class Home_TheGiaoDich {
     {
         return currency_unit;
     }
-    public void setHinhAnh(int hinhAnh) {
+    public void setHinhAnh(String hinhAnh) {
         HinhAnh = hinhAnh;
     }
 
@@ -49,7 +49,7 @@ public class Home_TheGiaoDich {
         ViTien = viTien;
     }
 
-    public int getHinhAnh() {
+    public String getHinhAnh() {
         return HinhAnh;
     }
 

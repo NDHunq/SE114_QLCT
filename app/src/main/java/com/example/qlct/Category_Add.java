@@ -61,14 +61,40 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+
 public class Category_Add extends AppCompatActivity {
     int sb=1;
     int sc=1;
     int type=0;
+    String url;
 
 
     private ImageView review;
     ActivityResultLauncher<Intent> resultLauncher;
+    private void covertAnh(int drawableResourceId )
+    {
+
+        try {
+            Uri imageUri = Uri.parse("android.resource://" + getPackageName() + "/" + drawableResourceId);
+            File test = new File(imageUri.getPath());
+            review.setImageURI(imageUri);
+            File file = new File(imageUri.getPath());
+
+            //Đây là url của ảnh sau khi upload lên server
+            //Sau khi có url này, thực hiện chèn vào các field API nào mà có "image"
+            String response = uploadImageAPI(imageUri);
+            Log.d("Response", response);
+            JSONObject json = new JSONObject(response);
+            String imageUrl = json.getJSONObject("data").getString("picture_url");
+            url=imageUrl;
+            //Log ra để xem url của ảnh
+            Log.d("dtreuri", imageUrl);
+
+        }catch (Exception e){
+            e.printStackTrace();
+            Log.d("dtre", e.getMessage());
+        }
+    }
     private void registerResult () {
         resultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
@@ -86,7 +112,7 @@ public class Category_Add extends AppCompatActivity {
                             Log.d("Response", response);
                             JSONObject json = new JSONObject(response);
                             String imageUrl = json.getJSONObject("data").getString("picture_url");
-
+                            url=imageUrl;
                             //Log ra để xem url của ảnh
                             Log.d("dtre", imageUrl);
 
@@ -102,7 +128,7 @@ public class Category_Add extends AppCompatActivity {
     private String uploadImageAPI(Uri imageUri) throws IOException, JSONException {
 
         //Đường dẫn của server, cái này trong source chính đã để trong folder API_CONFIG
-        String SERVER = "https://expense-management-backend-jslp.onrender.com";
+        String SERVER = "https://expense-management-backend-2tac.onrender.com";
         String API_VERSION = "api/v1";
 
         //Dưới nãy giữ y chang, không cần suy nghĩ
@@ -206,15 +232,10 @@ public class Category_Add extends AppCompatActivity {
                         ty="EXPENSE";
                     }
                     ImageView img = findViewById(R.id.hinhanh);
-                    Drawable drawable = img.getBackground();
-                    Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
 
-                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-                    byte[] byteArray = baos.toByteArray();
-                    String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                    Log.d("dtre", url);
 
-                    CreateCategoryEntity_quyen create = new CreateCategoryEntity_quyen(category_name.getText().toString(), encoded, ty, "aaea42e6-591e-45b3-8d4f-e0a4b80e3c69");
+                    CreateCategoryEntity_quyen create = new CreateCategoryEntity_quyen(category_name.getText().toString(),url, ty, "aaea42e6-591e-45b3-8d4f-e0a4b80e3c69");
                     CategoryAPIUntill CategoryAPIUntill = new CategoryAPIUntill();
                     CategoryAPIUntill.createCategoryAPI(create);
                     setResult(Activity.RESULT_OK);
@@ -733,6 +754,7 @@ public class Category_Add extends AppCompatActivity {
                 ImageView img = findViewById(R.id.hinhanh);
 
                 img.setBackgroundResource(R.drawable.anh1);
+                covertAnh(R.drawable.anh1);
             }
             if(kq==2)
             {

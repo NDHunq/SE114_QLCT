@@ -3,7 +3,7 @@ package com.example.qlct.Notification;
 public class Notification_class {
     String header;
     String id;
-    private int imageResId;
+    private String imageResId;
 
 
     String content;
@@ -18,7 +18,7 @@ public class Notification_class {
         this.id = id;
     }
 
-    public Notification_class(String id, String header, String content, int imageResId, int seen, String date) {
+    public Notification_class(String id, String header, String content, String imageResId, int seen, String date) {
         this.id = id;
         this.header = header;
         this.content = content;
@@ -35,11 +35,11 @@ public class Notification_class {
         this.date = date;
     }
 
-    public int getImageResId() {
+    public String getImageResId() {
         return imageResId;
     }
 
-    public void setImageResId(int imageResId) {
+    public void setImageResId(String imageResId) {
         this.imageResId = imageResId;
     }
 

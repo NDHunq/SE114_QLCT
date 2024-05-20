@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.qlct.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -36,7 +37,9 @@ public class Notification_Adapter extends RecyclerView.Adapter<Notification_Adap
             return;
         holder.tvheader.setText(notification.getHeader());
         holder.tvcontent.setText(notification.getContent());
-        holder.img.setImageResource(notification.getImageResId());
+        String url=notification.getImageResId();
+        Picasso.get().load(url).into( holder.img);
+
         holder.tvdate.setText(notification.getDate());
 
 //        if (notification.getSeen() == 1) {

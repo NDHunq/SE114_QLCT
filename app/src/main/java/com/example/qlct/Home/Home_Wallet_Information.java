@@ -47,6 +47,7 @@ public class Home_Wallet_Information extends AppCompatActivity {
     String create;
     String exupdate;
     String exduochon;
+    String spec;
 
 
   Home_The_Member_Adapter theMemberAdap;
@@ -55,6 +56,7 @@ public class Home_Wallet_Information extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Intent intent = getIntent();
+
         exid = intent.getStringExtra("id");
        exname= intent.getStringExtra("name");
          exammount = intent.getStringExtra("ammount");
@@ -62,6 +64,7 @@ public class Home_Wallet_Information extends AppCompatActivity {
             create = intent.getStringExtra("start");
             exupdate = intent.getStringExtra("update");
             exduochon = intent.getStringExtra("duocchon");
+            spec= intent.getStringExtra("spec");
 
         super.onCreate(savedInstanceState);
 
@@ -72,6 +75,40 @@ public class Home_Wallet_Information extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        //lay thong tin neu spec=spec
+        if(spec!= null)
+        {
+            if(spec.equals("spec"))
+            {
+
+                ArrayList<GetAllWalletsEntity> parseAPIList = new WalletAPIUtil().getAllWalletAPI();
+
+                //Chạy vòng lặp để lấy ra các field cần thiết cho hiển thị ra Views
+                for (GetAllWalletsEntity item : parseAPIList) {
+                    if(item.name.equals(exname))
+                    {
+                        Log.d("spec",spec);
+                        excurrency= item.currency_unit;
+                        exammount = String.valueOf(item.amount);
+                        create = item.create_at;
+                        exupdate = item.update_at;
+                        exduochon = item.name;
+                        exid= item.id;
+
+
+
+
+                        break;
+                    }
+                }
+
+            }
+
+
+        }
+
+
         //save
         TextView save = findViewById(R.id.save);
         save.setOnClickListener(new View.OnClickListener() {
@@ -125,6 +162,8 @@ public class Home_Wallet_Information extends AppCompatActivity {
                         .show();
             }
         });
+
+
         TextInputEditText nameview= findViewById(R.id.namewallet);
         nameview.setText(exname);
         TextInputEditText ammountview = findViewById(R.id.ammountinf);

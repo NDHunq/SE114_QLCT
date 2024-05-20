@@ -133,7 +133,7 @@ public class Notificaiton_activity extends AppCompatActivity {
 
                 {
                     try {
-                        notificationList.add(new Notification_class(item.getId(), item.getNotification().getTitle(), item.getNotification().getBody(),R.drawable.european,1,item.getDate()));
+                        notificationList.add(new Notification_class(item.getId(), item.getNotification().getTitle(), item.getNotification().getBody(),item.notification.getImageUrl(),1,item.getDate()));
                     } catch (Exception e) {
                         e.printStackTrace();
 

@@ -7,6 +7,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -160,7 +162,7 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
                     sumtien+=sotien;
                 }
 
-                theTopSpentList.add(new Home_TheTopSpent(R.drawable.wallet,theGiaoDichList.get(i).getTenGiaoDich(),String.valueOf(sotien)));
+                theTopSpentList.add(new Home_TheTopSpent(theGiaoDichList.get(i).getHinhAnh(),theGiaoDichList.get(i).getTenGiaoDich(),String.valueOf(sotien)));
 
             }
 
@@ -288,7 +290,7 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
                     sumtien+=sotien;
                 }
 
-                theTopSpentList.add(new Home_TheTopSpent(R.drawable.wallet,theGiaoDichList.get(i).getTenGiaoDich(),String.valueOf(sotien)));
+                theTopSpentList.add(new Home_TheTopSpent(theGiaoDichList.get(i).getHinhAnh(),theGiaoDichList.get(i).getTenGiaoDich(),String.valueOf(sotien)));
 
             }
 
@@ -341,7 +343,7 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
                 }
                 if (item.transaction_type.equals("TRANSFER") ) {
                     if(TenVi.equals("Total")||TenVi.equals(item.wallet.name)) {
-                        theGiaoDichList.add(new Home_TheGiaoDich(R.drawable.wallet, item.wallet.name, item.amount,dv, item.transaction_date, item.notes, "vi chuyenn toi", item.transaction_type));
+                        theGiaoDichList.add(new Home_TheGiaoDich(item.category.picture, item.wallet.name, item.amount,dv, item.transaction_date, item.notes, "vi chuyenn toi", item.transaction_type));
 
                         for(GetAllWalletsEntity wallet : walletsEntities) {
                             Log.d("textt", wallet.id + " " + item.target_wallet_id);
@@ -356,7 +358,7 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
 
                 } else {
                     if(TenVi.equals("Total")||TenVi.equals(item.wallet.name)) {
-                    theGiaoDichList.add(new Home_TheGiaoDich(R.drawable.wallet, item.category.name, item.amount, dv, item.transaction_date, item.notes, item.wallet.name, item.transaction_type));
+                    theGiaoDichList.add(new Home_TheGiaoDich(item.category.picture, item.category.name, item.amount, dv, item.transaction_date, item.notes, item.wallet.name, item.transaction_type));
                 }
                     }
             }
@@ -460,14 +462,7 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
             textView.setTextColor(Color.GRAY);
         }
         //add category test
-        TextView category = view.findViewById(R.id.seerp);
-        category.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), Category_Add.class);
-                startActivity(intent);
-            }
-        });
+
 
         /// data
         TextView sotien = view.findViewById(R.id.sotiensodo);
@@ -553,6 +548,8 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), Home_Wallet_Information.class);
+                intent.putExtra("name", TenVi);
+                intent.putExtra("spec","spec");
                 startActivity(intent);
             }
         });
@@ -699,9 +696,9 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
                 ArrayList<BarEntry> dataValues2 = new ArrayList<>();
                 dataValues2.add(new BarEntry(1, scaledTongtranthangnay)); // Số liệu cho cột 2 (tổng tháng này)
 
-                BarDataSet barDataSet1 = new BarDataSet(dataValues1, "Last month");
+                BarDataSet barDataSet1 = new BarDataSet(dataValues1, "Last week");
                 barDataSet1.setColor(Color.RED);
-                BarDataSet barDataSet2 = new BarDataSet(dataValues2, "This month");
+                BarDataSet barDataSet2 = new BarDataSet(dataValues2, "This week");
                 barDataSet2.setColor(Color.BLUE);
 
                 BarData data = new BarData(barDataSet1, barDataSet2);
@@ -736,6 +733,7 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
             }
 
         });
+
         // Tìm TextView Seeall
         TextView seeAll = view.findViewById(R.id.Seeall);
 
@@ -758,7 +756,7 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
                     startActivity(intent);
                 }
                 else
-                {
+                    {
                     Intent event;
 
                     Intent intent = new Intent(getActivity(), Home_New_wallet.class);
@@ -778,7 +776,7 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
                     return;
                 }
                 // Tao intent show more
-                Intent ShowMoreIntent = new Intent(getActivity(), Category_Add.class);
+                Intent ShowMoreIntent = new Intent(getActivity(), TransactionDetail.class);
 
                 // Mo activity transaction details
                 startActivity(ShowMoreIntent);
@@ -808,6 +806,13 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
             seeall.setText("ADD NEW");
             ImageView op = view.findViewById(R.id.optionsVi);
             op.setVisibility(View.INVISIBLE);
+        }
+        else{
+            if(TenVi.equals("Total"))
+            {
+               ImageView optionvi = view.findViewById(R.id.optionsVi);
+                optionvi.setVisibility(View.INVISIBLE);
+            }
         }
 
 

@@ -1,23 +1,23 @@
 package com.example.qlct;
 
 public class Home_TheTopSpent {
-    private int HinhAnh;
+    private String HinhAnh;
     private String tenCategory;
     private String soTien;
     private String percent;
 
-    public Home_TheTopSpent(int hinhAnh, String tenCategory, String soTien) {
+    public Home_TheTopSpent(String hinhAnh, String tenCategory, String soTien) {
         HinhAnh = hinhAnh;
         this.tenCategory = tenCategory;
         this.soTien = soTien;
 
     }
 
-    public int getHinhAnh() {
+    public String getHinhAnh() {
         return HinhAnh;
     }
 
-    public void setHinhAnh(int hinhAnh) {
+    public void setHinhAnh(String hinhAnh) {
         HinhAnh = hinhAnh;
     }
 
