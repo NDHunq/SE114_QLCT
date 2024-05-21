@@ -95,28 +95,45 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/trans_type_btn_layout"/>
 
-        <ScrollView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="210dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:scrollbars="none"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            app:layout_constraintTop_toBottomOf="@id/trans_type_subheader_layout"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/trans_type_subheader_layout">
-
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/trans_type_chipgroup"
+            app:layout_constraintEnd_toEndOf="parent">
+            <ScrollView
+                android:id="@+id/income_chipgroup_scrollview"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginStart="12dp"
-                android:layout_marginEnd="12dp"
-                app:chipSpacingHorizontal="12dp"
-                app:chipSpacingVertical="0dp">
+                android:layout_height="210dp"
+                android:scrollbars="none">
 
-            </com.google.android.material.chip.ChipGroup>
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/income_chipgroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    app:chipSpacingHorizontal="12dp"
+                    app:chipSpacingVertical="0dp">
+                </com.google.android.material.chip.ChipGroup>
+            </ScrollView>
 
+            <ScrollView
+                android:id="@+id/expense_chipgroup_scrollview"
+                android:layout_width="match_parent"
+                android:layout_height="210dp"
+                android:scrollbars="none">
 
-        </ScrollView>
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/expense_chipgroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    app:chipSpacingHorizontal="12dp"
+                    app:chipSpacingVertical="0dp">
+                </com.google.android.material.chip.ChipGroup>
+            </ScrollView>
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/trans_type_apply_button"

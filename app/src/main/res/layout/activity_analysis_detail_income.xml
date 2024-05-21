@@ -36,7 +36,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="22dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="8dp">
         <ImageView
             android:layout_width="25dp"
@@ -56,11 +56,13 @@
         </TextView>
     </LinearLayout>
     <TextView
+        android:id="@+id/total_income"
+        android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
         android:text="+10000000 đ"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="17dp"
         android:layout_marginTop="10dp"
         android:textSize="16dp"
         android:textColor="#177715">
@@ -80,9 +82,9 @@
         android:id="@+id/listvieww"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="12dp"
         android:layout_marginTop="10dp">
 
     </ListView>

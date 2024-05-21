@@ -3,12 +3,17 @@ package com.example.qlct.Fragment;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,13 +27,27 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+
 import com.example.qlct.Analysis.AnalysisExpenseFragment;
 import com.example.qlct.Analysis.AnalysisIcomeFragment;
 import com.example.qlct.Analysis.AnalysisNetIncomeFragment;
 import com.example.qlct.Notification.Notificaiton_activity;
+
+import com.example.qlct.API_Entity.GetAllCategoryEntity;
+import com.example.qlct.API_Entity.GetAllTransactionsEntity_quyen;
+import com.example.qlct.API_Entity.GetAllWalletsEntity;
+import com.example.qlct.API_Utils.CategoryAPIUntill;
+import com.example.qlct.API_Utils.CategoryAPIUtil;
+import com.example.qlct.API_Utils.TransactionAPIUtil;
+import com.example.qlct.API_Utils.WalletAPIUtil;
+import com.example.qlct.Analysis.AnalysisExpenseFragment;
+import com.example.qlct.Analysis.AnalysisIcomeFragment;
+import com.example.qlct.Analysis.AnalysisNetIncomeFragment;
+
+
 import com.example.qlct.R;
 import com.example.qlct.SelectWallet_Adapter;
-import com.example.qlct.Wallet;
+import com.example.qlct.Wallet_hdp;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -60,9 +79,12 @@ public class Analysis_fragment extends Fragment {
     final SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
     private ListView walletListView;
 
-    private ArrayList<Wallet> walletList;
+    private ArrayList<Wallet_hdp> walletList;
     TextView wallet_name;
-
+    ArrayList<GetAllTransactionsEntity_quyen> listTransactions;
+    ArrayList<GetAllWalletsEntity> listwallet;
+    ArrayList<GetAllCategoryEntity> listCategory;
+    String id_wallet;
 
 
     public Analysis_fragment() {
@@ -86,7 +108,6 @@ public class Analysis_fragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,35 +116,64 @@ public class Analysis_fragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_analysis_fragment, container, false);
+
+        TransactionAPIUtil transactionAPIUtil = new TransactionAPIUtil();
+        listTransactions = transactionAPIUtil.getAllTransactionsAPI();
+        WalletAPIUtil walletAPIUtil = new WalletAPIUtil();
+
+        listwallet = walletAPIUtil.getAllWalletAPI();
+        CategoryAPIUtil categoryAPIUtil = new CategoryAPIUtil();
+        listCategory = categoryAPIUtil.getAllCategory();
+       Load(listTransactions,"Total",listCategory);
+
+        AnhXa(view);
+        return view;
+    }
+    public void Load(ArrayList<GetAllTransactionsEntity_quyen> listtrans,String id_wallet,ArrayList<GetAllCategoryEntity> listCategory)
+    {
+        ArrayList<GetAllTransactionsEntity_quyen> listTransCopy = new ArrayList<>();
+        for (GetAllTransactionsEntity_quyen transaction : listtrans) {
+            GetAllTransactionsEntity_quyen transactionCopy = new GetAllTransactionsEntity_quyen(
+                    transaction.id,
+                    transaction.user_id,
+                    transaction.amount,
+                    transaction.category_id,
+                    transaction.wallet_id,
+                    transaction.notes,
+                    transaction.picture,
+                    transaction.transaction_date,
+                    transaction.transaction_type,
+                    transaction.currency_unit,
+                    transaction.target_wallet_id,
+                    transaction.wallet,
+                    transaction.category
+            );
+            listTransCopy.add(transactionCopy);
+        }
+
         FragmentManager fragmentManager=getChildFragmentManager();
         FragmentTransaction transaction=fragmentManager.beginTransaction();
-        Fragment child= new AnalysisNetIncomeFragment();
+        Fragment child= new AnalysisNetIncomeFragment(listTransCopy,id_wallet,listCategory,getCurrencyUnitById(id_wallet));
         transaction.replace(R.id.ChildFrag1,child);
         transaction.commit();
 
         FragmentManager fragmentManager1=getChildFragmentManager();
         FragmentTransaction transaction1=fragmentManager1.beginTransaction();
-        Fragment child1= new AnalysisExpenseFragment();
+        Fragment child1= new AnalysisExpenseFragment(listTransCopy,id_wallet,listCategory,getCurrencyUnitById(id_wallet));
         transaction1.replace(R.id.ChildFrag2,child1);
         transaction1.commit();
 
         FragmentManager fragmentManager2=getChildFragmentManager();
         FragmentTransaction transaction2=fragmentManager2.beginTransaction();
-        Fragment child2= new AnalysisIcomeFragment();
+        Fragment child2= new AnalysisIcomeFragment(listTransCopy,id_wallet,listCategory,getCurrencyUnitById(id_wallet));
         transaction2.replace(R.id.ChildFrag3,child2);
         transaction2.commit();
-
-        AnhXa(view);
-
-        return view;
     }
-
     public void AnhXa(View view) {
         month=view.findViewById(R.id.month);
         month.setChecked(true);
@@ -208,6 +258,39 @@ public class Analysis_fragment extends Fragment {
                 showWalletDialog();
             }
         });
+        try{
+            wallet_name.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    // Do nothing
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    // Do nothing
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    if (wallet_name.getText().toString().equals("Total")) {
+                        Load(listTransactions, "Total", listCategory);
+                    } else {
+                        id_wallet = getWalletIdByName(wallet_name.getText().toString());
+                        Load(listTransactions, id_wallet, listCategory);
+                    }
+                }
+            });
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    String getWalletIdByName(String walletName) {
+        for (GetAllWalletsEntity wallet : listwallet) {
+            if (wallet.name.equals(walletName)) {
+                return wallet.id;
+            }
+        }
+        return null; // Return null if no matching wallet is found
     }
     private void showWalletDialog(){
         final Dialog dialog = new Dialog(getActivity());
@@ -235,14 +318,31 @@ public class Analysis_fragment extends Fragment {
         });
     }
     private void AnhXaWallet(){
-        walletList = new ArrayList<Wallet>();
-        walletList.add(new Wallet("Vi 1", "2000000 d", R.drawable.budget));
-        walletList.add(new Wallet("Vi 2", "2000000 d", R.drawable.budget));
-        walletList.add(new Wallet("Vi 3", "2000000 d", R.drawable.budget));
-        walletList.add(new Wallet("Vi 4", "2000000 d", R.drawable.budget));
-        walletList.add(new Wallet("Vi 5", "2000000 d", R.drawable.budget));
-        walletList.add(new Wallet("Vi 6", "2000000 d", R.drawable.budget));
-        walletList.add(new Wallet("Vi 7", "2000000 d", R.drawable.budget));
-        walletList.add(new Wallet("Vi 8", "2000000 d", R.drawable.budget));
+        try{
+            walletList = new ArrayList<Wallet_hdp>();
+            ArrayList<GetAllWalletsEntity> parseAPIList = new WalletAPIUtil().getAllWalletAPI();
+            //Chạy vòng lặp để lấy ra các field cần thiết cho hiển thị ra Views
+            for (GetAllWalletsEntity item : parseAPIList) {
+                walletList.add(new Wallet_hdp(item.id, item.name, item.amount, R.drawable.wallet, item.currency_unit));
+            }
+            walletList.add(new Wallet_hdp("total", "Total", "", R.drawable.wallet, ""));
+            Log.d("Get_wallet_data_object", walletList.toString());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+    String getCurrencyUnitById(String id_wallet) {
+        for (GetAllWalletsEntity wallet : listwallet) {
+            if (wallet.id.equals(id_wallet)) {
+                String currency_unit = wallet.currency_unit;
+                if (currency_unit.equals("VND")) {
+                    return "đ";
+                } else if (currency_unit.equals("USD")) {
+                    return "$";
+                }
+            }
+        }
+        return "đ";
     }
 }

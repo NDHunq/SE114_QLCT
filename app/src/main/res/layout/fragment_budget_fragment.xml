@@ -109,7 +109,9 @@
             <SeekBar
                 android:id="@+id/seekBar"
                 android:layout_width="match_parent"
-                android:layout_height="20dp">
+                android:layout_height="20dp"
+                android:thumbTint="@color/xanhnendam"
+                android:progressTint="@color/xanhnendam">
 
             </SeekBar>
 
@@ -137,7 +139,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="200,000 đ"
-                        android:textColor="@color/xanhdam"
+                        android:textColor="@color/Expense"
                         android:textSize="20dp"
                         android:textStyle="bold"></TextView>
                 </LinearLayout>
@@ -162,7 +164,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="200,000 đ"
-                        android:textColor="@color/xanhdam"
+                        android:textColor="@color/xanhnendam"
                         android:textSize="20dp"
                         android:textStyle="bold"></TextView>
                 </LinearLayout>

@@ -4,9 +4,15 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+
+import android.content.res.ColorStateList;
+
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -24,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -37,32 +44,47 @@ import com.example.qlct.API_Entity.UpdateWalletEntity;
 import com.example.qlct.API_Utils.CategoryAPIUtil;
 import com.example.qlct.API_Utils.TransactionAPIUtil;
 import com.example.qlct.API_Utils.WalletAPIUtil;
-import com.example.qlct.Category.Category;
+
+import com.example.qlct.Category.Category_hdp;
 import com.example.qlct.Category.Category_adapter;
 import com.example.qlct.Category_Add;
+
+
+
+import com.example.qlct.Category.Category_adapter;
+
 import com.example.qlct.R;
 import com.example.qlct.SelectWallet_Adapter;
-import com.example.qlct.Wallet;
+import com.example.qlct.Wallet_hdp;
+import com.example.qlct.doitiente;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class AddTransaction extends AppCompatActivity {
 
+    private boolean isUserInteracting = true;
     private ListView categoryListView;
-    private List<Category> categoryList = new ArrayList<>();
+    private List<Category_hdp> categoryList = new ArrayList<>();
 
-    private List<Category> renderCategoryList;
+    private List<Category_hdp> renderCategoryList;
 
     private String currency;
 
     private ListView walletListView;
 
-    private ArrayList<Wallet> walletList;
+    private ArrayList<Wallet_hdp> walletList;
 
     private TextView select_category_txtview;
 
@@ -79,9 +101,17 @@ public class AddTransaction extends AppCompatActivity {
 
     private String expenseCategoryStorage = "";
 
-    private ArrayList<Wallet> fromWalletList;
+    private String expenseWalletAmount = "";
 
-    private ArrayList<Wallet> targetWalletList;
+    private String expenseWalletCurrency = "";
+
+    private String fromWalletAmount = "";
+
+    private String fromWalletCurrency = "";
+
+    private ArrayList<Wallet_hdp> fromWalletList;
+
+    private ArrayList<Wallet_hdp> targetWalletList;
 
     private boolean from_to_flag = true; // true: from, false: to
     //Unfocus EditText khi click ra ngoai
@@ -101,10 +131,10 @@ public class AddTransaction extends AppCompatActivity {
         return super.dispatchTouchEvent( event );
     }
     private void AnhXaCategory(){
-        categoryList = new ArrayList<Category>();
+        categoryList = new ArrayList<Category_hdp>();
         ArrayList<GetAllCategoryEntity> parseAPIList = new CategoryAPIUtil().getAllCategory();
         for(GetAllCategoryEntity category : parseAPIList){
-            categoryList.add(new Category(category.getId(), category.getName(), category.getPicture(), category.getType()));
+            categoryList.add(new Category_hdp(category.getId(), category.getName(), category.getPicture(), category.getType()));
         }
         Log.d("Get_wallet_data_object", categoryList.toString());
     }
@@ -112,16 +142,16 @@ public class AddTransaction extends AppCompatActivity {
     private void RenderCategoryList(){
         if(!categoryList.isEmpty()){
             if(income){
-                renderCategoryList = new ArrayList<Category>();
-                for (Category category : categoryList){
+                renderCategoryList = new ArrayList<Category_hdp>();
+                for (Category_hdp category : categoryList){
                     if(category.getCategory_type().equals("INCOME")){
                         renderCategoryList.add(category);
                     }
                 }
             }
             else if(expense){
-                renderCategoryList = new ArrayList<Category>();
-                for (Category category : categoryList){
+                renderCategoryList = new ArrayList<Category_hdp>();
+                for (Category_hdp category : categoryList){
                     if(category.getCategory_type().equals("EXPENSE")){
                         renderCategoryList.add(category);
                     }
@@ -132,11 +162,11 @@ public class AddTransaction extends AppCompatActivity {
 
     private void AnhXaWallet(){
         try{
-            walletList = new ArrayList<Wallet>();
+            walletList = new ArrayList<Wallet_hdp>();
             ArrayList<GetAllWalletsEntity> parseAPIList = new WalletAPIUtil().getAllWalletAPI();
             //Chạy vòng lặp để lấy ra các field cần thiết cho hiển thị ra Views
             for (GetAllWalletsEntity item : parseAPIList) {
-                walletList.add(new Wallet(item.id, item.name, item.amount, R.drawable.wallet, item.currency_unit));
+                walletList.add(new Wallet_hdp(item.id, item.name, item.amount, R.drawable.wallet, item.currency_unit));
             }
             Log.d("Get_wallet_data_object", walletList.toString());
         }catch (Exception e){
@@ -144,9 +174,9 @@ public class AddTransaction extends AppCompatActivity {
         }
     }
 
-    private ArrayList<Wallet> setupFromToWallet(String walletId){
-        ArrayList<Wallet> fromToWallet = new ArrayList<Wallet>();
-        for(Wallet wallet : walletList){
+    private ArrayList<Wallet_hdp> setupFromToWallet(String walletId){
+        ArrayList<Wallet_hdp> fromToWallet = new ArrayList<Wallet_hdp>();
+        for(Wallet_hdp wallet : walletList){
             if(!wallet.getId().equals(walletId)){
                 fromToWallet.add(wallet);
             }
@@ -174,7 +204,7 @@ public class AddTransaction extends AppCompatActivity {
         categoryListView.setAdapter(categoryAdapter);
 
         categoryListView.setOnItemClickListener((parent, view, position, id) -> {
-            Category category = renderCategoryList.get(position);
+            Category_hdp category = renderCategoryList.get(position);
             if(income){
                 TextView categoryTxtView = findViewById(R.id.income_category_txtview);
                 categoryTxtView.setText(category.getCategory_name());
@@ -252,7 +282,7 @@ public class AddTransaction extends AppCompatActivity {
 
 
         walletListView.setOnItemClickListener((parent, view, position, id) -> {
-            Wallet wallet = new Wallet("", "", "", 0, "");
+            Wallet_hdp wallet = new Wallet_hdp("", "", "", 0, "");
             if(transfer){
                 if(from_to_flag){
                     if(fromWalletList != null){
@@ -292,7 +322,7 @@ public class AddTransaction extends AppCompatActivity {
                         currencySymbol = "¥";
                         break;
                 }
-                String amount = wallet.getAmountMoney() + " " + currencySymbol;
+                String amount = formatCurrency(Double.parseDouble(wallet.getAmountMoney()), wallet.getCurrency()) + " " + currencySymbol;
                 walletMoney.setTextColor(getResources().getColor(R.color.xanhdam, null));
                 walletMoney.setText(amount);
                 incomeWalletIdStorage = wallet.getId();
@@ -318,10 +348,12 @@ public class AddTransaction extends AppCompatActivity {
                         currencySymbol = "¥";
                         break;
                 }
-                String amount = wallet.getAmountMoney() + " " + currencySymbol;
+                String amount = formatCurrency(Double.parseDouble(wallet.getAmountMoney()), wallet.getCurrency()) + " " + currencySymbol;
                 walletMoney.setTextColor(getResources().getColor(R.color.xanhdam, null));
                 walletMoney.setText(amount);
                 expenseWalletIdStorage = wallet.getId();
+                expenseWalletAmount = wallet.getAmountMoney();
+                expenseWalletCurrency = wallet.getCurrency();
             }
             else if (transfer) {
                 if(from_to_flag){
@@ -345,10 +377,12 @@ public class AddTransaction extends AppCompatActivity {
                             currencySymbol = "¥";
                             break;
                     }
-                    String amount = wallet.getAmountMoney() + " " + currencySymbol;
+                    String amount = formatCurrency(Double.parseDouble(wallet.getAmountMoney()), wallet.getCurrency()) + " " + currencySymbol;
                     walletMoney.setText(amount);
                     walletMoney.setTextColor(getResources().getColor(R.color.xanhdam, null));
                     fromWalletIdStorage = wallet.getId();
+                    fromWalletAmount = wallet.getAmountMoney();
+                    fromWalletCurrency = wallet.getCurrency();
                 }
                 else{
                     ImageView walletIcon = findViewById(R.id.target_wallet_icon);
@@ -371,7 +405,7 @@ public class AddTransaction extends AppCompatActivity {
                             currencySymbol = "¥";
                             break;
                     }
-                    String amount = wallet.getAmountMoney() + " " + currencySymbol;
+                    String amount = formatCurrency(Double.parseDouble(wallet.getAmountMoney()), wallet.getCurrency()) + " " + currencySymbol;
                     walletMoney.setText(amount);
                     walletMoney.setTextColor(getResources().getColor(R.color.xanhdam, null));
                     targetWalletIdStorage = wallet.getId();
@@ -480,6 +514,7 @@ public class AddTransaction extends AppCompatActivity {
                         amount.setPrefixText("¥");
                         break;
                 }
+                validateAmount();
                 dialog.dismiss();
             }
         });
@@ -733,6 +768,7 @@ public class AddTransaction extends AppCompatActivity {
         });
 
         ImageView calendarIcon = findViewById(R.id.add_trans_calendar_icon);
+        TextInputEditText dateTextBox = findViewById(R.id.select_date_txtbox);
         calendarIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -757,35 +793,72 @@ public class AddTransaction extends AppCompatActivity {
             }
         });
 
+        try{
+            dateTextBox.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    // Do nothing
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    // Do nothing
+                }
+
+                @RequiresApi(api = Build.VERSION_CODES.O)
+                @Override
+                public void afterTextChanged(Editable s) {
+                    validateDate();
+                }
+            });
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
         TextView saveButton = findViewById(R.id.save_button);
 
         try {
             saveButton.setOnClickListener(new View.OnClickListener() {
+                @RequiresApi(api = Build.VERSION_CODES.O)
                 @Override
                 public void onClick(View view) {
                     TextInputEditText amountEditText = findViewById(R.id.Amount_txtbox);
                     TextInputEditText dateEditText = findViewById(R.id.select_date_txtbox);
                     TextInputEditText noteEditText = findViewById(R.id.note_txtbox);
-                    String amount = amountEditText.getText().toString();
-                    String date = dateEditText.getText().toString();
-                    String note = noteEditText.getText().toString();
-                    TransactionAPIUtil transactionAPIUtil = new TransactionAPIUtil();
-                    if(amount.equals("") || date.equals("")){
-                        Toast.makeText(AddTransaction.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+                    String amount = amountEditText.getText().toString().replaceAll("[.,]", "");
+                    String currencies = ((MaterialButton) findViewById(R.id.add_trans_currency_btn)).getText().toString();
+
+                    if(!validate()){
+                        Toast.makeText(AddTransaction.this, "An error(s) has occurred!", Toast.LENGTH_SHORT).show();
                     }
                     else{
+                        // Tạo một đối tượng SimpleDateFormat để parse chuỗi ngày ban đầu
+                        SimpleDateFormat originalFormat = new SimpleDateFormat("dd/MM/yyyy");
+                        Date date = null;
+                        try {
+                            date = originalFormat.parse(dateEditText.getText().toString());
+                        } catch (ParseException e) {
+                            throw new RuntimeException(e);
+                        }
+
+                        // Tạo một đối tượng SimpleDateFormat mới để định dạng ngày đã parse
+                        SimpleDateFormat targetFormat = new SimpleDateFormat("yyyy-MM-dd");
+                        String formattedDate = targetFormat.format(date);
+
+                        String note = noteEditText.getText().toString();
+                        TransactionAPIUtil transactionAPIUtil = new TransactionAPIUtil();
                         if(income){
-                            CreateTransactionEntity createTransactionEntity = new CreateTransactionEntity(Integer.parseInt(amount), date, incomeCategoryStorage, incomeWalletIdStorage, note, null, "INCOME", currency, null);
+                            CreateTransactionEntity createTransactionEntity = new CreateTransactionEntity(Double.parseDouble(amount), formattedDate, incomeCategoryStorage, incomeWalletIdStorage, note, null, "INCOME", currencies, null);
                             transactionAPIUtil.createTransactionAPI(createTransactionEntity);
                             excuteIncome(incomeWalletIdStorage);
                         }
                         else if(expense){
-                            CreateTransactionEntity createTransactionEntity = new CreateTransactionEntity(Integer.parseInt(amount), date, expenseCategoryStorage, expenseWalletIdStorage, note, null, "EXPENSE", currency, null);
+                            CreateTransactionEntity createTransactionEntity = new CreateTransactionEntity(Double.parseDouble(amount), formattedDate, expenseCategoryStorage, expenseWalletIdStorage, note, null, "EXPENSE", currencies, null);
                             transactionAPIUtil.createTransactionAPI(createTransactionEntity);
                             excuteExpense(expenseWalletIdStorage);
                         }
                         else {
-                            CreateTransactionEntity createTransactionEntity = new CreateTransactionEntity(Integer.parseInt(amount), date, null, fromWalletIdStorage, note, null, null, currency, targetWalletIdStorage);
+                            CreateTransactionEntity createTransactionEntity = new CreateTransactionEntity(Double.parseDouble(amount), formattedDate, null, fromWalletIdStorage, note, null, "TRANSFER", currencies, targetWalletIdStorage);
                             transactionAPIUtil.createTransactionAPI(createTransactionEntity);
                             excuteTransfer(fromWalletIdStorage, targetWalletIdStorage);
                         }
@@ -797,48 +870,254 @@ public class AddTransaction extends AppCompatActivity {
         }catch (Exception e){
             e.printStackTrace();
         }
+
+        // format currency trên amount edittext
+        try{
+            TextInputEditText amountEditText = findViewById(R.id.Amount_txtbox);
+            amountEditText.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    // Do nothing
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    if (isUserInteracting && !s.toString().isEmpty()) {
+                        isUserInteracting = false; // Set to false before changing text programmatically
+                        try {
+                            // Remove thousands separators before parsing
+                            String cleanString = s.toString().replaceAll("[.,]", "");
+                            double amount = Double.parseDouble(cleanString);
+                            String currency = ((MaterialButton) findViewById(R.id.add_trans_currency_btn)).getText().toString();
+                            String formattedAmount = formatCurrency(amount, currency);
+                            amountEditText.setText(formattedAmount);
+                            amountEditText.setSelection(formattedAmount.length()); // Move cursor to the end
+                        } catch (Exception e) {
+                            // Handle or log the error
+                            e.printStackTrace();
+                        }
+                        validateAmount();
+                    }
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    isUserInteracting = true; // Set back to true after text change is done
+                }
+            });
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     private void excuteIncome(String incomeID){
-        for(Wallet wallet : walletList){
+        doitiente doi_tien_te = new doitiente();
+        for(Wallet_hdp wallet : walletList){
             if(wallet.getId().equals(incomeID)){
+                String currencies = ((MaterialButton) findViewById(R.id.add_trans_currency_btn)).getText().toString();
                 TextInputEditText amountEditText = findViewById(R.id.Amount_txtbox);
-                double newAmount = Double.parseDouble(wallet.getAmountMoney()) + Double.parseDouble(amountEditText.getText().toString());
-                wallet.setAmountMoney(String.valueOf(newAmount));
+                double vndAmount = doi_tien_te.converttoVND(wallet.getCurrency(), Double.parseDouble(wallet.getAmountMoney())) + doi_tien_te.converttoVND(currencies, Double.parseDouble(amountEditText.getText().toString().replaceAll("[.,]", "")));
+                switch (wallet.getCurrency()){
+                    case "USD":
+                        wallet.setAmountMoney(String.valueOf(vndAmount / doi_tien_te.getUSDtoVND()));
+                        break;
+                    case "VND":
+                        wallet.setAmountMoney(String.valueOf(vndAmount));
+                        break;
+                    case "EUR":
+                        wallet.setAmountMoney(String.valueOf(vndAmount / doi_tien_te.getUERtoVND()));
+                        break;
+                    case "CNY":
+                        wallet.setAmountMoney(String.valueOf(vndAmount / doi_tien_te.getCNYtoVND()));
+                        break;
+                }
                 WalletAPIUtil walletAPIUtil = new WalletAPIUtil();
-                walletAPIUtil.updateWalletAPI(incomeID, new UpdateWalletEntity(wallet.getWalletName(), (double)newAmount, wallet.getCurrency()));
+                walletAPIUtil.updateWalletAPI(incomeID, new UpdateWalletEntity(wallet.getWalletName(), Double.parseDouble(wallet.getAmountMoney()), wallet.getCurrency()));
             }
         }
     }
 
     private void excuteExpense(String expenseID){
-        for(Wallet wallet : walletList){
+        doitiente doi_tien_te = new doitiente();
+        for(Wallet_hdp wallet : walletList){
             if(wallet.getId().equals(expenseID)){
+                String currencies = ((MaterialButton) findViewById(R.id.add_trans_currency_btn)).getText().toString();
                 TextInputEditText amountEditText = findViewById(R.id.Amount_txtbox);
-                double newAmount = Double.parseDouble(wallet.getAmountMoney()) - Double.parseDouble(amountEditText.getText().toString());
-                wallet.setAmountMoney(String.valueOf(newAmount));
+                double vndAmount = doi_tien_te.converttoVND(wallet.getCurrency(), Double.parseDouble(wallet.getAmountMoney())) - doi_tien_te.converttoVND(currencies, Double.parseDouble(amountEditText.getText().toString().replaceAll("[.,]", "")));
+                switch (wallet.getCurrency()){
+                    case "USD":
+                        wallet.setAmountMoney(String.valueOf(vndAmount / doi_tien_te.getUSDtoVND()));
+                        break;
+                    case "VND":
+                        wallet.setAmountMoney(String.valueOf(vndAmount));
+                        break;
+                    case "EUR":
+                        wallet.setAmountMoney(String.valueOf(vndAmount / doi_tien_te.getUERtoVND()));
+                        break;
+                    case "CNY":
+                        wallet.setAmountMoney(String.valueOf(vndAmount / doi_tien_te.getCNYtoVND()));
+                        break;
+                }
                 WalletAPIUtil walletAPIUtil = new WalletAPIUtil();
-                walletAPIUtil.updateWalletAPI(expenseID, new UpdateWalletEntity(wallet.getWalletName(), (double)newAmount, wallet.getCurrency()));
+                walletAPIUtil.updateWalletAPI(expenseID, new UpdateWalletEntity(wallet.getWalletName(), Double.parseDouble(wallet.getAmountMoney()), wallet.getCurrency()));
             }
         }
     }
 
     private void excuteTransfer(String fromID, String targetID){
-        for(Wallet wallet : walletList){
+        doitiente doi_tien_te = new doitiente();
+        for(Wallet_hdp wallet : walletList){
             if(wallet.getId().equals(fromID)){
+                String currencies = ((MaterialButton) findViewById(R.id.add_trans_currency_btn)).getText().toString();
                 TextInputEditText amountEditText = findViewById(R.id.Amount_txtbox);
-                double newAmount = Double.parseDouble(wallet.getAmountMoney()) - Double.parseDouble(amountEditText.getText().toString());
-                wallet.setAmountMoney(String.valueOf(newAmount));
+                double vndAmount = doi_tien_te.converttoVND(wallet.getCurrency(), Double.parseDouble(wallet.getAmountMoney())) - doi_tien_te.converttoVND(currencies, Double.parseDouble(amountEditText.getText().toString().replaceAll("[.,]", "")));
+                switch (wallet.getCurrency()){
+                    case "USD":
+                        wallet.setAmountMoney(String.valueOf(vndAmount / doi_tien_te.getUSDtoVND()));
+                        break;
+                    case "VND":
+                        wallet.setAmountMoney(String.valueOf(vndAmount));
+                        break;
+                    case "EUR":
+                        wallet.setAmountMoney(String.valueOf(vndAmount / doi_tien_te.getUERtoVND()));
+                        break;
+                    case "CNY":
+                        wallet.setAmountMoney(String.valueOf(vndAmount / doi_tien_te.getCNYtoVND()));
+                        break;
+                }
                 WalletAPIUtil walletAPIUtil = new WalletAPIUtil();
-                walletAPIUtil.updateWalletAPI(fromID, new UpdateWalletEntity(wallet.getWalletName(), (double)newAmount, wallet.getCurrency()));
+                walletAPIUtil.updateWalletAPI(fromID, new UpdateWalletEntity(wallet.getWalletName(), Double.parseDouble(wallet.getAmountMoney()), wallet.getCurrency()));
             }
             if(wallet.getId().equals(targetID)){
+                String currencies = ((MaterialButton) findViewById(R.id.add_trans_currency_btn)).getText().toString();
                 TextInputEditText amountEditText = findViewById(R.id.Amount_txtbox);
-                double newAmount = Double.parseDouble(wallet.getAmountMoney()) + Double.parseDouble(amountEditText.getText().toString());
-                wallet.setAmountMoney(String.valueOf(newAmount));
+                double vndAmount = doi_tien_te.converttoVND(wallet.getCurrency(), Double.parseDouble(wallet.getAmountMoney())) + doi_tien_te.converttoVND(currencies, Double.parseDouble(amountEditText.getText().toString().replaceAll("[.,]", "")));
+                switch (wallet.getCurrency()){
+                    case "USD":
+                        wallet.setAmountMoney(String.valueOf(vndAmount / doi_tien_te.getUSDtoVND()));
+                        break;
+                    case "VND":
+                        wallet.setAmountMoney(String.valueOf(vndAmount));
+                        break;
+                    case "EUR":
+                        wallet.setAmountMoney(String.valueOf(vndAmount / doi_tien_te.getUERtoVND()));
+                        break;
+                    case "CNY":
+                        wallet.setAmountMoney(String.valueOf(vndAmount / doi_tien_te.getCNYtoVND()));
+                        break;
+                }
                 WalletAPIUtil walletAPIUtil = new WalletAPIUtil();
-                walletAPIUtil.updateWalletAPI(targetID, new UpdateWalletEntity(wallet.getWalletName(), (double)newAmount, wallet.getCurrency()));
+                walletAPIUtil.updateWalletAPI(targetID, new UpdateWalletEntity(wallet.getWalletName(), Double.parseDouble(wallet.getAmountMoney()), wallet.getCurrency()));
             }
         }
+    }
+
+    public static String formatCurrency(double amount, String currency) {
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+
+        // Set the thousands separator depending on the currency
+        if ("VND".equals(currency)) {
+            symbols.setGroupingSeparator('.');
+        } else {
+            symbols.setGroupingSeparator(',');
+        }
+
+        // Always use a dot for the decimal separator
+        symbols.setDecimalSeparator('.');
+
+        // Create a DecimalFormat with the desired symbols and format the amount
+        DecimalFormat formatter = new DecimalFormat("###,###.##", symbols);
+        return formatter.format(amount);
+    }
+
+    private boolean validateAmount() {
+        String currencies = ((MaterialButton) findViewById(R.id.add_trans_currency_btn)).getText().toString();
+        TextInputLayout amountEditTextLayout = findViewById(R.id.Amount_txtbox_layout);
+        TextInputEditText amountEditText = findViewById(R.id.Amount_txtbox);
+        String amountInput = amountEditText.getText().toString().replaceAll("[.,]", "").trim();
+
+
+        if(!amountInput.isEmpty()){
+            doitiente doi_tien_te = new doitiente();
+            if (Double.parseDouble(amountInput) < 1) { // Check if the input is a valid number
+                amountEditTextLayout.setError("Please enter a positive amount!");
+                amountEditText.setTextColor(getResources().getColor(R.color.errorColor, null));
+                amountEditTextLayout.setPrefixTextColor(ColorStateList.valueOf(getResources().getColor(R.color.errorColor, null)));
+                return false;
+            }
+            if(expense) {
+                if(!expenseWalletAmount.equals("") && (doi_tien_te.converttoVND(currencies, Double.parseDouble(amountInput)) > doi_tien_te.converttoVND(expenseWalletCurrency, Double.parseDouble(expenseWalletAmount)))){
+                    amountEditTextLayout.setError("Expense amount can't be greater than wallet amount!");
+                    amountEditText.setTextColor(getResources().getColor(R.color.errorColor, null));
+                    amountEditTextLayout.setPrefixTextColor(ColorStateList.valueOf(getResources().getColor(R.color.errorColor, null)));
+                    return false;
+                }
+            }
+            else if(transfer) {
+                if(!fromWalletAmount.equals("") && (doi_tien_te.converttoVND(currencies, Double.parseDouble(amountInput)) > doi_tien_te.converttoVND(fromWalletCurrency, Double.parseDouble(fromWalletAmount)))){
+                    amountEditTextLayout.setError("Transfer amount can't be greater than from wallet amount!");
+                    amountEditText.setTextColor(getResources().getColor(R.color.errorColor, null));
+                    amountEditTextLayout.setPrefixTextColor(ColorStateList.valueOf(getResources().getColor(R.color.errorColor, null)));
+                    return false;
+                }
+            }
+            amountEditTextLayout.setError(null);
+            amountEditText.setTextColor(getResources().getColor(R.color.xanhnen, null));
+            amountEditTextLayout.setPrefixTextColor(ColorStateList.valueOf(getResources().getColor(R.color.xanhnen, null)));
+            return true;
+        }
+        else{
+            amountEditTextLayout.setError("Amount can't be empty!");
+            return false;
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private boolean validateDate() {
+        TextInputLayout dateEditTextLayout = findViewById(R.id.select_date_txtbox_layout);
+        TextInputEditText dateEditText = findViewById(R.id.select_date_txtbox);
+        String dateInput = dateEditText.getText().toString().trim();
+
+        if (!dateInput.isEmpty()) {
+            if(LocalDate.parse(dateInput, DateTimeFormatter.ofPattern("d/M/yyyy")).isAfter(LocalDate.now())){
+                dateEditTextLayout.setError("Date can't be in the future!");
+                dateEditText.setTextColor(ColorStateList.valueOf(getResources().getColor(R.color.errorColor, null)));
+                return false;
+            }
+            dateEditTextLayout.setError(null);
+            dateEditText.setTextColor(ColorStateList.valueOf(getResources().getColor(R.color.black, null)));
+            return true;
+        }
+        else{
+            dateEditTextLayout.setError("Please press calendar icon to select a date!");
+            return false;
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private boolean validate(){
+        boolean isListValid = true;
+        if(income){
+            TextView incomeWalletAmount = findViewById(R.id.income_amount_txtview);
+            if(incomeWalletAmount.getText().toString().equals("")) {
+                isListValid = false;
+            }
+        }
+        else if(expense){
+            TextView expenseWalletAmount = findViewById(R.id.expense_amount_txtview);
+            if(expenseWalletAmount.getText().toString().equals("")) {
+                isListValid = false;
+            }
+        }
+        else{
+            TextView fromWalletAmount = findViewById(R.id.from_wallet_amount_txtview);
+            TextView targetWalletAmount = findViewById(R.id.target_wallet_amount_txtview);
+            if(fromWalletAmount.getText().toString().equals("") || targetWalletAmount.getText().toString().equals("")) {
+                isListValid = false;
+            }
+        }
+        boolean isAmountValid = validateAmount();
+        boolean isDateValid = validateDate();
+        return isAmountValid && isDateValid && isListValid;
     }
 }

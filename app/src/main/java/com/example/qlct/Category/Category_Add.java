@@ -1,33 +1,27 @@
-package com.example.qlct;
+package com.example.qlct.Category;
 
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.StrictMode;
-import android.provider.MediaStore;
-import android.provider.OpenableColumns;
 import android.util.Base64;
-import android.util.Log;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -38,158 +32,36 @@ import androidx.core.view.WindowInsetsCompat;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
-import com.example.qlct.API_Entity.CreateCategoryEntity;
 import com.example.qlct.API_Entity.CreateCategoryEntity_quyen;
-import com.example.qlct.API_Entity.CreateWalletEntity;
 import com.example.qlct.API_Utils.CategoryAPIUntill;
-import com.example.qlct.API_Utils.WalletAPIUtil;
 import com.google.android.material.textfield.TextInputEditText;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-
+import com.example.qlct.R;
 
 public class Category_Add extends AppCompatActivity {
     int sb=1;
     int sc=1;
     int type=0;
-    int coanh=0;
-    String url;
 
-
-    private ImageView review;
-    ActivityResultLauncher<Intent> resultLauncher;
-    private void covertAnh(int drawableResourceId )
-    {
-
-        try {
-            Uri imageUri = Uri.parse("android.resource://" + getPackageName() + "/" + drawableResourceId);
-            File test = new File(imageUri.getPath());
-            review.setImageURI(imageUri);
-            File file = new File(imageUri.getPath());
-
-            //Đây là url của ảnh sau khi upload lên server
-            //Sau khi có url này, thực hiện chèn vào các field API nào mà có "image"
-            String response = uploadImageAPI(imageUri);
-            Log.d("Response", response);
-            JSONObject json = new JSONObject(response);
-            String imageUrl = json.getJSONObject("data").getString("picture_url");
-            url=imageUrl;
-            //Log ra để xem url của ảnh
-            Log.d("dtreuri", imageUrl);
-
-        }catch (Exception e){
-            e.printStackTrace();
-            Log.d("dtre", e.getMessage());
-        }
-    }
-    private void registerResult () {
-        resultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult result) {
-                        try {
-                            Uri imageUri = result.getData().getData();
-                            File test = new File(imageUri.getPath());
-                            review.setImageURI(imageUri);
-                            File file = new File(imageUri.getPath());
-
-                            //Đây là url của ảnh sau khi upload lên server
-                            //Sau khi có url này, thực hiện chèn vào các field API nào mà có "image"
-                            String response = uploadImageAPI(imageUri);
-                            Log.d("Response", response);
-                            JSONObject json = new JSONObject(response);
-                            String imageUrl = json.getJSONObject("data").getString("picture_url");
-                            url=imageUrl;
-                            //Log ra để xem url của ảnh
-                            Log.d("dtre", imageUrl);
-
-                        }catch (Exception e){
-                            e.printStackTrace();
-                            Log.d("dtre", e.getMessage());
-                        }
-                    }
-                }
-        );
-
-    }
-    private String uploadImageAPI(Uri imageUri) throws IOException, JSONException {
-
-        //Đường dẫn của server, cái này trong source chính đã để trong folder API_CONFIG
-        String SERVER = "https://expense-management-backend-2tac.onrender.com";
-        String API_VERSION = "api/v1";
-
-        //Dưới nãy giữ y chang, không cần suy nghĩ
-        OkHttpClient client = new OkHttpClient().newBuilder()
-                .build();
-        File file = getFileFromUri(this, imageUri);
-        RequestBody body = new MultipartBody.Builder().setType(MultipartBody.FORM)
-                .addFormDataPart("image", file.getName(),
-                        RequestBody.create( file.getAbsoluteFile(),
-                                MediaType.parse("application/octet-stream")
-                        ))
-                .build();
-        Request request = new Request.Builder()
-                .url(SERVER+"/" + API_VERSION + "/media/upload")
-                .method("POST", body)
-                .build();
-        Response response = client.newCall(request).execute();
-
-        //Log.d("Response", response.body().string());
-        return  response.body().string();
-    }
-
-    private String getFileName(Context context, Uri uri) {
-        String result = null;
-        if (uri.getScheme().equals("content")) {
-            try (Cursor cursor = context.getContentResolver().query(uri, null, null, null, null)) {
-                if (cursor != null && cursor.moveToFirst()) {
-                    int index = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
-                    if (index != -1) {
-                        result = cursor.getString(index);
-                    }
+    //Unfocus EditText khi click ra ngoai
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if (v instanceof EditText) {
+                Rect outRect = new Rect();
+                v.getGlobalVisibleRect(outRect);
+                if (!outRect.contains((int)event.getRawX(), (int)event.getRawY())) {
+                    v.clearFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
                 }
             }
         }
-        if (result == null) {
-            result = uri.getLastPathSegment();
-        }
-        return result;
+        return super.dispatchTouchEvent( event );
     }
-    private File getFileFromUri(Context context, Uri uri) {
-        File file = null;
-        try {
-            String fileName = getFileName(context, uri);
-            InputStream inputStream = context.getContentResolver().openInputStream(uri);
-            if (inputStream != null) {
-                file = new File(context.getCacheDir(), fileName);
-                FileOutputStream outputStream = new FileOutputStream(file);
-                byte[] buffer = new byte[1024];
-                int bytesRead;
-                while ((bytesRead = inputStream.read(buffer)) != -1) {
-                    outputStream.write(buffer, 0, bytesRead);
-                }
-                outputStream.close();
-                inputStream.close();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return file;
-    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -200,21 +72,10 @@ public class Category_Add extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        //Disable strict mode
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-        review = findViewById(R.id.hinhanh);
-        registerResult();
-
         ImageButton upload = findViewById(R.id.button);
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(coanh==0)
-                {
-                    Log.d("dtre", "da co anh");
-                    covertAnh(R.drawable.question);
-                }
                 TextInputEditText category_name = findViewById(R.id.categoryname);
 
                 CategoryAPIUntill test = new CategoryAPIUntill();
@@ -228,7 +89,7 @@ public class Category_Add extends AppCompatActivity {
 
                 else if ( test.doesCategoryExist(category_name.getText().toString()) == 1){
                     // Show an error message if the wallet name is "Total" or if it already exists
-                    category_name.setError("Wallet_hdp name already exists");
+                    category_name.setError("Wallet name already exists");
                 } else
                 {
 
@@ -238,10 +99,15 @@ public class Category_Add extends AppCompatActivity {
                         ty="EXPENSE";
                     }
                     ImageView img = findViewById(R.id.hinhanh);
+                    Drawable drawable = img.getBackground();
+                    Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
 
-                    Log.d("dtre", url);
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                    byte[] byteArray = baos.toByteArray();
+                    String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
 
-                    CreateCategoryEntity_quyen create = new CreateCategoryEntity_quyen(category_name.getText().toString(),url, ty, "aaea42e6-591e-45b3-8d4f-e0a4b80e3c69");
+                    CreateCategoryEntity_quyen create = new CreateCategoryEntity_quyen(category_name.getText().toString(), encoded, ty, "aaea42e6-591e-45b3-8d4f-e0a4b80e3c69");
                     CategoryAPIUntill CategoryAPIUntill = new CategoryAPIUntill();
                     CategoryAPIUntill.createCategoryAPI(create);
                     setResult(Activity.RESULT_OK);
@@ -253,7 +119,7 @@ public class Category_Add extends AppCompatActivity {
         });
         CardView ic = findViewById(R.id.icon);
         ic.setOnClickListener(v -> {
-            showDialog();
+       showDialog();
         });
         LinearLayout income= findViewById(R.id.incomeclick);
         LinearLayout expense= findViewById(R.id.expenseclick);
@@ -307,7 +173,7 @@ public class Category_Add extends AppCompatActivity {
     }
 
 
-    int kq=1;
+int kq=1;
 
 
 
@@ -343,7 +209,7 @@ public class Category_Add extends AppCompatActivity {
 
 
         bo1.setOnClickListener(v -> {
-            bo1.setBackgroundResource(R.drawable.nenluachon);
+         bo1.setBackgroundResource(R.drawable.nenluachon);
 
             kq=1;
             bo2.setBackgroundResource(0);
@@ -755,13 +621,11 @@ public class Category_Add extends AppCompatActivity {
         TextView apply = dialog.findViewById(R.id.apply);
 
         apply.setOnClickListener(v -> {
-            coanh=1;
             if(kq==1)
             {
                 ImageView img = findViewById(R.id.hinhanh);
 
                 img.setBackgroundResource(R.drawable.anh1);
-                covertAnh(R.drawable.anh1);
             }
             if(kq==2)
             {
@@ -874,11 +738,9 @@ public class Category_Add extends AppCompatActivity {
         });
         TextView upload = dialog.findViewById(R.id.upload);
         upload.setOnClickListener(v -> {
-
-            Intent intent = new Intent(MediaStore.ACTION_PICK_IMAGES);
-            resultLauncher.launch(intent);
-
-            dialog.dismiss();
+          Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+          startActivityForResult(intent,3);
+          dialog.dismiss();
         });
 
 

@@ -91,22 +91,28 @@
         android:layout_height="wrap_content">
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+            android:id="@+id/Amount_layout"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="42dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="5dp"
             android:layout_weight="9"
             android:hint="Amount"
+            app:hintTextColor="@color/xanhnen"
             app:boxStrokeColor="#1EABED"
+            app:prefixText="$"
+            app:prefixTextColor="@color/xanhnen"
+            app:cursorColor="@color/xanhnen"
+            app:errorEnabled="true"
             app:boxStrokeWidth="2dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/Amount_txtbox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="number"
                 android:textColor="#1EABED"
-                android:textSize="20dp"
                 android:textStyle="bold"
                 app:hintTextColor="#1EABED">
 
@@ -119,7 +125,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="5dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="3dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
             android:layout_weight="1"
@@ -134,6 +140,8 @@
         android:layout_height="wrap_content">
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/date_layout"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="0dp"
             android:layout_weight="9"
             android:layout_height="wrap_content"
@@ -142,14 +150,15 @@
             android:hint="Date"
             app:boxStrokeColor="#1EABED"
             app:boxStrokeWidth="2dp"
-            style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox">
+            app:cursorColor="@color/xanhnen"
+            app:errorEnabled="true"
+            app:hintTextColor="@color/xanhnen">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:text="2024"
             android:textStyle="bold"
+            android:enabled="false"
             app:hintTextColor="#1EABED"
             android:textColor="#1EABED">
 
@@ -162,7 +171,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="5dp"
             android:layout_marginStart="7dp"
-            android:layout_marginTop="17dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="10dp"
             android:layout_weight="1"
             android:layout_marginBottom="15dp"

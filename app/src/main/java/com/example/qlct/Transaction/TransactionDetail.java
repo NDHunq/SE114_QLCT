@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,10 +34,14 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.qlct.Category.Category;
+import com.example.qlct.API_Entity.GetAllCategoryEntity;
+import com.example.qlct.API_Entity.GetAllWalletsEntity;
+import com.example.qlct.API_Utils.CategoryAPIUtil;
+import com.example.qlct.API_Utils.WalletAPIUtil;
+import com.example.qlct.Category.Category_hdp;
 import com.example.qlct.R;
 import com.example.qlct.SelectWallet_Adapter;
-import com.example.qlct.Wallet;
+import com.example.qlct.Wallet_hdp;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
@@ -53,6 +59,7 @@ import java.util.Locale;
 
 public class TransactionDetail extends AppCompatActivity {
 
+    private List<Category_hdp> categoryList = new ArrayList<>();
     private ExpandableListView expandableListView;
     private List<TransactionDetail_ExpandableListItems> listDataHeader;
     private HashMap<TransactionDetail_ExpandableListItems, List<TransactionDetail_TheGiaoDich>> listDataChild;
@@ -73,20 +80,28 @@ public class TransactionDetail extends AppCompatActivity {
 
     private ListView walletListView;
 
-    private ArrayList<Wallet> walletList;
+    private ArrayList<Wallet_hdp> walletList;
 
     private TextView dateTxtView;
 
+    private ArrayList<Chip> incomeChipList = new ArrayList<>();
+
+    private ArrayList<Chip> expenseChipList = new ArrayList<>();
+
     private void AnhXaWallet(){
-        walletList = new ArrayList<Wallet>();
-        walletList.add(new Wallet("Vi 1", "2000000 d", R.drawable.budget));
-        walletList.add(new Wallet("Vi 2", "2000000 d", R.drawable.budget));
-        walletList.add(new Wallet("Vi 3", "2000000 d", R.drawable.budget));
-        walletList.add(new Wallet("Vi 4", "2000000 d", R.drawable.budget));
-        walletList.add(new Wallet("Vi 5", "2000000 d", R.drawable.budget));
-        walletList.add(new Wallet("Vi 6", "2000000 d", R.drawable.budget));
-        walletList.add(new Wallet("Vi 7", "2000000 d", R.drawable.budget));
-        walletList.add(new Wallet("Vi 8", "2000000 d", R.drawable.budget));
+        try{
+            walletList = new ArrayList<Wallet_hdp>();
+            ArrayList<GetAllWalletsEntity> parseAPIList = new WalletAPIUtil().getAllWalletAPI();
+            //Chạy vòng lặp để lấy ra các field cần thiết cho hiển thị ra Views
+            for (GetAllWalletsEntity item : parseAPIList) {
+                walletList.add(new Wallet_hdp(item.id, item.name, item.amount, R.drawable.wallet, item.currency_unit));
+            }
+            walletList.add(new Wallet_hdp("total", "TOTAL", "", R.drawable.wallet, ""));
+            Log.d("Get_wallet_data_object", walletList.toString());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
     private void setIncomeBackground(MaterialButton income_btn){
         if (income){
@@ -119,21 +134,6 @@ public class TransactionDetail extends AppCompatActivity {
     private boolean income = true;
     private boolean expense = false;
 
-    private void setChips(Chip chip, Context context){
-        chip.setChipStrokeColor(getColorStateList(R.color.black));
-        chip.setText("Food");
-
-        if(chip.isChecked()){
-            chip.setChipBackgroundColor(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.xanhnen)));
-            chip.setTextColor(getResources().getColor(R.color.white, null));
-            chip.setCheckedIconTint(getColorStateList(R.color.white));
-        }
-        else{
-            chip.setChipBackgroundColor(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.white)));
-            chip.setTextColor(getResources().getColor(R.color.black, null));
-            chip.setCheckedIconTint(getColorStateList(R.color.black));
-        }
-    }
     private void showDialog(){
         final Dialog dialog = new Dialog(TransactionDetail.this);
 
@@ -147,6 +147,7 @@ public class TransactionDetail extends AppCompatActivity {
         dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_bgh);
 
         dialog.show();
+        AnhXaCategory();
 
         MaterialButton income_btn = dialog.findViewById(R.id.income_button);
         income_btn.setBackgroundColor(getResources().getColor(R.color.xanhdam));
@@ -154,41 +155,16 @@ public class TransactionDetail extends AppCompatActivity {
         income_btn.setIconTint(getColorStateList(R.color.white));
         income_btn.setRippleColor(getColorStateList(R.color.xanhnhat));
 
+        ScrollView incomeScrollView = dialog.findViewById(R.id.income_chipgroup_scrollview);
+        ScrollView expenseScrollView = dialog.findViewById(R.id.expense_chipgroup_scrollview);
+        expenseScrollView.setVisibility(View.GONE);
+
         MaterialButton expense_btn = dialog.findViewById(R.id.expense_button);
-        MaterialButton transfer_btn = dialog.findViewById(R.id.transfer_button);
 
-        Chip chip1 = (Chip) LayoutInflater.from(dialog.getContext()).inflate(R.layout.chips_layout, null);
-        chip1.setChipStrokeColor(getColorStateList(R.color.black));
-        chip1.setChipBackgroundColor(ColorStateList.valueOf(getResources().getColor(R.color.white, null)));
-        chip1.setTextColor(getResources().getColor(R.color.black, null));
-        chip1.setText("Food");
-        chip1.setId(0);
+        ChipGroup incomeChipGroup = dialog.findViewById(R.id.income_chipgroup);
+        ChipGroup expenseChipGroup = dialog.findViewById(R.id.expense_chipgroup);
+        AnhXaCategoryToChip(incomeChipGroup, expenseChipGroup);
 
-
-        ChipGroup chipGroup = dialog.findViewById(R.id.trans_type_chipgroup);
-        chipGroup.addView(chip1);
-
-        chip1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(chip1.isChecked()){
-                    if(income){
-                        chip1.setRippleColor(ColorStateList.valueOf(getResources().getColor(R.color.xanhnhat, null)));
-                        chip1.setChipBackgroundColor(ColorStateList.valueOf(getResources().getColor(R.color.xanhdam, null)));
-                    }else if(expense){
-                        chip1.setRippleColor(ColorStateList.valueOf(getResources().getColor(R.color.lightred, null)));
-                        chip1.setChipBackgroundColor(ColorStateList.valueOf(getResources().getColor(R.color.red, null)));
-                    }
-                    chip1.setCheckedIconVisible(true);
-                    chip1.setTextColor(getResources().getColor(R.color.white, null));
-                    chip1.setCheckedIconTint(ColorStateList.valueOf(getResources().getColor(R.color.white, null)));
-                }else{
-                    chip1.setCheckedIconVisible(false);
-                    chip1.setChipBackgroundColor(ColorStateList.valueOf(getResources().getColor(R.color.white, null)));
-                    chip1.setTextColor(getResources().getColor(R.color.black, null));
-                }
-            }
-        });
 
         income_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -197,6 +173,10 @@ public class TransactionDetail extends AppCompatActivity {
                 expense = false;
                 setIncomeBackground(income_btn);
                 setExpenseBackground(expense_btn);
+                ScrollView incomeScrollView = dialog.findViewById(R.id.income_chipgroup_scrollview);
+                ScrollView expenseScrollView = dialog.findViewById(R.id.expense_chipgroup_scrollview);
+                incomeScrollView.setVisibility(View.VISIBLE);
+                expenseScrollView.setVisibility(View.GONE);
             }
         });
 
@@ -207,7 +187,53 @@ public class TransactionDetail extends AppCompatActivity {
                 expense = true;
                 setIncomeBackground(income_btn);
                 setExpenseBackground(expense_btn);
+                ScrollView incomeScrollView = dialog.findViewById(R.id.income_chipgroup_scrollview);
+                ScrollView expenseScrollView = dialog.findViewById(R.id.expense_chipgroup_scrollview);
+                incomeScrollView.setVisibility(View.GONE);
+                expenseScrollView.setVisibility(View.VISIBLE);
             }
+        });
+
+        TextView apply = dialog.findViewById(R.id.trans_type_apply_button);
+        apply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try{
+                    addCheckedChipsToLists(dialog);
+                    Toast.makeText(dialog.getContext(), String.valueOf(incomeChipList.size()) + String.valueOf(expenseChipList.size()), Toast.LENGTH_SHORT).show();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                dialog.dismiss();
+            }
+        });
+    }
+
+    private void showWalletDialog(){
+        final Dialog dialog = new Dialog(TransactionDetail.this);
+
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.bottomsheet_select_wallet);
+
+        dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimationn;
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_bgh);
+
+        dialog.show();
+
+        walletListView = dialog.findViewById(R.id.select_wallet_listview);
+        AnhXaWallet();
+        SelectWallet_Adapter adapter = new SelectWallet_Adapter(TransactionDetail.this, R.layout.select_wallet_item_list, walletList);
+        walletListView.setAdapter(adapter);
+
+        walletListView.setOnItemClickListener((parent, view, position, id) -> {
+            Wallet_hdp wallet = new Wallet_hdp("", "", "", 0, "");
+            wallet = walletList.get(position);
+            TextView walletName = findViewById(R.id.wallet_name_txtview);
+            walletName.setText(wallet.getWalletName());
+            dialog.dismiss();
         });
     }
 
@@ -830,23 +856,7 @@ public class TransactionDetail extends AppCompatActivity {
         walletbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final Dialog dialog = new Dialog(TransactionDetail.this);
-
-                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dialog.setContentView(R.layout.bottomsheet_select_wallet);
-
-                dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-                dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimationn;
-                dialog.getWindow().setGravity(Gravity.BOTTOM);
-                dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_bgh);
-
-                dialog.show();
-
-                walletListView = dialog.findViewById(R.id.select_wallet_listview);
-                AnhXaWallet();
-                SelectWallet_Adapter adapter = new SelectWallet_Adapter(TransactionDetail.this, R.layout.select_wallet_item_list, walletList);
-                walletListView.setAdapter(adapter);
+                showWalletDialog();
             }
         });
 
@@ -992,36 +1002,123 @@ public class TransactionDetail extends AppCompatActivity {
         listDataHeader.add(new TransactionDetail_ExpandableListItems(LocalDate.parse("2022-07-05"), "200000d", "200000d"));
 
         List<TransactionDetail_TheGiaoDich> theGiaoDichList = new ArrayList<>();
-        theGiaoDichList.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", "EXPENSE"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", "EXPENSE"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "EXPENSE"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "EXPENSE"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
 
         List<TransactionDetail_TheGiaoDich> theGiaoDichList2 = new ArrayList<>();
-        theGiaoDichList2.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList2.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList2.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", "EXPENSE"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList2.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList2.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", "EXPENSE"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList2.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList2.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList2.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "EXPENSE"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList2.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList2.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "EXPENSE"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
 
         List<TransactionDetail_TheGiaoDich> theGiaoDichList3 = new ArrayList<>();
-        theGiaoDichList3.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList3.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", "EXPENSE"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList3.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", "EXPENSE"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList3.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList3.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList3.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList3.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "EXPENSE"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList3.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "EXPENSE"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList3.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList3.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
 
         List<TransactionDetail_TheGiaoDich> theGiaoDichList4 = new ArrayList<>();
-        theGiaoDichList4.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", "EXPENSE"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList4.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList4.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", "EXPENSE"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList4.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList4.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category("Tiền lương", "EXPENSE"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList4.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "EXPENSE"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList4.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList4.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "EXPENSE"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList4.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+        theGiaoDichList4.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "EXPENSE"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
 
         listDataChild.put(listDataHeader.get(0), theGiaoDichList);
         listDataChild.put(listDataHeader.get(1), theGiaoDichList2);
         listDataChild.put(listDataHeader.get(2), theGiaoDichList3);
         listDataChild.put(listDataHeader.get(3), theGiaoDichList4);
+    }
+
+    private void AnhXaCategory(){
+        try{
+            categoryList = new ArrayList<Category_hdp>();
+            ArrayList<GetAllCategoryEntity> parseAPIList = new CategoryAPIUtil().getAllCategory();
+            for(GetAllCategoryEntity category : parseAPIList){
+                categoryList.add(new Category_hdp(category.getId(), category.getName(), category.getPicture(), category.getType()));
+            }
+            Log.d("Get_wallet_data_object", categoryList.toString());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private void AnhXaCategoryToChip(ChipGroup incomeChipGroup, ChipGroup expenseChipGroup){
+        for (Category_hdp category : categoryList){
+            Chip chip = (Chip) getLayoutInflater().inflate(R.layout.chips_layout, null, false);
+            chip.setText(category.getCategory_name());
+            chip.setChipStrokeColor(getColorStateList(R.color.black));
+            chip.setChipBackgroundColor(ColorStateList.valueOf(getResources().getColor(R.color.white, null)));
+            chip.setTextColor(getResources().getColor(R.color.black, null));
+            chip.setCheckable(true);
+            chip.setTag(category);
+
+            chip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    if(chip.isChecked()){
+                        if(income){
+                            chip.setRippleColor(ColorStateList.valueOf(getResources().getColor(R.color.xanhnhat, null)));
+                            chip.setChipBackgroundColor(ColorStateList.valueOf(getResources().getColor(R.color.xanhdam, null)));
+                        }else if(expense){
+                            chip.setRippleColor(ColorStateList.valueOf(getResources().getColor(R.color.lightred, null)));
+                            chip.setChipBackgroundColor(ColorStateList.valueOf(getResources().getColor(R.color.red, null)));
+                        }
+                        chip.setCheckedIconVisible(true);
+                        chip.setTextColor(getResources().getColor(R.color.white, null));
+                        chip.setCheckedIconTint(ColorStateList.valueOf(getResources().getColor(R.color.white, null)));
+                    }else{
+                        chip.setCheckedIconVisible(false);
+                        chip.setChipBackgroundColor(ColorStateList.valueOf(getResources().getColor(R.color.white, null)));
+                        chip.setTextColor(getResources().getColor(R.color.black, null));
+                    }
+                }
+            });
+
+            if(category.getCategory_type().equals("INCOME")) {
+                incomeChipGroup.addView(chip);
+            }
+            else {
+                expenseChipGroup.addView(chip);
+            }
+        }
+    }
+
+    private void addCheckedChipsToLists(Dialog dialog) {
+        // Clear the lists first
+        incomeChipList.clear();
+        expenseChipList.clear();
+
+        ChipGroup incomeChipGroup = dialog.findViewById(R.id.income_chipgroup);
+        ChipGroup expenseChipGroup = dialog.findViewById(R.id.expense_chipgroup);
+
+        // Iterate over the chips in the incomeChipGroup
+        for (int i = 0; i < incomeChipGroup.getChildCount(); i++) {
+            View view = incomeChipGroup.getChildAt(i);
+            if (view instanceof Chip) {
+                Chip chip = (Chip) view;
+                if (chip.isChecked()) {
+                    // If the chip is checked, add it to the incomeChipList
+                    incomeChipList.add(chip);
+                }
+            }
+        }
+
+        // Iterate over the chips in the expenseChipGroup
+        for (int i = 0; i < expenseChipGroup.getChildCount(); i++) {
+            View view = expenseChipGroup.getChildAt(i);
+            if (view instanceof Chip) {
+                Chip chip = (Chip) view;
+                if (chip.isChecked()) {
+                    // If the chip is checked, add it to the expenseChipList
+                    expenseChipList.add(chip);
+                }
+            }
+        }
     }
 }

@@ -1,17 +1,14 @@
 package com.example.qlct.Category;
 
 import android.content.Context;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.qlct.Category.Category;
 import com.example.qlct.R;
 import com.google.android.material.card.MaterialCardView;
 import com.squareup.picasso.Picasso;
@@ -23,9 +20,9 @@ public class Category_adapter extends BaseAdapter {
 
     private int layout;
 
-    private List<Category> categoryList;
+    private List<Category_hdp> categoryList;
 
-    public Category_adapter(Context context, int layout, List<Category> categoryList) {
+    public Category_adapter(Context context, int layout, List<Category_hdp> categoryList) {
         this.context = context;
         this.layout = layout;
         this.categoryList = categoryList;
@@ -54,8 +51,9 @@ public class Category_adapter extends BaseAdapter {
         TextView categoryName = convertView.findViewById(R.id.category_txtview);
         MaterialCardView cardView = convertView.findViewById(R.id.category_icon_cardview);
 
-        Category category = categoryList.get(position);
-        Picasso.get().load(category.getImageURL()).into(categoryIcon);
+
+        Category_hdp category = categoryList.get(position);
+        Glide.with(context).load(category.getImageURL()).into(categoryIcon);
 
         categoryName.setText(category.getCategory_name());
         return convertView;

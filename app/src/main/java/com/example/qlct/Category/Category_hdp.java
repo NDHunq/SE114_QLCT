@@ -1,25 +1,25 @@
 package com.example.qlct.Category;
 
-public class Category {
+public class Category_hdp {
     private String category_id;
     private String category_name;
     private String image;
 
     private String category_type; //1: Income, 2: Expense
 
-//    public Category(String category_name, int image){
+//    public Category_hdp(String category_name, int image){
 //        this.category_name = category_name;
 //        this.image = image;
 //    }
 
-    public Category(String category_id,String category_name, String image, String category_type){
+    public Category_hdp(String category_id, String category_name, String image, String category_type){
         this.category_id = category_id;
         this.category_name = category_name;
         this.image = image;
         this.category_type = category_type;
     }
 
-    public Category(String category_name, String category_type){
+    public Category_hdp(String category_name, String category_type){
         this.category_name = category_name;
         this.category_type = category_type;
     }
