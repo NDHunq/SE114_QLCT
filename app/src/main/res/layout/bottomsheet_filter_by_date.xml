@@ -195,6 +195,22 @@
                     android:layout_marginBottom="10dp"
                     >
                 </TextView>
+
+                <TextView
+                    android:id="@+id/all_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="All time"
+                    android:textSize="18dp"
+                    android:textStyle="bold"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/xanhnen"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="10dp"
+                    >
+                </TextView>
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
