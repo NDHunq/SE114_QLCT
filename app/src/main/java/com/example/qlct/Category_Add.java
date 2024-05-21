@@ -67,7 +67,7 @@ public class Category_Add extends AppCompatActivity {
     int sc=1;
     int type=0;
     int coanh=0;
-    String url;
+    String url=null;
 
 
     private ImageView review;
@@ -210,7 +210,7 @@ public class Category_Add extends AppCompatActivity {
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(coanh==0)
+                if(url==null)
                 {
                     Log.d("dtre", "da co anh");
                     covertAnh(R.drawable.question);

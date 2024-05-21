@@ -782,7 +782,7 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
                     return;
                 }
                 // Tao intent show more
-                Intent ShowMoreIntent = new Intent(getActivity(), TransactionDetail.class);
+                Intent ShowMoreIntent = new Intent(getActivity(), Category_Add.class);
 
                 // Mo activity transaction details
                 startActivity(ShowMoreIntent);
@@ -915,6 +915,8 @@ public void TongTien() {
 
         // Check if the request code is the same as the one used in startActivityForResult()
         if (requestCode == 1) {
+
+
 
             try {
 
