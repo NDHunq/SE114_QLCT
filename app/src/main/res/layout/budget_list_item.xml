@@ -19,7 +19,7 @@
             app:shapeAppearanceOverlay="@style/circle"
             android:src="@color/black"
             android:layout_gravity="center"
-            android:layout_marginLeft="7dp">
+            >
 
         </com.google.android.material.imageview.ShapeableImageView>
 
@@ -39,7 +39,7 @@
                 android:fontFamily="@font/inter_semibold"
                 android:text="Food"
                 android:textColor="@color/black"
-                android:textSize="20dp">
+                android:textSize="18dp">
 
             </TextView>
         </LinearLayout>
@@ -50,7 +50,6 @@
 
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="7dp"
                 android:layout_alignParentRight="true"
                 android:orientation="vertical">
 
@@ -61,8 +60,8 @@
                     android:layout_gravity="right"
                     android:fontFamily="@font/inter"
                     android:text="Today, 21 March 2024"
-                    android:textColor="@color/black"
-                    android:textSize="14dp">
+                    android:textColor="@color/xamdam"
+                    android:textSize="13dp">
 
                 </TextView>
                 <TextView
@@ -72,8 +71,8 @@
                     android:layout_gravity="right"
                     android:fontFamily="@font/inter"
                     android:text="-Tuesday 26, March 2024"
-                    android:textColor="@color/black"
-                    android:textSize="14dp">
+                    android:textColor="@color/xamdam"
+                    android:textSize="13dp">
 
                 </TextView>
             </LinearLayout>
@@ -91,9 +90,9 @@
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:layout_marginTop="5dp"
-            android:layout_marginStart="0dp"
+            android:layout_marginStart="-5dp"
             android:layout_marginEnd="0dp"
-            android:thumbTint="@color/xanhnendam"
+            android:thumbTint="#0091D5"
             android:progressTint="@color/xanhnendam"
 
             >
@@ -103,6 +102,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             >
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -110,7 +110,6 @@
                 android:fontFamily="@font/inter"
                 android:text="Expense"
                 android:textColor="#FF0000"
-                android:layout_marginStart="7dp"
                 android:textSize="14dp">
 
             </TextView>
@@ -123,7 +122,6 @@
                 android:fontFamily="@font/inter"
                 android:text="300000 đ"
                 android:layout_alignParentRight="true"
-                android:layout_marginEnd="7dp"
                 android:textColor="#FF0000"
                 android:textSize="15dp">
 
@@ -140,8 +138,7 @@
                 android:layout_gravity="center"
                 android:fontFamily="@font/inter"
                 android:text="Budget"
-                android:textColor="@color/xanhnendam"
-                android:layout_marginStart="7dp"
+                android:textColor="#0091D5"
                 android:textSize="14dp">
 
             </TextView>
@@ -154,8 +151,7 @@
                 android:fontFamily="@font/inter"
                 android:text="2000000 đ"
                 android:layout_alignParentRight="true"
-                android:layout_marginEnd="7dp"
-                android:textColor="@color/xanhnendam"
+                android:textColor="#0091D5"
                 android:textSize="15dp">
 
             </TextView>

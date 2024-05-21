@@ -340,7 +340,7 @@ public class BudgetRunningFragment extends Fragment {
                         to="";
                     }
                     else {
-                        from="From: "+allBudgets.get(i).getCreate_at().substring(0,10);
+                        from=allBudgets.get(i).getCreate_at().substring(0,10);
                         to="Renew "+allBudgets.get(i).getRenew_date_unit();
                     }
 

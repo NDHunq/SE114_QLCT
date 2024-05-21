@@ -118,7 +118,7 @@ public class AddBudget extends AppCompatActivity implements OnDataPass {
                     BudgetAPIUtil budgetAPIUtil = new BudgetAPIUtil();
                     Boolean enable_notification= switch1.isChecked();
                     if(type.getText()=="Renew") {
-                        if(String.valueOf(date.getText())=="Daily"||String.valueOf(date.getText())=="Weekly" || String.valueOf(date.getText())=="Monthly" || String.valueOf(date.getText())=="Yearly")
+                        if(String.valueOf(date.getText()).equals("Daily")||String.valueOf(date.getText()).equals("Weekly") || String.valueOf(date.getText()).equals("Monthly") || String.valueOf(date.getText()).equals("Yearly"))
                         {
                             CreateRenewBudgetEntity createRenewBudgetEntity = new CreateRenewBudgetEntity(GetIDCategory(Category.getText().toString()), Double.parseDouble(amount.getText().toString()), date.getText().toString(), enable_notification);
                             budgetAPIUtil.createRenewBudget(createRenewBudgetEntity);
@@ -145,14 +145,6 @@ public class AddBudget extends AppCompatActivity implements OnDataPass {
                         if(date_unit!="Day")
                         {
                             realDate=realDate.replace(" - ", " ");
-                        }
-                        SimpleDateFormat originalFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-                        SimpleDateFormat targetFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-                        try {
-                            Date date = originalFormat.parse(realDate);
-                            realDate = targetFormat.format(date);
-                        } catch (ParseException e) {
-                            e.printStackTrace();
                         }
                         CreateNoRenewBudgetEntity createNoRenewBudgetEntity = new CreateNoRenewBudgetEntity(GetIDCategory(Category.getText().toString()), Double.parseDouble(amount.getText().toString()), date_unit.toUpperCase(), realDate, enable_notification);
                         budgetAPIUtil.createNoRenewBudget(createNoRenewBudgetEntity);
