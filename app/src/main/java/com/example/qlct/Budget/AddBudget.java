@@ -109,6 +109,23 @@ public class AddBudget extends AppCompatActivity implements OnDataPass {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
+                String currency ;
+                if(crr.getText().toString().equals("$"))
+                {
+                    currency="USD";
+                }
+                else if(crr.getText().toString().equals("đ"))
+                {
+                    currency="VND";
+                }
+                else if(crr.getText().toString().equals("€"))
+                {
+                    currency="EUR";
+                }
+                else
+                {
+                    currency="JPY";
+                }
                 if(!validdate())
                 {
                     Toast.makeText(AddBudget.this, "Error(s) has occured", Toast.LENGTH_SHORT).show();
@@ -120,7 +137,7 @@ public class AddBudget extends AppCompatActivity implements OnDataPass {
                     if(type.getText()=="Renew") {
                         if(String.valueOf(date.getText()).equals("Daily")||String.valueOf(date.getText()).equals("Weekly") || String.valueOf(date.getText()).equals("Monthly") || String.valueOf(date.getText()).equals("Yearly"))
                         {
-                            CreateRenewBudgetEntity createRenewBudgetEntity = new CreateRenewBudgetEntity(GetIDCategory(Category.getText().toString()), Double.parseDouble(amount.getText().toString()), date.getText().toString(), enable_notification);
+                            CreateRenewBudgetEntity createRenewBudgetEntity = new CreateRenewBudgetEntity(GetIDCategory(Category.getText().toString()), Double.parseDouble(amount.getText().toString()), date.getText().toString(), enable_notification, currency);
                             budgetAPIUtil.createRenewBudget(createRenewBudgetEntity);
                         }
                         else
@@ -136,7 +153,7 @@ public class AddBudget extends AppCompatActivity implements OnDataPass {
                             }
 
 
-                            CreateRenewBudgetEntity createRenewBudgetEntity = new CreateRenewBudgetEntity(GetIDCategory(Category.getText().toString()), Double.parseDouble(amount.getText().toString()),"Custom", realDate+" 00:00:00", enable_notification);
+                            CreateRenewBudgetEntity createRenewBudgetEntity = new CreateRenewBudgetEntity(GetIDCategory(Category.getText().toString()), Double.parseDouble(amount.getText().toString()),"Custom", realDate+" 00:00:00", enable_notification, currency);
                             budgetAPIUtil.createRenewBudget(createRenewBudgetEntity);
                         }
                     }
@@ -146,7 +163,7 @@ public class AddBudget extends AppCompatActivity implements OnDataPass {
                         {
                             realDate=realDate.replace(" - ", " ");
                         }
-                        CreateNoRenewBudgetEntity createNoRenewBudgetEntity = new CreateNoRenewBudgetEntity(GetIDCategory(Category.getText().toString()), Double.parseDouble(amount.getText().toString()), date_unit.toUpperCase(), realDate, enable_notification);
+                        CreateNoRenewBudgetEntity createNoRenewBudgetEntity = new CreateNoRenewBudgetEntity(GetIDCategory(Category.getText().toString()), Double.parseDouble(amount.getText().toString()), date_unit.toUpperCase(), realDate, enable_notification, currency);
                         budgetAPIUtil.createNoRenewBudget(createNoRenewBudgetEntity);
                     }
                     finish();

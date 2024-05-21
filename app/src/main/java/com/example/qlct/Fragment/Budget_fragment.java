@@ -29,6 +29,7 @@ import com.example.qlct.Budget.BudgetFinishFragment;
 import com.example.qlct.Budget.BudgetRunningFragment;
 import com.example.qlct.Notification.Notificaiton_activity;
 import com.example.qlct.R;
+import com.example.qlct.doitiente;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -90,13 +91,25 @@ public class Budget_fragment extends Fragment {
         double totalSpent=0;
         try {
             DecimalFormat df = new DecimalFormat("#,###");
+            doitiente doitiente = new doitiente();
             for (int i = 0; i < allBudgets.size(); i++) {
-                totalBudget += Double.parseDouble(allBudgets.get(i).getLimit_amount());
-                totalSpent += Double.parseDouble(allBudgets.get(i).getExpensed_amount());
+                if(allBudgets.get(i).getCurrency_unit().equals("VND"))
+                {
+                    totalBudget += Double.parseDouble(allBudgets.get(i).getLimit_amount());
+                    totalSpent += Double.parseDouble(allBudgets.get(i).getExpensed_amount());
+                }
+                else
+                {
+                    totalBudget += doitiente.converttoVND(allBudgets.get(i).getCurrency_unit(),Double.parseDouble(allBudgets.get(i).getLimit_amount()));
+                    totalSpent += doitiente.converttoVND(allBudgets.get(i).getCurrency_unit(),Double.parseDouble(allBudgets.get(i).getExpensed_amount()));
+                }
+
+
+
             }
-            total_budget.setText(df.format(totalBudget));
-            total_spent.setText(df.format(totalSpent));
-            remaining.setText(df.format(totalBudget - totalSpent));
+            total_budget.setText(df.format(totalBudget)+" đ");
+            total_spent.setText(df.format(totalSpent)+" đ");
+            remaining.setText(df.format(totalBudget - totalSpent)+" đ");
             seekBar.setMax((int) totalBudget);
             seekBar.setProgress((int) totalSpent);
             seekBar.setEnabled(false);
