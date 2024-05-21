@@ -65,7 +65,7 @@ public class Home_fragment extends Fragment {
         try {
             theGiaoDichList = new ArrayList<>();
             int i=0;
-            ArrayList<GetAllTransactionsEntity_quyen> parseAPIList = new TransactionAPIUtil().getAllTransactionsAPI();
+            ArrayList<GetAllTransactionsEntity_quyen> parseAPIList = new TransactionAPIUtil().getAllTransactionsAPI_quyen();
             //Chạy vòng lặp để lấy ra các field cần thiết cho hiển thị ra Views
             for (GetAllTransactionsEntity_quyen item : parseAPIList) {
                 i++;

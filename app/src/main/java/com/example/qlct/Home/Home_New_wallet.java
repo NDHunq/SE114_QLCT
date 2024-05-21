@@ -2,16 +2,25 @@ package com.example.qlct.Home;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
@@ -25,18 +34,40 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.qlct.API_Entity.CreateWalletEntity;
 import com.example.qlct.API_Utils.WalletAPIUtil;
 import com.example.qlct.R;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
+
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 
 
 public class Home_New_wallet extends AppCompatActivity {
-String currency;
-String getcurrency;
+    String currency;
+    String getcurrency;
 
-int sc=1;
-int sb=1;
+    private boolean isUserInteracting = true;
+
+    int sc=1;
+    int sb=1;
 
 
-
+    //Unfocus EditText khi click ra ngoai
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if (v instanceof EditText) {
+                Rect outRect = new Rect();
+                v.getGlobalVisibleRect(outRect);
+                if (!outRect.contains((int)event.getRawX(), (int)event.getRawY())) {
+                    v.clearFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        }
+        return super.dispatchTouchEvent( event );
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -59,34 +90,23 @@ int sb=1;
                 TextInputEditText walletname = findViewById(R.id.Walletname_txtbox);
                 TextInputEditText amount = findViewById(R.id.Amount_txtbox);
                 WalletAPIUtil test = new WalletAPIUtil();
-                if(walletname.getText().toString().isEmpty()||amount.getText().toString().isEmpty())
+                if(!validate())
                 {
-
-                        if(walletname.getText().toString().isEmpty())
-                    walletname.setError("Please enter wallet name");
-                        if(amount.getText().toString().isEmpty())
-                    amount.setError("Please enter amount");
+                    Toast.makeText(Home_New_wallet.this, "Please enter all required fields!", Toast.LENGTH_SHORT).show();
                 }
-
-            else if ( test.doesWalletExist(walletname.getText().toString()) == 1){
-                    // Show an error message if the wallet name is "Total" or if it already exists
-                    walletname.setError("Wallet name already exists");
-                } else if (walletname.getText().toString().equals("Total") ) {
-                    walletname.setError("Wallet name already exists");
-                } else
+                else
                 {
-                    CreateWalletEntity createWalletEntity = new CreateWalletEntity(name.getText().toString(),Integer.parseInt(ammount.getText().toString()),getcurrency);
+                    CreateWalletEntity createWalletEntity = new CreateWalletEntity(name.getText().toString(),Integer.parseInt(ammount.getText().toString().replaceAll("[.,]", "")),getcurrency);
                     WalletAPIUtil WalletAPIUtil = new WalletAPIUtil();
                     WalletAPIUtil.createWalletAPI(createWalletEntity);
                     setResult(Activity.RESULT_OK);
+                    Toast.makeText(Home_New_wallet.this, "Create wallet successfully!", Toast.LENGTH_SHORT).show();
                     finish();
                 }
-
-
             }
         });
 
-        TextView cancel = findViewById(R.id.cancel);
+        ImageButton cancel = findViewById(R.id.cancel);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,9 +119,54 @@ int sb=1;
             public void onClick(View v) {
   showDialog();
                 }
-
         });
 
+        ammount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (isUserInteracting && !charSequence.toString().isEmpty()) {
+                    isUserInteracting = false; // Set to false before changing text programmatically
+                    try {
+                        // Remove thousands separators before parsing
+                        String cleanString = charSequence.toString().replaceAll("[.,]", "");
+                        double amount = Double.parseDouble(cleanString);
+                        TextView crr = findViewById(R.id.crr);
+                        String currency = "";
+                        switch (crr.getText().toString()) {
+                            case "$":
+                                currency = "USD";
+                                break;
+                            case "đ":
+                                currency = "VND";
+                                break;
+                            case "€":
+                                currency = "EUR";
+                                break;
+                            case "¥":
+                                currency = "CNY";
+                                break;
+                        }
+                        String formattedAmount = formatCurrency(amount, currency);
+                        ammount.setText(formattedAmount);
+                        ammount.setSelection(formattedAmount.length()); // Move cursor to the end
+                    } catch (Exception e) {
+                        // Handle or log the error
+                        e.printStackTrace();
+                    }
+                    validateAmount();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                isUserInteracting = true;
+            }
+        });
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -201,26 +266,31 @@ int sb=1;
             public void onClick(View v) {
                 TextView txt = findViewById(R.id.crr);
                 TextView txt2 = findViewById(R.id.txtCurrency);
+                TextInputLayout amountLayout = findViewById(R.id.amountlayout);
                 txt.setText(currency);
                 if(currency.equals("$"))
                 {
                     txt2.setText("United States Dollar");
                     getcurrency="USD";
+                    amountLayout.setPrefixText("$");
                 }
                 else if(currency.equals("đ"))
                 {
                     txt2.setText("Việt Nam Đồng");
                     getcurrency="VND";
+                    amountLayout.setPrefixText("đ");
                 }
                 else if(currency.equals("€"))
                 {
                     txt2.setText("Euro");
                     getcurrency="EUR";
+                    amountLayout.setPrefixText("€");
                 }
                 else if(currency.equals("¥"))
                 {
                     txt2.setText("Yaun Renminbi");
                     getcurrency="CNY";
+                    amountLayout.setPrefixText("¥");
                 }
                 dialog.dismiss();
             }
@@ -597,7 +667,7 @@ int sb=1;
             bo18.setBackgroundResource(0);
 
         });
-bo17.setOnClickListener(v -> {
+        bo17.setOnClickListener(v -> {
             bo17.setBackgroundResource(R.drawable.nenluachon);
             bo2.setBackgroundResource(0);
             bo3.setBackgroundResource(0);
@@ -692,9 +762,55 @@ bo17.setOnClickListener(v -> {
             startActivityForResult(intent,3);
             dialog.dismiss();
         });
+    }
 
+    private boolean validateWalletName() {
+        TextInputLayout walletNameLayout = findViewById(R.id.walletlayout);
+        TextInputEditText walletName = findViewById(R.id.Walletname_txtbox);
+        if (walletName.getText().toString().isEmpty()) {
+            walletNameLayout.setError("Please enter wallet name!");
+            return false;
+        }
+        walletNameLayout.setError(null);
+        return true;
+    }
 
+    private boolean validateAmount() {
+        TextInputLayout amountLayout = findViewById(R.id.amountlayout);
+        TextInputEditText amount = findViewById(R.id.Amount_txtbox);
+        if (amount.getText().toString().isEmpty()) {
+            amountLayout.setError("Please enter amount!");
+            amount.setTextColor(ColorStateList.valueOf(getResources().getColor(R.color.errorColor, null)));
+            amountLayout.setPrefixTextColor(ColorStateList.valueOf(getResources().getColor(R.color.errorColor, null)));
+            return false;
+        }
+        amountLayout.setError(null);
+        amount.setTextColor(ColorStateList.valueOf(getResources().getColor(R.color.xanhnen, null)));
+        amountLayout.setPrefixTextColor(ColorStateList.valueOf(getResources().getColor(R.color.xanhnen, null)));
+        return true;
+    }
 
+    private boolean validate(){
+        boolean isWalletNameValid = validateWalletName();
+        boolean isAmountValid = validateAmount();
+        return isWalletNameValid && isAmountValid;
+    }
 
+    public static String formatCurrency(double amount, String currency) {
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+
+        // Set the thousands separator depending on the currency
+        if ("VND".equals(currency)) {
+            symbols.setGroupingSeparator('.');
+        } else {
+            symbols.setGroupingSeparator(',');
+        }
+
+        // Always use a dot for the decimal separator
+        symbols.setDecimalSeparator('.');
+
+        // Create a DecimalFormat with the desired symbols and format the amount
+        DecimalFormat formatter = new DecimalFormat("###,###.##", symbols);
+        return formatter.format(amount);
     }
 }

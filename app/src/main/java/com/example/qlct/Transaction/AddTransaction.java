@@ -43,11 +43,13 @@ import com.example.qlct.API_Utils.WalletAPIUtil;
 import com.example.qlct.Category.Category_hdp;
 import com.example.qlct.Category.Category_Add;
 import com.example.qlct.Category.Category_adapter;
+import com.example.qlct.Home.Home_New_wallet;
 import com.example.qlct.R;
 import com.example.qlct.SelectWallet_Adapter;
 import com.example.qlct.Wallet_hdp;
 import com.example.qlct.doitiente;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.datepicker.MaterialStyledDatePickerDialog;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -218,6 +220,7 @@ public class AddTransaction extends AppCompatActivity {
             public void onClick(View view) {
                 Intent AddCategoryIntent = new Intent(dialog.getContext(), Category_Add.class);
                 startActivity(AddCategoryIntent);
+                dialog.dismiss();
             }
         });
     }
@@ -400,9 +403,18 @@ public class AddTransaction extends AppCompatActivity {
                     walletMoney.setTextColor(getResources().getColor(R.color.xanhdam, null));
                     targetWalletIdStorage = wallet.getId();
                 }
-
             }
             dialog.dismiss();
+        });
+
+        TextView addNewWallet = dialog.findViewById(R.id.select_wallet_addnew_btn);
+        addNewWallet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent AddWalletIntent = new Intent(dialog.getContext(), Home_New_wallet.class);
+                startActivity(AddWalletIntent);
+                dialog.dismiss();
+            }
         });
     }
 
@@ -757,9 +769,9 @@ public class AddTransaction extends AppCompatActivity {
             }
         });
 
-        ImageView calendarIcon = findViewById(R.id.add_trans_calendar_icon);
         TextInputEditText dateTextBox = findViewById(R.id.select_date_txtbox);
-        calendarIcon.setOnClickListener(new View.OnClickListener() {
+
+        dateTextBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Lấy ngày hiện tại làm ngày mặc định cho DatePickerDialog
@@ -768,6 +780,7 @@ public class AddTransaction extends AppCompatActivity {
                 int month = c.get(Calendar.MONTH);
                 int day = c.get(Calendar.DAY_OF_MONTH);
 
+
                 // Tạo và hiển thị DatePickerDialog
                 DatePickerDialog datePickerDialog = new DatePickerDialog(AddTransaction.this,
                         new DatePickerDialog.OnDateSetListener() {
@@ -775,7 +788,6 @@ public class AddTransaction extends AppCompatActivity {
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                                 // Người dùng đã chọn ngày, cập nhật select_date_txtbox
                                 String selectedDate = dayOfMonth + "/" + (month + 1) + "/" + year;
-                                TextInputEditText dateTextBox = findViewById(R.id.select_date_txtbox);
                                 dateTextBox.setText(selectedDate);
                             }
                         }, year, month, day);
@@ -1069,14 +1081,17 @@ public class AddTransaction extends AppCompatActivity {
             if(LocalDate.parse(dateInput, DateTimeFormatter.ofPattern("d/M/yyyy")).isAfter(LocalDate.now())){
                 dateEditTextLayout.setError("Date can't be in the future!");
                 dateEditText.setTextColor(ColorStateList.valueOf(getResources().getColor(R.color.errorColor, null)));
+                dateEditTextLayout.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.errorColor, null)));
                 return false;
             }
             dateEditTextLayout.setError(null);
+            dateEditTextLayout.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.black, null)));
             dateEditText.setTextColor(ColorStateList.valueOf(getResources().getColor(R.color.black, null)));
             return true;
         }
         else{
             dateEditTextLayout.setError("Please press calendar icon to select a date!");
+            dateEditTextLayout.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.errorColor, null)));
             return false;
         }
     }

@@ -56,7 +56,7 @@
             android:layout_weight="1"
             android:text="INCOME"
             android:textColor="@color/black"
-            android:textSize="12sp"
+            android:textSize="11sp"
             android:textStyle="bold"
             app:cornerRadius="5dp"
             app:icon="@drawable/income_icon"
@@ -75,7 +75,7 @@
             android:layout_weight="1"
             android:text="EXPENSE"
             android:textColor="@color/black"
-            android:textSize="12sp"
+            android:textSize="11sp"
             android:textStyle="bold"
             app:cornerRadius="5dp"
             app:icon="@drawable/outcome_icon"
@@ -94,7 +94,7 @@
             android:layout_weight="1"
             android:text="TRANSFER"
             android:textColor="@color/black"
-            android:textSize="12sp"
+            android:textSize="11sp"
             android:textStyle="bold"
             app:cornerRadius="5dp"
             app:icon="@drawable/transfer_icon"
@@ -155,41 +155,34 @@
             android:textColor="@color/xanhnen"
             android:textSize="12sp"
             android:textStyle="bold"
+            android:layout_marginTop="-1dp"
             app:strokeColor="@color/xanhnen"
             app:rippleColor="@color/xanhnennhat"
             app:cornerRadius="5dp" />
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/date_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginStart="12dp"
         android:layout_marginEnd="10dp"
-        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/amount_curency_layout">
-
-        <ImageView
-            android:id="@+id/add_trans_calendar_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/calendar_icon"
-            android:layout_marginTop="18dp"
-            android:layout_marginEnd="12dp"/>
+        app:layout_constraintTop_toBottomOf="@+id/note_layout">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/select_date_txtbox_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:hint="Selected Date"
             android:textColorHint="@color/black"
             app:errorEnabled="true"
             app:boxStrokeColor="@color/black"
+            app:startIconDrawable="@drawable/calendar_icon"
+            app:startIconTint="@color/black"
             app:boxStrokeWidth="1dp"
             app:endIconMode="clear_text">
             <com.google.android.material.textfield.TextInputEditText
@@ -197,10 +190,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
-                android:enabled="false" />
+                android:clickable="false"
+                android:focusable="false"/>
         </com.google.android.material.textfield.TextInputLayout>
-
-    </LinearLayout>
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/category_layout"
@@ -630,7 +623,7 @@
         android:layout_marginEnd="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/wallet_layout">
+        app:layout_constraintTop_toBottomOf="@+id/amount_curency_layout">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -649,7 +642,7 @@
             android:layout_height="wrap_content">
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="130dp">
+                android:layout_height="90dp">
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/note_txtbox_layout"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
@@ -677,7 +670,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/note_layout"
+        app:layout_constraintTop_toBottomOf="@+id/wallet_layout"
         android:layout_marginTop="10dp"
         android:layout_marginStart="12dp"
         android:layout_marginEnd="10dp"
