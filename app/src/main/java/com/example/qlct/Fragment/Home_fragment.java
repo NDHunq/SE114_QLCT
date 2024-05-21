@@ -1,6 +1,7 @@
 package com.example.qlct.Fragment;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -423,6 +424,13 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
 
             // Now you can use "tenvi" and "ammount" in your fragment
         }
+        // loading screen
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        LayoutInflater inflaterloading = getLayoutInflater();
+        builder.setView(inflaterloading.inflate(R.layout.loading_dialog, null));
+        builder.setCancelable(false);
+
+        AlertDialog load = builder.create();
 
 
         Anhxa();
@@ -531,18 +539,22 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
         noti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                load.show();
                 Intent intent = new Intent(getActivity(), Notificaiton_activity.class);
                 startActivity(intent);
+                load.dismiss();
             }
         });
         ImageView optionVi = view.findViewById(R.id.optionsVi);
         optionVi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                load.show();
                 Intent intent = new Intent(getActivity(), Home_Wallet_Information.class);
                 intent.putExtra("name", TenVi);
                 intent.putExtra("spec","spec");
                 startActivity(intent);
+                load.dismiss();
             }
         });
 
@@ -736,6 +748,7 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
             public void onClick(View v) {
                 if(seeAll.getText().toString().equals("See all"))
                 {
+                    load.show();
                     Intent event;
 
 
@@ -746,6 +759,7 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
                     intent.putExtra("viduocchon",vi.getText());
                     // Bắt đầu Activity mới
                     startActivity(intent);
+                    load.dismiss();
                 }
                 else
                     {

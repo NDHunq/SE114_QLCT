@@ -768,72 +768,90 @@ public class Category_Add extends AppCompatActivity {
                 ImageView img = findViewById(R.id.hinhanh);
 
                 img.setBackgroundResource(R.drawable.anh2);
+                covertAnh(R.drawable.anh2);
             }
             if(kq==3)
             {
                 ImageView img = findViewById(R.id.hinhanh);
 
                 img.setBackgroundResource(R.drawable.anh3);
+                covertAnh(R.drawable.anh3);
             }
             if(kq==4)
             {
                 ImageView img = findViewById(R.id.hinhanh);
 
                 img.setBackgroundResource(R.drawable.anh4);
+                covertAnh(R.drawable.anh4);
             }
             if(kq==5)
             {
                 ImageView img = findViewById(R.id.hinhanh);
 
                 img.setBackgroundResource(R.drawable.anh5);
+                covertAnh(R.drawable.anh5);
+
             }
             if(kq==6)
             {
                 ImageView img = findViewById(R.id.hinhanh);
 
                 img.setBackgroundResource(R.drawable.anh6);
+                covertAnh(R.drawable.anh6);
+
             }
             if(kq==7)
             {
                 ImageView img = findViewById(R.id.hinhanh);
 
                 img.setBackgroundResource(R.drawable.anh7);
+                covertAnh(R.drawable.anh7);
+
             }
             if(kq==8)
             {
                 ImageView img = findViewById(R.id.hinhanh);
 
                 img.setBackgroundResource(R.drawable.anh8);
+                covertAnh(R.drawable.anh8);
+
             }
             if(kq==9)
             {
                 ImageView img = findViewById(R.id.hinhanh);
 
                 img.setBackgroundResource(R.drawable.anh9);
+                covertAnh(R.drawable.anh9);
+
             }
             if(kq==10)
             {
                 ImageView img = findViewById(R.id.hinhanh);
 
                 img.setBackgroundResource(R.drawable.anh10);
+                covertAnh(R.drawable.anh10);
             }
             if(kq==11)
             {
                 ImageView img = findViewById(R.id.hinhanh);
 
                 img.setBackgroundResource(R.drawable.anh11);
+                covertAnh(R.drawable.anh11);
+
             }
             if(kq==12)
             {
                 ImageView img = findViewById(R.id.hinhanh);
 
                 img.setBackgroundResource(R.drawable.anh12);
+                covertAnh(R.drawable.anh12);
             }
             if(kq==13)
             {
                 ImageView img = findViewById(R.id.hinhanh);
 
                 img.setBackgroundResource(R.drawable.anh13);
+                covertAnh(R.drawable.anh13);
             }
 
             if(kq==14)
@@ -841,18 +859,21 @@ public class Category_Add extends AppCompatActivity {
                 ImageView img = findViewById(R.id.hinhanh);
 
                 img.setBackgroundResource(R.drawable.anh14);
+                covertAnh(R.drawable.anh14);
             }
             if(kq==15)
             {
                 ImageView img = findViewById(R.id.hinhanh);
 
                 img.setBackgroundResource(R.drawable.anh15);
+                covertAnh(R.drawable.anh15);
             }
             if(kq==16)
             {
                 ImageView img = findViewById(R.id.hinhanh);
 
                 img.setBackgroundResource(R.drawable.anh16);
+                covertAnh(R.drawable.anh16);
             }
 
             if(kq==17)
@@ -860,12 +881,14 @@ public class Category_Add extends AppCompatActivity {
                 ImageView img = findViewById(R.id.hinhanh);
 
                 img.setBackgroundResource(R.drawable.anh17);
+                covertAnh(R.drawable.anh17);
             }
             if(kq==18)
             {
                 ImageView img = findViewById(R.id.hinhanh);
 
                 img.setBackgroundResource(R.drawable.anh18);
+                covertAnh(R.drawable.anh18);
             }
             dialog.dismiss();
 
