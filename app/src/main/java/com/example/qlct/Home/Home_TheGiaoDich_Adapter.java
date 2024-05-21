@@ -8,6 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
+
 import com.example.qlct.R;
 import com.squareup.picasso.Picasso;
 
@@ -43,6 +45,7 @@ public class Home_TheGiaoDich_Adapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view=inflater.inflate(layout,null);
+
         ImageView imageView = (ImageView) view.findViewById(R.id.hinhanh);
         TextView ten = (TextView) view.findViewById(R.id.tendanhmuc);
         TextView sotien = (TextView) view.findViewById(R.id.sotien);
