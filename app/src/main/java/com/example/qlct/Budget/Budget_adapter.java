@@ -61,11 +61,26 @@ public class Budget_adapter extends BaseAdapter {
         category.setText(budget.getCategory());
         fromday.setText(budget.getFromDate());
         today.setText(budget.getToDate());
-        maxmoney.setText(df.format((budget.getMax_money())) );
-        expense.setText(df.format((budget.getCurent_money())) );
+        maxmoney.setText(df.format((budget.getMax_money())) + " " + currency(budget.getCurrency()));
+        expense.setText(df.format((budget.getCurent_money())) + " " +currency( budget.getCurrency()));
         seekBar.setMax((int) budget.getMax_money());
         seekBar.setProgress((int) budget.getCurent_money());
         seekBar.setEnabled(false);
         return convertView;
+    }
+    String currency(String currency){
+        if(currency.equals("VND")){
+            return "đ";
+        }
+        else if(currency.equals("USD")){
+            return "$";
+        }
+        else if(currency.equals("EUR")){
+            return "€";
+        }
+        else if(currency.equals("CNY")){
+            return "¥";
+        }
+        return "";
     }
 }

@@ -1,7 +1,10 @@
 package com.example.qlct.Budget;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -9,6 +12,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -79,13 +83,30 @@ public class AdjustBudget extends AppCompatActivity implements OnDataPass {
     void Init(){
         if(budget != null){
             Category_txt.setText(budget.getCategory());
-            amount.setText(String.valueOf(budget.getMax_money()));
+            amount.setText(String.valueOf(budget.getMax_money()).substring(0, String.valueOf(budget.getMax_money()).length()-2));
             type.setText(budget.getType());
             Glide.with(this)
                     .load(budget.getImage())
                     .into(hinhanh);
+            crr.setText(currency(budget.getCurrency()));
+            Amount_layout.setPrefixText(currency(budget.getCurrency()));
         }
 
+    }
+    String currency(String currency){
+        if(currency.equals("VND")){
+            return "đ";
+        }
+        else if(currency.equals("USD")){
+            return "$";
+        }
+        else if(currency.equals("EUR")){
+            return "€";
+        }
+        else if(currency.equals("CNY")){
+            return "¥";
+        }
+        return "";
     }
     void AnhXa(){
         exit_budget = findViewById(R.id.exit_budget);
@@ -109,15 +130,26 @@ public class AdjustBudget extends AppCompatActivity implements OnDataPass {
                 finish();
             }
         });
-        xoa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String currency ;
+                if(crr.getText().toString().equals("$"))
+                {
+                    currency="USD";
+                }
+                else if(crr.getText().toString().equals("đ"))
+                {
+                    currency="VND";
+                }
+                else if(crr.getText().toString().equals("€"))
+                {
+                    currency="EUR";
+                }
+                else
+                {
+                    currency="JPY";
+                }
                 if(!validdate())
                 {
                     Toast.makeText(AdjustBudget.this, "Error(s) has occured", Toast.LENGTH_SHORT).show();
@@ -127,14 +159,14 @@ public class AdjustBudget extends AppCompatActivity implements OnDataPass {
                     BudgetAPIUtil budgetAPIUtil = new BudgetAPIUtil();
                     if(type.getText().equals("NO_RENEW"))
                     {
-                        CreateNoRenewBudgetEntity createNoRenewBudgetEntity = new CreateNoRenewBudgetEntity(GetIDCategory(Category_txt.getText().toString()), Double.parseDouble(amount.getText().toString()), date_unit.toUpperCase(), date.getText().toString(), switch1.isChecked());
+                        CreateNoRenewBudgetEntity createNoRenewBudgetEntity = new CreateNoRenewBudgetEntity(GetIDCategory(Category_txt.getText().toString()), Double.parseDouble(amount.getText().toString()), date_unit.toUpperCase(), date.getText().toString(), switch1.isChecked(), currency);
                         budgetAPIUtil.updateNoRenewBudget(budget.getId(),createNoRenewBudgetEntity);
                     }
                     else
                     {
                         if((date.getText().equals("Daily")||date.getText().equals("Weekly")||date.getText().equals("Monthly")||date.getText().equals("Yearly")))
                         {
-                            CreateRenewBudgetEntity createRenewBudgetEntity = new CreateRenewBudgetEntity(GetIDCategory(Category_txt.getText().toString()), Double.parseDouble(amount.getText().toString()), date.getText().toString(), switch1.isChecked());
+                            CreateRenewBudgetEntity createRenewBudgetEntity = new CreateRenewBudgetEntity(GetIDCategory(Category_txt.getText().toString()), Double.parseDouble(amount.getText().toString()), date.getText().toString(), switch1.isChecked(), currency);
                             budgetAPIUtil.updateRenewBudget(budget.getId(),createRenewBudgetEntity);
                         }
                         else
@@ -148,7 +180,7 @@ public class AdjustBudget extends AppCompatActivity implements OnDataPass {
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
-                            CreateRenewBudgetEntity createRenewBudgetEntity = new CreateRenewBudgetEntity(GetIDCategory(Category_txt.getText().toString()), Double.parseDouble(amount.getText().toString()), date_unit, realDate, switch1.isChecked());
+                            CreateRenewBudgetEntity createRenewBudgetEntity = new CreateRenewBudgetEntity(GetIDCategory(Category_txt.getText().toString()), Double.parseDouble(amount.getText().toString()), date_unit, realDate, switch1.isChecked(), currency);
                             budgetAPIUtil.updateRenewBudget(budget.getId(),createRenewBudgetEntity);
                         }
                     }
@@ -160,9 +192,27 @@ public class AdjustBudget extends AppCompatActivity implements OnDataPass {
         xoa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BudgetAPIUtil budgetAPIUtil = new BudgetAPIUtil();
-                budgetAPIUtil.deleteBudget(budget.getId());
-                finish();
+                AlertDialog dialog = new AlertDialog.Builder(AdjustBudget.this)
+                        .setTitle("Confirmation")
+                        .setMessage("Do you really want to delete?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Execute delete action
+                                BudgetAPIUtil budgetAPIUtil = new BudgetAPIUtil();
+                                budgetAPIUtil.deleteBudget(budget.getId());
+                                finish();
+                            }
+                        })
+                        .setNegativeButton("No", null)
+                        .setIcon(R.drawable.warning)
+                        .show();
+
+                // Change the colors of the buttons
+                Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                positiveButton.setTextColor(Color.parseColor("#177715"));
+
+                Button negativeButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+                negativeButton.setTextColor(Color.RED);
             }
         });
         crr.setOnClickListener(new View.OnClickListener() {

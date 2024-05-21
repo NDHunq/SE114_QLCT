@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.example.qlct.API_Entity.GetAllCategoryEntity;
 import com.example.qlct.API_Entity.GetAllTransactionsEntity_quyen;
 import com.example.qlct.R;
+import com.example.qlct.doitiente;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
@@ -182,17 +183,33 @@ public class AnalysisNetIncomeFragment extends Fragment {
             }
         });
         SplitList();
-        Log.d("INCOME",String.valueOf(listIncome.size()) );
-        Log.d("EXPENSE",String.valueOf(listExpense.size()));
         AdjustList(listIncome,date);
         AdjustList(listExpense,date);
-        Log.d("INCOME",String.valueOf(listIncome.size()) );
-        Log.d("EXPENSE",String.valueOf(listExpense.size()));
         SortListByDate(listIncome);
         SortListByDate(listExpense);
+        //**********************************************************
+        if(id_wallet.equals("Total"))
+        {
+            AdjustCurrency(listIncome);
+            AdjustCurrency(listExpense);
+        }
+        //**********************************************************
         Draw();
         SetText();
         return view;
+    }
+    void AdjustCurrency(ArrayList<GetAllTransactionsEntity_quyen> list)
+    {
+        doitiente dt=new doitiente();
+        for(GetAllTransactionsEntity_quyen transaction : list)
+        {
+            if(!transaction.currency_unit.equals("VND"))
+            {
+                transaction.amount=dt.converttoVND(transaction.currency_unit,Double.parseDouble(transaction.amount)).toString();
+
+            }
+
+        }
     }
     void SetText() {
         float totalIncome = 0;
@@ -295,7 +312,8 @@ public class AnalysisNetIncomeFragment extends Fragment {
                             // If the other transaction date matches, add the amount to the current transaction and remove the other transaction
                             float currentAmount = Float.parseFloat(list.get(i).amount);
                             float otherAmount = Float.parseFloat(otherTransaction.amount);
-                            list.get(i).amount = String.valueOf(currentAmount + otherAmount);                            list.remove(j);
+                            list.get(i).amount = String.valueOf(currentAmount + otherAmount);
+                            list.remove(j);
                         } else {
                             j++;
                         }
