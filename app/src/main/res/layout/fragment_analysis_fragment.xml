@@ -137,7 +137,7 @@
                 <TextView
                     android:id="@+id/date"
                     android:layout_width="80dp"
-                    android:text="05/2024"
+                    android:text="05-2024"
                     android:gravity="center"
                     android:textColor="@color/black"
                     android:textSize="16dp"
@@ -152,57 +152,7 @@
             </LinearLayout>
 
         </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Opening balance"
-                android:textColor="@color/black"
-                android:textSize="15dp"
-                android:layout_marginStart="25dp"
-                android:layout_marginTop="10dp"
-                android:gravity="left">
 
-            </TextView>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Ending balance"
-                android:textColor="@color/black"
-                android:textSize="15dp"
-                android:layout_marginStart="25dp"
-                android:layout_marginTop="40dp"
-                android:gravity="left">
-            </TextView>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="1000000 đ"
-                android:textColor="@color/black"
-                android:textSize="15dp"
-                android:layout_marginEnd="27dp"
-                android:layout_marginTop="10dp"
-                android:layout_alignParentEnd="true"
-                android:gravity="right">
-            </TextView>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="50000000 đ"
-                android:textColor="@color/black"
-                android:textSize="15dp"
-                android:layout_marginEnd="27dp"
-                android:layout_marginTop="40dp"
-                android:layout_alignParentEnd="true"
-                android:gravity="right">
-            </TextView>
-        </RelativeLayout>
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"

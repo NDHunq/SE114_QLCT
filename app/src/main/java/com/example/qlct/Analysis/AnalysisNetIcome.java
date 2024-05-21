@@ -1,22 +1,22 @@
 package com.example.qlct.Analysis;
 
 public class AnalysisNetIcome {
-    int year;
+    int date;
     double income;
     double expense;
 
     public AnalysisNetIcome(int year, double income, double expense) {
-        this.year = year;
+        this.date = year;
         this.income = income;
         this.expense = expense;
     }
 
     public int getYear() {
-        return year;
+        return date;
     }
 
     public void setYear(int year) {
-        this.year = year;
+        this.date = year;
     }
 
     public double getIncome() {

@@ -20,18 +20,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
+
 
 
 import com.example.qlct.Analysis.AnalysisExpenseFragment;
 import com.example.qlct.Analysis.AnalysisIcomeFragment;
 import com.example.qlct.Analysis.AnalysisNetIncomeFragment;
 import com.example.qlct.Notification.Notificaiton_activity;
+
 
 import com.example.qlct.API_Entity.GetAllCategoryEntity;
 import com.example.qlct.API_Entity.GetAllTransactionsEntity_quyen;
@@ -44,14 +49,17 @@ import com.example.qlct.Analysis.AnalysisExpenseFragment;
 import com.example.qlct.Analysis.AnalysisIcomeFragment;
 import com.example.qlct.Analysis.AnalysisNetIncomeFragment;
 
+import com.example.qlct.Notification.Notificaiton_activity;
 
 import com.example.qlct.R;
 import com.example.qlct.SelectWallet_Adapter;
 import com.example.qlct.Wallet_hdp;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -75,7 +83,7 @@ public class Analysis_fragment extends Fragment {
     ImageView bell;
     LinearLayout select_wallet;
     final Calendar calendar = Calendar.getInstance();
-    final SimpleDateFormat monthFormat = new SimpleDateFormat("MM/yyyy", Locale.getDefault());
+    final SimpleDateFormat monthFormat = new SimpleDateFormat("MM-yyyy", Locale.getDefault());
     final SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
     private ListView walletListView;
 
@@ -129,14 +137,16 @@ public class Analysis_fragment extends Fragment {
         listwallet = walletAPIUtil.getAllWalletAPI();
         CategoryAPIUtil categoryAPIUtil = new CategoryAPIUtil();
         listCategory = categoryAPIUtil.getAllCategory();
-       Load(listTransactions,"Total",listCategory);
-
         AnhXa(view);
+       Load(listTransactions,"Total",listCategory,date.getText().toString());
+
         return view;
     }
-    public void Load(ArrayList<GetAllTransactionsEntity_quyen> listtrans,String id_wallet,ArrayList<GetAllCategoryEntity> listCategory)
+    public void Load(ArrayList<GetAllTransactionsEntity_quyen> listtrans,String id_wallet,ArrayList<GetAllCategoryEntity> listCategory,String Date)
     {
         ArrayList<GetAllTransactionsEntity_quyen> listTransCopy = new ArrayList<>();
+        ArrayList<GetAllTransactionsEntity_quyen> listTransCopy1 = new ArrayList<>();
+        ArrayList<GetAllTransactionsEntity_quyen> listTransCopy2 = new ArrayList<>();
         for (GetAllTransactionsEntity_quyen transaction : listtrans) {
             GetAllTransactionsEntity_quyen transactionCopy = new GetAllTransactionsEntity_quyen(
                     transaction.id,
@@ -154,23 +164,27 @@ public class Analysis_fragment extends Fragment {
                     transaction.category
             );
             listTransCopy.add(transactionCopy);
+            listTransCopy1.add(transactionCopy);
+            listTransCopy2.add(transactionCopy);
         }
-
+        Log.d("ListTransCopy", listTransCopy.size()+"");
+        Log.d("ListTransCopy1", listTransCopy1.size()+"");
+        Log.d("ListTransCopy2", listTransCopy2.size()+"");
         FragmentManager fragmentManager=getChildFragmentManager();
         FragmentTransaction transaction=fragmentManager.beginTransaction();
-        Fragment child= new AnalysisNetIncomeFragment(listTransCopy,id_wallet,listCategory,getCurrencyUnitById(id_wallet));
+        Fragment child= new AnalysisNetIncomeFragment(listTransCopy,id_wallet,listCategory,getCurrencyUnitById(id_wallet),Date);
         transaction.replace(R.id.ChildFrag1,child);
         transaction.commit();
 
         FragmentManager fragmentManager1=getChildFragmentManager();
         FragmentTransaction transaction1=fragmentManager1.beginTransaction();
-        Fragment child1= new AnalysisExpenseFragment(listTransCopy,id_wallet,listCategory,getCurrencyUnitById(id_wallet));
+        Fragment child1= new AnalysisExpenseFragment(listTransCopy1,id_wallet,listCategory,getCurrencyUnitById(id_wallet),Date);
         transaction1.replace(R.id.ChildFrag2,child1);
         transaction1.commit();
 
         FragmentManager fragmentManager2=getChildFragmentManager();
         FragmentTransaction transaction2=fragmentManager2.beginTransaction();
-        Fragment child2= new AnalysisIcomeFragment(listTransCopy,id_wallet,listCategory,getCurrencyUnitById(id_wallet));
+        Fragment child2= new AnalysisIcomeFragment(listTransCopy2,id_wallet,listCategory,getCurrencyUnitById(id_wallet),Date);
         transaction2.replace(R.id.ChildFrag3,child2);
         transaction2.commit();
     }
@@ -200,6 +214,7 @@ public class Analysis_fragment extends Fragment {
                     date.setText(monthFormat.format(Calendar.getInstance().getTime()));
                     next.setVisibility(View.INVISIBLE);
                     calendar.setTime(Calendar.getInstance().getTime());
+
                 }
             }
         });
@@ -211,6 +226,7 @@ public class Analysis_fragment extends Fragment {
                     date.setText(yearFormat.format(Calendar.getInstance().getTime()));
                     next.setVisibility(View.INVISIBLE);
                     calendar.setTime(Calendar.getInstance().getTime());
+
                 }
             }
         });
@@ -236,6 +252,7 @@ public class Analysis_fragment extends Fragment {
 
             }
         });
+
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -272,16 +289,256 @@ public class Analysis_fragment extends Fragment {
 
                 @Override
                 public void afterTextChanged(Editable s) {
+                    ArrayList<GetAllTransactionsEntity_quyen> lisrI = new ArrayList<>();
+                    for (GetAllTransactionsEntity_quyen transaction : listTransactions) {
+                        GetAllTransactionsEntity_quyen transactionCopy = new GetAllTransactionsEntity_quyen(
+                                transaction.id,
+                                transaction.user_id,
+                                transaction.amount,
+                                transaction.category_id,
+                                transaction.wallet_id,
+                                transaction.notes,
+                                transaction.picture,
+                                transaction.transaction_date,
+                                transaction.transaction_type,
+                                transaction.currency_unit,
+                                transaction.target_wallet_id,
+                                transaction.wallet,
+                                transaction.category
+                        );
+                        lisrI.add(transactionCopy);
+                    }
                     if (wallet_name.getText().toString().equals("Total")) {
-                        Load(listTransactions, "Total", listCategory);
+                        Load(lisrI, "Total", listCategory, date.getText().toString());
                     } else {
                         id_wallet = getWalletIdByName(wallet_name.getText().toString());
-                        Load(listTransactions, id_wallet, listCategory);
+                        Load(lisrI, id_wallet, listCategory, date.getText().toString());
                     }
                 }
             });
         }catch (Exception e){
             e.printStackTrace();
+        }
+        date.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Do nothing
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Do nothing
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                ArrayList<GetAllTransactionsEntity_quyen> lisrI = new ArrayList<>();
+                for (GetAllTransactionsEntity_quyen transaction : listTransactions) {
+                    GetAllTransactionsEntity_quyen transactionCopy = new GetAllTransactionsEntity_quyen(
+                            transaction.id,
+                            transaction.user_id,
+                            transaction.amount,
+                            transaction.category_id,
+                            transaction.wallet_id,
+                            transaction.notes,
+                            transaction.picture,
+                            transaction.transaction_date,
+                            transaction.transaction_type,
+                            transaction.currency_unit,
+                            transaction.target_wallet_id,
+                            transaction.wallet,
+                            transaction.category
+                    );
+                    lisrI.add(transactionCopy);
+                }
+                if (wallet_name.getText().toString().equals("Total")) {
+                    Load(lisrI, "Total", listCategory, date.getText().toString());
+                } else {
+                    id_wallet = getWalletIdByName(wallet_name.getText().toString());
+                    Load(lisrI, id_wallet, listCategory, date.getText().toString());
+                }
+            }
+        });
+        date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShowDiaLog();
+            }
+        });
+    }
+    void ShowDiaLog(){
+        if(date.getText().length()==4)
+        {
+            Dialog dialog = new Dialog(getActivity());
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.setContentView(R.layout.dialog_year_picker);
+            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            dialog.show();
+            GridView gridView = dialog.findViewById(R.id.gridView);
+            TextView year_lbl = dialog.findViewById(R.id.year);
+            TextView cancel = dialog.findViewById(R.id.cancel);
+            TextView ok = dialog.findViewById(R.id.ok);
+            ImageView up = dialog.findViewById(R.id.up);
+            ImageView down = dialog.findViewById(R.id.down);
+            String[] years={"2013","2014","2015","2016","2017","2018","2019","2020","2021","2022","2023","2024"};
+            ArrayAdapter yearAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, years) ;
+            gridView.setAdapter(yearAdapter);
+            gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    year_lbl.setText(years[position]);
+                }
+            });
+            up.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Calendar calendar = Calendar.getInstance();
+                    int currentYear = calendar.get(Calendar.YEAR);
+                    if(Integer.parseInt(year_lbl.getText().toString())<currentYear)
+                        year_lbl.setText(Integer.parseInt(year_lbl.getText().toString())+1+"");
+                    else
+                        Toast.makeText(getContext(), "Năm không được lớn hơn "+currentYear, Toast.LENGTH_LONG).show();
+                }
+            });
+            down.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    year_lbl.setText(Integer.parseInt(year_lbl.getText().toString())-1+"");
+                }
+            });
+            cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+            ok.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(isYearLessThanCurrent(year_lbl.getText().toString()))
+                    {
+                        Toast.makeText(getContext(), "Năm không được lớn hơn hiện tại", Toast.LENGTH_LONG).show();
+                    }
+                    else
+                    {
+                        date.setText(year_lbl.getText().toString());
+                    }
+                    dialog.dismiss();
+                }
+            });
+        }
+        else {
+            Dialog dialog = new Dialog(getActivity());
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.setContentView(R.layout.dialog_month_picker);
+            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            dialog.show();
+            GridView gridView = dialog.findViewById(R.id.gridView);
+            TextView month_lbl = dialog.findViewById(R.id.month);
+            TextView year_lbl = dialog.findViewById(R.id.year);
+            TextView cancel = dialog.findViewById(R.id.cancel);
+            TextView ok = dialog.findViewById(R.id.ok);
+            ImageView up = dialog.findViewById(R.id.up);
+            ImageView down = dialog.findViewById(R.id.down);
+            String[] month={"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
+            ArrayAdapter monthAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, month) ;
+            gridView.setAdapter(monthAdapter);
+            gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    month_lbl.setText(month[position]);
+                }
+            });
+            up.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Calendar calendar = Calendar.getInstance();
+                    int currentYear = calendar.get(Calendar.YEAR);
+                    if(Integer.parseInt(year_lbl.getText().toString())<currentYear)
+                        year_lbl.setText(Integer.parseInt(year_lbl.getText().toString())+1+"");
+                    else
+                        Toast.makeText(getContext(), "Năm không được lớn hơn "+currentYear, Toast.LENGTH_LONG).show();
+                }
+            });
+            down.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    year_lbl.setText(Integer.parseInt(year_lbl.getText().toString())-1+"");
+                }
+            });
+            cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+            ok.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String inputDate = month_lbl.getText().toString()+" "+year_lbl.getText().toString();
+                    SimpleDateFormat inputFormat = new SimpleDateFormat("MMM yyyy", Locale.ENGLISH);
+                    SimpleDateFormat outputFormat = new SimpleDateFormat("MM-yyyy", Locale.ENGLISH);
+
+                    try {
+                        Date daTe = inputFormat.parse(inputDate);
+                        String outputDate = outputFormat.format(daTe);
+                        if(isDateLessThanCurrent(outputDate))
+                        {
+                            Toast.makeText(getContext(), "Tháng không được lớn hơn hiện tại", Toast.LENGTH_LONG).show();
+                        }
+                        else
+                            date.setText(outputDate);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    dialog.dismiss();
+                }
+            });
+        }
+    }
+    public boolean isDateLessThanCurrent(String dateString) {
+        SimpleDateFormat format = new SimpleDateFormat("MM-yyyy");
+        try {
+            // Phân tích chuỗi ngày thành đối tượng Date
+            Date inputDate = format.parse(dateString);
+
+            // Lấy tháng và năm hiện tại
+            Calendar currentCalendar = Calendar.getInstance();
+            int currentYear = currentCalendar.get(Calendar.YEAR);
+            int currentMonth = currentCalendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0 nên cần cộng thêm 1
+
+            // Lấy tháng và năm từ chuỗi ngày
+            Calendar inputCalendar = Calendar.getInstance();
+            inputCalendar.setTime(inputDate);
+            int inputYear = inputCalendar.get(Calendar.YEAR);
+            int inputMonth = inputCalendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0 nên cần cộng thêm 1
+
+            // So sánh tháng và năm
+            if (inputYear < currentYear || (inputYear == currentYear && inputMonth <= currentMonth)) {
+                return false;
+            } else {
+                return true;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public boolean isYearLessThanCurrent(String yearString) {
+        // Chuyển đổi chuỗi năm thành số nguyên
+        int inputYear = Integer.parseInt(yearString);
+
+        // Lấy năm hiện tại
+        Calendar currentCalendar = Calendar.getInstance();
+        int currentYear = currentCalendar.get(Calendar.YEAR);
+
+        // So sánh năm
+        if (inputYear <= currentYear) {
+            return false;
+        } else {
+            return true;
         }
     }
     String getWalletIdByName(String walletName) {

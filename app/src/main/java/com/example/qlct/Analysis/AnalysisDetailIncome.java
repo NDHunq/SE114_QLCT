@@ -20,6 +20,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.qlct.API_Entity.GetAllCategoryEntity;
 import com.example.qlct.API_Entity.GetAllTransactionsEntity_quyen;
 import com.example.qlct.R;
+import com.example.qlct.doitiente;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
@@ -27,9 +28,12 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 
 import java.math.RoundingMode;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 public class AnalysisDetailIncome extends AppCompatActivity {
@@ -44,6 +48,9 @@ public class AnalysisDetailIncome extends AppCompatActivity {
     TextView total_icome;
     String currency;
     ArrayList<Integer> colors;
+    String date;
+    TextView date_lbl;
+    doitiente doitiente=new doitiente();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,11 +67,14 @@ public class AnalysisDetailIncome extends AppCompatActivity {
             id_wallet = bundle.getString("id_wallet");
             listCategory = (ArrayList<GetAllCategoryEntity>) bundle.getSerializable("listCategory");
             currency = bundle.getString("currency");
+            date = bundle.getString("date");
         }
         total_icome=this.findViewById(R.id.total_income);
         exit=this.findViewById(R.id.exit_Income);
         listView=this.findViewById(R.id.listvieww);
         pieChart=this.findViewById(R.id.piechart);
+        date_lbl=this.findViewById(R.id.date_lbl);
+        date_lbl.setText(date);
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,11 +84,59 @@ public class AnalysisDetailIncome extends AppCompatActivity {
 
         list=new ArrayList<>();
         SetUpPieChart();
+        DoiDonVi();
         AnhXa();
         Analysis_Expense_Adapter adapter=new Analysis_Expense_Adapter(list,this,R.layout.analysis_expense_list_item);
         listView.setAdapter(adapter);
 
 
+    }
+    void DoiDonVi()
+    {
+        for(GetAllTransactionsEntity_quyen transaction:listIncome)
+        {
+            if(id_wallet.equals("Total"))
+            {
+                if(transaction.currency_unit.equals("VND"))
+                    transaction.amount=String.valueOf(Float.parseFloat(transaction.amount));
+                else if(transaction.currency_unit.equals("USD"))
+                    transaction.amount=String.valueOf(Float.parseFloat(transaction.amount)*doitiente.getUSDtoVND());
+                else if(transaction.currency_unit.equals("CNY"))
+                    transaction.amount=String.valueOf(Float.parseFloat(transaction.amount)*doitiente.getCNYtoVND());
+                else if(transaction.currency_unit.equals("EUR"))
+                    transaction.amount=String.valueOf(Float.parseFloat(transaction.amount)*doitiente.getUERtoVND());
+            }
+        }
+    }
+    Double TinhPhanTram(String a, String b) {
+        a=a.replace(",", ".");
+        b=b.replace(",", ".");
+        double valueA = convertStringToNumber(a);
+        double valueB = convertStringToNumber(b);
+
+        return (valueA * 100) / valueB;
+    }
+
+    double convertStringToNumber(String str) {
+        double value;
+        char lastChar = str.charAt(str.length() - 1);
+
+        switch (lastChar) {
+            case 'K':
+                value = Double.parseDouble(str.substring(0, str.length() - 1)) * 1;
+                break;
+            case 'B':
+                value = Double.parseDouble(str.substring(0, str.length() - 1)) * 1000000;
+                break;
+            case 'M':
+                value = Double.parseDouble(str.substring(0, str.length() - 1)) * 1000;
+                break;
+            default:
+                value = Double.parseDouble(str);
+                break;
+        }
+
+        return value;
     }
     void AnhXa(){
         for(int i=0;i<listIncome.size();i++)
@@ -93,13 +151,15 @@ public class AnalysisDetailIncome extends AppCompatActivity {
             {
                 color=colors.get(4);
             }
+            double kq=TinhPhanTram(String.valueOf(doitiente.formatValue(Double.parseDouble(listIncome.get(i).amount))) ,total_icome.getText().toString().substring(0,total_icome.getText().toString().length()-2));
             if(listIncome.get(i).category_id!=null)
             {
-                list.add(new AnalysisExpense(color,hinh,getCategoryNameById(listIncome.get(i).category_id),roundTwoDecimals(Float.parseFloat(listIncome.get(i).amount)/TotalIncome(listIncome)*100),formatString(listIncome.get(i).amount),currency));
+                list.add(new AnalysisExpense(color,listIncome.get(i).category.picture,getCategoryNameById(listIncome.get(i).category_id),roundTwoDecimals(kq),doitiente.formatValue(Double.parseDouble((listIncome.get(i).amount))),currency));
+                Log.d("Expense",Double.parseDouble(listIncome.get(i).amount)+"/"+ TotalIncome(listIncome));
             }
             else
             {
-                list.add(new AnalysisExpense(color,hinh,"Transfer",roundTwoDecimals(Float.parseFloat(listIncome.get(i).amount)/TotalIncome(listIncome)*100),formatString(listIncome.get(i).amount),currency));
+                list.add(new AnalysisExpense(color,listIncome.get(i).category.picture,"Transfer",roundTwoDecimals(kq),doitiente.formatValue(Double.parseDouble (listIncome.get(i).amount)),currency));
             }
         }
 
@@ -108,21 +168,41 @@ public class AnalysisDetailIncome extends AppCompatActivity {
     void SetUpPieChart()
     {
         try{
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Calendar calendar = Calendar.getInstance();
+            String[] dateParts = date.split("-");
+            int month=-1,year;
+            if(date.length()==4)
+                year=Integer.parseInt(date);
+            else
+            {
+                month=Integer.parseInt(dateParts[0]);
+                year=Integer.parseInt(dateParts[1]);
+            }
+
             listIncome=new ArrayList<>();
             if(id_wallet.equals("Total")){
                 for(GetAllTransactionsEntity_quyen transaction:listTransactions){
-                    if(transaction.transaction_type.equals("INCOME")){
+                    Date transactionDate = format.parse(transaction.transaction_date);
+                    calendar.setTime(transactionDate);
+                    int transactionYear = calendar.get(Calendar.YEAR);
+                    int transactionMonth = calendar.get(Calendar.MONTH) + 1;
+                    if(transaction.transaction_type.equals("INCOME") && transactionYear==year && (month==-1 || transactionMonth==month)){
                         listIncome.add(transaction);
                     }
                 }
             }
             else
                 for(GetAllTransactionsEntity_quyen transaction:listTransactions){
-                    if(transaction.transaction_type.equals("INCOME") && transaction.wallet_id.equals(id_wallet)){
+                    Date transactionDate = format.parse(transaction.transaction_date);
+                    calendar.setTime(transactionDate);
+                    int transactionYear = calendar.get(Calendar.YEAR);
+                    int transactionMonth = calendar.get(Calendar.MONTH) + 1;
+                    if(transaction.transaction_type.equals("INCOME") && transaction.wallet_id.equals(id_wallet) && transactionYear==year && (month==-1 || transactionMonth==month)){
                         listIncome.add(transaction);
                     }
                     else
-                    if(transaction.transaction_type.equals("TRANSFER")&&transaction.target_wallet_id.equals(id_wallet)){
+                    if(transaction.transaction_type.equals("TRANSFER")&&transaction.target_wallet_id.equals(id_wallet) && transactionYear==year && (month==-1 || transactionMonth==month)){
                         listIncome.add(transaction);
                     }
                 }
@@ -138,7 +218,7 @@ public class AnalysisDetailIncome extends AppCompatActivity {
             }
         });
         AdjustList(listIncome);
-        total_icome.setText(formatString(String.valueOf(TotalIncome(listIncome)))+" "+currency);
+        total_icome.setText(doitiente.formatValue(TotalIncome(listIncome))+" "+currency);
         ArrayList<PieEntry> categories=new ArrayList<>();
         if(listIncome.size()==0)
         {
@@ -225,12 +305,27 @@ public class AnalysisDetailIncome extends AppCompatActivity {
 
         }
     }
-    Float TotalIncome(ArrayList<GetAllTransactionsEntity_quyen> listIncome)
+    Double TotalIncome(ArrayList<GetAllTransactionsEntity_quyen> listIncome)
     {
-        float sum=0;
+        Double sum= (double) 0;
         for(GetAllTransactionsEntity_quyen transaction:listIncome)
         {
-            sum+=Float.parseFloat(transaction.amount);
+            if(id_wallet.equals("Total"))
+            {
+                if(transaction.currency_unit.equals("VND"))
+                    sum+=Float.parseFloat(transaction.amount);
+                else if(transaction.currency_unit.equals("USD"))
+                    sum+=Float.parseFloat(transaction.amount)*doitiente.getUSDtoVND();
+                else if(transaction.currency_unit.equals("CNY"))
+                    sum+=Float.parseFloat(transaction.amount)*doitiente.getCNYtoVND();
+                else if(transaction.currency_unit.equals("EUR"))
+                    sum+=Float.parseFloat(transaction.amount)*doitiente.getUERtoVND();
+            }
+            else
+            {
+                sum+=Float.parseFloat(transaction.amount);
+            }
+
         }
         return sum;
     }

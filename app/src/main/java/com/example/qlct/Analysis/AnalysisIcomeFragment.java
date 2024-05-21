@@ -17,15 +17,19 @@ import com.example.qlct.API_Entity.GetAllCategoryEntity;
 import com.example.qlct.API_Entity.GetAllCategoryy;
 import com.example.qlct.API_Entity.GetAllTransactionsEntity_quyen;
 import com.example.qlct.R;
+import com.example.qlct.doitiente;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -51,7 +55,10 @@ public class AnalysisIcomeFragment extends Fragment {
     TextView total_icome;
     String currency;
     Bundle bundle;
-    public AnalysisIcomeFragment(ArrayList<GetAllTransactionsEntity_quyen> listTransactions,String id_wallet,ArrayList<GetAllCategoryEntity> listCategory, String currency) {
+    String date;
+    doitiente doitiente=new doitiente();
+
+    public AnalysisIcomeFragment(ArrayList<GetAllTransactionsEntity_quyen> listTransactions,String id_wallet,ArrayList<GetAllCategoryEntity> listCategory, String currency,String date) {
         bundle=new Bundle();
         ArrayList<GetAllTransactionsEntity_quyen> listTransactionsCopy = new ArrayList<>();
         for (GetAllTransactionsEntity_quyen transaction : listTransactions) {
@@ -76,11 +83,12 @@ public class AnalysisIcomeFragment extends Fragment {
         bundle.putSerializable("listCategory",listCategory);
         bundle.putString("currency",currency);
         bundle.putString("id_wallet",id_wallet);
+        bundle.putString("date",date);
         this.listTransactions = listTransactions;
         this.id_wallet=id_wallet;
         this.listCategory=listCategory;
          this.currency=currency;
-
+        this.date=date;
     }
 
     public AnalysisIcomeFragment() {
@@ -142,25 +150,44 @@ public class AnalysisIcomeFragment extends Fragment {
     void SetUpPieChart()
     {
         try{
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Calendar calendar = Calendar.getInstance();
+            String[] dateParts = date.split("-");
+            int month=-1,year;
+            if(date.length()==4)
+                year=Integer.parseInt(date);
+            else
+            {
+                month=Integer.parseInt(dateParts[0]);
+                year=Integer.parseInt(dateParts[1]);
+            }
+
             listIncome=new ArrayList<>();
             if(id_wallet.equals("Total")){
                 for(GetAllTransactionsEntity_quyen transaction:listTransactions){
-                    if(transaction.transaction_type.equals("INCOME")){
+                    Date transactionDate = format.parse(transaction.transaction_date);
+                    calendar.setTime(transactionDate);
+                    int transactionYear = calendar.get(Calendar.YEAR);
+                    int transactionMonth = calendar.get(Calendar.MONTH) + 1;
+                    if(transaction.transaction_type.equals("INCOME") && transactionYear==year && (month==-1 || transactionMonth==month)){
                         listIncome.add(transaction);
                     }
                 }
             }
             else
                 for(GetAllTransactionsEntity_quyen transaction:listTransactions){
-                    if(transaction.transaction_type.equals("INCOME") && transaction.wallet_id.equals(id_wallet)){
+                    Date transactionDate = format.parse(transaction.transaction_date);
+                    calendar.setTime(transactionDate);
+                    int transactionYear = calendar.get(Calendar.YEAR);
+                    int transactionMonth = calendar.get(Calendar.MONTH) + 1;
+                    if(transaction.transaction_type.equals("INCOME") && transactionYear==year && (month==-1 || transactionMonth==month)){
                         listIncome.add(transaction);
                     }
                     else
-                    if(transaction.transaction_type.equals("TRANSFER")&&transaction.target_wallet_id.equals(id_wallet)){
+                    if(transaction.transaction_type.equals("TRANSFER")&& transactionYear==year && (month==-1 || transactionMonth==month)){
                         listIncome.add(transaction);
                     }
                 }
-            Toast.makeText(getContext(),listIncome.size()+"", Toast.LENGTH_SHORT).show();
             Log.d("Income",listIncome.size()+"");
         }
         catch (Exception e){
@@ -173,7 +200,7 @@ public class AnalysisIcomeFragment extends Fragment {
             }
         });
         AdjustList(listIncome);
-        total_icome.setText(formatString(String.valueOf(TotalIncome(listIncome)))+" "+currency);
+        total_icome.setText(doitiente.formatValue(TotalIncome(listIncome))+" "+currency);
         ArrayList<PieEntry> categories=new ArrayList<>();
         if(listIncome.size()==0)
         {
@@ -260,12 +287,27 @@ public class AnalysisIcomeFragment extends Fragment {
 
         }
     }
-    Float TotalIncome(ArrayList<GetAllTransactionsEntity_quyen> listIncome)
+    Double TotalIncome(ArrayList<GetAllTransactionsEntity_quyen> listIncome)
     {
-        float sum=0;
+        Double sum= (double) 0;
         for(GetAllTransactionsEntity_quyen transaction:listIncome)
         {
-            sum+=Float.parseFloat(transaction.amount);
+            if(id_wallet.equals("Total"))
+            {
+                if(transaction.currency_unit.equals("VND"))
+                    sum+=Float.parseFloat(transaction.amount);
+                else if(transaction.currency_unit.equals("USD"))
+                    sum+=Float.parseFloat(transaction.amount)*doitiente.getUSDtoVND();
+                else if(transaction.currency_unit.equals("CNY"))
+                    sum+=Float.parseFloat(transaction.amount)*doitiente.getCNYtoVND();
+                else if(transaction.currency_unit.equals("EUR"))
+                    sum+=Float.parseFloat(transaction.amount)*doitiente.getUERtoVND();
+            }
+            else
+            {
+                sum+=Float.parseFloat(transaction.amount);
+            }
+
         }
         return sum;
     }

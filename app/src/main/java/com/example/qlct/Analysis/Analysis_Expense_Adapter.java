@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.qlct.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -52,7 +53,8 @@ public class Analysis_Expense_Adapter extends BaseAdapter {
         //gán giá trị
         color.setBackgroundColor(analysisExpense.getColor());
         //color.setBackgroundColor(analysisExpense.getColor());
-        avt.setImageResource(analysisExpense.getAvt());
+        String url=analysisExpense.getAvt();
+        Picasso.get().load(url).into(avt);
         name.setText(analysisExpense.getName());
         percent.setText(String.valueOf(analysisExpense.getPercent())+"%");
         money.setText((analysisExpense.getMoney())+" "+analysisExpense.getCurrency());

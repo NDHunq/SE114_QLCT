@@ -16,15 +16,19 @@ import android.widget.Toast;
 import com.example.qlct.API_Entity.GetAllCategoryEntity;
 import com.example.qlct.API_Entity.GetAllTransactionsEntity_quyen;
 import com.example.qlct.R;
+import com.example.qlct.doitiente;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -50,11 +54,13 @@ public class AnalysisExpenseFragment extends Fragment {
     TextView total_expense;
     ArrayList<GetAllTransactionsEntity_quyen> listExpense;
     Bundle bundle;
+    String date;
+    doitiente doitiente=new doitiente();
     public AnalysisExpenseFragment() {
         // Required empty public constructor
     }
 
-    public AnalysisExpenseFragment(ArrayList<GetAllTransactionsEntity_quyen> listTransactions,String id_wallet,ArrayList<GetAllCategoryEntity> listCategory,String currency) {
+    public AnalysisExpenseFragment(ArrayList<GetAllTransactionsEntity_quyen> listTransactions,String id_wallet,ArrayList<GetAllCategoryEntity> listCategory,String currency,String date) {
         bundle=new Bundle();
         ArrayList<GetAllTransactionsEntity_quyen> listTransactionsCopy = new ArrayList<>();
         for (GetAllTransactionsEntity_quyen transaction : listTransactions) {
@@ -79,10 +85,12 @@ public class AnalysisExpenseFragment extends Fragment {
         bundle.putSerializable("listCategory",listCategory);
         bundle.putString("currency",currency);
         bundle.putString("id_wallet",id_wallet);
+        bundle.putString("date",date);
         this.listTransactions = listTransactions;
         this.id_wallet=id_wallet;
         this.listCategory=listCategory;
         this.currency=currency;
+        this.date=date;
     }
 
     /**
@@ -140,25 +148,44 @@ public class AnalysisExpenseFragment extends Fragment {
     void SetUpPieChart()
     {
         try{
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Calendar calendar = Calendar.getInstance();
+            String[] dateParts = date.split("-");
+            int month=-1,year;
+            if(date.length()==4)
+                year=Integer.parseInt(date);
+            else
+            {
+                month=Integer.parseInt(dateParts[0]);
+                year=Integer.parseInt(dateParts[1]);
+            }
+
             listExpense=new ArrayList<>();
             if(id_wallet.equals("Total")){
                 for(GetAllTransactionsEntity_quyen transaction:listTransactions){
-                    if(transaction.transaction_type.equals("EXPENSE")){
+                    Date transactionDate = format.parse(transaction.transaction_date);
+                    calendar.setTime(transactionDate);
+                    int transactionYear = calendar.get(Calendar.YEAR);
+                    int transactionMonth = calendar.get(Calendar.MONTH) + 1;
+                    if(transaction.transaction_type.equals("EXPENSE") && transactionYear==year && (month==-1 || transactionMonth==month)){
                         listExpense.add(transaction);
                     }
                 }
             }
             else
                 for(GetAllTransactionsEntity_quyen transaction:listTransactions){
-                    if(transaction.transaction_type.equals("EXPENSE") && transaction.wallet_id.equals(id_wallet)){
+                    Date transactionDate = format.parse(transaction.transaction_date);
+                    calendar.setTime(transactionDate);
+                    int transactionYear = calendar.get(Calendar.YEAR);
+                    int transactionMonth = calendar.get(Calendar.MONTH) + 1;
+                    if(transaction.transaction_type.equals("EXPENSE") && transaction.wallet_id.equals(id_wallet) && transactionYear==year && (month==-1 || transactionMonth==month)){
                         listExpense.add(transaction);
                     }
                     else
-                    if(transaction.transaction_type.equals("TRANSFER")&&transaction.wallet_id.equals(id_wallet)){
+                    if(transaction.transaction_type.equals("TRANSFER")&&transaction.wallet_id.equals(id_wallet) && transactionYear==year && (month==-1 || transactionMonth==month)){
                         listExpense.add(transaction);
                     }
                 }
-            Toast.makeText(getContext(),listExpense.size()+"", Toast.LENGTH_SHORT).show();
             Log.d("Expense",listExpense.size()+"");
         }
         catch (Exception e){
@@ -171,7 +198,7 @@ public class AnalysisExpenseFragment extends Fragment {
             }
         });
         AdjustList(listExpense);
-        total_expense.setText(formatString(String.valueOf(TotalExpense(listExpense)))+" "+currency);
+        total_expense.setText(doitiente.formatValue(TotalExpense(listExpense))+" "+currency);
         ArrayList<PieEntry> categories=new ArrayList<>();
         if(listExpense.size()==0)
         {
@@ -258,12 +285,27 @@ public class AnalysisExpenseFragment extends Fragment {
 
         }
     }
-    Float TotalExpense(ArrayList<GetAllTransactionsEntity_quyen> listExpense)
+    Double TotalExpense(ArrayList<GetAllTransactionsEntity_quyen> listExpense)
     {
-        float sum=0;
+        Double sum= (double) 0;
         for(GetAllTransactionsEntity_quyen transaction:listExpense)
         {
-            sum+=Float.parseFloat(transaction.amount);
+            if(id_wallet.equals("Total"))
+            {
+                if(transaction.currency_unit.equals("VND"))
+                    sum+=Float.parseFloat(transaction.amount);
+                else if(transaction.currency_unit.equals("USD"))
+                    sum+=Float.parseFloat(transaction.amount)*doitiente.getUSDtoVND();
+                else if(transaction.currency_unit.equals("CNY"))
+                    sum+=Float.parseFloat(transaction.amount)*doitiente.getCNYtoVND();
+                else if(transaction.currency_unit.equals("EUR"))
+                    sum+=Float.parseFloat(transaction.amount)*doitiente.getUERtoVND();
+            }
+            else
+            {
+                sum+=Float.parseFloat(transaction.amount);
+            }
+
         }
         return sum;
     }

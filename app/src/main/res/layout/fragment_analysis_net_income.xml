@@ -51,6 +51,7 @@
                 android:gravity="left">
             </TextView>
             <TextView
+                android:id="@+id/income"
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -64,6 +65,7 @@
                 android:gravity="right">
             </TextView>
             <TextView
+                android:id="@+id/expense"
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -85,6 +87,7 @@
             android:background="@drawable/grey_background">
         </RelativeLayout>
         <TextView
+            android:id="@+id/net_income"
             android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
