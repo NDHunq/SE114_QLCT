@@ -26,5 +26,9 @@ public class GetAllCategoryy {
     public String getPicture() {
         return picture;
     }
+
+    public String getType() {
+        return type;
+    }
 }
 

@@ -304,7 +304,8 @@ public class AddBudget extends AppCompatActivity implements OnDataPass {
         categoryList = new ArrayList<>();
         ArrayList<GetAllCategoryy> list = new CategoryAPIUntill().getAllCategoryys();
         for (int i = 0; i < list.size(); i++) {
-            categoryList.add(new Category2(list.get(i).getName(), list.get(i).getPicture()));
+            if(list.get(i).getType().equals("Expense"))
+                categoryList.add(new Category2(list.get(i).getName(), list.get(i).getPicture()));
         }
     }
     void ShowDialog()

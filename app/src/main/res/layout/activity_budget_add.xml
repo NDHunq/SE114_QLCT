@@ -106,7 +106,6 @@
             app:cursorColor="@color/xanhnen"
             app:errorEnabled="true"
             app:boxStrokeWidth="2dp">
-
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/Amount_txtbox"
                 android:layout_width="match_parent"
@@ -115,7 +114,6 @@
                 android:textColor="#1EABED"
                 android:textStyle="bold"
                 app:hintTextColor="#1EABED">
-
             </com.google.android.material.textfield.TextInputEditText>
         </com.google.android.material.textfield.TextInputLayout>
 
