@@ -1,9 +1,12 @@
 package com.example.qlct.Budget;
 
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +17,8 @@ import com.example.qlct.API_Entity.GetAllCategoryy;
 import com.example.qlct.API_Utils.CategoryAPIUntill;
 import com.example.qlct.R;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,6 +76,7 @@ public class BudgetFinishFragment extends Fragment {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -83,19 +89,57 @@ public class BudgetFinishFragment extends Fragment {
         listView.setAdapter(adapter);
         return view;
     }
+    @RequiresApi(api = Build.VERSION_CODES.O)
     void Anhxa()
     {
         list=new ArrayList<>();
-        list.add(new Budget("Food",2000000,5000,"21, March 2024","25 March 2024",R.drawable.dish));
-        list.add(new Budget("Food",2000000,5000,"21, March 2024","25 March 2024",R.drawable.dish));
-        list.add(new Budget("Food",2000000,5000,"21, March 2024","25 March 2024",R.drawable.dish));
-        list.add(new Budget("Food",2000000,5000,"21, March 2024","25 March 2024",R.drawable.dish));
-        list.add(new Budget("Food",2000000,5000,"21, March 2024","25 March 2024",R.drawable.dish));
+        String from="";
+        String to="";
+        if(allBudgets != null)
+            for(int i=0;i<allBudgets.size();i++){
+                if(allBudgets.get(i).getBudget_type().equals("NO_RENEW")) {
+                    if (allBudgets.get(i).getNo_renew_date_unit().equals("DAY") ) {
+                        from = "";
+                        to = allBudgets.get(i).getNo_renew_date();
+                        if(!DayIsBeforeNow(to))
+                            break;
+                    }
+                    else {
+                        String[] dates = allBudgets.get(i).getNo_renew_date().split(" ");
+                        if(dates.length == 2) {
+                            from ="From: "+ dates[0];
+                            to = "To: "+dates[1];
+                            if(!DayIsBeforeNow(dates[1]))
+                                break;
+                        }
+                    }
+                    Budget budget = new Budget(GetNameCategory(allBudgets.get(i).getCategory_id()),Double.valueOf(allBudgets.get(i).getLimit_amount()) ,Double.valueOf(allBudgets.get(i).getExpensed_amount()) ,from,to,allBudgets.get(i).getCategory().getPicture(),allBudgets.get(i).getBudget_type(),allBudgets.get(i).getId(),allBudgets.get(i).getCurrency_unit());
+                    list.add(budget);
+                }
+            }
+        else{
+            Log.d("BudgetRunningFragment", "allBudgets is null");
+        }
+    }
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    boolean DayIsBeforeNow(String date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate inputDate = LocalDate.parse(date, formatter);
+        LocalDate currentDate = LocalDate.now();
 
+        return inputDate.isBefore(currentDate);
     }
     void GetAllCategory()
     {
         listCate=new CategoryAPIUntill().getAllCategoryys();
+    }
+    String GetNameCategory(String id) {
+        for(int i = 0; i < listCate.size(); i++) {
+            if(listCate.get(i).getId().equals(id)) {
+                return listCate.get(i).getName();
+            }
+        }
+        return "";
     }
     String GetIDCategory(String name)
     {
@@ -108,4 +152,5 @@ public class BudgetFinishFragment extends Fragment {
         }
         return "";
     }
+
 }

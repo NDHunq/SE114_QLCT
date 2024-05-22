@@ -2,17 +2,27 @@ package com.example.qlct.Analysis;
 
 public class AnalysisExpense {
     int color;
-    int avt;
+    String avt;
     String name;
     double percent;
-    double money;
+    String money;
+    String currency;
 
-    public AnalysisExpense(int color, int avt, String name, double percent, double money) {
+    public AnalysisExpense(int color, String avt, String name, double percent, String money, String currency) {
         this.color = color;
         this.avt = avt;
         this.name = name;
         this.percent = percent;
         this.money = money;
+        this.currency = currency;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 
     public int getColor() {
@@ -23,11 +33,11 @@ public class AnalysisExpense {
         this.color = color;
     }
 
-    public int getAvt() {
+    public String getAvt() {
         return avt;
     }
 
-    public void setAvt(int avt) {
+    public void setAvt(String avt) {
         this.avt = avt;
     }
 
@@ -47,11 +57,11 @@ public class AnalysisExpense {
         this.percent = percent;
     }
 
-    public double getMoney() {
+    public String getMoney() {
         return money;
     }
 
-    public void setMoney(double money) {
+    public void setMoney(String money) {
         this.money = money;
     }
 }

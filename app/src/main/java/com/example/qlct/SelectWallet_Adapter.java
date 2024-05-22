@@ -1,6 +1,7 @@
 package com.example.qlct;
 
 import android.content.Context;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,15 +9,15 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class SelectWallet_Adapter extends BaseAdapter {
 
     private Context context;
     private int layout;
-    private List<Wallet> walletList;
+    private ArrayList<Wallet_hdp> walletList;
 
-    public SelectWallet_Adapter(Context context, int layout, List<Wallet> walletList) {
+    public SelectWallet_Adapter(Context context, int layout, ArrayList<Wallet_hdp> walletList) {
         this.context = context;
         this.layout = layout;
         this.walletList = walletList;
@@ -46,9 +47,27 @@ public class SelectWallet_Adapter extends BaseAdapter {
         TextView money = view.findViewById(R.id.select_wallet_money);
         ImageView image = view.findViewById(R.id.select_wallet_icon);
 
-        Wallet wallet = walletList.get(i);
+        Wallet_hdp wallet = walletList.get(i);
         walletname.setText(wallet.getWalletName());
-        money.setText(wallet.getAmountMoney());
+        String currencySymbol = "";
+        switch (wallet.getCurrency()){
+            case "USD":
+                currencySymbol = "$";
+                break;
+            case "VND":
+                currencySymbol = "₫";
+                break;
+            case "EUR":
+                currencySymbol = "€";
+                break;
+            case "CNY":
+                currencySymbol = "¥";
+                break;
+        }
+        String amount = wallet.getAmountMoney() + " " + currencySymbol;
+        money.setText(amount);
+        // Tạo một đối tượng LayoutParams mới với chiều rộng và chiều cao mong muốn
+
         image.setImageResource(wallet.getImage());
 
         return view;

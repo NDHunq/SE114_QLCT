@@ -2,7 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+
     <uses-permission android:name="android.permission.INTERNET" />
+
+
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+
+
 
     <application
         android:allowBackup="true"
@@ -15,6 +21,7 @@
         android:theme="@style/Theme.QLCT"
         tools:targetApi="31">
         <activity
+
             android:name=".Currency"
             android:exported="false" />
         <activity
@@ -28,9 +35,7 @@
             android:exported="false" /> <!-- <activity -->
         <!-- android:name=".Email_confirm_login" -->
         <!-- android:exported="false" /> -->
-        <activity
-            android:name=".select_currency"
-            android:exported="false" />
+
         <activity
             android:name=".Create_Account"
             android:exported="true" />
@@ -68,12 +73,17 @@
             android:name=".Fragment.Account_fragment"
             android:exported="true" />
         <activity
-            android:name=".TransactionDetail"
+
+            android:name=".Budget.AdjustBudget"
             android:exported="false" />
         <activity
-            android:name=".AddTransaction"
+            android:name=".Transaction.TransactionDetail"
             android:exported="false" />
         <activity
+            android:name=".Transaction.AddTransaction"
+            android:exported="false" />
+        <activity
+
             android:name=".Analysis.AnalysisDetailExpense"
             android:exported="false" />
         <activity
@@ -87,13 +97,17 @@
             android:exported="false" />
         <activity
             android:name=".Category_Add"
-            android:exported="false" />
+            android:exported="true" >
+
+
+
+        </activity>
         <activity
             android:name=".Share_Wallet"
             android:exported="false"
             android:theme="@style/Theme.QLCT" />
         <activity
-            android:name=".Notification.Notificaiton"
+            android:name=".Notification.Notificaiton_activity"
             android:exported="false" />
         <activity
             android:name=".Home.Home_Wallet_Information"
@@ -104,16 +118,20 @@
         <activity
             android:name=".Home.Home_My_wallets"
             android:exported="false" />
+
         <activity
             android:name=".MainActivity"
             android:exported="false">
 
-            <!-- <intent-filter> -->
+             <intent-filter>
             <!-- <action android:name="android.intent.action.MAIN" /> -->
 
 
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+<!--             <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <meta-data

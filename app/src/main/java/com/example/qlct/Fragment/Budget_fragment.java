@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.example.qlct.API_Entity.GetAllBudget;
@@ -26,9 +27,11 @@ import com.example.qlct.API_Utils.BudgetAPIUtil;
 import com.example.qlct.Budget.AddBudget;
 import com.example.qlct.Budget.BudgetFinishFragment;
 import com.example.qlct.Budget.BudgetRunningFragment;
-import com.example.qlct.Notification.Notificaiton;
+import com.example.qlct.Notification.Notificaiton_activity;
 import com.example.qlct.R;
+import com.example.qlct.doitiente;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class Budget_fragment extends Fragment {
@@ -40,7 +43,10 @@ public class Budget_fragment extends Fragment {
     ImageView bell;
     LinearLayout running_budget;
     ArrayList<GetAllBudget> allBudgets = new ArrayList<>();
-
+    TextView remaining;
+    TextView total_spent;
+    TextView total_budget;
+    SeekBar seekBar;
     public Budget_fragment() {
         // Required empty public constructor
     }
@@ -69,18 +75,51 @@ public class Budget_fragment extends Fragment {
         running=view.findViewById(R.id.running);
         finish=view.findViewById(R.id.finish);
         bell = view.findViewById(R.id.bell);
+        remaining=view.findViewById(R.id.remaining);
+        total_spent=view.findViewById(R.id.total_spent);
+        total_budget=view.findViewById(R.id.total_budget);
         running_budget=view.findViewById(R.id.running_budget);
+        seekBar=view.findViewById(R.id.seekBar);
         //CALL API
-            allBudgets=new BudgetAPIUtil().getAllBudgets();
-            if(allBudgets==null){
-               Log.d("Budget","null");
+        allBudgets=new BudgetAPIUtil().getAllBudgets();
+        if(allBudgets==null){
+            Log.d("Budget","null");
+        }
+        else
+            Log.d("Budget",allBudgets.size()+"");
+        double totalBudget=0;
+        double totalSpent=0;
+        try {
+            DecimalFormat df = new DecimalFormat("#,###");
+            doitiente doitiente = new doitiente();
+            for (int i = 0; i < allBudgets.size(); i++) {
+                if(allBudgets.get(i).getCurrency_unit().equals("VND"))
+                {
+                    totalBudget += Double.parseDouble(allBudgets.get(i).getLimit_amount());
+                    totalSpent += Double.parseDouble(allBudgets.get(i).getExpensed_amount());
+                }
+                else
+                {
+                    totalBudget += doitiente.converttoVND(allBudgets.get(i).getCurrency_unit(),Double.parseDouble(allBudgets.get(i).getLimit_amount()));
+                    totalSpent += doitiente.converttoVND(allBudgets.get(i).getCurrency_unit(),Double.parseDouble(allBudgets.get(i).getExpensed_amount()));
+                }
+
+
+
             }
-            else
-                Log.d("Budget",allBudgets.size()+"");
+            total_budget.setText(df.format(totalBudget)+" đ");
+            total_spent.setText(df.format(totalSpent)+" đ");
+            remaining.setText(df.format(totalBudget - totalSpent)+" đ");
+            seekBar.setMax((int) totalBudget);
+            seekBar.setProgress((int) totalSpent);
+            seekBar.setEnabled(false);
+        } catch (Exception e){
+            Log.d("Budget",e.getMessage());
+        }
         bell.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), Notificaiton.class);
+                Intent intent = new Intent(getActivity(), Notificaiton_activity.class);
                 startActivity(intent);
             }
         });

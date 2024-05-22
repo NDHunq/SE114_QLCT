@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:background="@drawable/the12dp"
+        android:layout_marginTop="10dp"
+        android:layout_height="80dp">
+        <androidx.cardview.widget.CardView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="12dp"
+            app:cardCornerRadius="250dp"
+            app:cardBackgroundColor="@color/white">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                app:cardCornerRadius="250dp"
+                android:layout_gravity="center">
+                <ImageView
+                    android:id="@+id/hinhanhVi_Thetop"
+                    android:layout_width="35dp"
+
+                    android:layout_gravity="center"
+
+                    android:layout_height="35dp">
+
+
+                </ImageView>
+
+            </androidx.cardview.widget.CardView>
+
+        </androidx.cardview.widget.CardView>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="9dp"
+            android:layout_gravity="center"
+            android:layout_marginEnd="12dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tenVi_Thetop"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+
+                android:text="Total"
+                android:textColor="@color/black"
+                android:textSize="23dp"
+
+
+
+                android:layout_marginStart="5dp"
+                android:layout_height="0dp"></TextView>
+            <TextView
+                android:id="@+id/tienVi_Thetop"
+                android:layout_width="wrap_content"
+
+                android:text="2,000,000 đ"
+
+                android:textSize="12dp"
+                android:textStyle="bold"
+                android:layout_marginStart="10dp"
+                android:layout_height="wrap_content"></TextView>
+        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/phantramVi_Thetop"
+            android:layout_gravity="center"
+            android:text="90%"
+            android:textStyle=""
+            android:layout_marginEnd="12dp"
+            android:textSize="20dp"
+            android:layout_height="wrap_content"></TextView>
+
+
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

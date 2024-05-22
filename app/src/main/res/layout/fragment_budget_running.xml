@@ -13,65 +13,75 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="35dp">
-            <TextView
-                android:id="@+id/day"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:text="This day"
-                android:gravity="center"
-                android:textColor="@color/black"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="35dp">
+                <TextView
+                    android:id="@+id/day"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="This  day"
+                    android:gravity="center"
+                    android:textColor="@color/black"
 
-                android:textSize="12dp"
-                android:layout_height="match_parent">
-            </TextView>
-            <TextView
-                android:id="@+id/week"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:text="This week"
-                android:gravity="center"
-                android:textColor="@color/black"
+                    android:textSize="16dp"
+                    android:layout_height="match_parent">
+                </TextView>
+                <TextView
+                    android:id="@+id/week"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="This week"
+                    android:gravity="center"
+                    android:textColor="@color/black"
 
-                android:textSize="12dp"
-                android:layout_height="match_parent">
-            </TextView>
-            <TextView
-                android:id="@+id/month"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:text="This month"
-                android:textSize="12dp"
-                android:gravity="center"
-                android:textColor="@color/black"
+                    android:textSize="16dp"
+                    android:layout_height="match_parent">
+                </TextView>
+                <TextView
+                    android:id="@+id/month"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="This month"
+                    android:textSize="16dp"
+                    android:gravity="center"
+                    android:textColor="@color/black"
 
-                android:layout_height="match_parent">
-            </TextView>
-            <TextView
-                android:id="@+id/year"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:text="This year"
-                android:textColor="@color/black"
-                android:gravity="center"
+                    android:layout_height="match_parent">
+                </TextView>
+                <TextView
+                    android:id="@+id/year"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="This year"
+                    android:textColor="@color/black"
+                    android:gravity="center"
 
-                android:textSize="12dp"
-                android:layout_height="match_parent">
-            </TextView>
-            <TextView
-                android:id="@+id/future"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:text="Future"
-                android:textSize="12dp"
-                android:textColor="@color/black"
-                android:gravity="center"
+                    android:textSize="16dp"
+                    android:layout_height="match_parent">
+                </TextView>
+                <TextView
+                    android:id="@+id/future"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="Future"
+                    android:textSize="16dp"
+                    android:textColor="@color/black"
+                    android:gravity="center"
 
-                android:layout_height="match_parent">
-            </TextView>
-        </LinearLayout>
+                    android:layout_height="match_parent">
+                </TextView>
+            </LinearLayout>
+        </ScrollView>
+
         <ListView
             android:id="@+id/listviewRunning"
             android:layout_marginStart="10dp"

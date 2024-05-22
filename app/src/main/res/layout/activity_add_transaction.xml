@@ -8,6 +8,7 @@
     android:background="@color/white">
 
     <LinearLayout
+        android:id="@+id/header_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
@@ -39,11 +40,11 @@
         android:id="@+id/add_trans_button_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="65dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/header_layout">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/income_button"
@@ -105,6 +106,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/amount_curency_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -116,11 +118,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/add_trans_button_layout">
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/Amount_txtbox_layout"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_weight="9"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:hint="Amount"
+            app:prefixText="$"
+            app:prefixTextColor="@color/xanhnen"
+            app:errorEnabled="true"
             app:hintTextColor="@color/xanhnen"
             android:textColor="#5CC2F2"
             android:layout_marginEnd="10dp"
@@ -128,14 +134,14 @@
             app:boxStrokeColor="@color/xanhnen"
             app:boxStrokeWidth="1dp"
             android:textColorHighlight="@color/xanhnen"
-            android:textColorHint="@color/xanhnen">
+            android:textColorHint="@color/black">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/Amount_txtbox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number"
-                />
+                android:textColor="@color/xanhnen" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -149,288 +155,553 @@
             android:textColor="@color/xanhnen"
             android:textSize="12sp"
             android:textStyle="bold"
-            android:layout_gravity="center"
             app:strokeColor="@color/xanhnen"
             app:rippleColor="@color/xanhnennhat"
             app:cornerRadius="5dp" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/date_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="185dp"
+        android:layout_marginTop="10dp"
         android:layout_marginStart="12dp"
         android:layout_marginEnd="10dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:weightSum="6">
+        app:layout_constraintTop_toBottomOf="@+id/amount_curency_layout">
 
         <ImageView
             android:id="@+id/add_trans_calendar_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/calendar_icon"
-            android:layout_gravity="center"
-            android:layout_marginEnd="10dp"
-            android:layout_weight="2"/>
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="12dp"/>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/select_date_txtbox_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_weight="4"
             android:hint="Selected Date"
             android:textColorHint="@color/black"
+            app:errorEnabled="true"
             app:boxStrokeColor="@color/black"
-            app:boxStrokeWidth="1dp">
+            app:boxStrokeWidth="1dp"
+            app:endIconMode="clear_text">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/select_date_txtbox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
-                android:enabled="false"/>
+                android:enabled="false" />
         </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="245dp"
-        android:text="Select category"
-        android:textColor="@color/xanhnen"
-        android:textStyle="bold"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/layout_border"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="275dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/category_icon_cardview"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center"
-            app:cardCornerRadius="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="20dp">
-
-            <ImageView
-                android:id="@+id/category_icon"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/circle_icon"
-                android:backgroundTint="@color/black"
-                android:layout_gravity="center"/>
-        </com.google.android.material.card.MaterialCardView>
-
-        <TextView
-            android:id="@+id/category_txtview"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:text="hello world"
-            android:layout_gravity="center"
-            android:textStyle="bold"
-            android:textColor="@color/black" />
-
-        <TextView
-            android:id="@+id/add_trans_select_category"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=">"
-            android:textSize="28sp"
-            android:textColor="@color/black"
-            android:backgroundTint="#F2F2F2"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="2dp"
-            android:layout_gravity="center" />
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="340dp"
-        android:text="Select wallet"
-        android:textColor="@color/xanhnen"
-        android:textStyle="bold"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/layout_border"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="370dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/wallet_icon_cardview"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center"
-            app:cardCornerRadius="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="20dp">
-
-            <ImageView
-                android:id="@+id/wallet_icon"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/circle_icon"
-                android:backgroundTint="@color/black"
-                android:layout_gravity="center"/>
-        </com.google.android.material.card.MaterialCardView>
-
-        <TextView
-            android:id="@+id/wallet_name_txtview"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:text="hello world"
-            android:layout_gravity="center"
-            android:textStyle="bold"
-            android:textColor="@color/black"/>
-
-        <TextView
-            android:id="@+id/amount_txtview"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:text="$2000000"
-            android:layout_gravity="center"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:textAlignment="textEnd"
-            android:layout_marginEnd="20dp"/>
-
-        <TextView
-            android:id="@+id/add_trans_select_wallet"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=">"
-            android:textSize="28sp"
-            android:textColor="@color/black"
-            android:backgroundTint="#F2F2F2"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="2dp"
-            android:layout_gravity="center" />
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="440dp"
-        android:text="Optional details"
-        android:textColor="@color/xanhnen"
-        android:textStyle="bold"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/note_txtbox_layout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:id="@+id/category_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="465dp"
         android:layout_marginEnd="10dp"
-        android:hint="Notes"
-        android:textColorHint="@color/black"
-        app:hintTextColor="@color/black"
-        app:boxStrokeColor="@color/black"
-        app:cursorColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="parent"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/note_txtbox"
+        app:layout_constraintTop_toBottomOf="@+id/date_layout">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/black" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginBottom="5dp">
+            <TextView
+                android:id="@+id/select_category_txtview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select Category"
+                android:textColor="@color/xanhnen"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/layout_border">
+            <LinearLayout
+                android:id="@+id/income_category_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/income_category_icon_cardview"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    app:cardCornerRadius="20dp"
+                    app:cardBackgroundColor="@color/white"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="20dp">
+
+                    <ImageView
+                        android:id="@+id/income_category_icon"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/circle_icon"
+                        android:backgroundTint="@color/white"
+                        android:layout_gravity="center"/>
+                </com.google.android.material.card.MaterialCardView>
+
+                <TextView
+                    android:id="@+id/income_category_txtview"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="Choose your category"
+                    android:layout_gravity="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/add_trans_select_income_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=">"
+                    android:textSize="28sp"
+                    android:textColor="@color/black"
+                    android:backgroundTint="#F2F2F2"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_gravity="center" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/expense_category_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/expense_category_icon_cardview"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    app:cardCornerRadius="20dp"
+                    app:cardBackgroundColor="@color/white"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="20dp">
+
+                    <ImageView
+                        android:id="@+id/expense_category_icon"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/circle_icon"
+                        android:backgroundTint="@color/white"
+                        android:layout_gravity="center"/>
+                </com.google.android.material.card.MaterialCardView>
+
+                <TextView
+                    android:id="@+id/expense_category_txtview"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="Choose your category"
+                    android:layout_gravity="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/add_trans_select_expense_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=">"
+                    android:textSize="28sp"
+                    android:textColor="@color/black"
+                    android:backgroundTint="#F2F2F2"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_gravity="center" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/from_wallet_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/from_wallet_icon_cardview"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    app:cardCornerRadius="20dp"
+                    app:cardBackgroundColor="@color/white"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="20dp">
+
+                    <ImageView
+                        android:id="@+id/from_wallet_icon"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/circle_icon"
+                        android:backgroundTint="@color/white"
+                        android:layout_gravity="center"/>
+                </com.google.android.material.card.MaterialCardView>
+
+                <TextView
+                    android:id="@+id/from_wallet_txtview"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="Choose your wallet"
+                    android:layout_gravity="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:id="@+id/from_wallet_amount_txtview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text=""
+                    android:layout_gravity="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:textAlignment="textEnd"
+                    android:layout_marginEnd="10dp"/>
+
+                <TextView
+                    android:id="@+id/add_trans_select_from_wallet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=">"
+                    android:textSize="28sp"
+                    android:textColor="@color/black"
+                    android:backgroundTint="#F2F2F2"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_gravity="center" />
+            </LinearLayout>
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/wallet_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/category_layout">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/select_wallet_txtview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="Select Wallet"
+                android:textColor="@color/xanhnen"
+                android:textStyle="bold"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/layout_border">
+            <LinearLayout
+                android:id="@+id/income_wallet_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/income_wallet_icon_cardview"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    app:cardCornerRadius="20dp"
+                    app:cardBackgroundColor="@color/white"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="20dp">
+
+                    <ImageView
+                        android:id="@+id/income_wallet_icon"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/circle_icon"
+                        android:backgroundTint="@color/white"
+                        android:layout_gravity="center"/>
+                </com.google.android.material.card.MaterialCardView>
+
+                <TextView
+                    android:id="@+id/income_wallet_name_txtview"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="Choose your wallet"
+                    android:layout_gravity="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:id="@+id/income_amount_txtview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text=""
+                    android:layout_gravity="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:textAlignment="textEnd"
+                    android:layout_marginEnd="10dp"/>
+
+                <TextView
+                    android:id="@+id/add_trans_select_income_wallet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=">"
+                    android:textSize="28sp"
+                    android:textColor="@color/black"
+                    android:backgroundTint="#F2F2F2"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_gravity="center" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/expense_wallet_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/expense_wallet_icon_cardview"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    app:cardCornerRadius="20dp"
+                    app:cardBackgroundColor="@color/white"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="20dp">
+
+                    <ImageView
+                        android:id="@+id/expense_wallet_icon"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/circle_icon"
+                        android:backgroundTint="@color/white"
+                        android:layout_gravity="center"/>
+                </com.google.android.material.card.MaterialCardView>
+
+                <TextView
+                    android:id="@+id/expense_wallet_name_txtview"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="Choose your wallet"
+                    android:layout_gravity="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:id="@+id/expense_amount_txtview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text=""
+                    android:layout_gravity="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:textAlignment="textEnd"
+                    android:layout_marginEnd="10dp"/>
+
+                <TextView
+                    android:id="@+id/add_trans_select_expense_wallet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=">"
+                    android:textSize="28sp"
+                    android:textColor="@color/black"
+                    android:backgroundTint="#F2F2F2"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_gravity="center" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/target_wallet_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/target_wallet_icon_cardview"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    app:cardCornerRadius="20dp"
+                    app:cardBackgroundColor="@color/white"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="20dp">
+
+                    <ImageView
+                        android:id="@+id/target_wallet_icon"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/circle_icon"
+                        android:backgroundTint="@color/white"
+                        android:layout_gravity="center"/>
+                </com.google.android.material.card.MaterialCardView>
+
+                <TextView
+                    android:id="@+id/target_wallet_name_txtview"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="Choose your wallet"
+                    android:layout_gravity="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:id="@+id/target_wallet_amount_txtview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text=""
+                    android:layout_gravity="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:textAlignment="textEnd"
+                    android:layout_marginEnd="10dp"/>
+
+                <TextView
+                    android:id="@+id/add_trans_select_target_wallet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=">"
+                    android:textSize="28sp"
+                    android:textColor="@color/black"
+                    android:backgroundTint="#F2F2F2"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_gravity="center" />
+            </LinearLayout>
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
 
 
     <LinearLayout
-        android:id="@+id/remind_layout"
+        android:id="@+id/note_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="540dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="parent"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageButton
-            android:id="@+id/remind_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/clock_icon"
-            android:background="@color/white"
-            android:layout_marginStart="14dp"
-            android:layout_marginEnd="14dp" />
-
-        <TextView
-            android:id="@+id/remind_txt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/wallet_layout">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="No remind"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:layout_gravity="center"/>
+            android:layout_marginEnd="5dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Optional details"
+                android:textColor="@color/xanhnen"
+                android:textStyle="bold"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="130dp">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/note_txtbox_layout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Notes"
+                    android:textColorHint="@color/black"
+                    app:hintTextColor="@color/black"
+                    app:boxStrokeColor="@color/black"
+                    app:cursorColor="@color/black">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/note_txtbox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:singleLine="false"/>
+                </com.google.android.material.textfield.TextInputLayout>
+            </ScrollView>
+        </LinearLayout>
+
     </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="595dp"
-        android:text="Add image (Optional)"
-        android:textColor="@color/xanhnen"
-        android:textStyle="bold"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/transaction_image"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/note_layout"
+        android:layout_marginTop="10dp"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="635dp"
-        android:background="@drawable/imageview_background"
-        android:src="@drawable/add_image_icon"
-        app:tint="@color/white"
+        android:layout_marginEnd="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Image (Optional)"
+            android:textColor="@color/xanhnen"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/transaction_image"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="35dp"
+            android:background="@drawable/imageview_background"
+            android:src="@drawable/add_image_icon"
+            app:tint="@color/white" />
+    </RelativeLayout>
+
+
 
     <TextView
         android:id="@+id/save_button"
@@ -446,18 +717,5 @@
         android:layout_marginBottom="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
-
-    <TextView
-        android:id="@+id/open_n_save_button"
-        android:layout_width="164dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginBottom="15dp"
-        android:text="Open payment app and save"
-        android:textColor="@color/xanhnen"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

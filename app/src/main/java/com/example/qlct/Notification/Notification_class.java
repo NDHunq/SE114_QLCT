@@ -2,24 +2,44 @@ package com.example.qlct.Notification;
 
 public class Notification_class {
     String header;
-    private int imageResId;
+    String id;
+    private String imageResId;
 
 
     String content;
     int seen;
+    String date;
 
-    public Notification_class(String header, String content, int imageResId, int seen) {
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Notification_class(String id, String header, String content, String imageResId, int seen, String date) {
+        this.id = id;
         this.header = header;
         this.content = content;
         this.imageResId = imageResId;
         this.seen = seen;
+        this.date = date;
     }
 
-    public int getImageResId() {
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getImageResId() {
         return imageResId;
     }
 
-    public void setImageResId(int imageResId) {
+    public void setImageResId(String imageResId) {
         this.imageResId = imageResId;
     }
 
