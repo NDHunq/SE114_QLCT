@@ -77,6 +77,7 @@ UserProfile userProfile;
             @Override
             public void onClick(View v) {
                 Intent myintent=new Intent(getActivity(),Home_My_wallets.class);
+                myintent.putExtra("spec","spec");
                 startActivity(myintent);
             }
         });

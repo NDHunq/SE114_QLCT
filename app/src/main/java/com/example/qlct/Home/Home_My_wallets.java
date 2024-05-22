@@ -64,6 +64,7 @@ public class Home_My_wallets extends AppCompatActivity {
     double TongTien=0;
     doitiente doitien = new doitiente();
     double tongsovi=0;
+    String spec;
 
     private  void Anhxa()
     {
@@ -146,17 +147,25 @@ public class Home_My_wallets extends AppCompatActivity {
          EditText searchbar = findViewById(R.id.searchbar);
 
         viduocchon= getIntent().getStringExtra("viduocchon");
+        spec= getIntent().getStringExtra("spec");
         if(viduocchon==null)
         {
-            viduocchon="Total";
+
+                viduocchon = "Total";
+
         }
 
 
         if(viduocchon.equals("Total"))
+
         {
-           LinearLayout total_layout = findViewById(R.id.total_layout);
-            total_layout.setBackgroundResource(R.drawable.the12dpvienxanh);
+            if(spec==null) {
+                LinearLayout total_layout = findViewById(R.id.total_layout);
+                total_layout.setBackgroundResource(R.drawable.the12dpvienxanh);
+            }
         }
+
+
 
 
         Anhxa();
@@ -166,12 +175,14 @@ public class Home_My_wallets extends AppCompatActivity {
         total.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                intent.putExtra("tenvi", "Total");
-                intent.putExtra("ammount", TongTien);
-                intent.putExtra("currency_unit", "VND");
-                intent.putExtra("tongsovi", tongsovi);
-                startActivity(intent);
+
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.putExtra("tenvi", "Total");
+                    intent.putExtra("ammount", TongTien);
+                    intent.putExtra("currency_unit", "VND");
+                    intent.putExtra("tongsovi", tongsovi);
+                    startActivity(intent);
+
             }
         });
 
@@ -253,30 +264,30 @@ ImageView search = findViewById(R.id.search);
         backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putString("tenvi", viduocchon);
-                if(viduocchon.equals("Total"))
-                {
-                    bundle.putDouble("ammount", TongTien);
-                    bundle.putString("currency_unit", "VND");
-                    bundle.putDouble("tongsovi", tongsovi);
+                if (spec == null) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("tenvi", viduocchon);
+                    if (viduocchon.equals("Total")) {
+                        bundle.putDouble("ammount", TongTien);
+                        bundle.putString("currency_unit", "VND");
+                        bundle.putDouble("tongsovi", tongsovi);
 
 
+                    } else {
+                        bundle.putDouble("ammount", tienduocchon);
+                        bundle.putString("currency_unit", currencyduocchon);
+                        bundle.putDouble("tongsovi", tongsovi);
+                    }
 
-
+                    // Kết thúc Activity hiện tại và quay lại Activity cũ
+                    Intent intent = new Intent(Home_My_wallets.this, MainActivity.class);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                } else {
+                    finish();
                 }
-                else
-                {
-                    bundle.putDouble("ammount", tienduocchon);
-                    bundle.putString("currency_unit", currencyduocchon);
-                    bundle.putDouble("tongsovi", tongsovi);
-                }
-
-                // Kết thúc Activity hiện tại và quay lại Activity cũ
-                Intent intent = new Intent(Home_My_wallets.this, MainActivity.class);
-                intent.putExtras(bundle);
-               startActivity(intent);
             }
+
         });
         linearLayout = findViewById(R.id.sortbutton);
         linearLayout.setOnClickListener(new View.OnClickListener() {
