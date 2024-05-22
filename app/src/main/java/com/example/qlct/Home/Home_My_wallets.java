@@ -68,7 +68,6 @@ public class Home_My_wallets extends AppCompatActivity {
     double TongTien=0;
     doitiente doitien = new doitiente();
     double tongsovi=0;
-    String spec;
 
     private  void Anhxa()
     {
@@ -148,14 +147,9 @@ public class Home_My_wallets extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        EditText searchbar = findViewById(R.id.searchbar);
+         EditText searchbar = findViewById(R.id.searchbar);
 
         viduocchon= getIntent().getStringExtra("viduocchon");
-        spec = getIntent().getStringExtra("spec");
-        if(spec==null)
-        {
-            viduocchon="Total";
-        }
         if(viduocchon==null)
         {
             viduocchon="Total";
@@ -164,10 +158,8 @@ public class Home_My_wallets extends AppCompatActivity {
 
         if(viduocchon.equals("Total"))
         {
-            if(spec==null) {
-                LinearLayout total_layout = findViewById(R.id.total_layout);
-                total_layout.setBackgroundResource(R.drawable.the12dpvienxanh);
-            }
+           LinearLayout total_layout = findViewById(R.id.total_layout);
+            total_layout.setBackgroundResource(R.drawable.the12dpvienxanh);
         }
 
 
@@ -190,7 +182,6 @@ public class Home_My_wallets extends AppCompatActivity {
                 intent.putExtra("currency_unit", "VND");
                 intent.putExtra("tongsovi", tongsovi);
 
-
                 startActivity(intent);
 
 
@@ -201,7 +192,16 @@ public class Home_My_wallets extends AppCompatActivity {
 
 
 
+                new Handler().postDelayed(new Runnable() {
 
+                    @Override
+                    public void run() {
+
+
+
+                        load.dismiss();
+                    }
+                }, 4000); // Delay of 1 second
             }
         });
 
@@ -219,7 +219,7 @@ public class Home_My_wallets extends AppCompatActivity {
 
             }
         });
-        listView = this.<ListView>findViewById(R.id.listView_wallets);
+       listView = this.<ListView>findViewById(R.id.listView_wallets);
 
 
         Collections.sort(theViList, nameComparator);
@@ -245,12 +245,12 @@ public class Home_My_wallets extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        ImageView search = findViewById(R.id.search);
+ImageView search = findViewById(R.id.search);
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Anhxa();
+            Anhxa();
                 Home_TheVi_Adapter theViAdap = new Home_TheVi_Adapter(Home_My_wallets.this, R.layout.home_dong_vi, theViList);
                 listView.setAdapter(theViAdap);
 
@@ -305,7 +305,7 @@ public class Home_My_wallets extends AppCompatActivity {
                 // Kết thúc Activity hiện tại và quay lại Activity cũ
                 Intent intent = new Intent(Home_My_wallets.this, MainActivity.class);
                 intent.putExtras(bundle);
-                startActivity(intent);
+               startActivity(intent);
             }
         });
         linearLayout = findViewById(R.id.sortbutton);
@@ -368,7 +368,7 @@ public class Home_My_wallets extends AppCompatActivity {
         }
         else {
 
-            descLayout.setBackgroundResource(R.drawable.nutchonbenphai);
+        descLayout.setBackgroundResource(R.drawable.nutchonbenphai);
             TextView textView= dialog.findViewById(R.id.DESCtxt);
             textView.setTextColor(Color.parseColor("#5CC2F2"));
         }
@@ -378,23 +378,23 @@ public class Home_My_wallets extends AppCompatActivity {
         TextView textView = dialog.findViewById(R.id.apply);
         TextView txtcu = findViewById(R.id.sortbutton_text);
 
-        txt2=txtcu.getText().toString();
+         txt2=txtcu.getText().toString();
         namelayout.setBackgroundResource(R.drawable.nenluachon);
-        if(txt2=="Name")
-        {
-            namelayout.setBackgroundResource(R.drawable.nenluachon);
+         if(txt2=="Name")
+         {
+             namelayout.setBackgroundResource(R.drawable.nenluachon);
 
-        }
-        else if(txt2=="Currency unit")
-        {
-            recentlayout.setBackgroundResource(R.drawable.nenluachon);
-            namelayout.setBackgroundResource(0);
-        }
+         }
+         else if(txt2=="Currency unit")
+         {
+             recentlayout.setBackgroundResource(R.drawable.nenluachon);
+             namelayout.setBackgroundResource(0);
+         }
         else if(txt2=="Total Balance")
-        {
-            totallayout.setBackgroundResource(R.drawable.nenluachon);
-            namelayout.setBackgroundResource(0);
-        }
+         {
+             totallayout.setBackgroundResource(R.drawable.nenluachon);
+             namelayout.setBackgroundResource(0);
+         }
 
         // Initialize the views
 
@@ -458,7 +458,7 @@ public class Home_My_wallets extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 TextView textView = findViewById(R.id.sortbutton_text);
-                txt2 = "Currency unit";
+               txt2 = "Currency unit";
 
                 recentlayout.setBackgroundResource(R.drawable.nenluachon);
                 totallayout.setBackgroundResource(0);
@@ -467,7 +467,7 @@ public class Home_My_wallets extends AppCompatActivity {
             }
         });
         totallayout.setOnClickListener(new View.OnClickListener()
-        {
+ {
             @Override
             public void onClick(View v) {
                 TextView textView = findViewById(R.id.sortbutton_text);
@@ -475,7 +475,7 @@ public class Home_My_wallets extends AppCompatActivity {
                 txt2 = "Total Balance";
                 recentlayout.setBackgroundResource(0);
                 namelayout.setBackgroundResource(0);
-                totallayout.setBackgroundResource(R.drawable.nenluachon);
+              totallayout.setBackgroundResource(R.drawable.nenluachon);
             }
         });
         textView.setOnClickListener(new View.OnClickListener() {
