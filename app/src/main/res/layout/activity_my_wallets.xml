@@ -17,8 +17,8 @@
             android:layout_marginStart="12dp"
             android:background="@drawable/back_arrow"
             android:layout_gravity="center"
-            android:layout_width="34dp"
-            android:layout_height="35dp">
+            android:layout_width="28dp"
+            android:layout_height="30dp">
     </ImageView>
         <TextView
             android:layout_width="0dp"
@@ -26,7 +26,7 @@
             android:layout_weight="1"
             android:text="My wallets"
             android:layout_gravity="center"
-            android:textSize="32dp"
+            android:textSize="25dp"
             android:textStyle="bold"
             android:textColor="@color/black"
             android:layout_height="wrap_content"></TextView>

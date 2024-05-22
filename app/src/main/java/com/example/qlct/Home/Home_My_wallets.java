@@ -181,16 +181,8 @@ public class Home_My_wallets extends AppCompatActivity {
                 intent.putExtra("ammount", TongTien);
                 intent.putExtra("currency_unit", "VND");
                 intent.putExtra("tongsovi", tongsovi);
-                load.show();
-                Window window = load.getWindow();
-                if (window != null) {
-                    WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
-                    layoutParams.copyFrom(window.getAttributes());
-                    layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
-                    layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT;
-                    layoutParams.gravity = Gravity.TOP;
-                    window.setAttributes(layoutParams);
-                }
+
+
                 startActivity(intent);
 
 
@@ -201,16 +193,7 @@ public class Home_My_wallets extends AppCompatActivity {
 
 
 
-                new Handler().postDelayed(new Runnable() {
 
-                    @Override
-                    public void run() {
-
-
-
-                        load.dismiss();
-                    }
-                }, 4000); // Delay of 1 second
             }
         });
 
