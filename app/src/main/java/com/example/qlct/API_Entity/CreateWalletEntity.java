@@ -1,6 +1,8 @@
 package com.example.qlct.API_Entity;
 
-public class CreateWalletEntity {
+import java.io.Serializable;
+
+public class CreateWalletEntity implements Serializable {
     public String name;
     public Integer amount;
     public String currency_unit;

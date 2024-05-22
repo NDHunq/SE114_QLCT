@@ -155,7 +155,7 @@
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/trans_detail_listview_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -166,13 +166,26 @@
         app:layout_constraintTop_toBottomOf="@id/filter_layout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
+        <TextView
+            android:id="@+id/no_transaction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No transactions"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/inter"
+            android:textColor="@color/black"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="70dp"
+            android:visibility="invisible"/>
+
         <ExpandableListView
             android:id="@+id/trans_detail_listview"
             android:layout_width="match_parent"
             android:layout_height="600dp"
             android:layout_margin="12dp">
         </ExpandableListView>
-    </LinearLayout>
+    </RelativeLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/trans_detail_add_trans"

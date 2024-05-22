@@ -7,11 +7,12 @@ import com.example.qlct.API_Entity.CreateWalletEntity;
 import com.example.qlct.Category.Category_hdp;
 import com.example.qlct.Wallet_hdp;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 
-public class TransactionDetail_TheGiaoDich {
+public class TransactionDetail_TheGiaoDich implements Serializable {
     private String HinhAnh;
     private CreateCategoryEntity DanhMuc;
     private String SoTien;

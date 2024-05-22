@@ -1,6 +1,8 @@
 package com.example.qlct.API_Entity;
 
-public class CreateCategoryEntity {
+import java.io.Serializable;
+
+public class CreateCategoryEntity implements Serializable {
     public String name;
     public String picture;
     public String type;

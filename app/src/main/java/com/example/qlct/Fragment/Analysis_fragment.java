@@ -236,13 +236,13 @@ public class Analysis_fragment extends Fragment {
     }
     private void AnhXaWallet(){
         walletList = new ArrayList<Wallet_hdp>();
-        walletList.add(new Wallet_hdp("Vi 1", "2000000 d", R.drawable.budget));
-        walletList.add(new Wallet_hdp("Vi 2", "2000000 d", R.drawable.budget));
-        walletList.add(new Wallet_hdp("Vi 3", "2000000 d", R.drawable.budget));
-        walletList.add(new Wallet_hdp("Vi 4", "2000000 d", R.drawable.budget));
-        walletList.add(new Wallet_hdp("Vi 5", "2000000 d", R.drawable.budget));
-        walletList.add(new Wallet_hdp("Vi 6", "2000000 d", R.drawable.budget));
-        walletList.add(new Wallet_hdp("Vi 7", "2000000 d", R.drawable.budget));
-        walletList.add(new Wallet_hdp("Vi 8", "2000000 d", R.drawable.budget));
+        walletList.add(new Wallet_hdp("Vi 1", "2000000 d", R.drawable.wallet));
+        walletList.add(new Wallet_hdp("Vi 2", "2000000 d", R.drawable.wallet));
+        walletList.add(new Wallet_hdp("Vi 3", "2000000 d", R.drawable.wallet));
+        walletList.add(new Wallet_hdp("Vi 4", "2000000 d", R.drawable.wallet));
+        walletList.add(new Wallet_hdp("Vi 5", "2000000 d", R.drawable.wallet));
+        walletList.add(new Wallet_hdp("Vi 6", "2000000 d", R.drawable.wallet));
+        walletList.add(new Wallet_hdp("Vi 7", "2000000 d", R.drawable.wallet));
+        walletList.add(new Wallet_hdp("Vi 8", "2000000 d", R.drawable.wallet));
     }
 }
