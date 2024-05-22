@@ -68,6 +68,7 @@ public class Home_My_wallets extends AppCompatActivity {
     double TongTien=0;
     doitiente doitien = new doitiente();
     double tongsovi=0;
+    String spec;
 
     private  void Anhxa()
     {
@@ -150,6 +151,11 @@ public class Home_My_wallets extends AppCompatActivity {
         EditText searchbar = findViewById(R.id.searchbar);
 
         viduocchon= getIntent().getStringExtra("viduocchon");
+        spec = getIntent().getStringExtra("spec");
+        if(spec==null)
+        {
+            viduocchon="Total";
+        }
         if(viduocchon==null)
         {
             viduocchon="Total";
@@ -158,8 +164,10 @@ public class Home_My_wallets extends AppCompatActivity {
 
         if(viduocchon.equals("Total"))
         {
-            LinearLayout total_layout = findViewById(R.id.total_layout);
-            total_layout.setBackgroundResource(R.drawable.the12dpvienxanh);
+            if(spec==null) {
+                LinearLayout total_layout = findViewById(R.id.total_layout);
+                total_layout.setBackgroundResource(R.drawable.the12dpvienxanh);
+            }
         }
 
 
