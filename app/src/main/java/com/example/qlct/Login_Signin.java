@@ -107,7 +107,7 @@ API_Config api_config;
         forgetpass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myintent=new Intent(Login_Signin.this, forget_pass.class);
+                Intent myintent=new Intent(Login_Signin.this, Phone.class);
                 startActivity(myintent);
 
             }

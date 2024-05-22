@@ -53,7 +53,7 @@
             android:id="@+id/phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="113114115"
+            android:text=""
             android:gravity="center"
             android:textColor="@color/black"
             android:textSize="30dp">

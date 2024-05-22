@@ -11,10 +11,15 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
+        </LinearLayout>
 
         <LinearLayout
             android:layout_margin="20dp"
-            android:layout_width="match_parent"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
             android:layout_height="100dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
@@ -23,23 +28,37 @@
 
     android:layout_gravity="top"
     android:layout_width="wrap_content"
-    android:text="Financ"
-    android:textSize="50dp"
-    android:textColor="@color/xanhnen"
+    android:text="financ"
+    android:textSize="47dp"
+    android:textStyle="bold"
+    android:textColor="#1EABED"
     android:layout_height="wrap_content">
 
 </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:text="E"
+                android:textColor="#1EABED"
+                android:textSize="70dp">
+
+            </TextView>
+
             <TextView
                 android:layout_gravity="bottom"
                 android:layout_width="wrap_content"
-                android:text="Expert"
-                android:textSize="70dp"
-                android:textColor="@color/xanhnen"
+                android:text="xpert"
+                android:textStyle="bold"
+                android:textSize="47dp"
+                android:textColor="#1EABED"
                 android:layout_height="wrap_content">
 
             </TextView>
         </LinearLayout>
         <TextView
+            android:textStyle="bold"
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -52,7 +71,7 @@
 
         <LinearLayout
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="70dp"
@@ -74,6 +93,7 @@
                 app:boxStrokeWidth="2dp">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/phone"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"
@@ -96,11 +116,13 @@
 
         <TextView
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:textColor="@color/black"
             android:textSize="25dp"
+            android:textStyle="bold"
             android:text="Password">
         </TextView>
 
@@ -112,6 +134,7 @@
             android:layout_height="50dp"
             android:layout_marginRight="20dp"
             android:gravity="center_vertical"
+
             android:background="@drawable/border"
             >
 
@@ -149,28 +172,32 @@
             android:id="@+id/forgetpass"
             android:layout_marginRight="20dp"
             android:layout_gravity="right"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="5dp"
             android:text="Forget password"
             android:textSize="20dp"
-            android:textColor="@color/xanhnen"
+            android:textStyle="bold"
+            android:textColor="#1EABED"
             android:layout_width="wrap_content"
             android:layout_height="30dp">
 
         </TextView>
         <Button
+            android:background="@drawable/the15dpvienxanhnentrong"
             android:id="@+id/Login"
             android:layout_margin="20dp"
             android:layout_width="match_parent"
             android:text="Log In"
-            android:textColor="@color/xanhnen"
-            android:textSize="20dp"
-            android:layout_height="50dp">
+            android:textStyle="bold"
+            android:textColor="#1EABED"
+            android:textSize="23dp"
+            android:layout_height="60dp">
 
         </Button>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <Button
+android:background="@drawable/transperant"
                 android:id="@+id/signin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -181,7 +208,7 @@
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 android:layout_marginRight="20dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="15dp"
 
                 >
 

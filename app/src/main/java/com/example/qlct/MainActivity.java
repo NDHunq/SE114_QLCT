@@ -2,10 +2,20 @@ package com.example.qlct;
 
 
 import android.content.Intent;
+
 import android.graphics.Color;
 import android.os.Bundle;
+
+
+import android.content.pm.PackageManager;
+import android.os.Build;
+
 import android.os.StrictMode;
 import android.util.Log;
+
+
+import android.util.Log;
+
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -17,11 +27,22 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+
 import com.example.qlct.API_Entity.GetAllWalletsEntity;
 import com.example.qlct.API_Entity.SharedPrefManager;
 import com.example.qlct.API_Entity.UpdateDeviceTokenEntity;
 import com.example.qlct.API_Utils.DeviceTokenAPIUtil;
+
 import com.example.qlct.API_Utils.WalletAPIUtil;
+
+
+
+import com.example.qlct.Category.Category_Add;
+
+
+
+import com.example.qlct.API_Entity.SharedPrefManager;
+
 import com.example.qlct.Fragment.Account_fragment;
 import com.example.qlct.Fragment.Analysis_fragment;
 import com.example.qlct.Fragment.Budget_fragment;

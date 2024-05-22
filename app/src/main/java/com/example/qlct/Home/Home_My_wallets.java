@@ -147,7 +147,7 @@ public class Home_My_wallets extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-         EditText searchbar = findViewById(R.id.searchbar);
+        EditText searchbar = findViewById(R.id.searchbar);
 
         viduocchon= getIntent().getStringExtra("viduocchon");
         if(viduocchon==null)
@@ -158,7 +158,7 @@ public class Home_My_wallets extends AppCompatActivity {
 
         if(viduocchon.equals("Total"))
         {
-           LinearLayout total_layout = findViewById(R.id.total_layout);
+            LinearLayout total_layout = findViewById(R.id.total_layout);
             total_layout.setBackgroundResource(R.drawable.the12dpvienxanh);
         }
 
@@ -181,16 +181,8 @@ public class Home_My_wallets extends AppCompatActivity {
                 intent.putExtra("ammount", TongTien);
                 intent.putExtra("currency_unit", "VND");
                 intent.putExtra("tongsovi", tongsovi);
-                load.show();
-                Window window = load.getWindow();
-                if (window != null) {
-                    WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
-                    layoutParams.copyFrom(window.getAttributes());
-                    layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
-                    layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT;
-                    layoutParams.gravity = Gravity.TOP;
-                    window.setAttributes(layoutParams);
-                }
+
+
                 startActivity(intent);
 
 
@@ -201,16 +193,7 @@ public class Home_My_wallets extends AppCompatActivity {
 
 
 
-                new Handler().postDelayed(new Runnable() {
 
-                    @Override
-                    public void run() {
-
-
-
-                        load.dismiss();
-                    }
-                }, 4000); // Delay of 1 second
             }
         });
 
@@ -228,7 +211,7 @@ public class Home_My_wallets extends AppCompatActivity {
 
             }
         });
-       listView = this.<ListView>findViewById(R.id.listView_wallets);
+        listView = this.<ListView>findViewById(R.id.listView_wallets);
 
 
         Collections.sort(theViList, nameComparator);
@@ -254,12 +237,12 @@ public class Home_My_wallets extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-ImageView search = findViewById(R.id.search);
+        ImageView search = findViewById(R.id.search);
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-            Anhxa();
+                Anhxa();
                 Home_TheVi_Adapter theViAdap = new Home_TheVi_Adapter(Home_My_wallets.this, R.layout.home_dong_vi, theViList);
                 listView.setAdapter(theViAdap);
 
@@ -314,7 +297,7 @@ ImageView search = findViewById(R.id.search);
                 // Kết thúc Activity hiện tại và quay lại Activity cũ
                 Intent intent = new Intent(Home_My_wallets.this, MainActivity.class);
                 intent.putExtras(bundle);
-               startActivity(intent);
+                startActivity(intent);
             }
         });
         linearLayout = findViewById(R.id.sortbutton);
@@ -377,7 +360,7 @@ ImageView search = findViewById(R.id.search);
         }
         else {
 
-        descLayout.setBackgroundResource(R.drawable.nutchonbenphai);
+            descLayout.setBackgroundResource(R.drawable.nutchonbenphai);
             TextView textView= dialog.findViewById(R.id.DESCtxt);
             textView.setTextColor(Color.parseColor("#5CC2F2"));
         }
@@ -387,23 +370,23 @@ ImageView search = findViewById(R.id.search);
         TextView textView = dialog.findViewById(R.id.apply);
         TextView txtcu = findViewById(R.id.sortbutton_text);
 
-         txt2=txtcu.getText().toString();
+        txt2=txtcu.getText().toString();
         namelayout.setBackgroundResource(R.drawable.nenluachon);
-         if(txt2=="Name")
-         {
-             namelayout.setBackgroundResource(R.drawable.nenluachon);
+        if(txt2=="Name")
+        {
+            namelayout.setBackgroundResource(R.drawable.nenluachon);
 
-         }
-         else if(txt2=="Currency unit")
-         {
-             recentlayout.setBackgroundResource(R.drawable.nenluachon);
-             namelayout.setBackgroundResource(0);
-         }
+        }
+        else if(txt2=="Currency unit")
+        {
+            recentlayout.setBackgroundResource(R.drawable.nenluachon);
+            namelayout.setBackgroundResource(0);
+        }
         else if(txt2=="Total Balance")
-         {
-             totallayout.setBackgroundResource(R.drawable.nenluachon);
-             namelayout.setBackgroundResource(0);
-         }
+        {
+            totallayout.setBackgroundResource(R.drawable.nenluachon);
+            namelayout.setBackgroundResource(0);
+        }
 
         // Initialize the views
 
@@ -467,7 +450,7 @@ ImageView search = findViewById(R.id.search);
             @Override
             public void onClick(View v) {
                 TextView textView = findViewById(R.id.sortbutton_text);
-               txt2 = "Currency unit";
+                txt2 = "Currency unit";
 
                 recentlayout.setBackgroundResource(R.drawable.nenluachon);
                 totallayout.setBackgroundResource(0);
@@ -476,7 +459,7 @@ ImageView search = findViewById(R.id.search);
             }
         });
         totallayout.setOnClickListener(new View.OnClickListener()
- {
+        {
             @Override
             public void onClick(View v) {
                 TextView textView = findViewById(R.id.sortbutton_text);
@@ -484,7 +467,7 @@ ImageView search = findViewById(R.id.search);
                 txt2 = "Total Balance";
                 recentlayout.setBackgroundResource(0);
                 namelayout.setBackgroundResource(0);
-              totallayout.setBackgroundResource(R.drawable.nenluachon);
+                totallayout.setBackgroundResource(R.drawable.nenluachon);
             }
         });
         textView.setOnClickListener(new View.OnClickListener() {
@@ -496,7 +479,7 @@ ImageView search = findViewById(R.id.search);
                 up=upin;
                 if(up==0)
                 {
-                    upDownImage.setBackgroundResource(R.drawable.up_arrow_1);
+                    upDownImage.setBackgroundResource(R.drawable.up_arrow);
                 }
                 else
                 {
