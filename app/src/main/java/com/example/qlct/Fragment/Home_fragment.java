@@ -589,6 +589,8 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
         year.setBackgroundTintList(colorStateList2);
 
         sotien.setText(doitien.formatValue(tongtranthangnay) + " đ");
+        month.setTextColor(Color.parseColor("#5CC2F2"));
+        year.setTextColor(Color.BLACK);
 
         month.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -598,6 +600,11 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
                 } catch (ParseException e) {
                     throw new RuntimeException(e);
                 }
+                month.setTextColor(Color.parseColor("#5CC2F2"));
+                year.setTextColor(Color.BLACK);
+
+                TextView tstm = view.findViewById(R.id.tstm);
+                tstm.setText("Total spent this month");
                 TextView sotien = view.findViewById(R.id.sotiensodo);
                 sotien.setText(doitien.formatValue(tongtranthangnay) + " đ");
                 ColorStateList colorStateList = ColorStateList.valueOf(Color.WHITE);
@@ -670,6 +677,10 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
                 } catch (ParseException e) {
                     throw new RuntimeException(e);
                 }
+                TextView tstm = view.findViewById(R.id.tstm);
+                tstm.setText("Total spent this week");
+                year.setTextColor(Color.parseColor("#5CC2F2"));
+                month.setTextColor(Color.BLACK);
 
                 TextView sotien = view.findViewById(R.id.sotiensodo);
                 sotien.setText(doitien.formatValue(tongtrantuannay) + " đ");

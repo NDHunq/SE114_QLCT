@@ -277,41 +277,43 @@
 
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
-                            android:layout_marginTop="10dp"
                             android:layout_marginStart="12dp"
+                            android:layout_marginTop="10dp"
                             android:layout_marginEnd="12dp">
+
                             <TextView
                                 android:id="@+id/month"
                                 android:layout_width="0dp"
-                                android:backgroundTint="#ACACAC"
                                 android:layout_height="35dp"
-                                android:layout_weight="1"
                                 android:layout_gravity="center"
-                                android:text="Month"
+                                android:layout_weight="1"
                                 android:background="@drawable/background_bo_trai"
-                                android:textSize="18dp"
+                                android:backgroundTint="#ACACAC"
+                                android:gravity="center"
+                                android:text="Month"
                                 android:textColor="@color/black"
 
-                                android:gravity="center">
-                            </TextView>
+                                android:textSize="18dp"></TextView>
+
                             <TextView
                                 android:id="@+id/year"
                                 android:layout_width="0dp"
                                 android:layout_height="35dp"
-                                android:layout_weight="1"
                                 android:layout_gravity="center"
-                                android:text="Week"
+                                android:layout_weight="1"
                                 android:background="@drawable/background_bo_phai"
+                                android:gravity="center"
 
-                                android:textSize="18dp"
+                                android:text="Week"
                                 android:textColor="@color/black"
 
-                                android:gravity="center">
-                            </TextView>
+                                android:textSize="18dp"></TextView>
                         </LinearLayout>
+
                         <TextView
                             android:id="@+id/sotiensodo"
                             android:layout_marginStart="12dp"
@@ -325,6 +327,7 @@
 
                         </TextView>
                         <TextView
+                            android:id="@+id/tstm"
                             android:layout_marginStart="12dp"
                             android:textStyle="bold"
                             android:text="Total spent this month"
