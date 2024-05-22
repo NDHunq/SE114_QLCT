@@ -54,7 +54,7 @@ public class Analysis_Expense_Adapter extends BaseAdapter {
         color.setBackgroundColor(analysisExpense.getColor());
         //color.setBackgroundColor(analysisExpense.getColor());
         String url=analysisExpense.getAvt();
-        Picasso.get().load(url).into(avt);
+        Picasso.get().load(url).fit().into(avt);
         name.setText(analysisExpense.getName());
         percent.setText(String.valueOf(analysisExpense.getPercent())+"%");
         money.setText((analysisExpense.getMoney())+" "+analysisExpense.getCurrency());

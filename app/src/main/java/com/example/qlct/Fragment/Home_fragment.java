@@ -180,8 +180,10 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
         Collections.sort(theTopSpentList, new Comparator<Home_TheTopSpent>() {
             @Override
             public int compare(Home_TheTopSpent o1, Home_TheTopSpent o2) {
-                double percent1 = Double.parseDouble(o1.getPercent().replace("%", ""));
-                double percent2 = Double.parseDouble(o2.getPercent().replace("%", ""));
+                String s1 = o1.getPercent().replace(",", ".");
+                String s2 = o2.getPercent().replace(",", ".");
+                double percent1 = Double.parseDouble(s1.replace("%", ""));
+                double percent2 = Double.parseDouble(s2.replace("%", ""));
                 return Double.compare(percent2, percent1);
             }
         });

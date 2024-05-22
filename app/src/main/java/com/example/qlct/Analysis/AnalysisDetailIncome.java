@@ -159,7 +159,8 @@ public class AnalysisDetailIncome extends AppCompatActivity {
             }
             else
             {
-                list.add(new AnalysisExpense(color,listIncome.get(i).category.picture,"Transfer",roundTwoDecimals(kq),doitiente.formatValue(Double.parseDouble (listIncome.get(i).amount)),currency));
+                String transferImage="https://expense-management-backend-2tac.onrender.com/api/v1/media/1716342462182.jpg";
+                list.add(new AnalysisExpense(color,transferImage,"Transfer",roundTwoDecimals(kq),doitiente.formatValue(Double.parseDouble (listIncome.get(i).amount)),currency));
             }
         }
 

@@ -155,7 +155,8 @@ public class AnalysisDetailExpense extends AppCompatActivity {
             }
             else
             {
-                list.add(new AnalysisExpense(color,listExpense.get(i).category.picture,"Transfer",roundTwoDecimals(kq),doitiente.formatValue(Double.parseDouble (listExpense.get(i).amount)),currency));
+                String transferImage="https://expense-management-backend-2tac.onrender.com/api/v1/media/1716342462182.jpg";
+                list.add(new AnalysisExpense(color,transferImage,"Transfer",roundTwoDecimals(kq),doitiente.formatValue(Double.parseDouble (listExpense.get(i).amount)),currency));
             }
         }
 
