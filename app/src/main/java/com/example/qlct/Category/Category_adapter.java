@@ -48,7 +48,6 @@ public class Category_adapter extends BaseAdapter {
         convertView = inflater.inflate(layout, null);
         ImageView categoryIcon = convertView.findViewById(R.id.category_icon);
         TextView categoryName = convertView.findViewById(R.id.category_txtview);
-        MaterialCardView cardView = convertView.findViewById(R.id.category_icon_cardview);
 
         Category_hdp category = categoryList.get(position);
         Glide.with(context).load(category.getImageURL()).into(categoryIcon);

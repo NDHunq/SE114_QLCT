@@ -416,7 +416,7 @@ public class TransactionDetail extends AppCompatActivity {
                                         Calendar calendar = Calendar.getInstance();
                                         calendar.set(year, monthOfYear, dayOfMonth);
                                         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-                                        if(compareDates(from.getText().toString(),format.format(calendar.getTime()))==1 || compareDates(from.getText().toString(),format.format(calendar.getTime()))==0)
+                                        if(compareDates(from.getText().toString(),format.format(calendar.getTime()))==-1 || compareDates(from.getText().toString(),format.format(calendar.getTime()))==0)
                                         {
                                             Toast.makeText(dateDialog.getContext(), "Ngày kết thúc không được lớn hơn hoặc bằng ngày bắt đầu", Toast.LENGTH_LONG).show();
                                         }
@@ -454,7 +454,12 @@ public class TransactionDetail extends AppCompatActivity {
                         calendar.add(Calendar.DAY_OF_MONTH, 1);
 
                         // Định dạng ngày mới và đặt nó vào TextView
-                        date.setText(format.format(calendar.getTime()));
+                        if(isEndDateLessThanCurrent(". - "+format.format(calendar.getTime()))) {
+                            Toast.makeText(dateDialog.getContext(), "Ngày không được lớn hơn hiện tại", Toast.LENGTH_LONG).show();
+                            calendar.add(Calendar.DAY_OF_MONTH, 1);
+                        }
+                        else
+                            date.setText(format.format(calendar.getTime()));
                     }
                     break;
                     case "month":
@@ -471,8 +476,13 @@ public class TransactionDetail extends AppCompatActivity {
                         // Tăng tháng lên 1
                         calendar.add(Calendar.MONTH, 1);
 
-                        // Định dạng tháng mới và đặt nó vào TextView
-                        date.setText(format.format(calendar.getTime()));
+                        if(!isDateLessThanCurrent(format.format(calendar.getTime())))
+                        {
+                            Toast.makeText(dateDialog.getContext(), "Tháng không được lớn hơn hiện tại", Toast.LENGTH_LONG).show();
+                            calendar.add(Calendar.MONTH, 1);
+                        }
+                        else
+                            date.setText(format.format(calendar.getTime()));
                     }
                     break;
                     case "year":
@@ -489,8 +499,13 @@ public class TransactionDetail extends AppCompatActivity {
                         // Tăng năm lên 1
                         calendar.add(Calendar.YEAR, 1);
 
-                        // Định dạng năm mới và đặt nó vào TextView
-                        date.setText(format.format(calendar.getTime()));
+                        if(!isYearLessThanCurrent(format.format(calendar.getTime())))
+                        {
+                            Toast.makeText(dateDialog.getContext(), "Năm không được lớn hơn hiện tại", Toast.LENGTH_LONG).show();
+                            calendar.add(Calendar.YEAR, 1);
+                        }
+                        else
+                            date.setText(format.format(calendar.getTime()));
 
                     }
                     break;
@@ -512,8 +527,16 @@ public class TransactionDetail extends AppCompatActivity {
                         calendarStart.add(Calendar.DAY_OF_MONTH, 7);
                         calendarEnd.add(Calendar.DAY_OF_MONTH, 7);
 
-                        // Định dạng ngày mới và đặt nó vào TextView
-                        date.setText(format.format(calendarStart.getTime()) + " - " + format.format(calendarEnd.getTime()));
+                        if(isEndDateLessThanCurrent(". - "+format.format(calendarStart.getTime()))) {
+                            Toast.makeText(dateDialog.getContext(), "Ngày kết thúc không được lớn hơn hiện tại", Toast.LENGTH_LONG).show();
+                            calendarStart.add(Calendar.DAY_OF_MONTH, 7);
+                            calendarEnd.add(Calendar.DAY_OF_MONTH, 7);
+                        }
+                        else
+                        {
+                            // Định dạng ngày mới và đặt nó vào TextView
+                            date.setText(format.format(calendarStart.getTime()) + " - " + format.format(calendarEnd.getTime()));
+                        }
 
                     }
                     break;
@@ -543,14 +566,7 @@ public class TransactionDetail extends AppCompatActivity {
 
                         // Giảm ngày đi 1
                         calendar.add(Calendar.DAY_OF_MONTH, -1);
-
-                        // Định dạng ngày mới và đặt nó vào TextView
-                        if(isEndDateLessThanCurrent(". - "+format.format(calendar.getTime()))) {
-                            Toast.makeText(dateDialog.getContext(), "Ngày không được lớn hơn hiện tại", Toast.LENGTH_LONG).show();
-                            calendar.add(Calendar.DAY_OF_MONTH, 1);
-                        }
-                        else
-                            date.setText(format.format(calendar.getTime()));
+                        date.setText(format.format(calendar.getTime()));
                     }
                     break;
                     case "month":
@@ -566,13 +582,7 @@ public class TransactionDetail extends AppCompatActivity {
 
                         // Giảm tháng đi 1
                         calendar.add(Calendar.MONTH, -1);
-                        if(!isDateLessThanCurrent(format.format(calendar.getTime())))
-                        {
-                            Toast.makeText(dateDialog.getContext(), "Tháng không được lớn hơn hiện tại", Toast.LENGTH_LONG).show();
-                            calendar.add(Calendar.MONTH, 1);
-                        }
-                        else
-                            date.setText(format.format(calendar.getTime()));
+                        date.setText(format.format(calendar.getTime()));
                     }
                     break;
                     case "year":
@@ -588,13 +598,8 @@ public class TransactionDetail extends AppCompatActivity {
 
                         // Giảm năm đi 1
                         calendar.add(Calendar.YEAR, -1);
-                        if(!isYearLessThanCurrent(format.format(calendar.getTime())))
-                        {
-                            Toast.makeText(dateDialog.getContext(), "Năm không được lớn hơn hiện tại", Toast.LENGTH_LONG).show();
-                            calendar.add(Calendar.YEAR, 1);
-                        }
-                        else
-                            date.setText(format.format(calendar.getTime()));
+                        date.setText(format.format(calendar.getTime()));
+
 
                     }
                     break;
@@ -615,16 +620,9 @@ public class TransactionDetail extends AppCompatActivity {
                         // Giảm ngày đi 7 (1 tuần)
                         calendarStart.add(Calendar.DAY_OF_MONTH, -7);
                         calendarEnd.add(Calendar.DAY_OF_MONTH, -7);
-                        if(isEndDateLessThanCurrent(". - "+format.format(calendarEnd.getTime()))) {
-                            Toast.makeText(dateDialog.getContext(), "Ngày kết thúc không được lướn hơn hiện tại", Toast.LENGTH_LONG).show();
-                            calendarStart.add(Calendar.DAY_OF_MONTH, 7);
-                            calendarEnd.add(Calendar.DAY_OF_MONTH, 7);
-                        }
-                        else
-                        {
-                            // Định dạng ngày mới và đặt nó vào TextView
-                            date.setText(format.format(calendarStart.getTime()) + " - " + format.format(calendarEnd.getTime()));
-                        }
+                        date.setText(format.format(calendarStart.getTime()) + " - " + format.format(calendarEnd.getTime()));
+
+
                     }
                     break;
                 }
@@ -895,6 +893,7 @@ public class TransactionDetail extends AppCompatActivity {
 ////            }
 ////        });
 
+        TextView noTransaction = findViewById(R.id.no_transaction);
         setupExpandableListView(theGiaoDichList);
         expandableListView = findViewById(R.id.trans_detail_listview);
         expandableListView.setGroupIndicator(null);
@@ -903,6 +902,7 @@ public class TransactionDetail extends AppCompatActivity {
         for (int i = 0; i < expandableListAdapter.getGroupCount(); i++) {
             expandableListView.expandGroup(i);
         }
+        noTransaction.setVisibility(View.GONE);
 
         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
@@ -1058,10 +1058,10 @@ public class TransactionDetail extends AppCompatActivity {
             // Chuyển đổi chuỗi ngày thứ hai thành đối tượng Date
             Date endDate = format.parse(dates[1]);
             Calendar calendar = Calendar.getInstance();
-            calendar.add(Calendar.DAY_OF_MONTH, -1);
+            //calendar.add(Calendar.DAY_OF_MONTH, -1);
             Date currentDate = calendar.getTime();
             // So sánh ngày thứ hai với ngày hiện tại
-            return endDate.before(currentDate) ;
+            return !(endDate.before(currentDate)) ;
         } catch (ParseException e) {
             e.printStackTrace();
             return false;
@@ -1103,10 +1103,10 @@ public class TransactionDetail extends AppCompatActivity {
             int inputMonth = inputCalendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0 nên cần cộng thêm 1
 
             // So sánh tháng và năm
-            if (inputYear < currentYear || (inputYear == currentYear && inputMonth < currentMonth)) {
-                return false;
-            } else {
+            if (inputYear < currentYear || (inputYear == currentYear && inputMonth <= currentMonth)) {
                 return true;
+            } else {
+                return false;
             }
         } catch (ParseException e) {
             e.printStackTrace();
@@ -1122,10 +1122,10 @@ public class TransactionDetail extends AppCompatActivity {
         int currentYear = currentCalendar.get(Calendar.YEAR);
 
         // So sánh năm
-        if (inputYear < currentYear) {
-            return false;
-        } else {
+        if (inputYear <= currentYear) {
             return true;
+        } else {
+            return false;
         }
     }
 
@@ -1515,7 +1515,7 @@ public class TransactionDetail extends AppCompatActivity {
             List<TransactionDetail_TheGiaoDich> list = new ArrayList<>();
             if (date.contains("-")) {
                 // Date range
-                String[] dates = date.split("-");
+                String[] dates = date.split(" - ");
                 for (TransactionDetail_TheGiaoDich item : filteredList) {
                     if (item.getNgayThang().compareTo(formatDate2(dates[0])) >= 0 && item.getNgayThang().compareTo(formatDate2(dates[1])) <= 0) {
                         list.add(item);

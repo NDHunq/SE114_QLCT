@@ -27,12 +27,13 @@
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:layout_gravity="center"
+                    app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="250dp">
 
                     <ImageView
                         android:id="@+id/hinhanh"
                         android:layout_width="35dp"
-
+                        android:background="@color/white"
                         android:layout_height="35dp"
                         android:src="@drawable/transfer_icon"
 
@@ -92,6 +93,7 @@
                         android:textAlignment="textEnd"
                         android:layout_width="match_parent"
                         android:text="12/12/2020"
+                        android:textColor="@color/black"
                         android:textSize="14dp"
                         android:layout_height="wrap_content">
 
@@ -128,6 +130,7 @@
             android:layout_height="wrap_content"
             android:text="Ghi Chu"
             android:layout_marginTop="5dp"
+            android:textColor="@color/black"
             android:textSize="15dp"
             android:layout_marginStart="12dp"
             >

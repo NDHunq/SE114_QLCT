@@ -83,6 +83,23 @@ public class Home_New_wallet extends AppCompatActivity {
 
         TextInputEditText ammount = findViewById(R.id.Amount_txtbox);
         TextInputEditText name =findViewById(R.id.Walletname_txtbox);
+        name.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Do nothing
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                validateWalletName();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // Do nothing
+            }
+        });
+
         ImageButton upload = findViewById(R.id.addnewbut);
         upload.setOnClickListener(new View.OnClickListener() {
             @Override

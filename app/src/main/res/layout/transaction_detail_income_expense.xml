@@ -27,6 +27,7 @@
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:layout_gravity="center"
+                    app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="250dp">
 
                     <ImageView
@@ -34,6 +35,7 @@
                         android:layout_width="35dp"
 
                         android:layout_height="35dp"
+                        android:background="@color/white"
 
                         android:layout_gravity="center">
 
@@ -103,6 +105,7 @@
                         android:id="@+id/ngaythang"
                         android:textAlignment="textEnd"
                         android:layout_width="match_parent"
+                        android:textColor="@color/black"
                         android:text="12/12/2020"
                         android:textSize="14dp"
                         android:layout_height="wrap_content">
@@ -139,6 +142,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Ghi Chu"
+            android:textColor="@color/black"
             android:layout_marginTop="5dp"
             android:textSize="15dp"
             android:layout_marginStart="12dp"

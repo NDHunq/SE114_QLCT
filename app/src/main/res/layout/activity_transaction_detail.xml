@@ -177,7 +177,7 @@
             android:textColor="@color/black"
             android:layout_marginTop="15dp"
             android:layout_marginStart="70dp"
-            android:visibility="invisible"/>
+            android:visibility="visible"/>
 
         <ExpandableListView
             android:id="@+id/trans_detail_listview"

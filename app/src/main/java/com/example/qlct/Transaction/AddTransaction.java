@@ -5,11 +5,17 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
 import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -33,6 +39,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.qlct.API_Entity.CreateTransactionEntity;
 import com.example.qlct.API_Entity.GetAllCategoryEntity;
 import com.example.qlct.API_Entity.GetAllWalletsEntity;
@@ -53,6 +60,7 @@ import com.google.android.material.datepicker.MaterialStyledDatePickerDialog;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.io.ByteArrayOutputStream;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
@@ -66,6 +74,7 @@ import java.util.List;
 
 public class AddTransaction extends AppCompatActivity {
 
+    private static final int PICK_IMAGE_REQUEST = 1;
     private boolean isUserInteracting = true;
     private ListView categoryListView;
     private List<Category_hdp> categoryList = new ArrayList<>();
@@ -212,6 +221,7 @@ public class AddTransaction extends AppCompatActivity {
                 expenseCategoryStorage = category.getCategory_id();
             }
             dialog.dismiss();
+            //Toast.makeText(AddTransaction.this, category.getImageURL(), Toast.LENGTH_SHORT).show();
         });
 
         TextView addnew = dialog.findViewById(R.id.select_category_addnew_btn);
@@ -827,6 +837,7 @@ public class AddTransaction extends AppCompatActivity {
                     TextInputEditText noteEditText = findViewById(R.id.note_txtbox);
                     String amount = amountEditText.getText().toString().replaceAll("[.,]", "");
                     String currencies = ((MaterialButton) findViewById(R.id.add_trans_currency_btn)).getText().toString();
+                    ImageView transactionImage = findViewById(R.id.transaction_image);
 
                     if(!validate()){
                         Toast.makeText(AddTransaction.this, "An error(s) has occurred!", Toast.LENGTH_SHORT).show();
@@ -907,6 +918,38 @@ public class AddTransaction extends AppCompatActivity {
             });
         }catch (Exception e){
             e.printStackTrace();
+        }
+
+        ImageView transactionImage = findViewById(R.id.transaction_image);
+        transactionImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            Uri uri = data.getData();
+            try {
+                int width = 100; // chiều rộng mong muốn
+                int height = 100; // chiều cao mong muốn
+
+                ImageView transactionImage = findViewById(R.id.transaction_image);
+                Glide.with(this)
+                        .load(uri)
+                        .apply(new RequestOptions().override(width, height))
+                        .into(transactionImage);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

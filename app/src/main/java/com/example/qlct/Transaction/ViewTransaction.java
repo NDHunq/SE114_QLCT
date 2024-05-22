@@ -94,8 +94,8 @@ public class ViewTransaction extends AppCompatActivity {
             setExpenseBackground(expenseButton, transferType);
             setTransferBackground(transferButton, transferType);
 
-            categoryTextView.setText("Select Category");
-            walletTextView.setText("Select Wallet");
+            categoryTextView.setText("View Category");
+            walletTextView.setText("View Wallet");
             categoryLayout.setVisibility(LinearLayout.VISIBLE);
             fromWalletLayout.setVisibility(LinearLayout.GONE);
             walletLayout.setVisibility(LinearLayout.VISIBLE);
@@ -136,8 +136,8 @@ public class ViewTransaction extends AppCompatActivity {
             setExpenseBackground(expenseButton, transferType);
             setTransferBackground(transferButton, transferType);
 
-            categoryTextView.setText("Select Category");
-            walletTextView.setText("Select Wallet");
+            categoryTextView.setText("View Category");
+            walletTextView.setText("View Wallet");
             categoryLayout.setVisibility(LinearLayout.VISIBLE);
             fromWalletLayout.setVisibility(LinearLayout.GONE);
             walletLayout.setVisibility(LinearLayout.VISIBLE);

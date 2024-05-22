@@ -11,6 +11,10 @@ import android.widget.TextView;
 import com.example.qlct.R;
 import com.example.qlct.doitiente;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.HashMap;
@@ -128,7 +132,7 @@ public class TransactionDetail_ExpandableListView extends BaseExpandableListAdap
                         break;
                 }
 
-                ngaythang.setText(item.getNgayThang());
+                ngaythang.setText(convertDateFormat(item.getNgayThang()));
                 ghichu.setText(item.getGhiChu());
                 if(item.getViTien() != null) {
                     fromwallet.setText(item.getViTien().name);
@@ -177,7 +181,7 @@ public class TransactionDetail_ExpandableListView extends BaseExpandableListAdap
                         break;
                 }
 
-                ngaythang.setText(item.getNgayThang());
+                ngaythang.setText(convertDateFormat(item.getNgayThang()));
                 ghichu.setText(item.getGhiChu());
                 if(item.getViTien() != null) {
                     vitien.setText(item.getViTien().name);
@@ -229,5 +233,13 @@ public class TransactionDetail_ExpandableListView extends BaseExpandableListAdap
         // Create a DecimalFormat with the desired symbols and format the amount
         DecimalFormat formatter = new DecimalFormat("###,###.##", symbols);
         return formatter.format(amount);
+    }
+
+    public String convertDateFormat(String inputDate) {
+        DateTimeFormatter inputFormat = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter outputFormat = DateTimeFormat.forPattern("dd/MM/yyyy");
+
+        DateTime dateTime = inputFormat.parseDateTime(inputDate);
+        return outputFormat.print(dateTime);
     }
 }
