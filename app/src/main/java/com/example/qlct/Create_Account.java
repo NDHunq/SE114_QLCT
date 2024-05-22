@@ -18,11 +18,12 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.qlct.API_Entity.RegisterEntity;
 import com.example.qlct.API_Utils.UserAPiUtil;
+import com.google.android.material.textfield.TextInputEditText;
 
 public class Create_Account extends AppCompatActivity {
 Button nextcreateaccount;
-EditText phone;
-EditText username;
+TextInputEditText phone;
+    TextInputEditText username;
 TextView errorphone;
 int flag=1;
     EditText enterpass;
@@ -64,7 +65,7 @@ int flag=1;
                 }
                 if (phone.length() >= 10 && phone.length() <= 11 && phone.getText().toString().matches("[0-9]+")) {
                     if (flag == 1) {
-                        Log.d("Register", flag + "");
+                        Log.d("Register1", flag + "");
                         String phone_convert = phone.getText().toString();
                         if (phone_convert.startsWith("0")) {
                             phone_convert = "+84" + phone_convert.substring(1);
@@ -73,17 +74,17 @@ int flag=1;
                             RegisterEntity registerEntity = new RegisterEntity(username.getText().toString(), phone_convert, enterpass.getText().toString());
                             UserAPiUtil userAPiUtil = new UserAPiUtil();
                             userAPiUtil.RegisterUser(registerEntity);
-                            Log.d("Register", "Request successful");
+                            Log.d("Register1", "Request successful");
                         } catch (Exception e) {
-                            Log.d("Register", "Request failed with status code: " + e.getMessage());
+                            Log.d("Register1", "Request failed with status code: " + e.getMessage());
                         }
-                        Log.d("Register", "2");
+                        Log.d("Register1", "2");
                         Intent myintent = new Intent(Create_Account.this, email_login.class);
-                        Log.d("Register", "3");
+                        Log.d("Register1", "3");
                     myintent.putExtra("phone", phone.getText().toString());
-                    Log.d("Register", "4");
+                    Log.d("Register1", "4");
                         startActivity(myintent);
-Log.d("Register", "da intent thanh cong");
+Log.d("Register1", "da intent thanh cong");
 
                     }
                 }

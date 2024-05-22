@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Email_Confirm">
+    tools:context=".email_login">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -67,6 +67,7 @@
             >
             <EditText
                 android:id="@+id/editText1"
+                android:inputType="number"
                 android:paddingLeft="10dp"
                 android:textSize="40dp"
                 android:layout_width="50dp"
@@ -77,6 +78,7 @@
             </EditText>
             <EditText
                 android:id="@+id/editText2"
+                android:inputType="number"
                 android:paddingLeft="10dp"
                 android:textSize="40dp"
                 android:layout_width="50dp"
@@ -87,6 +89,7 @@
             </EditText>
             <EditText
                 android:id="@+id/editText3"
+                android:inputType="number"
                 android:paddingLeft="10dp"
                 android:textSize="40dp"
                 android:layout_width="50dp"
@@ -97,6 +100,7 @@
             </EditText>
             <EditText
                 android:id="@+id/editText4"
+                android:inputType="number"
                 android:paddingLeft="10dp"
                 android:textSize="40dp"
                 android:layout_width="50dp"
@@ -107,6 +111,7 @@
             </EditText>
             <EditText
                 android:id="@+id/editText5"
+                android:inputType="number"
                 android:paddingLeft="10dp"
                 android:textSize="40dp"
                 android:layout_width="50dp"
@@ -117,6 +122,7 @@
             </EditText>
             <EditText
                 android:id="@+id/editText6"
+                android:inputType="number"
                 android:paddingLeft="10dp"
                 android:textSize="40dp"
                 android:layout_width="50dp"
@@ -131,7 +137,7 @@
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:text="Resent Email"
+            android:text="Resent Code"
             android:textColor="@color/xanhnen"
             android:gravity="center_vertical"
             android:textSize="20dp">
@@ -141,7 +147,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <Button
-                android:id="@+id/next"
+                android:id="@+id/create"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Create"

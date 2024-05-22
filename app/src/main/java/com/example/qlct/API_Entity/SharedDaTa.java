@@ -2,7 +2,7 @@ package com.example.qlct.API_Entity;
 
 public class SharedDaTa {
     private static SharedDaTa instance = null;
-    private LoginResponse loginResponse;
+    private UserProfile userProfile;
 
     private SharedDaTa() {
         // Private constructor to prevent instantiation
@@ -15,11 +15,11 @@ public class SharedDaTa {
         return instance;
     }
 
-    public LoginResponse getLoginResponse() {
-        return loginResponse;
+    public UserProfile getUserProfile() {
+        return userProfile;
     }
 
-    public void setLoginResponse(LoginResponse loginResponse) {
-        this.loginResponse = loginResponse;
+    public void setUserProfile(UserProfile userProfile)  {
+        this.userProfile = userProfile;
     }
 }

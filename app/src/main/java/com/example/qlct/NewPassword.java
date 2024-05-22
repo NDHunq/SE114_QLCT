@@ -3,6 +3,7 @@ package com.example.qlct;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,8 +16,13 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.qlct.API_Entity.ChangePassWord;
+import com.example.qlct.API_Entity.SharedDaTa;
+import com.example.qlct.API_Entity.SharedPrefManager;
+import com.example.qlct.API_Entity.UserProfile;
+import com.example.qlct.API_Utils.UserAPiUtil;
 
 public class NewPassword extends AppCompatActivity {
+    UserAPiUtil userAPiUtil = new UserAPiUtil();
 
 ImageButton backnewpass;
 EditText enterpass;
@@ -40,7 +46,9 @@ Button save;
         backnewpass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myintent=new Intent(NewPassword.this,Setting.class);
+                Intent myintent = new Intent(NewPassword.this, Setting.class);
+                myintent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // Thêm cờ này
+                Log.d("NewPass", "back to setting ");
                 startActivity(myintent);
             }
         });
@@ -73,8 +81,23 @@ Button save;
                 }
 
                 ChangePassWord changePassWord = new ChangePassWord(currentpass.getText().toString(),enterpass.getText().toString());
-                Intent myintent=new Intent(NewPassword.this, Login_Signin.class);
-                startActivity(myintent);
+                if(flag==1)
+                {
+                    userAPiUtil.changePassword(changePassWord, new UserAPiUtil.OnTaskCompleted() {
+                        @Override
+                        public void onTaskCompleted(String result) {
+                            Log.d("NewPass", "response");
+                        }
+                });
+                }
+                try {
+                    SharedPrefManager.getInstance(NewPassword.this).saveMyVariable(null);
+                    Intent myintent = new Intent(NewPassword.this, Login_Signin.class);
+                    startActivity(myintent);
+                } catch (Exception e) {
+                    // Log lỗi hoặc xử lý ngoại lệ tại đây
+                    Log.d("ErrorPassword", "Error: ", e);
+                }
             }
         });
         showpass2.setOnClickListener(new View.OnClickListener() {

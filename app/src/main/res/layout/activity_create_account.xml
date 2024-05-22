@@ -58,19 +58,32 @@
             android:layout_height="70dp"
             android:layout_marginRight="20dp"
             android:gravity="center_vertical"
-            android:background="@drawable/background_item"
+
             >
 
-            <EditText
-                android:id="@+id/phone"
-                android:textSize="40dp"
-                android:paddingLeft="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                >
-            </EditText>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/phone_layout"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="42dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_weight="9"
+
+                app:hintTextColor="@color/xanhnen"
+                app:boxStrokeColor="#1EABED"
+                app:cursorColor="@color/xanhnen"
+                app:errorEnabled="true"
+                app:boxStrokeWidth="2dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:textColor="#1EABED"
+                    android:textStyle="bold"
+                    app:hintTextColor="#1EABED">
+                </com.google.android.material.textfield.TextInputEditText>
+            </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
         <TextView
@@ -100,19 +113,31 @@
             android:layout_height="70dp"
             android:layout_marginRight="20dp"
             android:gravity="center_vertical"
-            android:background="@drawable/background_item"
+
             >
 
-            <EditText
-                android:id="@+id/username"
-                android:textSize="40dp"
-                android:paddingLeft="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                >
-            </EditText>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/username_layout"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="42dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_weight="9"
+
+                app:hintTextColor="@color/xanhnen"
+                app:boxStrokeColor="#1EABED"
+                app:cursorColor="@color/xanhnen"
+                app:errorEnabled="true"
+                app:boxStrokeWidth="2dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#1EABED"
+                    android:textStyle="bold"
+                    app:hintTextColor="#1EABED">
+                </com.google.android.material.textfield.TextInputEditText>
+            </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
         <TextView
             android:layout_marginTop="10dp"
@@ -126,22 +151,24 @@
 
         <LinearLayout
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="50dp"
             android:layout_marginRight="20dp"
             android:gravity="center_vertical"
-            android:background="@drawable/background_item"
+            android:background="@drawable/border"
             >
 
             <EditText
                 android:paddingLeft="20dp"
-                android:textSize="40dp"
+                android:textSize="20dp"
                 android:id="@+id/enterpass"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:textColor="#1EABED"
+                android:textStyle="bold"
                 android:background="@android:color/transparent"
                 >
             </EditText>
@@ -167,22 +194,24 @@
 
         <LinearLayout
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="50dp"
             android:layout_marginRight="20dp"
             android:gravity="center_vertical"
-            android:background="@drawable/background_item"
+            android:background="@drawable/border"
             >
 
             <EditText
                 android:paddingLeft="20dp"
-                android:textSize="40dp"
+                android:textSize="20dp"
                 android:id="@+id/repeatpass"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:textColor="#1EABED"
+                android:textStyle="bold"
                 android:background="@android:color/transparent"
                 >
             </EditText>
@@ -222,7 +251,6 @@
                 android:textStyle="bold"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
-                android:background="#FFFFFF"
                 >
 
             </Button>

@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,7 +16,12 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.qlct.API_Entity.LoginResponse;
+import com.example.qlct.API_Entity.SharedDaTa;
+import com.example.qlct.API_Entity.UserProfile;
+
 public class forget_pass extends AppCompatActivity {
+    TextView phone;
     ImageButton back;
     Button next;
     private int lastEditTextIndex = 0;
@@ -32,6 +38,10 @@ public class forget_pass extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        UserProfile userProfile = SharedDaTa.getInstance().getUserProfile();
+        String phoneNumber = userProfile.getData().getPhone_number();
+        TextView phone=findViewById(R.id.phone);
+        phone.setText(phoneNumber);
         next=findViewById(R.id.next);
         back=findViewById(R.id.back);
         back.setOnClickListener(v -> finish());

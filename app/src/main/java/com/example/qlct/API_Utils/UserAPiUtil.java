@@ -79,7 +79,6 @@ public void RegisterUser(RegisterEntity registerEntity) {
                     Request request = new Request.Builder()
                             .url( SERVER + "/" + API_VERSION + "/user/login")
                             .method("POST", body)
-                            .addHeader("Authorization", LOGIN_TOKEN)
                             .build();
 
                     Response response = client.newCall(request).execute();
@@ -169,5 +168,36 @@ public void RegisterUser(RegisterEntity registerEntity) {
         }.execute();
     }
 
+    public void getUserProfile(OnTaskCompleted listener) {
+        new AsyncTask<Void, Void, String>() {
+            @Override
+            protected String doInBackground(Void... voids) {
+                String jsonData = "";
+                try {
+                    OkHttpClient client = new OkHttpClient().newBuilder()
+                            .build();
 
+                    Request request = new Request.Builder()
+                            .url(SERVER + "/" + API_VERSION + "/user/profile")
+                            .addHeader("Authorization", LOGIN_TOKEN)
+                            .method("GET", null)
+                            .build();
+
+                    Response response = client.newCall(request).execute();
+
+                    jsonData = response.body().string();
+
+                    Log.d("GetUserProfile", jsonData);
+                } catch (Exception e) {
+                    Log.d("GetUserProfile", "Error:" + e.toString());
+                }
+                return jsonData;
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                listener.onTaskCompleted(result);
+            }
+        }.execute();
+    }
 }

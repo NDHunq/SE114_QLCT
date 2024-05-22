@@ -16,6 +16,8 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.qlct.API_Entity.LoginResponse;
 import com.example.qlct.API_Entity.SharedDaTa;
+import com.example.qlct.API_Entity.UserProfile;
+import com.example.qlct.Fragment.Account_fragment;
 
 public class Setting extends AppCompatActivity {
 LinearLayout changemail;
@@ -34,17 +36,18 @@ TextView currency1;
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        LoginResponse loginResponse = SharedDaTa.getInstance().getLoginResponse();
+        UserProfile userProfile = SharedDaTa.getInstance().getUserProfile();
+
         currency1=findViewById(R.id.currency1);
         currency=findViewById(R.id.currency);
         phone=findViewById(R.id.phone);
 //        changemail=findViewById(R.id.changemail);
         changepass=findViewById(R.id.changpass);
         backsetting=findViewById(R.id.backsetting);
-        String phoneNumber = loginResponse.getData().getUser().getPhone_number();
+        String phoneNumber = userProfile.getData().getPhone_number();
        phoneNumber="0"+ phoneNumber.substring(3);
         phone.setText(phoneNumber);
-        currency1.setText(loginResponse.getData().getUser().getCurrency_unit());
+        currency1.setText(userProfile.getData().getCurrency_unit());
         currency.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -56,9 +59,8 @@ TextView currency1;
             }
         });
         backsetting.setOnClickListener(new View.OnClickListener() {
-            @Override
             public void onClick(View v) {
-               finish();
+                finish();
             }
         });
 //        changemail.setOnClickListener(new View.OnClickListener() {

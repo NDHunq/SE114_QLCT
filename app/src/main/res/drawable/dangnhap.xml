@@ -5,9 +5,7 @@
         android:width="3dp"  android:color="@color/xanhnen" />
     <corners android:radius="7dp"
         >
-
     </corners>
     <solid android:color="#FFFFFF">
-
     </solid>
 </shape>

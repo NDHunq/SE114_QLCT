@@ -7,10 +7,14 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
+
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.util.Log;
+
+
 import android.util.Log;
 
 import android.view.View;
@@ -32,7 +36,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 
-
 import com.example.qlct.API_Entity.GetAllWalletsEntity;
 import com.example.qlct.API_Utils.WalletAPIUtil;
 
@@ -42,6 +45,9 @@ import com.example.qlct.API_Utils.DeviceTokenAPIUtil;
 
 import com.example.qlct.Category.Category_Add;
 
+
+
+import com.example.qlct.API_Entity.SharedPrefManager;
 
 import com.example.qlct.Fragment.Account_fragment;
 import com.example.qlct.Fragment.Analysis_fragment;
@@ -270,13 +276,25 @@ tongsovi = getIntent().getDoubleExtra("tongsovi",0);
         accbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateButtonBackgrounds(R.id.theaccount);
-                // Tạo một instance mới của HomeFragment
-                Account_fragment accountFragment = new Account_fragment();
+                // Kiểm tra xem người dùng đã đăng nhập hay chưa
+                try {
+                    if (SharedPrefManager.getInstance(MainActivity.this).getMyVariable() != null) {
+                        Log.d("Account", "User is logged in");
+                        updateButtonBackgrounds(R.id.theaccount);
+                        // Tạo một instance mới của HomeFragment
+                        Account_fragment accountFragment = new Account_fragment();
 
-                // Sử dụng FragmentManager và FragmentTransaction để thay thế HomeFragment vào FrameLayout container
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, accountFragment).commit();
-
+                        // Sử dụng FragmentManager và FragmentTransaction để thay thế HomeFragment vào FrameLayout container
+                        getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, accountFragment).commit();
+                    } else {
+                        Log.d("Account", "User is not logged in");
+                        // Nếu người dùng chưa đăng nhập, chuyển hướng họ đến LoginActivity
+                        startActivity(new Intent(MainActivity.this, Login_Signin.class));
+                    }
+                } catch (Exception e) {
+                    // Xử lý lỗi ở đây
+                    Log.d("Error", e.toString());
+                }
             }
         });
 
