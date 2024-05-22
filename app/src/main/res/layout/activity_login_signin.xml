@@ -21,12 +21,11 @@
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="100dp"
-
             android:gravity="center_vertical"
             android:orientation="horizontal"
             >
 <TextView
-android:layout_marginEnd="2dp"
+
     android:layout_gravity="top"
     android:layout_width="wrap_content"
     android:text="financ"
@@ -51,7 +50,6 @@ android:layout_marginEnd="2dp"
                 android:layout_gravity="bottom"
                 android:layout_width="wrap_content"
                 android:text="xpert"
-                android:layout_marginStart="2dp"
                 android:textStyle="bold"
                 android:textSize="47dp"
                 android:textColor="#1EABED"
@@ -141,7 +139,6 @@ android:layout_marginEnd="2dp"
             >
 
             <EditText
-                android:layout_marginTop=""
                 android:paddingLeft="20dp"
                 android:textSize="20dp"
                 android:id="@+id/enterpass"
@@ -185,6 +182,7 @@ android:layout_marginEnd="2dp"
 
         </TextView>
         <Button
+            android:background="@drawable/the15dpvienxanhnentrong"
             android:id="@+id/Login"
             android:layout_margin="20dp"
             android:layout_width="match_parent"
@@ -199,7 +197,7 @@ android:layout_marginEnd="2dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <Button
-
+android:background="@drawable/transperant"
                 android:id="@+id/signin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
