@@ -40,16 +40,17 @@
 
             </TextView>
 
-            <Button
+           <TextView
                 android:id="@+id/addnew"
                 android:layout_width="90dp"
                 android:layout_height="40dp"
                 android:layout_marginRight="20dp"
-                android:background="@color/white"
                 android:contextClickable="true"
                 android:text="ADD NEW"
+               android:textStyle="bold"
+               android:layout_marginTop="5dp"
                 android:textColor="@color/xanhnen"
-                android:textSize="20dp"></Button>
+                android:textSize="20dp"></TextView>
         </LinearLayout>
 
         <LinearLayout
@@ -64,6 +65,7 @@
                 android:layout_height="40dp"
                 android:layout_marginLeft="20dp"
                 android:background="@drawable/xanhla"
+
                 android:gravity="center">
 
                 <ImageButton
@@ -78,7 +80,7 @@
                     android:layout_marginLeft="10dp"
                     android:gravity="center"
                     android:text="Income"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/black"
                     android:textSize="20dp"></TextView>
             </LinearLayout>
 

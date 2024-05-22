@@ -2,17 +2,28 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/background_item"
     android:layout_margin="10dp">
-<ImageView
-    android:id="@+id/circle_black"
-    android:layout_margin="10dp"
-    android:layout_width="40dp"
-    android:layout_height="40dp"
-    android:src="@drawable/hinhtronden"
-    android:scaleType="centerCrop"
- >
-</ImageView>
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/category_icon_cardview"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        app:cardCornerRadius="30dp"
+        android:backgroundTint="@color/white"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="20dp">
+
+        <ImageView
+            android:id="@+id/circle_black"
+            android:layout_width="37dp"
+            android:layout_height="37dp"
+            android:background="@drawable/circle_icon"
+            android:layout_gravity="center"/>
+    </com.google.android.material.card.MaterialCardView>
     <TextView
         android:id="@+id/category"
         android:layout_marginLeft="10dp"

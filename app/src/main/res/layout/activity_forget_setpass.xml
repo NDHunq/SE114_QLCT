@@ -54,19 +54,22 @@
             android:layout_marginTop="20dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="50dp"
             android:layout_marginRight="20dp"
             android:gravity="center_vertical"
-            android:background="@drawable/background_item"
+
+            android:background="@drawable/border"
             >
 
             <EditText
                 android:paddingLeft="20dp"
-                android:textSize="40dp"
+                android:textSize="20dp"
                 android:id="@+id/enterpass"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:textColor="#1EABED"
+                android:textStyle="bold"
                 android:background="@android:color/transparent"
                 >
             </EditText>
@@ -95,19 +98,22 @@
             android:layout_marginTop="20dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="50dp"
             android:layout_marginRight="20dp"
             android:gravity="center_vertical"
-            android:background="@drawable/background_item"
+
+            android:background="@drawable/border"
             >
 
             <EditText
                 android:paddingLeft="20dp"
-                android:textSize="40dp"
+                android:textSize="20dp"
                 android:id="@+id/repeatpass"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:textColor="#1EABED"
+                android:textStyle="bold"
                 android:background="@android:color/transparent"
                 >
             </EditText>
@@ -124,7 +130,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <Button
+            <TextView
                 android:background="#FFFFFF"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -138,7 +144,7 @@
                 android:layout_marginBottom="20dp"
                 >
 
-            </Button>
+            </TextView>
         </RelativeLayout>
     </LinearLayout>
 

@@ -21,7 +21,7 @@ import com.example.qlct.API_Entity.SharedDaTa;
 import com.example.qlct.API_Entity.UserProfile;
 
 public class Email_Confirm extends AppCompatActivity {
-Button next;
+TextView next;
 TextView phone;
 ImageButton backemmailconfirm_next;
     private int lastEditTextIndex = 0;

@@ -60,30 +60,34 @@ API_Config api_config;
             Log.d("Login", "Token: " + SharedPrefManager.getInstance(this).getMyVariable());
             api_config = new API_Config();
             api_config.setTestLoginToken(SharedPrefManager.getInstance(this).getMyVariable());
+            Log.d("Token", api_config.TEST_LOGIN_TOKEN);
             UserAPiUtil userAPiUtil = new UserAPiUtil();
-            userAPiUtil.getUserProfile(new UserAPiUtil.OnTaskCompleted() {
-                @Override
-                public void onTaskCompleted(String result) {
-                    Log.d("Profile", "response: " + result);
-                    Gson gson = new Gson();
-                    if (result == null || result.isEmpty()) {
-                        Log.d("Profile", "Result is null or empty");
-                        return;
-                    }
-                    UserProfile userProfile = gson.fromJson(result, UserProfile.class);
-                    if (userProfile == null) {
-                        Log.d("Profile", "null");
-                    } else {
-                        Log.d("Profile", "not null");
-                    }
-                    Log.d("Profile", "userProfile: " + userProfile.getStatus().getCode());
-                    if (userProfile.getStatus().getCode() == 200) {
-                        SharedDaTa.getInstance().setUserProfile(userProfile);
-                    } else {
-                        Log.d("Profile", "failed");
-                    }
-                }
-            });
+//            userAPiUtil.getUserProfile(new UserAPiUtil.OnTaskCompleted() {
+//                @Override
+//                public void onTaskCompleted(String result) {
+//                    Log.d("Profile", "response: " + result);
+//                    Gson gson = new Gson();
+//                    if (result == null || result.isEmpty()) {
+//                        Log.d("Profile", "Result is null or empty");
+//                        return;
+//                    }
+//                    UserProfile userProfile = gson.fromJson(result, UserProfile.class);
+//                    if (userProfile == null) {
+//                        Log.d("Profile", "null");
+//                    } else {
+//                        Log.d("Profile", "not null");
+//                    }
+//                    Log.d("Profile", "userProfile: " + userProfile.getStatus().getCode());
+//                    if (userProfile.getStatus().getCode() == 200) {
+//
+//                        SharedDaTa.getInstance().setUserProfile(userProfile);
+//                    } else {
+//                        Log.d("Profile", "failed");
+//                    }
+//                }
+//            });
+            UserProfile userProfile=userAPiUtil.getUserProfile();
+
             // User is already logged in, navigate to MainActivity
             Log.d("Token", SharedPrefManager.getInstance(Login_Signin.this).getMyVariable());
             startActivity(new Intent(this, MainActivity.class));
@@ -179,29 +183,29 @@ API_Config api_config;
                                 api_config = new API_Config();
                                 api_config.setTestLoginToken(SharedPrefManager.getInstance(Login_Signin.this).getMyVariable());
                                 UserAPiUtil userAPiUtil = new UserAPiUtil();
-                                userAPiUtil.getUserProfile(new UserAPiUtil.OnTaskCompleted() {
-                                    @Override
-                                    public void onTaskCompleted(String result) {
-                                        Log.d("Profile", "response: " + result);
-                                        Gson gson = new Gson();
-                                        if (result == null || result.isEmpty()) {
-                                            Log.d("Profile", "Result is null or empty");
-                                            return;
-                                        }
-                                        UserProfile userProfile = gson.fromJson(result, UserProfile.class);
-                                        if (userProfile == null) {
-                                            Log.d("Profile", "null");
-                                        } else {
-                                            Log.d("Profile", "not null");
-                                        }
-                                        Log.d("Profile", "userProfile: " + userProfile.getStatus().getCode());
-                                        if (userProfile.getStatus().getCode() == 200) {
-                                            SharedDaTa.getInstance().setUserProfile(userProfile);
-                                        } else {
-                                            Log.d("Profile", "failed");
-                                        }
-                                    }
-                                });
+//                                userAPiUtil.getUserProfile(new UserAPiUtil.OnTaskCompleted() {
+//                                    @Override
+//                                    public void onTaskCompleted(String result) {
+//                                        Log.d("Profile", "response: " + result);
+//                                        Gson gson = new Gson();
+//                                        if (result == null || result.isEmpty()) {
+//                                            Log.d("Profile", "Result is null or empty");
+//                                            return;
+//                                        }
+//                                        UserProfile userProfile = gson.fromJson(result, UserProfile.class);
+//                                        if (userProfile == null) {
+//                                            Log.d("Profile", "null");
+//                                        } else {
+//                                            Log.d("Profile", "not null");
+//                                        }
+//                                        Log.d("Profile", "userProfile: " + userProfile.getStatus().getCode());
+//                                        if (userProfile.getStatus().getCode() == 200) {
+//                                            SharedDaTa.getInstance().setUserProfile(userProfile);
+//                                        } else {
+//                                            Log.d("Profile", "failed");
+//                                        }
+//                                    }
+//                                });
                                 Intent myintent = new Intent(Login_Signin.this, MainActivity.class);
                                 startActivity(myintent);
                             } else {

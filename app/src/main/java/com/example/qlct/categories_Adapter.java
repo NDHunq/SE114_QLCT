@@ -14,6 +14,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +51,7 @@ public class categories_Adapter extends BaseAdapter {
         TextView textname= (TextView) view.findViewById(R.id.category);
         ImageView imagedelete= (ImageView) view.findViewById(R.id.delete);
         cate_item cateItem=listcase.get(i);
-        imagecate.setImageResource(cateItem.getImagecate());
+        Glide.with(context).load(cateItem.getImagecate()).into(imagecate);
         imagedelete.setImageResource(cateItem.getImagedelete());
         textname.setText(cateItem.getName());
 

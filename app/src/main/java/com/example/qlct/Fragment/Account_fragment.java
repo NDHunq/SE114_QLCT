@@ -24,6 +24,7 @@ import com.example.qlct.API_Entity.LoginResponse;
 import com.example.qlct.API_Entity.SharedDaTa;
 import com.example.qlct.API_Entity.SharedPrefManager;
 import com.example.qlct.API_Entity.UserProfile;
+import com.example.qlct.API_Utils.UserAPiUtil;
 import com.example.qlct.Home.Home_My_wallets;
 import com.example.qlct.Login_Signin;
 import com.example.qlct.My_categories;
@@ -38,9 +39,10 @@ public class Account_fragment extends Fragment {
     LinearLayout logout;
     LinearLayout mycate;
     LinearLayout setting;
-    ImageButton editname;
     TextView phone;
+    TextView name;
 UserProfile userProfile;
+    String phoneNumber;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,13 +53,23 @@ UserProfile userProfile;
         mywallet=view.findViewById(R.id.mywallet);
         mycate=view.findViewById(R.id.mycates);
         setting=view.findViewById(R.id.setting);
-        editname=view.findViewById(R.id.editname);
         phone=view.findViewById(R.id.phone);
+        name=view.findViewById(R.id.name);
         logout=view.findViewById(R.id.logout);
-        userProfile=new UserProfile();
-        userProfile = SharedDaTa.getInstance().getUserProfile();
-        String phoneNumber = userProfile.getData().getPhone_number();
-        phoneNumber="0"+ phoneNumber.substring(3);
+        UserAPiUtil userAPiUtil = new UserAPiUtil();
+        UserProfile userProfile=userAPiUtil.getUserProfile();
+//        userProfile = SharedDaTa.getInstance().getUserProfile();
+        if (
+                userProfile== null
+        ) {
+            phoneNumber = "";
+        }
+        else {
+            name.setText(userProfile.getData().getUsername());
+            phoneNumber = userProfile.getData().getPhone_number();
+            phoneNumber="0"+ phoneNumber.substring(3);
+        }
+
         phone.setText(phoneNumber);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override

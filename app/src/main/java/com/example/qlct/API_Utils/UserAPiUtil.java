@@ -8,9 +8,18 @@ import com.example.qlct.API_Entity.ChangePassWord;
 import com.example.qlct.API_Entity.CreateRenewBudgetEntity;
 import com.example.qlct.API_Entity.CreateUserRegiterEntity;
 import com.example.qlct.API_Entity.CreateWalletEntity;
+import com.example.qlct.API_Entity.GetAllCategoryEntity;
+import com.example.qlct.API_Entity.GetAllCategoryy;
 import com.example.qlct.API_Entity.LoginEntity;
 import com.example.qlct.API_Entity.RegisterEntity;
+import com.example.qlct.API_Entity.UserProfile;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONObject;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -168,36 +177,64 @@ public void RegisterUser(RegisterEntity registerEntity) {
         }.execute();
     }
 
-    public void getUserProfile(OnTaskCompleted listener) {
-        new AsyncTask<Void, Void, String>() {
-            @Override
-            protected String doInBackground(Void... voids) {
-                String jsonData = "";
-                try {
-                    OkHttpClient client = new OkHttpClient().newBuilder()
-                            .build();
+//    public void getUserProfile(OnTaskCompleted listener) {
+//        new AsyncTask<Void, Void, String>() {
+//
+//            @Override
+//            protected String doInBackground(Void... voids) {
+//                Log.d("GetUserProfile", LOGIN_TOKEN);
+//                String jsonData = "";
+//                try {
+//                    OkHttpClient client = new OkHttpClient().newBuilder()
+//                            .build();
+//
+//                    Request request = new Request.Builder()
+//                            .url(SERVER + "/" + API_VERSION + "/user/profile")
+//                            .addHeader("Authorization", LOGIN_TOKEN)
+//                            .method("GET", null)
+//                            .build();
+//
+//                    Response response = client.newCall(request).execute();
+//
+//                    jsonData = response.body().string();
+//
+//                    Log.d("GetUserProfile", jsonData);
+//                } catch (Exception e) {
+//                    Log.d("GetUserProfile", "Error:" + e.toString());
+//                }
+//                return jsonData;
+//            }
+//
+//            @Override
+//            protected void onPostExecute(String result) {
+//                listener.onTaskCompleted(result);
+//            }
+//        }.execute();
+//    }
+public UserProfile getUserProfile (){
+    try {
+        OkHttpClient client = new OkHttpClient().newBuilder()
+                .build();
+        Log.d("url", SERVER + "/" + API_VERSION + "/user/profile");
+        Request request = new Request.Builder()
+                .url( SERVER + "/" + API_VERSION + "/user/profile")
+                .method("GET", null)
+                .addHeader("Authorization", LOGIN_TOKEN)
+                .build();
+        Response response = client.newCall(request).execute();
+        String jsonData = response.body().string();
+        Log.d("userprofile", jsonData);
+        JSONObject json = new JSONObject(jsonData);
 
-                    Request request = new Request.Builder()
-                            .url(SERVER + "/" + API_VERSION + "/user/profile")
-                            .addHeader("Authorization", LOGIN_TOKEN)
-                            .method("GET", null)
-                            .build();
+        Type user = new TypeToken<UserProfile>(){}.getType();
+       UserProfile userProfile = new Gson().fromJson(json.toString(), user);
 
-                    Response response = client.newCall(request).execute();
-
-                    jsonData = response.body().string();
-
-                    Log.d("GetUserProfile", jsonData);
-                } catch (Exception e) {
-                    Log.d("GetUserProfile", "Error:" + e.toString());
-                }
-                return jsonData;
-            }
-
-            @Override
-            protected void onPostExecute(String result) {
-                listener.onTaskCompleted(result);
-            }
-        }.execute();
+        return userProfile;
     }
+    catch(Exception e) {
+        //Thông báo lỗi, không thể kết nối đến server, co the hien mot notification ra app
+       Log.d("Error", "Error: "+ e.toString());
+        return null;
+    }
+}
 }

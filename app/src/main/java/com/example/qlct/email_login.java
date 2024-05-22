@@ -23,7 +23,7 @@ import com.example.qlct.API_Utils.UserAPiUtil;
 import com.google.gson.Gson;
 
 public class email_login extends AppCompatActivity {
-Button create;
+TextView create;
 ImageButton back;
 String id;
 String phoneNumber;

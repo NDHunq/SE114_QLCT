@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,7 +31,7 @@ EditText enterpass;
 EditText repeatpass;
 ImageButton showpass;
 ImageButton showpass1;
-Button save;
+TextView save;
     ImageButton showpass2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

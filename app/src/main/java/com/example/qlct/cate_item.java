@@ -3,21 +3,21 @@ package com.example.qlct;
 public class cate_item {
 
 
-        private int imagecate;
+        private String imagecate;
         private String name;
         private int imagedelete;
 
-        public cate_item(int imagecate, String name, int imagedelete) {
+        public cate_item(String imagecate, String name, int imagedelete) {
             this.imagecate = imagecate;
             this.name = name;
             this.imagedelete = imagedelete;
         }
 
-        public int getImagecate() {
+        public String getImagecate() {
             return imagecate;
         }
 
-        public void setImagecate(int imagecate) {
+        public void setImagecate(String imagecate) {
             this.imagecate = imagecate;
         }
 

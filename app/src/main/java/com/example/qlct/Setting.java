@@ -17,6 +17,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.qlct.API_Entity.LoginResponse;
 import com.example.qlct.API_Entity.SharedDaTa;
 import com.example.qlct.API_Entity.UserProfile;
+import com.example.qlct.API_Utils.UserAPiUtil;
 import com.example.qlct.Fragment.Account_fragment;
 
 public class Setting extends AppCompatActivity {
@@ -36,7 +37,8 @@ TextView currency1;
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        UserProfile userProfile = SharedDaTa.getInstance().getUserProfile();
+        UserAPiUtil userAPiUtil = new UserAPiUtil();
+        UserProfile userProfile=userAPiUtil.getUserProfile();
 
         currency1=findViewById(R.id.currency1);
         currency=findViewById(R.id.currency);

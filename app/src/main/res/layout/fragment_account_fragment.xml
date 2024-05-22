@@ -51,22 +51,16 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp">
             <TextView
+                android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="quyen213"
+                android:text=""
                 android:textSize="25dp"
                 android:textColor="@color/black"
                 android:textStyle="bold">
             </TextView>
 
-            <ImageButton
-                android:id="@+id/editname"
-                android:layout_marginLeft="10dp"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:background="@drawable/pen">
 
-            </ImageButton>
 
         </LinearLayout>
 
@@ -76,7 +70,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text=""
-            android:textSize="15dp"
+            android:textStyle="bold"
+            android:textSize="20dp"
             >
         </TextView>
 
