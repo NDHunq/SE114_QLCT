@@ -8,7 +8,7 @@
 
         android:layout_width="match_parent"
         android:orientation="vertical"
-        android:layout_height="107dp"
+        android:layout_height="110dp"
         android:background="@drawable/the7dp">
         <LinearLayout
             android:layout_width="match_parent"
@@ -94,14 +94,15 @@
             </LinearLayout>
             <LinearLayout
                 android:layout_marginEnd="12dp"
-                android:layout_width="wrap_content"
+                android:layout_width="120dp"
 android:layout_gravity="center"
-                android:layout_height="50dp">
+                android:layout_height="wrap_content">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:orientation="vertical"
                     android:layout_height="match_parent">
                     <TextView
+                        android:layout_marginTop="9dp"
                         android:id="@+id/ngaythang"
                         android:textAlignment="textEnd"
                         android:layout_width="match_parent"

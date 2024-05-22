@@ -864,8 +864,7 @@ public class AddTransaction extends AppCompatActivity {
                         }
                         Toast.makeText(AddTransaction.this, "Transaction added successfully", Toast.LENGTH_SHORT).show();
                         finish();
-                    }
-                }
+                    }                }
             });
         }catch (Exception e){
             e.printStackTrace();
