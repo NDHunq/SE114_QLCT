@@ -2,11 +2,9 @@ package com.example.qlct.API_Entity;
 
 import java.util.List;
 
-public class LoginResponse {
+public class UserProfile {
     private Status status;
     private Data data;
-
-    // getters and setters
 
     public Status getStatus() {
         return status;
@@ -23,12 +21,11 @@ public class LoginResponse {
     public void setData(Data data) {
         this.data = data;
     }
+// getters and setters
 
     public static class Status {
         private int code;
         private String message;
-
-        // getters and setters
 
         public int getCode() {
             return code;
@@ -45,45 +42,16 @@ public class LoginResponse {
         public void setMessage(String message) {
             this.message = message;
         }
+
+        // getters and setters
     }
 
     public static class Data {
-        private String status;
-        private User user;
-        private String token;
-
-        public String getStatus() {
-            return status;
-        }
-
-        public void setStatus(String status) {
-            this.status = status;
-        }
-
-        public User getUser() {
-            return user;
-        }
-
-        public void setUser(User user) {
-            this.user = user;
-        }
-
-        public String getToken() {
-            return token;
-        }
-
-        public void setToken(String token) {
-            this.token = token;
-        }
-// getters and setters
-    }
-
-    public static class User {
         private String id;
         private String username;
         private String phone_number;
         private String currency_unit;
-        private List<Object> user_wallets;
+        private List<UserWallet> user_wallets;
         private List<Object> transactions;
         private List<Object> categories;
 
@@ -119,11 +87,11 @@ public class LoginResponse {
             this.currency_unit = currency_unit;
         }
 
-        public List<Object> getUser_wallets() {
+        public List<UserWallet> getUser_wallets() {
             return user_wallets;
         }
 
-        public void setUser_wallets(List<Object> user_wallets) {
+        public void setUser_wallets(List<UserWallet> user_wallets) {
             this.user_wallets = user_wallets;
         }
 
@@ -142,7 +110,28 @@ public class LoginResponse {
         public void setCategories(List<Object> categories) {
             this.categories = categories;
         }
-// getters and setters
+
+        // getters and setters
+
+        public static class UserWallet {
+            private String user_id;
+            private String wallet_id;
+            private String join_date;
+            private boolean isAdmin;
+            private Wallet wallet;
+
+            // getters and setters
+
+            public static class Wallet {
+                private String id;
+                private String name;
+                private String amount;
+                private String currency_unit;
+                private String create_at;
+                private String update_at;
+
+                // getters and setters
+            }
+        }
     }
 }
-

@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,8 +16,13 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.qlct.API_Entity.LoginResponse;
+import com.example.qlct.API_Entity.SharedDaTa;
+import com.example.qlct.API_Entity.UserProfile;
+
 public class verification extends AppCompatActivity {
 Button nextrequired;
+TextView phone;
     private int lastEditTextIndex = 0;
     // Tạo một mảng chứa tất cả các EditText
     EditText[] editTexts = new EditText[6];
@@ -35,6 +41,12 @@ ImageButton backverification;
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        phone=findViewById(R.id.phone);
+        UserProfile userProfile = SharedDaTa.getInstance().getUserProfile();
+        String phoneNumber = userProfile.getData().getPhone_number();
+        phoneNumber="0"+ phoneNumber.substring(3);
+        phone.setText(phoneNumber);
+
         nextrequired=findViewById(R.id.nextrequired);
         backverification=findViewById(R.id.backverification);
         editTexts[0] = findViewById(R.id.editText1);

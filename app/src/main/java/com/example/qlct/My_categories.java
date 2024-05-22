@@ -15,7 +15,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import java.util.ArrayList;
 
-public class My_categories extends AppCompatActivity {
+public class  My_categories extends AppCompatActivity {
     ImageButton backmycate;
     ListView lvcate;
     ArrayList<cate_item> arraycate;

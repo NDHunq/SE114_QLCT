@@ -15,6 +15,9 @@
         android:theme="@style/Theme.QLCT"
         tools:targetApi="31">
         <activity
+            android:name=".Currency"
+            android:exported="false" />
+        <activity
             android:name=".forget_setpass"
             android:exported="false" />
         <activity
