@@ -39,6 +39,7 @@ import com.example.qlct.doitiente;
 
 import com.example.qlct.Transaction.TransactionDetail;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -494,9 +495,11 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
         dataValues2.add(new BarEntry(1, scaledTongtranthangnay)); // Số liệu cho cột 2 (tổng tháng này)
 
         BarDataSet barDataSet1 = new BarDataSet(dataValues1, "Last month");
-        barDataSet1.setColor(Color.RED);
+        barDataSet1.setColor(Color.parseColor("#EE0E36"));
+        barDataSet1.setValueTextSize(12f);
         BarDataSet barDataSet2 = new BarDataSet(dataValues2, "This month");
-        barDataSet2.setColor(Color.BLUE);
+        barDataSet2.setColor(Color.parseColor("#5CC2F2"));
+        barDataSet2.setValueTextSize(12f);
 
         BarData data = new BarData(barDataSet1, barDataSet2);
         float groupSpace = 0f; // Khoảng cách giữa các nhóm
@@ -510,6 +513,10 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
         barChart.getXAxis().setAxisMaximum(2);
         barChart.getAxisLeft().setAxisMinimum(0); // Đặt cột y bắt đầu từ số 0
         barChart.getAxisRight().setAxisMinimum(0);
+
+        Description description = new Description();
+        description.setText(""); // Set text to empty
+        barChart.setDescription(description);
 
 // Vẽ lại BarChart với dữ liệu mới
         barChart.invalidate();
@@ -634,9 +641,11 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
                 dataValues2.add(new BarEntry(1, scaledTongtranthangnay)); // Số liệu cho cột 2 (tổng tháng này)
 
                 BarDataSet barDataSet1 = new BarDataSet(dataValues1, "Last month");
-                barDataSet1.setColor(Color.RED);
+                barDataSet1.setColor(Color.parseColor("#EE0E36"));
+                barDataSet1.setValueTextSize(12f);
                 BarDataSet barDataSet2 = new BarDataSet(dataValues2, "This month");
-                barDataSet2.setColor(Color.BLUE);
+                barDataSet2.setColor(Color.parseColor("#5CC2F2"));
+                barDataSet2.setValueTextSize(12f);
 
                 BarData data = new BarData(barDataSet1, barDataSet2);
                 float groupSpace = 0f; // Khoảng cách giữa các nhóm
@@ -650,7 +659,9 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
                 barChart.getXAxis().setAxisMaximum(2);
                 barChart.getAxisLeft().setAxisMinimum(0); // Đặt cột y bắt đầu từ số 0
                 barChart.getAxisRight().setAxisMinimum(0);
-
+                Description description = new Description();
+                description.setText(""); // Set text to empty
+                barChart.setDescription(description);
 // Vẽ lại BarChart với dữ liệu mới
                 barChart.invalidate();
 
@@ -714,9 +725,11 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
                 dataValues2.add(new BarEntry(1, scaledTongtranthangnay)); // Số liệu cho cột 2 (tổng tháng này)
 
                 BarDataSet barDataSet1 = new BarDataSet(dataValues1, "Last week");
-                barDataSet1.setColor(Color.RED);
+                barDataSet1.setColor(Color.parseColor("#EE0E36"));
+                barDataSet1.setValueTextSize(12f);
                 BarDataSet barDataSet2 = new BarDataSet(dataValues2, "This week");
-                barDataSet2.setColor(Color.BLUE);
+                barDataSet2.setColor(Color.parseColor("#5CC2F2"));
+                barDataSet2.setValueTextSize(12f);
 
                 BarData data = new BarData(barDataSet1, barDataSet2);
                 float groupSpace = 0f; // Khoảng cách giữa các nhóm
@@ -730,6 +743,9 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
                 barChart.getXAxis().setAxisMaximum(2);
                 barChart.getAxisLeft().setAxisMinimum(0); // Đặt cột y bắt đầu từ số 0
                 barChart.getAxisRight().setAxisMinimum(0);
+                Description description = new Description();
+                description.setText(""); // Set text to empty
+                barChart.setDescription(description);
 
 // Vẽ lại BarChart với dữ liệu mới
                 barChart.invalidate();
