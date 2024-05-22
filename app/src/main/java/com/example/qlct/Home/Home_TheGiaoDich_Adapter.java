@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 
 
+import com.bumptech.glide.Glide;
 import com.example.qlct.R;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
@@ -65,7 +66,7 @@ public class Home_TheGiaoDich_Adapter extends BaseAdapter {
 
         }
        String url=theGiaoDich.getHinhAnh();
-        Picasso.get().load(url).into(imageView);
+        Glide.with(context).load(url).into(imageView);
         ten.setText(theGiaoDich.getTenGiaoDich());
         sotien.setText(theGiaoDich.getSoTien()+""+theGiaoDich.getCurrencyUnit());
         ngaythang.setText(theGiaoDich.getNgayThang());

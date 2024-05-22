@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.qlct.R;
 import com.squareup.picasso.Picasso;
 
@@ -54,7 +55,7 @@ public class Analysis_Expense_Adapter extends BaseAdapter {
         color.setBackgroundColor(analysisExpense.getColor());
         //color.setBackgroundColor(analysisExpense.getColor());
         String url=analysisExpense.getAvt();
-        Picasso.get().load(url).fit().into(avt);
+        Glide.with(context).load(url).into(avt);
         name.setText(analysisExpense.getName());
         percent.setText(String.valueOf(analysisExpense.getPercent())+"%");
         money.setText((analysisExpense.getMoney())+" "+analysisExpense.getCurrency());

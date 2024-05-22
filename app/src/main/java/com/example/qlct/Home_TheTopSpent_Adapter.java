@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -49,7 +50,7 @@ public class Home_TheTopSpent_Adapter  extends BaseAdapter {
         TextView percent = view.findViewById(R.id.phantramVi_Thetop);
         Home_TheTopSpent theTopSpent = theTopSpentList.get(i);
         String url =theTopSpent.getHinhAnh();
-        Picasso.get().load(url).into(image);
+        Glide.with(context).load(url).into(image);
 
         ten.setText(theTopSpent.getTenCategory());
         sotien.setText(theTopSpent.getSoTien());
