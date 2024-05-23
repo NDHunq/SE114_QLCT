@@ -8,6 +8,8 @@ import com.example.qlct.API_Entity.ChangePassWord;
 import com.example.qlct.API_Entity.CreateRenewBudgetEntity;
 import com.example.qlct.API_Entity.CreateUserRegiterEntity;
 import com.example.qlct.API_Entity.CreateWalletEntity;
+import com.example.qlct.API_Entity.ForgetPass;
+import com.example.qlct.API_Entity.ForgetPassRP;
 import com.example.qlct.API_Entity.GetAllCategoryEntity;
 import com.example.qlct.API_Entity.GetAllCategoryy;
 import com.example.qlct.API_Entity.LoginEntity;
@@ -237,4 +239,72 @@ public UserProfile getUserProfile (){
         return null;
     }
 }
+    public void SendOtp(String phoneNumber) {
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                try {
+                    OkHttpClient client = new OkHttpClient().newBuilder().build();
+
+                    // Create a JSON object with the phone number
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("phone_number", phoneNumber);
+
+                    // Convert the JSON object to a string
+                    String json = jsonObject.toString();
+
+                    MediaType mediaType = MediaType.parse("application/json");
+                    RequestBody body = RequestBody.create(json, mediaType);
+
+                    Request request = new Request.Builder()
+                            .url(SERVER + "/" + API_VERSION + "/user/forget-password")
+                            .addHeader("Content-Type", "application/json")
+                            .method("POST", body)
+                            .build();
+
+                    Response response = client.newCall(request).execute();
+                    String jsonData = response.body().string();
+
+                    Log.d("ForgetPassword", jsonData);
+                } catch (Exception e) {
+                    Log.d("ForgetPassword", "Error:" + e.toString());
+                }
+                return null;
+            }
+        }.execute();
+    }
+    public void resetPassword(ForgetPass forgetPass, OnTaskCompleted listener) {
+        new AsyncTask<Void, Void, String>() {
+            @Override
+            protected String doInBackground(Void... voids) {
+                String jsonData = "";
+                try {
+                    OkHttpClient client = new OkHttpClient().newBuilder()
+                            .build();
+
+                    MediaType mediaType = MediaType.parse("application/json");
+                    RequestBody body = RequestBody.create( new Gson().toJson(forgetPass), mediaType);
+
+                    Request request = new Request.Builder()
+                            .url( SERVER + "/" + API_VERSION + "/user/reset-password")
+                            .method("POST", body)
+                            .build();
+
+                    Response response = client.newCall(request).execute();
+
+                    jsonData = response.body().string();
+
+                    Log.d("forgetpass", jsonData);
+                }catch (Exception e) {
+                    Log.d("forgetpass","Error:"+e.toString());
+                }
+                return jsonData;
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                listener.onTaskCompleted(result);
+            }
+        }.execute();
+    }
 }

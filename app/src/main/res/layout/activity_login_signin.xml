@@ -134,7 +134,9 @@
             android:layout_height="50dp"
             android:layout_marginRight="20dp"
             android:gravity="center_vertical"
-
+            android:focusable="true"
+            android:clickable="true"
+            android:focusableInTouchMode="true"
             android:background="@drawable/border"
             >
 

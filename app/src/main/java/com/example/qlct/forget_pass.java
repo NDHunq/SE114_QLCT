@@ -88,30 +88,14 @@ public class forget_pass extends AppCompatActivity {
                         Log.d("phone",editTexts[i].getText().toString());
                         id = id + editTexts[i].getText().toString();
                     }
-                    Log.d("phone",id);
+                    Log.d("OTP",id);
                 } catch (Exception e) {
-                    Log.d("phone", "Exception occurred: "+ e.toString());
+                    Log.d("OTP", "Exception occurred: "+ e.toString());
                 }
-                UserAPiUtil userAPiUtil = new UserAPiUtil();
-                userAPiUtil.verifyPhoneNumber(phoneNumber, id, new UserAPiUtil.OnTaskCompleted() {
-                    @Override
-                    public void onTaskCompleted(String result) {
-                        Gson gson = new Gson();
-                        OTPResponse otpResponse = gson.fromJson(result, OTPResponse.class);
-                        if(otpResponse.getStatus().getCode()==200)
-                        {
-                            Intent myintent=new Intent(forget_pass.this, forget_setpass.class);
-                            myintent.putExtra("phone",phoneNumber);
-                            startActivity(myintent);
-                        }
-                        else
-                        {
-                            Log.d("create","fail");
-                        }
-                        // handle the result here
-                        // for example, navigate to the next screen if the verification is successful
-                    }
-                });
+                Intent myintent=new Intent(forget_pass.this, forget_setpass.class);
+                myintent.putExtra("OTP",id);
+                myintent.putExtra("phone",phoneNumber);
+                startActivity(myintent);
             }
 
 
