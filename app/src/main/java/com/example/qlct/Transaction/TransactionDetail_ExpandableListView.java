@@ -239,7 +239,7 @@ public class TransactionDetail_ExpandableListView extends BaseExpandableListAdap
 
     public String convertDateFormat(String inputDate) {
         DateTimeFormatter inputFormat = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
-        DateTimeFormatter outputFormat = DateTimeFormat.forPattern("dd/MM/yyyy");
+        DateTimeFormatter outputFormat = DateTimeFormat.forPattern("dd-MM-yyy");
 
         DateTime dateTime = inputFormat.parseDateTime(inputDate);
         return outputFormat.print(dateTime);

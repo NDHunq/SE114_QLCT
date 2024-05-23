@@ -637,6 +637,7 @@ public class AddTransaction extends AppCompatActivity {
         close_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                setResult(RESULT_OK);
                 finish();
             }
         });
@@ -761,24 +762,24 @@ public class AddTransaction extends AppCompatActivity {
             }
         });
 
-        TextView selectIncomeCategory = findViewById(R.id.add_trans_select_income_category);
-        selectIncomeCategory.setOnClickListener(new View.OnClickListener() {
+        LinearLayout incomeCategoryLayout = findViewById(R.id.income_category_layout);
+        incomeCategoryLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showCategoryDialog();
             }
         });
 
-        TextView selectExpenseCategory = findViewById(R.id.add_trans_select_expense_category);
-        selectExpenseCategory.setOnClickListener(new View.OnClickListener() {
+        LinearLayout expenseCategoryLayout = findViewById(R.id.expense_category_layout);
+        expenseCategoryLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showCategoryDialog();
             }
         });
 
-        TextView selectFromWallet = findViewById(R.id.add_trans_select_from_wallet);
-        selectFromWallet.setOnClickListener(new View.OnClickListener() {
+        LinearLayout fromWalletLayout = findViewById(R.id.from_wallet_layout);
+        fromWalletLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 from_to_flag = true;
@@ -786,24 +787,25 @@ public class AddTransaction extends AppCompatActivity {
             }
         });
 
-        TextView selectIncomeWallet = findViewById(R.id.add_trans_select_income_wallet);
-        selectIncomeWallet.setOnClickListener(new View.OnClickListener() {
+        LinearLayout incomeWalletLayout = findViewById(R.id.income_wallet_layout);
+        incomeWalletLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showWalletDialog();
             }
         });
 
-        TextView selectExpenseWallet = findViewById(R.id.add_trans_select_expense_wallet);
-        selectExpenseWallet.setOnClickListener(new View.OnClickListener() {
+        LinearLayout expenseWalletLayout = findViewById(R.id.expense_wallet_layout);
+        expenseWalletLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showWalletDialog();
             }
         });
 
-        TextView selectTargetWallet = findViewById(R.id.add_trans_select_target_wallet);
-        selectTargetWallet.setOnClickListener(new View.OnClickListener() {
+        LinearLayout targetWalletLayout = findViewById(R.id.target_wallet_layout);
+
+        targetWalletLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 from_to_flag = false;
@@ -863,7 +865,6 @@ public class AddTransaction extends AppCompatActivity {
                     // Do nothing
                 }
 
-                @RequiresApi(api = Build.VERSION_CODES.O)
                 @Override
                 public void afterTextChanged(Editable s) {
                     validateDate();
