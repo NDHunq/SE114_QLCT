@@ -72,6 +72,7 @@
 
                 </LinearLayout>
                 <TextView
+                    android:textColor="@color/black"
                     android:layout_width="wrap_content"
                     android:text="Total Balance"
                     android:layout_marginStart="15dp"
@@ -327,6 +328,7 @@
 
                         </TextView>
                         <TextView
+                            android:textColor="@color/black"
                             android:id="@+id/tstm"
                             android:layout_marginStart="12dp"
                             android:textStyle="bold"
@@ -352,6 +354,7 @@
 
 
                         <TextView
+                            android:textColor="@color/black"
                             android:layout_marginStart="12dp"
                             android:textStyle="bold"
                             android:text="Top spending"
