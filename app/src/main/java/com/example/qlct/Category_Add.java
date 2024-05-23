@@ -127,10 +127,10 @@ public class Category_Add extends AppCompatActivity {
 
     }
     private String uploadImageAPI(Uri imageUri) throws IOException, JSONException {
-
+API_Config api_config = new API_Config();
         //Đường dẫn của server, cái này trong source chính đã để trong folder API_CONFIG
-        String SERVER = "https://expense-management-backend-2tac.onrender.com";
-        String API_VERSION = "api/v1";
+        String SERVER = api_config.getSERVER();
+        String API_VERSION = api_config.getApiVersion();
 
         //Dưới nãy giữ y chang, không cần suy nghĩ
         OkHttpClient client = new OkHttpClient().newBuilder()
