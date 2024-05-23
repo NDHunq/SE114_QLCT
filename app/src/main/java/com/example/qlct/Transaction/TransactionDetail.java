@@ -985,8 +985,9 @@ public class TransactionDetail extends AppCompatActivity {
             }
         });
 
-        ImageButton walletbutton = findViewById(R.id.trans_detail_wallet_icon);
-        walletbutton.setOnClickListener(new View.OnClickListener() {
+        //ImageButton walletbutton = findViewById(R.id.trans_detail_wallet_icon);
+        LinearLayout walletLayout = findViewById(R.id.add_trans_wallet_layout);
+        walletLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showWalletDialog();
@@ -1010,7 +1011,6 @@ public class TransactionDetail extends AppCompatActivity {
         calenderIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                date = findViewById(R.id.trans_detail_date_txtview);
                 showDateDialog();
             }
         });
@@ -1020,9 +1020,24 @@ public class TransactionDetail extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(TransactionDetail.this, AddTransaction.class);
-                startActivity(intent);
+                int REQUEST_CODE = 1;
+                startActivityForResult(intent, REQUEST_CODE);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Kiểm tra requestCode để xác định yêu cầu
+        if (requestCode == 1) {
+            // Kiểm tra resultCode để xác định kết quả
+            if (resultCode == RESULT_OK) {
+                // Nếu kết quả là RESULT_OK, reload lại ExpandableListView
+                reloadExpandableListView();
+            }
+        }
     }
 
     public String getStartAndEndOfWeek(String inputDate) {
@@ -1150,7 +1165,7 @@ public class TransactionDetail extends AppCompatActivity {
         listDataHeader = new ArrayList<>();
         //Toast.makeText(TransactionDetail.this, formatDate(theGiaoDichList.get(0).getNgayThang()), Toast.LENGTH_SHORT).show();
 
-        TransactionList.sort(Comparator.comparing(TransactionDetail_TheGiaoDich::getNgayThang_LocalDate));
+        TransactionList.sort(Comparator.comparing(TransactionDetail_TheGiaoDich::getNgayThang_LocalDate).reversed());
 
         doitiente doi_tien_te = new doitiente();
 
@@ -1544,7 +1559,7 @@ public class TransactionDetail extends AppCompatActivity {
             }
         }
 
-        if(!walletName.equals("TOTAL")){
+        if(!walletName.equals("Total")){
             // Filter by wallet name
             List<TransactionDetail_TheGiaoDich> list = new ArrayList<>();
             for (TransactionDetail_TheGiaoDich item : filteredList) {

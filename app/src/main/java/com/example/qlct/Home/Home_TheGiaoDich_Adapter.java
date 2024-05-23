@@ -15,6 +15,9 @@ import androidx.cardview.widget.CardView;
 import com.bumptech.glide.Glide;
 import com.example.qlct.R;
 import com.squareup.picasso.Picasso;
+
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 
 public class Home_TheGiaoDich_Adapter extends BaseAdapter {
@@ -68,11 +71,46 @@ public class Home_TheGiaoDich_Adapter extends BaseAdapter {
        String url=theGiaoDich.getHinhAnh();
         Glide.with(context).load(url).into(imageView);
         ten.setText(theGiaoDich.getTenGiaoDich());
-        sotien.setText(theGiaoDich.getSoTien()+""+theGiaoDich.getCurrencyUnit());
+        String currency = theGiaoDich.getCurrencyUnit();
+        switch (currency){
+            case "đ":
+                currency = "VND";
+                break;
+            case "$":
+                currency = "USD";
+                break;
+            case "¥":
+                currency = "CNY";
+                break;
+            case "€":
+                currency = "EUR";
+                break;
+        }
+        String amount = formatCurrency(Double.parseDouble(theGiaoDich.getSoTien()), currency);
+        sotien.setText(amount+""+theGiaoDich.getCurrencyUnit());
         ngaythang.setText(theGiaoDich.getNgayThang());
         ghichu.setText(theGiaoDich.getGhiChu());
         vitien.setText(theGiaoDich.getViTien());
 
         return view;
     }
+
+    public static String formatCurrency(double amount, String currency) {
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+
+        // Set the thousands separator depending on the currency
+        if ("VND".equals(currency)) {
+            symbols.setGroupingSeparator('.');
+        } else {
+            symbols.setGroupingSeparator(',');
+        }
+
+        // Always use a dot for the decimal separator
+        symbols.setDecimalSeparator('.');
+
+        // Create a DecimalFormat with the desired symbols and format the amount
+        DecimalFormat formatter = new DecimalFormat("###,###.##", symbols);
+        return formatter.format(amount);
+    }
+
 }

@@ -88,6 +88,7 @@
                 android:layout_weight="6"/>
 
             <LinearLayout
+                android:id="@+id/add_trans_wallet_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/darker_layout_border"
@@ -102,7 +103,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Total"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textColor="@color/black"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
@@ -116,7 +117,7 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/wallet_icon"
                     android:background="@color/xamplus"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="3dp"
                     android:layout_marginBottom="5dp"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
@@ -151,6 +152,8 @@
                 android:layout_height="match_parent"
                 android:background="@color/xam"
                 android:layout_marginBottom="12dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="5dp"
                 android:src="@drawable/moreoption_icon" />
 
         </LinearLayout>
