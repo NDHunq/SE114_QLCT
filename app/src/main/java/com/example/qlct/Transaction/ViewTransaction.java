@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -16,6 +17,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.bumptech.glide.Glide;
 import com.example.qlct.R;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -49,14 +51,6 @@ public class ViewTransaction extends AppCompatActivity {
         clickedItem = (TransactionDetail_TheGiaoDich) intent.getSerializableExtra("clickedItem");
 
 
-        // Hiển thị thông tin của mục con
-        if(clickedItem != null){
-            Toast.makeText(this, clickedItem.getLoaiGiaoDich(), Toast.LENGTH_SHORT).show();
-        }
-        else {
-            Toast.makeText(this, "null", Toast.LENGTH_SHORT).show();
-        }
-
         MaterialButton incomeButton = findViewById(R.id.income_button);
         MaterialButton expenseButton = findViewById(R.id.expense_button);
         MaterialButton transferButton = findViewById(R.id.transfer_button);
@@ -81,6 +75,8 @@ public class ViewTransaction extends AppCompatActivity {
         TextView fromWalletAmount = findViewById(R.id.from_wallet_amount_txtview);
         TextView targetWalletText = findViewById(R.id.target_wallet_name_txtview);
         TextView targetWalletAmount = findViewById(R.id.target_wallet_amount_txtview);
+
+        ImageView transactionImage = findViewById(R.id.transaction_image);
 
 
         String transferType = clickedItem.getLoaiGiaoDich();
@@ -228,6 +224,16 @@ public class ViewTransaction extends AppCompatActivity {
             }
         }
 
+        String url = clickedItem.getHinhAnh_TheGiaoDich();
+        if(url != null){
+            Glide.with(this).load(url).into(transactionImage);
+        }
+        else{
+            transactionImage.setVisibility(LinearLayout.GONE);
+            CardView cardView = findViewById(R.id.transaction_image_cardview);
+            cardView.setVisibility(LinearLayout.GONE);
+        }
+
         MaterialButton currencyButton = findViewById(R.id.view_trans_currency_btn);
         currencyButton.setText(clickedItem.getDonViTien());
 
@@ -255,8 +261,6 @@ public class ViewTransaction extends AppCompatActivity {
 
         TextInputEditText dateEditText = findViewById(R.id.select_date_txtbox);
         dateEditText.setText(convertDateFormat(clickedItem.getNgayThang()));
-
-
     }
 
     private void setIncomeBackground(MaterialButton income_btn, String transferType){

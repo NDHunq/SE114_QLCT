@@ -416,14 +416,14 @@ public class TransactionDetail extends AppCompatActivity {
                                         Calendar calendar = Calendar.getInstance();
                                         calendar.set(year, monthOfYear, dayOfMonth);
                                         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-                                        if(compareDates(from.getText().toString(),format.format(calendar.getTime()))==-1 || compareDates(from.getText().toString(),format.format(calendar.getTime()))==0)
+                                        if(compareDates(from.getText().toString(),format.format(calendar.getTime()))==1 || compareDates(from.getText().toString(),format.format(calendar.getTime()))==0)
                                         {
-                                            Toast.makeText(dateDialog.getContext(), "Ngày kết thúc không được lớn hơn hoặc bằng ngày bắt đầu", Toast.LENGTH_LONG).show();
+                                            Toast.makeText(dateDialog.getContext(), "Ngày kết thúc không được lớn bé hoặc bằng ngày bắt đầu", Toast.LENGTH_LONG).show();
                                         }
-                                        else if(isEndDateLessThanCurrent(". - "+format.format(calendar.getTime())))
-                                        {
-                                            Toast.makeText(dateDialog.getContext(), "Ngày kết thúc không được lớn hơn hiện tại", Toast.LENGTH_LONG).show();
-                                        }
+//                                        else if(!isEndDateLessThanCurrent(". - "+format.format(calendar.getTime())))
+//                                        {
+//                                            Toast.makeText(dateDialog.getContext(), "Ngày kết thúc không được lớn hơn hiện tại", Toast.LENGTH_LONG).show();
+//                                        }
                                         else
                                             to.setText(format.format(calendar.getTime()));
 
@@ -829,7 +829,7 @@ public class TransactionDetail extends AppCompatActivity {
                                         Calendar calendar = Calendar.getInstance();
                                         calendar.set(year, monthOfYear, dayOfMonth);
                                         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-                                        if(isEndDateLessThanCurrent(getStartAndEndOfWeek(format.format(calendar.getTime())))==true)
+                                        if(isEndDateLessThanCurrent(getStartAndEndOfWeek(format.format(calendar.getTime())))==false)
                                         {
                                             Toast.makeText(dateDialog.getContext(), "Ngày kết thúc không được lớn hơn hiện tại", Toast.LENGTH_LONG).show();
                                         }
@@ -1010,6 +1010,7 @@ public class TransactionDetail extends AppCompatActivity {
         calenderIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                date = findViewById(R.id.trans_detail_date_txtview);
                 showDateDialog();
             }
         });
@@ -1135,7 +1136,9 @@ public class TransactionDetail extends AppCompatActivity {
                 TransactionAPIUtil transactionAPIUtil = new TransactionAPIUtil();
                 ArrayList<GetAllTransactionsEntity> parseAPIList = transactionAPIUtil.getAllTransactionsAPI();
                 for(GetAllTransactionsEntity item : parseAPIList){
-                    TransactionList.add(new TransactionDetail_TheGiaoDich(item.picture, item.category, item.amount, item.transaction_date, item.transaction_type, item.notes, item.currency_unit, findWalletById(item.wallet_id), findWalletById(item.target_wallet_id)));
+                    if(item.category != null){
+                        TransactionList.add(new TransactionDetail_TheGiaoDich(item.picture, item.category.picture, item.category, item.amount, item.transaction_date, item.transaction_type, item.notes, item.currency_unit, findWalletById(item.wallet_id), findWalletById(item.target_wallet_id)));
+                    }
                 }
             }catch (Exception e){
                 e.printStackTrace();

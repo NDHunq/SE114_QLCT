@@ -314,7 +314,7 @@
                     android:text=""
                     android:layout_gravity="center"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    android:textColor="@color/xanhdam"
                     android:textAlignment="textEnd"
                     android:layout_marginEnd="10dp"/>
 
@@ -400,7 +400,7 @@
                     android:text=""
                     android:layout_gravity="center"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    android:textColor="@color/xanhdam"
                     android:textAlignment="textEnd"
                     android:layout_marginEnd="10dp"/>
             </LinearLayout>
@@ -450,7 +450,7 @@
                     android:text=""
                     android:layout_gravity="center"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    android:textColor="@color/xanhdam"
                     android:textAlignment="textEnd"
                     android:layout_marginEnd="10dp"/>
             </LinearLayout>
@@ -479,7 +479,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Optional details"
+                android:text="View Note"
                 android:textColor="@color/xanhnen"
                 android:textStyle="bold"
                 android:textSize="16sp" />
@@ -528,18 +528,23 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add Image (Optional)"
+            android:text="Image"
             android:textColor="@color/xanhnen"
             android:textSize="16sp"
             android:textStyle="bold" />
 
-        <ImageView
-            android:id="@+id/transaction_image"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/transaction_image_cardview"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:layout_marginTop="35dp"
-            android:background="@drawable/imageview_background"
-            android:src="@drawable/add_image_icon"
-            app:tint="@color/white" />
+            app:cardCornerRadius="30dp"
+            android:background="@color/white"
+            android:layout_marginTop="35dp">
+            <ImageView
+                android:id="@+id/transaction_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/add_image_icon" />
+        </androidx.cardview.widget.CardView>
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

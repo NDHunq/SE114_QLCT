@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.util.Date;
 
 public class TransactionDetail_TheGiaoDich implements Serializable {
+    private String HinhAnh_TheGiaoDich;
     private String HinhAnh;
     private CreateCategoryEntity DanhMuc;
     private String SoTien;
@@ -24,7 +25,8 @@ public class TransactionDetail_TheGiaoDich implements Serializable {
     private CreateWalletEntity ViTien;
     private CreateWalletEntity ViDuocNhanTien;
 
-    public TransactionDetail_TheGiaoDich(String hinhAnh, CreateCategoryEntity GiaoDich, String soTien, String ngayThang, String loaiGiaoDich, String ghiChu, String donViTien, CreateWalletEntity viTien, CreateWalletEntity viDuocNhanTien) {
+    public TransactionDetail_TheGiaoDich(String hinhAnh_TheGiaoDich, String hinhAnh, CreateCategoryEntity GiaoDich, String soTien, String ngayThang, String loaiGiaoDich, String ghiChu, String donViTien, CreateWalletEntity viTien, CreateWalletEntity viDuocNhanTien) {
+        HinhAnh_TheGiaoDich = hinhAnh_TheGiaoDich;
         HinhAnh = hinhAnh;
         this.DanhMuc = GiaoDich;
         SoTien = soTien;
@@ -34,6 +36,14 @@ public class TransactionDetail_TheGiaoDich implements Serializable {
         this.donViTien = donViTien;
         ViTien = viTien;
         ViDuocNhanTien = viDuocNhanTien;
+    }
+
+    public String getHinhAnh_TheGiaoDich() {
+        return HinhAnh_TheGiaoDich;
+    }
+
+    public void setHinhAnh_TheGiaoDich(String hinhAnh_TheGiaoDich) {
+        HinhAnh_TheGiaoDich = hinhAnh_TheGiaoDich;
     }
 
     public void setHinhAnh(String hinhAnh) {

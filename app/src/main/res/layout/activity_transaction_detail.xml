@@ -82,8 +82,9 @@
                 android:layout_height="wrap_content"
                 android:text="All time"
                 android:textColor="@color/black"
-                android:textSize="20sp"
-                android:layout_marginTop="12dp"
+                android:textSize="15sp"
+                android:layout_marginTop="15dp"
+                android:singleLine="true"
                 android:layout_weight="6"/>
 
             <LinearLayout
@@ -176,6 +177,7 @@
             android:fontFamily="@font/inter"
             android:textColor="@color/black"
             android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
             android:layout_marginStart="70dp"
             android:visibility="visible"/>
 

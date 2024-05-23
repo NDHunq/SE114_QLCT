@@ -14,6 +14,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.text.Editable;
@@ -95,10 +96,11 @@ import okhttp3.Response;
 
 public class AddTransaction extends AppCompatActivity {
 
-    private TextView url;
+    private String url=null;
+
     private Button uploadBtn;
 
-    private ImageView review;
+    private ImageView transactionImage;
 
     ActivityResultLauncher<Intent> resultLauncher;
     private static final int PICK_IMAGE_REQUEST = 1;
@@ -886,21 +888,21 @@ public class AddTransaction extends AppCompatActivity {
                         String note = noteEditText.getText().toString();
                         TransactionAPIUtil transactionAPIUtil = new TransactionAPIUtil();
                         if(income){
-                            CreateTransactionEntity createTransactionEntity = new CreateTransactionEntity(Double.parseDouble(amount), formattedDate, incomeCategoryStorage, incomeWalletIdStorage, note, null, "INCOME", currencies, null);
+                            CreateTransactionEntity createTransactionEntity = new CreateTransactionEntity(Double.parseDouble(amount), formattedDate, incomeCategoryStorage, incomeWalletIdStorage, note, url, "INCOME", currencies, null);
                             transactionAPIUtil.createTransactionAPI(createTransactionEntity);
                             excuteIncome(incomeWalletIdStorage);
                         }
                         else if(expense){
-                            CreateTransactionEntity createTransactionEntity = new CreateTransactionEntity(Double.parseDouble(amount), formattedDate, expenseCategoryStorage, expenseWalletIdStorage, note, null, "EXPENSE", currencies, null);
+                            CreateTransactionEntity createTransactionEntity = new CreateTransactionEntity(Double.parseDouble(amount), formattedDate, expenseCategoryStorage, expenseWalletIdStorage, note, url, "EXPENSE", currencies, null);
                             transactionAPIUtil.createTransactionAPI(createTransactionEntity);
                             excuteExpense(expenseWalletIdStorage);
                         }
                         else {
-                            CreateTransactionEntity createTransactionEntity = new CreateTransactionEntity(Double.parseDouble(amount), formattedDate, null, fromWalletIdStorage, note, null, "TRANSFER", currencies, targetWalletIdStorage);
+                            CreateTransactionEntity createTransactionEntity = new CreateTransactionEntity(Double.parseDouble(amount), formattedDate, null, fromWalletIdStorage, note, url, "TRANSFER", currencies, targetWalletIdStorage);
                             transactionAPIUtil.createTransactionAPI(createTransactionEntity);
                             excuteTransfer(fromWalletIdStorage, targetWalletIdStorage);
                         }
-                        Toast.makeText(AddTransaction.this, "Transaction added successfully", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddTransaction.this, url, Toast.LENGTH_SHORT).show();
                         finish();
                     }
                 }
@@ -947,37 +949,20 @@ public class AddTransaction extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        ImageView transactionImage = findViewById(R.id.transaction_image);
+        //Disable strict mode
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+        //review = findViewById(R.id.transaction_image);
+        registerResult();
+        transactionImage = findViewById(R.id.transaction_image);
         transactionImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                resultLauncher.launch(intent);
             }
         });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            Uri uri = data.getData();
-            try {
-                int width = 100; // chiều rộng mong muốn
-                int height = 100; // chiều cao mong muốn
-
-                ImageView transactionImage = findViewById(R.id.transaction_image);
-                Glide.with(this)
-                        .load(uri)
-                        .apply(new RequestOptions().override(width, height))
-                        .into(transactionImage);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     private void excuteIncome(String incomeID){
@@ -1196,7 +1181,7 @@ public class AddTransaction extends AppCompatActivity {
     private String uploadImageAPI(Uri imageUri) throws IOException, JSONException {
 
         //Đường dẫn của server, cái này trong source chính đã để trong folder API_CONFIG
-        String SERVER = "https://expense-management-backend-jslp.onrender.com";
+        String SERVER = "http://13.215.179.128";
         String API_VERSION = "api/v1";
 
         //Dưới nãy giữ y chang, không cần suy nghĩ
@@ -1227,7 +1212,7 @@ public class AddTransaction extends AppCompatActivity {
                         try {
                             Uri imageUri = result.getData().getData();
                             File test = new File(imageUri.getPath());
-                            review.setImageURI(imageUri);
+                            transactionImage.setImageURI(imageUri);
                             File file = new File(imageUri.getPath());
 
                             //Đây là url của ảnh sau khi upload lên server
@@ -1239,7 +1224,7 @@ public class AddTransaction extends AppCompatActivity {
 
                             //Log ra để xem url của ảnh
                             Log.d("Data", imageUrl);
-                            url.setText(imageUrl);
+                            url = imageUrl;
                         }catch (Exception e){
                             e.printStackTrace();
                         }
