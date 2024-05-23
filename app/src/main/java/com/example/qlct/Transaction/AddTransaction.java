@@ -838,7 +838,7 @@ public class AddTransaction extends AppCompatActivity {
 
 
                 // Tạo và hiển thị DatePickerDialog
-                DatePickerDialog datePickerDialog = new DatePickerDialog(AddTransaction.this,
+                DatePickerDialog datePickerDialog = new DatePickerDialog(AddTransaction.this, R.style.CustomDatePickerDialogTheme,
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
