@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -29,6 +30,7 @@ import com.example.qlct.Home.Home_My_wallets;
 import com.example.qlct.Login_Signin;
 import com.example.qlct.My_categories;
 import com.example.qlct.NewPassword;
+import com.example.qlct.Notification.Notificaiton_activity;
 import com.example.qlct.R;
 import com.example.qlct.Setting;
 import com.github.mikephil.charting.data.LineRadarDataSet;
@@ -43,6 +45,7 @@ public class Account_fragment extends Fragment {
     TextView name;
 UserProfile userProfile;
     String phoneNumber;
+    ImageButton bell;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,6 +59,7 @@ UserProfile userProfile;
         phone=view.findViewById(R.id.phone);
         name=view.findViewById(R.id.name);
         logout=view.findViewById(R.id.logout);
+        bell=view.findViewById(R.id.bell);
         UserAPiUtil userAPiUtil = new UserAPiUtil();
         UserProfile userProfile=userAPiUtil.getUserProfile();
 //        userProfile = SharedDaTa.getInstance().getUserProfile();
@@ -107,6 +111,14 @@ UserProfile userProfile;
                 Intent myintent=new Intent(getActivity(), Setting.class);
                 startActivity(myintent);
 
+            }
+        });
+
+        bell.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), Notificaiton_activity.class);
+                startActivity(intent);
             }
         });
 

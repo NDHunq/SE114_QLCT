@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -137,7 +138,28 @@ public class Home_Wallet_Information extends AppCompatActivity {
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 WalletAPIUtil walletAPIUtil = new WalletAPIUtil();
-                                walletAPIUtil.deleteWallet(exid);
+                                try
+                                {
+                                    String loi=walletAPIUtil.deleteWallet(exid);
+                                    if(loi.equals("loi"))
+                                    {
+                                        new AlertDialog.Builder(Home_Wallet_Information.this)
+                                                .setTitle("Error")
+                                                .setMessage("Failed to delete wallet")
+                                                .setPositiveButton(android.R.string.ok, null)
+                                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                                .show();
+                                    }
+
+                                }
+                                catch (Exception e)
+                                {
+
+
+
+                                }
+
+
                                 Intent intent = new Intent(Home_Wallet_Information.this, Home_My_wallets.class);
                                 TextInputEditText nameview= findViewById(R.id.namewallet);
                                 if(exduochon.equals(nameview.getText().toString()))
