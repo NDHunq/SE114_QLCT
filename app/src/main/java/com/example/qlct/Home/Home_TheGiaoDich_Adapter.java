@@ -14,6 +14,7 @@ import androidx.cardview.widget.CardView;
 
 import com.bumptech.glide.Glide;
 import com.example.qlct.R;
+import com.example.qlct.doitiente;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
@@ -65,6 +66,7 @@ public class Home_TheGiaoDich_Adapter extends BaseAdapter {
             sotien.setTextColor(context.getResources().getColor(R.color.xanhnendam));
 
         }
+        doitiente doitiente = new doitiente();
        String url=theGiaoDich.getHinhAnh();
         Glide.with(context).load(url).into(imageView);
         ten.setText(theGiaoDich.getTenGiaoDich());

@@ -2,6 +2,7 @@ package com.example.qlct;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 
 public class doitiente {
 
@@ -74,6 +75,23 @@ public class doitiente {
             return amount*CNYtoVND;
         }
         return 0.0;
+    }
+    public static String formatCurrency(double amount, String currency) {
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+
+        // Set the thousands separator depending on the currency
+        if ("VND".equals(currency)) {
+            symbols.setGroupingSeparator('.');
+        } else {
+            symbols.setGroupingSeparator(',');
+        }
+
+        // Always use a dot for the decimal separator
+        symbols.setDecimalSeparator('.');
+
+        // Create a DecimalFormat with the desired symbols and format the amount
+        DecimalFormat formatter = new DecimalFormat("###,###.##", symbols);
+        return formatter.format(amount);
     }
 
     public void setUSDtoVND(double USDtoVND) {
