@@ -899,6 +899,8 @@ public class Category_Add extends AppCompatActivity {
         });
         TextView upload = dialog.findViewById(R.id.upload);
         upload.setOnClickListener(v -> {
+            ImageView img = findViewById(R.id.hinhanh);
+            img.setBackgroundResource(0);
 
             Intent intent = new Intent(MediaStore.ACTION_PICK_IMAGES);
             resultLauncher.launch(intent);
