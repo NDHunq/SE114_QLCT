@@ -6,7 +6,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#008477"
+        android:background="@color/xanhnen"
         android:orientation="vertical">
         <LinearLayout
             android:layout_width="wrap_content"
@@ -51,7 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:numColumns="4">
+        android:numColumns="3">
 
     </GridView>
     <RelativeLayout
@@ -67,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="Cancel"
-                android:textColor="#008477"
+                android:textColor="@color/xanhnen"
                 android:textSize="20dp"
                 android:layout_marginBottom="20dp"
                 android:textStyle="bold">
@@ -82,7 +82,7 @@
                 android:textSize="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginStart="20dp"
-                android:textColor="#008477"
+                android:textColor="@color/xanhnen"
                 android:layout_marginBottom="20dp"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="30dp"

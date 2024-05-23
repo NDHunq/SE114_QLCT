@@ -219,7 +219,8 @@
         <Switch
             android:id="@+id/switch1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></Switch>
+            android:layout_height="match_parent"
+            android:theme="@style/CustomSwitch"></Switch>
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"

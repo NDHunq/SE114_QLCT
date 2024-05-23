@@ -384,7 +384,7 @@ public class TransactionDetail extends AppCompatActivity {
                         int day = c.get(Calendar.DAY_OF_MONTH);
 
                         // Tạo một DatePickerDialog mới
-                        DatePickerDialog datePickerDialog = new DatePickerDialog(dateDialog.getContext(),
+                        DatePickerDialog datePickerDialog = new DatePickerDialog(dateDialog.getContext(),R.style.CustomDatePickerDialogTheme,
                                 new DatePickerDialog.OnDateSetListener() {
                                     @Override
                                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -408,7 +408,7 @@ public class TransactionDetail extends AppCompatActivity {
                         int day = c.get(Calendar.DAY_OF_MONTH);
 
                         // Tạo một DatePickerDialog mới
-                        DatePickerDialog datePickerDialog = new DatePickerDialog(dateDialog.getContext(),
+                        DatePickerDialog datePickerDialog = new DatePickerDialog(dateDialog.getContext(),R.style.CustomDatePickerDialogTheme,
                                 new DatePickerDialog.OnDateSetListener() {
                                     @Override
                                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -663,7 +663,7 @@ public class TransactionDetail extends AppCompatActivity {
                         int day = c.get(Calendar.DAY_OF_MONTH);
 
                         // Tạo một DatePickerDialog mới
-                        DatePickerDialog datePickerDialog = new DatePickerDialog(dateDialog.getContext(),
+                        DatePickerDialog datePickerDialog = new DatePickerDialog(dateDialog.getContext(),R.style.CustomDatePickerDialogTheme,
                                 new DatePickerDialog.OnDateSetListener() {
                                     @Override
                                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -821,7 +821,7 @@ public class TransactionDetail extends AppCompatActivity {
                         int day = b.get(Calendar.DAY_OF_MONTH);
 
                         // Tạo một DatePickerDialog mới
-                        DatePickerDialog datePickerDialog = new DatePickerDialog(dateDialog.getContext(),
+                        DatePickerDialog datePickerDialog = new DatePickerDialog(dateDialog.getContext(),R.style.CustomDatePickerDialogTheme,
                                 new DatePickerDialog.OnDateSetListener() {
                                     @Override
                                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {

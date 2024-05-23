@@ -24,4 +24,21 @@
         <item name="android:windowEnterAnimation">@anim/slide_in_bottom_vi</item>
         <item name="android:windowExitAnimation">@anim/slide_out_bottom_vi</item>
     </style>
+    <style name="CustomSwitch" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">@color/xanhnen</item> <!-- Màu khi Switch được bật -->
+        <item name="colorSwitchThumbNormal">#3F51B5</item> <!-- Màu của nút Switch -->
+    </style>
+    <style name="CustomDatePickerDialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/xanhnen</item> <!-- Màu của nút và tiêu đề -->
+        <item name="android:buttonBarButtonStyle">@style/ButtonBarButtonStyle</item>
+        <item name="android:buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
+    </style>
+
+    <style name="ButtonBarButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/xanhnen</item> <!-- Màu của nút "Cancel" -->
+    </style>
+
+    <style name="PositiveButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/xanhnen</item> <!-- Màu của nút "OK" -->
+    </style>
 </resources>
