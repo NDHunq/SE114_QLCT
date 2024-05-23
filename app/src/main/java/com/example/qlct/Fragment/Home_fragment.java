@@ -332,7 +332,7 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
         try {
             theGiaoDichList = new ArrayList<>();
             int i=0;
-            ArrayList<GetAllTransactionsEntity_quyen> parseAPIList = new TransactionAPIUtil().getAllTransactionsAPI();
+            ArrayList<GetAllTransactionsEntity_quyen> parseAPIList = new TransactionAPIUtil().getAllTransactionsAPI_quyen();
             ArrayList<GetAllWalletsEntity> walletsEntities = new WalletAPIUtil().getAllWalletAPI();
             //Chạy vòng lặp để lấy ra các field cần thiết cho hiển thị ra Views
             for (GetAllTransactionsEntity_quyen item : parseAPIList) {

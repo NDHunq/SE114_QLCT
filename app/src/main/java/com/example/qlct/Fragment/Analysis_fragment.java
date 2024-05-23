@@ -131,7 +131,7 @@ public class Analysis_fragment extends Fragment {
         View view=inflater.inflate(R.layout.fragment_analysis_fragment, container, false);
 
         TransactionAPIUtil transactionAPIUtil = new TransactionAPIUtil();
-        listTransactions = transactionAPIUtil.getAllTransactionsAPI();
+        listTransactions = transactionAPIUtil.getAllTransactionsAPI_quyen();
         WalletAPIUtil walletAPIUtil = new WalletAPIUtil();
 
         listwallet = walletAPIUtil.getAllWalletAPI();

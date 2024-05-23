@@ -44,13 +44,7 @@
         <activity
             android:name=".Category_Add"
             android:exported="true" >
-
-
-
         </activity>
-        <activity
-            android:name=".Category_Add"
-            android:exported="false" />
         <activity
             android:name=".Share_Wallet"
             android:exported="false"
