@@ -2,9 +2,11 @@ package com.example.qlct.Transaction;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.Instrumentation;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
@@ -13,6 +15,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
@@ -33,6 +36,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -60,7 +67,14 @@ import com.google.android.material.datepicker.MaterialStyledDatePickerDialog;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
@@ -72,8 +86,21 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
 public class AddTransaction extends AppCompatActivity {
 
+    private TextView url;
+    private Button uploadBtn;
+
+    private ImageView review;
+
+    ActivityResultLauncher<Intent> resultLauncher;
     private static final int PICK_IMAGE_REQUEST = 1;
     private boolean isUserInteracting = true;
     private ListView categoryListView;
@@ -1163,5 +1190,100 @@ public class AddTransaction extends AppCompatActivity {
         boolean isAmountValid = validateAmount();
         boolean isDateValid = validateDate();
         return isAmountValid && isDateValid && isListValid;
+    }
+
+    //API chính để upload ảnh
+    private String uploadImageAPI(Uri imageUri) throws IOException, JSONException {
+
+        //Đường dẫn của server, cái này trong source chính đã để trong folder API_CONFIG
+        String SERVER = "https://expense-management-backend-jslp.onrender.com";
+        String API_VERSION = "api/v1";
+
+        //Dưới nãy giữ y chang, không cần suy nghĩ
+        OkHttpClient client = new OkHttpClient().newBuilder()
+                .build();
+        File file = getFileFromUri(this, imageUri);
+        RequestBody body = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                .addFormDataPart("image", file.getName(),
+                        RequestBody.create( file.getAbsoluteFile(),
+                                MediaType.parse("application/octet-stream")
+                        ))
+                .build();
+        Request request = new Request.Builder()
+                .url(SERVER+"/" + API_VERSION + "/media/upload")
+                .method("POST", body)
+                .build();
+        Response response = client.newCall(request).execute();
+
+        //Log.d("Response", response.body().string());
+        return  response.body().string();
+    }
+
+//    private void registerResult (){
+//        resultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+//                new ActivityResultCallback<Instrumentation.ActivityResult>() {
+//                    @Override
+//                    public void onActivityResult(ActivityResult result) {
+//                        try {
+//                            Uri imageUri = result.getData().getData();
+//                            File test = new File(imageUri.getPath());
+//                            review.setImageURI(imageUri);
+//                            File file = new File(imageUri.getPath());
+//
+//                            //Đây là url của ảnh sau khi upload lên server
+//                            //Sau khi có url này, thực hiện chèn vào các field API nào mà có "image"
+//                            String response = uploadImageAPI(imageUri);
+//                            Log.d("Response", response);
+//                            JSONObject json = new JSONObject(response);
+//                            String imageUrl = json.getJSONObject("data").getString("picture_url");
+//
+//                            //Log ra để xem url của ảnh
+//                            Log.d("Data", imageUrl);
+//                            url.setText(imageUrl);
+//                        }catch (Exception e){
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                }
+//        );
+//    }
+
+    private String getFileName(Context context, Uri uri) {
+        String result = null;
+        if (uri.getScheme().equals("content")) {
+            try (Cursor cursor = context.getContentResolver().query(uri, null, null, null, null)) {
+                if (cursor != null && cursor.moveToFirst()) {
+                    int index = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+                    if (index != -1) {
+                        result = cursor.getString(index);
+                    }
+                }
+            }
+        }
+        if (result == null) {
+            result = uri.getLastPathSegment();
+        }
+        return result;
+    }
+    private File getFileFromUri(Context context, Uri uri) {
+        File file = null;
+        try {
+            String fileName = getFileName(context, uri);
+            InputStream inputStream = context.getContentResolver().openInputStream(uri);
+            if (inputStream != null) {
+                file = new File(context.getCacheDir(), fileName);
+                FileOutputStream outputStream = new FileOutputStream(file);
+                byte[] buffer = new byte[1024];
+                int bytesRead;
+                while ((bytesRead = inputStream.read(buffer)) != -1) {
+                    outputStream.write(buffer, 0, bytesRead);
+                }
+                outputStream.close();
+                inputStream.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return file;
     }
 }
