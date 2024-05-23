@@ -1,15 +1,17 @@
 package com.example.qlct.Transaction;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Looper;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -29,39 +31,52 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.qlct.API_Entity.CreateWalletEntity;
 import com.example.qlct.API_Entity.GetAllCategoryEntity;
+import com.example.qlct.API_Entity.GetAllTransactionsEntity;
 import com.example.qlct.API_Entity.GetAllWalletsEntity;
 import com.example.qlct.API_Utils.CategoryAPIUtil;
+import com.example.qlct.API_Utils.TransactionAPIUtil;
 import com.example.qlct.API_Utils.WalletAPIUtil;
 import com.example.qlct.Category.Category_hdp;
 import com.example.qlct.R;
 import com.example.qlct.SelectWallet_Adapter;
 import com.example.qlct.Wallet_hdp;
+import com.example.qlct.doitiente;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
+
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+import org.w3c.dom.Text;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 public class TransactionDetail extends AppCompatActivity {
 
     private List<Category_hdp> categoryList = new ArrayList<>();
     private ExpandableListView expandableListView;
     private List<TransactionDetail_ExpandableListItems> listDataHeader;
+    private List<TransactionDetail_TheGiaoDich> theGiaoDichList = new ArrayList<>();
     private HashMap<TransactionDetail_ExpandableListItems, List<TransactionDetail_TheGiaoDich>> listDataChild;
     private TransactionDetail_ExpandableListView expandableListAdapter;
     private TextView apply;
@@ -73,7 +88,7 @@ public class TransactionDetail extends AppCompatActivity {
     private TextView timespan;
     private ImageView back;
     private ImageView next;
-    private static String status;
+    private static String status = "day";
     private LinearLayout time;
     private LinearLayout from_to;
     private TextView from,to;
@@ -87,6 +102,8 @@ public class TransactionDetail extends AppCompatActivity {
     private ArrayList<Chip> incomeChipList = new ArrayList<>();
 
     private ArrayList<Chip> expenseChipList = new ArrayList<>();
+
+    private CircularProgressIndicator loading;
 
     private void AnhXaWallet(){
         try{
@@ -205,6 +222,9 @@ public class TransactionDetail extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 dialog.dismiss();
+                ChipGroup chipGroup = findViewById(R.id.chipgroup);
+                chipGroup.removeAllViews();
+                AnhXaChipToFilter(chipGroup);
             }
         });
     }
@@ -398,12 +418,12 @@ public class TransactionDetail extends AppCompatActivity {
                                         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
                                         if(compareDates(from.getText().toString(),format.format(calendar.getTime()))==1 || compareDates(from.getText().toString(),format.format(calendar.getTime()))==0)
                                         {
-                                            Toast.makeText(dateDialog.getContext(), "Ngày kết thúc không được nhỏ hơn hoặc bằng ngày bắt đầu", Toast.LENGTH_LONG).show();
+                                            Toast.makeText(dateDialog.getContext(), "Ngày kết thúc không được lớn bé hoặc bằng ngày bắt đầu", Toast.LENGTH_LONG).show();
                                         }
-                                        else if(isEndDateLessThanCurrent(". - "+format.format(calendar.getTime())))
-                                        {
-                                            Toast.makeText(dateDialog.getContext(), "Ngày kết thúc không được nhỏ hơn hiện tại", Toast.LENGTH_LONG).show();
-                                        }
+//                                        else if(!isEndDateLessThanCurrent(". - "+format.format(calendar.getTime())))
+//                                        {
+//                                            Toast.makeText(dateDialog.getContext(), "Ngày kết thúc không được lớn hơn hiện tại", Toast.LENGTH_LONG).show();
+//                                        }
                                         else
                                             to.setText(format.format(calendar.getTime()));
 
@@ -434,7 +454,12 @@ public class TransactionDetail extends AppCompatActivity {
                         calendar.add(Calendar.DAY_OF_MONTH, 1);
 
                         // Định dạng ngày mới và đặt nó vào TextView
-                        date.setText(format.format(calendar.getTime()));
+                        if(isEndDateLessThanCurrent(". - "+format.format(calendar.getTime()))) {
+                            Toast.makeText(dateDialog.getContext(), "Ngày không được lớn hơn hiện tại", Toast.LENGTH_LONG).show();
+                            calendar.add(Calendar.DAY_OF_MONTH, 1);
+                        }
+                        else
+                            date.setText(format.format(calendar.getTime()));
                     }
                     break;
                     case "month":
@@ -451,8 +476,13 @@ public class TransactionDetail extends AppCompatActivity {
                         // Tăng tháng lên 1
                         calendar.add(Calendar.MONTH, 1);
 
-                        // Định dạng tháng mới và đặt nó vào TextView
-                        date.setText(format.format(calendar.getTime()));
+                        if(!isDateLessThanCurrent(format.format(calendar.getTime())))
+                        {
+                            Toast.makeText(dateDialog.getContext(), "Tháng không được lớn hơn hiện tại", Toast.LENGTH_LONG).show();
+                            calendar.add(Calendar.MONTH, 1);
+                        }
+                        else
+                            date.setText(format.format(calendar.getTime()));
                     }
                     break;
                     case "year":
@@ -469,8 +499,13 @@ public class TransactionDetail extends AppCompatActivity {
                         // Tăng năm lên 1
                         calendar.add(Calendar.YEAR, 1);
 
-                        // Định dạng năm mới và đặt nó vào TextView
-                        date.setText(format.format(calendar.getTime()));
+                        if(!isYearLessThanCurrent(format.format(calendar.getTime())))
+                        {
+                            Toast.makeText(dateDialog.getContext(), "Năm không được lớn hơn hiện tại", Toast.LENGTH_LONG).show();
+                            calendar.add(Calendar.YEAR, 1);
+                        }
+                        else
+                            date.setText(format.format(calendar.getTime()));
 
                     }
                     break;
@@ -492,8 +527,16 @@ public class TransactionDetail extends AppCompatActivity {
                         calendarStart.add(Calendar.DAY_OF_MONTH, 7);
                         calendarEnd.add(Calendar.DAY_OF_MONTH, 7);
 
-                        // Định dạng ngày mới và đặt nó vào TextView
-                        date.setText(format.format(calendarStart.getTime()) + " - " + format.format(calendarEnd.getTime()));
+                        if(isEndDateLessThanCurrent(". - "+format.format(calendarStart.getTime()))) {
+                            Toast.makeText(dateDialog.getContext(), "Ngày kết thúc không được lớn hơn hiện tại", Toast.LENGTH_LONG).show();
+                            calendarStart.add(Calendar.DAY_OF_MONTH, 7);
+                            calendarEnd.add(Calendar.DAY_OF_MONTH, 7);
+                        }
+                        else
+                        {
+                            // Định dạng ngày mới và đặt nó vào TextView
+                            date.setText(format.format(calendarStart.getTime()) + " - " + format.format(calendarEnd.getTime()));
+                        }
 
                     }
                     break;
@@ -523,14 +566,7 @@ public class TransactionDetail extends AppCompatActivity {
 
                         // Giảm ngày đi 1
                         calendar.add(Calendar.DAY_OF_MONTH, -1);
-
-                        // Định dạng ngày mới và đặt nó vào TextView
-                        if(isEndDateLessThanCurrent(". - "+format.format(calendar.getTime()))) {
-                            Toast.makeText(dateDialog.getContext(), "Ngày không được nhỏ hơn hiện tại", Toast.LENGTH_LONG).show();
-                            calendar.add(Calendar.DAY_OF_MONTH, 1);
-                        }
-                        else
-                            date.setText(format.format(calendar.getTime()));
+                        date.setText(format.format(calendar.getTime()));
                     }
                     break;
                     case "month":
@@ -546,13 +582,7 @@ public class TransactionDetail extends AppCompatActivity {
 
                         // Giảm tháng đi 1
                         calendar.add(Calendar.MONTH, -1);
-                        if(!isDateLessThanCurrent(format.format(calendar.getTime())))
-                        {
-                            Toast.makeText(dateDialog.getContext(), "Tháng không được nhỏ hơn hiện tại", Toast.LENGTH_LONG).show();
-                            calendar.add(Calendar.MONTH, 1);
-                        }
-                        else
-                            date.setText(format.format(calendar.getTime()));
+                        date.setText(format.format(calendar.getTime()));
                     }
                     break;
                     case "year":
@@ -568,13 +598,8 @@ public class TransactionDetail extends AppCompatActivity {
 
                         // Giảm năm đi 1
                         calendar.add(Calendar.YEAR, -1);
-                        if(!isYearLessThanCurrent(format.format(calendar.getTime())))
-                        {
-                            Toast.makeText(dateDialog.getContext(), "Năm không được nhỏ hơn hiện tại", Toast.LENGTH_LONG).show();
-                            calendar.add(Calendar.YEAR, 1);
-                        }
-                        else
-                            date.setText(format.format(calendar.getTime()));
+                        date.setText(format.format(calendar.getTime()));
+
 
                     }
                     break;
@@ -595,19 +620,21 @@ public class TransactionDetail extends AppCompatActivity {
                         // Giảm ngày đi 7 (1 tuần)
                         calendarStart.add(Calendar.DAY_OF_MONTH, -7);
                         calendarEnd.add(Calendar.DAY_OF_MONTH, -7);
-                        if(isEndDateLessThanCurrent(". - "+format.format(calendarEnd.getTime()))) {
-                            Toast.makeText(dateDialog.getContext(), "Ngày kết thúc không được nhỏ hơn hiện tại", Toast.LENGTH_LONG).show();
-                            calendarStart.add(Calendar.DAY_OF_MONTH, 7);
-                            calendarEnd.add(Calendar.DAY_OF_MONTH, 7);
-                        }
-                        else
-                        {
-                            // Định dạng ngày mới và đặt nó vào TextView
-                            date.setText(format.format(calendarStart.getTime()) + " - " + format.format(calendarEnd.getTime()));
-                        }
+                        date.setText(format.format(calendarStart.getTime()) + " - " + format.format(calendarEnd.getTime()));
+
+
                     }
                     break;
                 }
+            }
+        });
+
+        TextView allTime = dateDialog.findViewById(R.id.all_time);
+        allTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dateTxtView.setText("All time");
+                dateDialog.dismiss();
             }
         });
 
@@ -646,7 +673,7 @@ public class TransactionDetail extends AppCompatActivity {
                                         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
                                         if(isEndDateLessThanCurrent(". - "+format.format(calendar.getTime()))==true)
                                         {
-                                            Toast.makeText(dateDialog.getContext(), "Ngày không được nhỏ hơn hiện tại", Toast.LENGTH_LONG).show();
+                                            Toast.makeText(dateDialog.getContext(), "Ngày không được lớn hơn hiện tại", Toast.LENGTH_LONG).show();
                                         }
                                         else
                                             date.setText(format.format(calendar.getTime()));
@@ -690,10 +717,10 @@ public class TransactionDetail extends AppCompatActivity {
                             public void onClick(View v) {
                                 Calendar calendar = Calendar.getInstance();
                                 int currentYear = calendar.get(Calendar.YEAR);
-                                if(Integer.parseInt(year_lbl.getText().toString())>currentYear)
+                                if(Integer.parseInt(year_lbl.getText().toString())<=currentYear)
                                     year_lbl.setText(Integer.parseInt(year_lbl.getText().toString())-1+"");
                                 else
-                                    Toast.makeText(dialog.getContext(), "Năm không được nhỏ hơn "+currentYear, Toast.LENGTH_LONG).show();
+                                    Toast.makeText(dialog.getContext(), "Năm không được lớn hơn "+currentYear, Toast.LENGTH_LONG).show();
                             }
                         });
                         cancel.setOnClickListener(new View.OnClickListener() {
@@ -714,7 +741,7 @@ public class TransactionDetail extends AppCompatActivity {
                                     String outputDate = outputFormat.format(daTe);
                                     if(!isDateLessThanCurrent(outputDate))
                                     {
-                                        Toast.makeText(dialog.getContext(), "Tháng không được nhỏ hơn hiện tại", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(dialog.getContext(), "Tháng không được lớn hơn hiện tại", Toast.LENGTH_LONG).show();
                                     }
                                     else
                                         date.setText(outputDate);
@@ -760,10 +787,10 @@ public class TransactionDetail extends AppCompatActivity {
                             public void onClick(View v) {
                                 Calendar calendar = Calendar.getInstance();
                                 int currentYear = calendar.get(Calendar.YEAR);
-                                if(Integer.parseInt(year_lbl.getText().toString())>currentYear)
+                                if(Integer.parseInt(year_lbl.getText().toString())<=currentYear)
                                     year_lbl.setText(Integer.parseInt(year_lbl.getText().toString())-1+"");
                                 else
-                                    Toast.makeText(dialog.getContext(), "Năm không được nhỏ hơn "+currentYear, Toast.LENGTH_LONG).show();
+                                    Toast.makeText(dialog.getContext(), "Năm không được lớn hơn "+currentYear, Toast.LENGTH_LONG).show();
                             }
                         });
                         cancel.setOnClickListener(new View.OnClickListener() {
@@ -777,7 +804,7 @@ public class TransactionDetail extends AppCompatActivity {
                             public void onClick(View v) {
                                 if(!isYearLessThanCurrent(year_lbl.getText().toString()))
                                 {
-                                    Toast.makeText(dialog.getContext(), "Năm không được nhỏ hơn hiện tại", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(dialog.getContext(), "Năm không được lớn hơn hiện tại", Toast.LENGTH_LONG).show();
                                 }
                                 else
                                     date.setText(year_lbl.getText().toString());
@@ -802,9 +829,9 @@ public class TransactionDetail extends AppCompatActivity {
                                         Calendar calendar = Calendar.getInstance();
                                         calendar.set(year, monthOfYear, dayOfMonth);
                                         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-                                        if(isEndDateLessThanCurrent(getStartAndEndOfWeek(format.format(calendar.getTime())))==true)
+                                        if(isEndDateLessThanCurrent(getStartAndEndOfWeek(format.format(calendar.getTime())))==false)
                                         {
-                                            Toast.makeText(dateDialog.getContext(), "Ngày kết thúc không được nhỏ hơn hiện tại", Toast.LENGTH_LONG).show();
+                                            Toast.makeText(dateDialog.getContext(), "Ngày kết thúc không được lớn hơn hiện tại", Toast.LENGTH_LONG).show();
                                         }
                                         else
                                             date.setText(getStartAndEndOfWeek(format.format(calendar.getTime())));
@@ -818,7 +845,6 @@ public class TransactionDetail extends AppCompatActivity {
                     {}
                     break;
                 }
-
             }
         });
 
@@ -834,16 +860,123 @@ public class TransactionDetail extends AppCompatActivity {
             return insets;
         });
 
-        setupExpandableListView();
+        expandableListView = findViewById(R.id.trans_detail_listview);
+        expandableListView.setGroupIndicator(null);
+
+        loading = findViewById(R.id.progressBar);
+
+        AnhXaWallet();
+//        ExecutorService excuterService = Executors.newSingleThreadExecutor();
+////        // Hiển thị ProgressBar
+////        loading.setVisibility(View.VISIBLE);
+////
+////        excuterService.execute(new Runnable() {
+////            @Override
+////            public void run() {
+////
+////                setupExpandableListView();
+////
+////                runOnUiThread(new Runnable() {
+////                    @Override
+////                    public void run() {
+////                        expandableListView = findViewById(R.id.trans_detail_listview);
+////                        expandableListView.setGroupIndicator(null);
+////                        expandableListAdapter = new TransactionDetail_ExpandableListView(TransactionDetail.this, listDataHeader, listDataChild);
+////                        expandableListView.setAdapter(expandableListAdapter);
+////                        for (int i = 0; i < expandableListAdapter.getGroupCount(); i++) {
+////                            expandableListView.expandGroup(i);
+////                        }
+////
+////                        loading.setVisibility(View.GONE);
+////                    }
+////                });
+////            }
+////        });
+
+        TextView noTransaction = findViewById(R.id.no_transaction);
+        setupExpandableListView(theGiaoDichList);
+        expandableListView = findViewById(R.id.trans_detail_listview);
         expandableListView.setGroupIndicator(null);
         expandableListAdapter = new TransactionDetail_ExpandableListView(TransactionDetail.this, listDataHeader, listDataChild);
         expandableListView.setAdapter(expandableListAdapter);
-
         for (int i = 0; i < expandableListAdapter.getGroupCount(); i++) {
             expandableListView.expandGroup(i);
         }
+        noTransaction.setVisibility(View.GONE);
+
+        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                // Lấy thông tin của mục con được nhấp
+                TransactionDetail_TheGiaoDich clickedItem = (TransactionDetail_TheGiaoDich) expandableListAdapter.getChild(groupPosition, childPosition);
+
+                // Tạo một Intent để khởi động Activity mới
+                Intent intent = new Intent(TransactionDetail.this, ViewTransaction.class);
+
+                // Đưa thông tin của mục con vào Intent
+                intent.putExtra("clickedItem", clickedItem);
+
+                // Khởi động Activity mới
+                startActivity(intent);
+
+                // Trả về true nếu sự kiện onClick đã được xử lý, false nếu không
+                return true;
+            }
+        });
 
         dateTxtView = findViewById(R.id.trans_detail_date_txtview);
+        dateTxtView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Code to execute before text is changed
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Code to execute when text is changing
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // Code to execute after text has changed
+                reloadExpandableListView();
+            }
+        });
+
+        TextView walletName = findViewById(R.id.wallet_name_txtview);
+        walletName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Code to execute before text is changed
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Code to execute when text is changing
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // Code to execute after text has changed
+                reloadExpandableListView();
+            }
+        });
+
+        ChipGroup chipGroup = findViewById(R.id.chipgroup);
+        chipGroup.setOnHierarchyChangeListener(new ViewGroup.OnHierarchyChangeListener() {
+            @Override
+            public void onChildViewAdded(View parent, View child) {
+                // Code to execute when a new chip is added to the ChipGroup
+                reloadExpandableListView();
+            }
+
+            @Override
+            public void onChildViewRemoved(View parent, View child) {
+                // Code to execute when a chip is removed from the ChipGroup
+                reloadExpandableListView();
+            }
+        });
+
         ImageButton backbutton = findViewById(R.id.trans_detail_back_btn);
         backbutton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -864,7 +997,12 @@ public class TransactionDetail extends AppCompatActivity {
         morebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                income = true;
+                expense = false;
+                //Toast.makeText(TransactionDetail.this, String.valueOf(incomeChipList.size()) + " " + String.valueOf(expenseChipList.size()), Toast.LENGTH_SHORT).show();
                 showDialog();
+                ChipGroup chipGroup = findViewById(R.id.chipgroup);
+                AnhXaChipToFilter(chipGroup);
             }
         });
 
@@ -872,6 +1010,7 @@ public class TransactionDetail extends AppCompatActivity {
         calenderIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                date = findViewById(R.id.trans_detail_date_txtview);
                 showDateDialog();
             }
         });
@@ -884,7 +1023,6 @@ public class TransactionDetail extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
 
     public String getStartAndEndOfWeek(String inputDate) {
@@ -921,10 +1059,10 @@ public class TransactionDetail extends AppCompatActivity {
             // Chuyển đổi chuỗi ngày thứ hai thành đối tượng Date
             Date endDate = format.parse(dates[1]);
             Calendar calendar = Calendar.getInstance();
-            calendar.add(Calendar.DAY_OF_MONTH, -1);
+            //calendar.add(Calendar.DAY_OF_MONTH, -1);
             Date currentDate = calendar.getTime();
             // So sánh ngày thứ hai với ngày hiện tại
-            return endDate.before(currentDate) ;
+            return !(endDate.before(currentDate)) ;
         } catch (ParseException e) {
             e.printStackTrace();
             return false;
@@ -966,10 +1104,10 @@ public class TransactionDetail extends AppCompatActivity {
             int inputMonth = inputCalendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0 nên cần cộng thêm 1
 
             // So sánh tháng và năm
-            if (inputYear < currentYear || (inputYear == currentYear && inputMonth < currentMonth)) {
-                return false;
-            } else {
+            if (inputYear < currentYear || (inputYear == currentYear && inputMonth <= currentMonth)) {
                 return true;
+            } else {
+                return false;
             }
         } catch (ParseException e) {
             e.printStackTrace();
@@ -985,54 +1123,165 @@ public class TransactionDetail extends AppCompatActivity {
         int currentYear = currentCalendar.get(Calendar.YEAR);
 
         // So sánh năm
-        if (inputYear < currentYear) {
-            return false;
-        } else {
+        if (inputYear <= currentYear) {
             return true;
+        } else {
+            return false;
         }
     }
 
-    public void setupExpandableListView(){
-        expandableListView = findViewById(R.id.trans_detail_listview);
+    public void setupExpandableListView(List<TransactionDetail_TheGiaoDich> TransactionList){
+        if(TransactionList.isEmpty()){
+            try{
+                TransactionAPIUtil transactionAPIUtil = new TransactionAPIUtil();
+                ArrayList<GetAllTransactionsEntity> parseAPIList = transactionAPIUtil.getAllTransactionsAPI();
+                for(GetAllTransactionsEntity item : parseAPIList){
+                    if(item.category != null){
+                        TransactionList.add(new TransactionDetail_TheGiaoDich(item.picture, item.category.picture, item.category, item.amount, item.transaction_date, item.transaction_type, item.notes, item.currency_unit, findWalletById(item.wallet_id), findWalletById(item.target_wallet_id)));
+                    }
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+
+        // Adding header data
         listDataHeader = new ArrayList<>();
+        //Toast.makeText(TransactionDetail.this, formatDate(theGiaoDichList.get(0).getNgayThang()), Toast.LENGTH_SHORT).show();
+
+        TransactionList.sort(Comparator.comparing(TransactionDetail_TheGiaoDich::getNgayThang_LocalDate));
+
+        doitiente doi_tien_te = new doitiente();
+
+        if(!TransactionList.isEmpty()){
+            if(TransactionList.get(0).getLoaiGiaoDich().equals("INCOME")){
+                listDataHeader.add(new TransactionDetail_ExpandableListItems(LocalDate.parse(formatDate(TransactionList.get(0).getNgayThang())), doi_tien_te.converttoVND(TransactionList.get(0).getDonViTien(), Double.parseDouble(TransactionList.get(0).getSoTien())) , 0, TransactionList.get(0).getDonViTien()));
+            }
+            else if(TransactionList.get(0).getLoaiGiaoDich().equals("EXPENSE")){
+                listDataHeader.add(new TransactionDetail_ExpandableListItems(LocalDate.parse(formatDate(TransactionList.get(0).getNgayThang())), 0, doi_tien_te.converttoVND(TransactionList.get(0).getDonViTien(), Double.parseDouble(TransactionList.get(0).getSoTien())), TransactionList.get(0).getDonViTien()));
+            }
+            else{
+                listDataHeader.add(new TransactionDetail_ExpandableListItems(LocalDate.parse(formatDate(TransactionList.get(0).getNgayThang())), 0, 0, TransactionList.get(0).getDonViTien()));
+            }
+
+            for(int i = 1; i < TransactionList.size(); i++){
+                if(!TransactionList.get(i).getNgayThang().equals(TransactionList.get(i - 1).getNgayThang())){
+                    if(TransactionList.get(i).getViTien() != null){
+                        if(TransactionList.get(i).getLoaiGiaoDich().equals("INCOME")){
+                            listDataHeader.add(new TransactionDetail_ExpandableListItems(LocalDate.parse(formatDate(TransactionList.get(i).getNgayThang())), doi_tien_te.converttoVND(TransactionList.get(i).getDonViTien(), Double.parseDouble(TransactionList.get(i).getSoTien())), 0, TransactionList.get(i).getDonViTien()));
+                        }
+                        else if(TransactionList.get(i).getLoaiGiaoDich().equals("EXPENSE")){
+                            listDataHeader.add(new TransactionDetail_ExpandableListItems(LocalDate.parse(formatDate(TransactionList.get(i).getNgayThang())), 0, doi_tien_te.converttoVND(TransactionList.get(i).getDonViTien(), Double.parseDouble(TransactionList.get(i).getSoTien())), TransactionList.get(i).getDonViTien()));
+                        }
+                        else{
+                            listDataHeader.add(new TransactionDetail_ExpandableListItems(LocalDate.parse(formatDate(TransactionList.get(i).getNgayThang())), 0, 0, TransactionList.get(i).getDonViTien()));
+                        }
+                    }
+                }
+                else{
+                    if(TransactionList.get(i).getLoaiGiaoDich().equals("INCOME")){
+                        listDataHeader.get(listDataHeader.size() - 1).setTotalIncome(doi_tien_te.converttoVND("VND", listDataHeader.get(listDataHeader.size() - 1).getTotalIncome()) + doi_tien_te.converttoVND(TransactionList.get(i).getDonViTien(), Double.parseDouble(TransactionList.get(i).getSoTien())));
+                    }
+                    else if(TransactionList.get(i).getLoaiGiaoDich().equals("EXPENSE")){
+                        listDataHeader.get(listDataHeader.size() - 1).setTotalExpense(doi_tien_te.converttoVND("VND", listDataHeader.get(listDataHeader.size() - 1).getTotalExpense()) + doi_tien_te.converttoVND(TransactionList.get(i).getDonViTien(), Double.parseDouble(TransactionList.get(i).getSoTien())));
+                    }
+                }
+            }
+        }
+
         listDataChild = new HashMap<TransactionDetail_ExpandableListItems, List<TransactionDetail_TheGiaoDich>>();
-        listDataHeader.add(new TransactionDetail_ExpandableListItems(LocalDate.parse("2022-07-02"), "200000d", "200000d"));
-        listDataHeader.add(new TransactionDetail_ExpandableListItems(LocalDate.parse("2022-07-03"), "200000d", "200000d"));
-        listDataHeader.add(new TransactionDetail_ExpandableListItems(LocalDate.parse("2022-07-04"), "200000d", "200000d"));
-        listDataHeader.add(new TransactionDetail_ExpandableListItems(LocalDate.parse("2022-07-05"), "200000d", "200000d"));
+        for (TransactionDetail_ExpandableListItems headerItem : listDataHeader) {
+            List<TransactionDetail_TheGiaoDich> childList = new ArrayList<>();
 
-        List<TransactionDetail_TheGiaoDich> theGiaoDichList = new ArrayList<>();
-        theGiaoDichList.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "EXPENSE"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "EXPENSE"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+            // Duyệt qua từng phần tử trong theGiaoDichList
+            for (TransactionDetail_TheGiaoDich giaoDichItem : TransactionList) {
+                // So sánh ngày của giaoDichItem với ngày của headerItem
+                if (formatDate(giaoDichItem.getNgayThang()).equals(headerItem.getTime().toString())) {
+                    // Nếu ngày giống nhau, thêm giaoDichItem vào childList
+                    childList.add(giaoDichItem);
+                }
+            }
 
-        List<TransactionDetail_TheGiaoDich> theGiaoDichList2 = new ArrayList<>();
-        theGiaoDichList2.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList2.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList2.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "EXPENSE"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList2.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList2.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "EXPENSE"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+            // Thêm childList vào listDataChild với key là headerItem
+            listDataChild.put(headerItem, childList);
+        }
 
-        List<TransactionDetail_TheGiaoDich> theGiaoDichList3 = new ArrayList<>();
-        theGiaoDichList3.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList3.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "EXPENSE"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList3.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "EXPENSE"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList3.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList3.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+    }
 
-        List<TransactionDetail_TheGiaoDich> theGiaoDichList4 = new ArrayList<>();
-        theGiaoDichList4.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "EXPENSE"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList4.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList4.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "EXPENSE"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList4.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "INCOME"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
-        theGiaoDichList4.add(new TransactionDetail_TheGiaoDich(R.drawable.budget,new Category_hdp("Tiền lương", "EXPENSE"),"5000000 đ","20/10/2021","Tiền lương tháng 10","Ví tiền"));
+    public void filterExpandableListView(List<TransactionDetail_TheGiaoDich> TransactionList){
+        TextView noTransaction = findViewById(R.id.no_transaction);
+        ExpandableListView expandableListView = findViewById(R.id.trans_detail_listview);
 
-        listDataChild.put(listDataHeader.get(0), theGiaoDichList);
-        listDataChild.put(listDataHeader.get(1), theGiaoDichList2);
-        listDataChild.put(listDataHeader.get(2), theGiaoDichList3);
-        listDataChild.put(listDataHeader.get(3), theGiaoDichList4);
+        if(TransactionList.isEmpty()){
+            noTransaction.setVisibility(View.VISIBLE);
+            expandableListView.setVisibility(View.GONE);
+        }
+        else{
+            noTransaction.setVisibility(View.GONE);
+            expandableListView.setVisibility(View.VISIBLE);
+
+            // Adding header data
+            listDataHeader = new ArrayList<>();
+            //Toast.makeText(TransactionDetail.this, formatDate(theGiaoDichList.get(0).getNgayThang()), Toast.LENGTH_SHORT).show();
+
+            TransactionList.sort(Comparator.comparing(TransactionDetail_TheGiaoDich::getNgayThang_LocalDate));
+
+            doitiente doi_tien_te = new doitiente();
+
+            if(!TransactionList.isEmpty()){
+                if(TransactionList.get(0).getLoaiGiaoDich().equals("INCOME")){
+                    listDataHeader.add(new TransactionDetail_ExpandableListItems(LocalDate.parse(formatDate(TransactionList.get(0).getNgayThang())), doi_tien_te.converttoVND(TransactionList.get(0).getDonViTien(), Double.parseDouble(TransactionList.get(0).getSoTien())) , 0, TransactionList.get(0).getDonViTien()));
+                }
+                else if(TransactionList.get(0).getLoaiGiaoDich().equals("EXPENSE")){
+                    listDataHeader.add(new TransactionDetail_ExpandableListItems(LocalDate.parse(formatDate(TransactionList.get(0).getNgayThang())), 0, doi_tien_te.converttoVND(TransactionList.get(0).getDonViTien(), Double.parseDouble(TransactionList.get(0).getSoTien())), TransactionList.get(0).getDonViTien()));
+                }
+                else{
+                    listDataHeader.add(new TransactionDetail_ExpandableListItems(LocalDate.parse(formatDate(TransactionList.get(0).getNgayThang())), 0, 0, TransactionList.get(0).getDonViTien()));
+                }
+
+                for(int i = 1; i < TransactionList.size(); i++){
+                    if(!TransactionList.get(i).getNgayThang().equals(TransactionList.get(i - 1).getNgayThang())){
+                        if(TransactionList.get(i).getViTien() != null){
+                            if(TransactionList.get(i).getLoaiGiaoDich().equals("INCOME")){
+                                listDataHeader.add(new TransactionDetail_ExpandableListItems(LocalDate.parse(formatDate(TransactionList.get(i).getNgayThang())), doi_tien_te.converttoVND(TransactionList.get(i).getDonViTien(), Double.parseDouble(TransactionList.get(i).getSoTien())), 0, TransactionList.get(i).getDonViTien()));
+                            }
+                            else if(TransactionList.get(i).getLoaiGiaoDich().equals("EXPENSE")){
+                                listDataHeader.add(new TransactionDetail_ExpandableListItems(LocalDate.parse(formatDate(TransactionList.get(i).getNgayThang())), 0, doi_tien_te.converttoVND(TransactionList.get(i).getDonViTien(), Double.parseDouble(TransactionList.get(i).getSoTien())), TransactionList.get(i).getDonViTien()));
+                            }
+                            else{
+                                listDataHeader.add(new TransactionDetail_ExpandableListItems(LocalDate.parse(formatDate(TransactionList.get(i).getNgayThang())), 0, 0, TransactionList.get(i).getDonViTien()));
+                            }
+                        }
+                    }
+                    else{
+                        if(TransactionList.get(i).getLoaiGiaoDich().equals("INCOME")){
+                            listDataHeader.get(listDataHeader.size() - 1).setTotalIncome(doi_tien_te.converttoVND("VND", listDataHeader.get(listDataHeader.size() - 1).getTotalIncome()) + doi_tien_te.converttoVND(TransactionList.get(i).getDonViTien(), Double.parseDouble(TransactionList.get(i).getSoTien())));
+                        }
+                        else if(TransactionList.get(i).getLoaiGiaoDich().equals("EXPENSE")){
+                            listDataHeader.get(listDataHeader.size() - 1).setTotalExpense(doi_tien_te.converttoVND("VND", listDataHeader.get(listDataHeader.size() - 1).getTotalExpense()) + doi_tien_te.converttoVND(TransactionList.get(i).getDonViTien(), Double.parseDouble(TransactionList.get(i).getSoTien())));
+                        }
+                    }
+                }
+            }
+
+            listDataChild = new HashMap<TransactionDetail_ExpandableListItems, List<TransactionDetail_TheGiaoDich>>();
+            for (TransactionDetail_ExpandableListItems headerItem : listDataHeader) {
+                List<TransactionDetail_TheGiaoDich> childList = new ArrayList<>();
+
+                // Duyệt qua từng phần tử trong theGiaoDichList
+                for (TransactionDetail_TheGiaoDich giaoDichItem : TransactionList) {
+                    // So sánh ngày của giaoDichItem với ngày của headerItem
+                    if (formatDate(giaoDichItem.getNgayThang()).equals(headerItem.getTime().toString())) {
+                        // Nếu ngày giống nhau, thêm giaoDichItem vào childList
+                        childList.add(giaoDichItem);
+                    }
+                }
+
+                // Thêm childList vào listDataChild với key là headerItem
+                listDataChild.put(headerItem, childList);
+            }
+        }
     }
 
     private void AnhXaCategory(){
@@ -1050,7 +1299,7 @@ public class TransactionDetail extends AppCompatActivity {
 
     private void AnhXaCategoryToChip(ChipGroup incomeChipGroup, ChipGroup expenseChipGroup){
         for (Category_hdp category : categoryList){
-            Chip chip = (Chip) getLayoutInflater().inflate(R.layout.chips_layout, null, false);
+            Chip chip = (Chip) getLayoutInflater().inflate(R.layout.filter_chips_layout, null, false);
             chip.setText(category.getCategory_name());
             chip.setChipStrokeColor(getColorStateList(R.color.black));
             chip.setChipBackgroundColor(ColorStateList.valueOf(getResources().getColor(R.color.white, null)));
@@ -1062,10 +1311,11 @@ public class TransactionDetail extends AppCompatActivity {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                     if(chip.isChecked()){
-                        if(income){
+                        String categoryType = ((Category_hdp)chip.getTag()).getCategory_type();
+                        if(categoryType.equals("INCOME")){
                             chip.setRippleColor(ColorStateList.valueOf(getResources().getColor(R.color.xanhnhat, null)));
                             chip.setChipBackgroundColor(ColorStateList.valueOf(getResources().getColor(R.color.xanhdam, null)));
-                        }else if(expense){
+                        }else if(categoryType.equals("EXPENSE")){
                             chip.setRippleColor(ColorStateList.valueOf(getResources().getColor(R.color.lightred, null)));
                             chip.setChipBackgroundColor(ColorStateList.valueOf(getResources().getColor(R.color.red, null)));
                         }
@@ -1087,6 +1337,37 @@ public class TransactionDetail extends AppCompatActivity {
                 expenseChipGroup.addView(chip);
             }
         }
+
+        if(!incomeChipList.isEmpty()) {
+            for (int i = 0; i < incomeChipGroup.getChildCount(); i++) {
+                Chip chip = (Chip) incomeChipGroup.getChildAt(i);
+                for (Chip selectedChip : incomeChipList) {
+                    if (selectedChip.getTag().equals(chip.getTag())) {
+                        chip.setChecked(true);
+                        chip.setSelected(true);
+                        break;
+                    }
+                }
+            }
+        }
+
+        if(!expenseChipList.isEmpty()) {
+            for (int i = 0; i < expenseChipGroup.getChildCount(); i++) {
+                Chip chip = (Chip) expenseChipGroup.getChildAt(i);
+                for (Chip selectedChip : expenseChipList) {
+                    if (selectedChip.getTag().equals(chip.getTag())) {
+                        chip.setChecked(true);
+                        chip.setSelected(true);
+                        break;
+                    }
+                }
+            }
+        }
+
+        incomeChipList.clear();
+        expenseChipList.clear();
+
+        ChipGroup chipGroup = findViewById(R.id.chipgroup);
     }
 
     private void addCheckedChipsToLists(Dialog dialog) {
@@ -1119,6 +1400,211 @@ public class TransactionDetail extends AppCompatActivity {
                     expenseChipList.add(chip);
                 }
             }
+        }
+    }
+
+    private void AnhXaChipToFilter(ChipGroup chipGroup){
+        if(!incomeChipList.isEmpty())
+            for (Chip chip : incomeChipList){
+                Chip newChip = (Chip) getLayoutInflater().inflate(R.layout.input_chips_layout, null, false);
+                newChip.setText(chip.getText());
+                newChip.setChipStrokeColor(getColorStateList(R.color.black));
+                newChip.setChipBackgroundColor(ColorStateList.valueOf(getResources().getColor(R.color.xanhdam, null)));
+                newChip.setTextColor(getResources().getColor(R.color.white, null));
+                newChip.setCloseIconTint(ColorStateList.valueOf(getResources().getColor(R.color.white, null)));
+                newChip.setTag(chip.getTag());
+                newChip.setOnCloseIconClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        chipGroup.removeView(newChip);
+                        incomeChipList.remove(chip);
+                        reloadExpandableListView();
+                    }
+                });
+                chipGroup.addView(newChip);
+            }
+        if(!expenseChipList.isEmpty()){
+            for (Chip chip : expenseChipList){
+                Chip newChip = (Chip) getLayoutInflater().inflate(R.layout.input_chips_layout, null, false);
+                newChip.setText(chip.getText());
+                newChip.setChipStrokeColor(getColorStateList(R.color.black));
+                newChip.setChipBackgroundColor(ColorStateList.valueOf(getResources().getColor(R.color.red, null)));
+                newChip.setTextColor(getResources().getColor(R.color.white, null));
+                newChip.setCloseIconTint(ColorStateList.valueOf(getResources().getColor(R.color.white, null)));
+                newChip.setTag(chip.getTag());
+                newChip.setOnCloseIconClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        chipGroup.removeView(newChip);
+                        expenseChipList.remove(chip);
+                        reloadExpandableListView();
+                    }
+                });
+                chipGroup.addView(newChip);
+            }
+        }
+    }
+
+    public String formatDate(String inputDate) {
+        try {
+            // Tạo một đối tượng SimpleDateFormat với định dạng ngày giờ đầu vào
+            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+            // Phân tích chuỗi ngày giờ đầu vào thành một đối tượng Date
+            Date date = inputFormat.parse(inputDate);
+
+            // Tạo một đối tượng SimpleDateFormat với định dạng ngày đầu ra
+            SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+            // Định dạng lại đối tượng Date thành chuỗi ngày và trả về
+            return outputFormat.format(date);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public String formatDate2(String inputDate) {
+        DateTimeFormatter inputFormat;
+        DateTimeFormatter outputFormat;
+
+        // Kiểm tra định dạng ngày đầu vào
+        if (inputDate.contains("/")) {
+            String[] parts = inputDate.split("/");
+            if (parts.length == 3) {
+                // Định dạng ngày là "d/M/yyyy"
+                inputFormat = DateTimeFormat.forPattern("d/M/yyyy");
+                outputFormat = DateTimeFormat.forPattern("yyyy-MM-dd");
+            } else {
+                // Định dạng ngày là "M/yyyy"
+                inputFormat = DateTimeFormat.forPattern("M/yyyy");
+                outputFormat = DateTimeFormat.forPattern("yyyy-MM");
+            }
+        } else {
+            return null;
+        }
+
+        try {
+            // Phân tích chuỗi ngày đầu vào thành một đối tượng DateTime
+            org.joda.time.DateTime date = inputFormat.parseDateTime(inputDate);
+
+            // Định dạng lại đối tượng DateTime thành chuỗi ngày và trả về
+            return outputFormat.print(date);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private CreateWalletEntity findWalletById(String id){
+        try{
+            for(Wallet_hdp wallet : walletList){
+                if(wallet.getId().equals(id)){
+                    CreateWalletEntity temp = new CreateWalletEntity(wallet.getWalletName(), Integer.parseInt(wallet.getAmountMoney()), wallet.getCurrency());
+                    return temp;
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<TransactionDetail_TheGiaoDich> filter(String date, String walletName, ArrayList<Chip> chipList) {
+        List<TransactionDetail_TheGiaoDich> filteredList = new ArrayList<>(theGiaoDichList);
+
+        // Filter by date
+        if (!date.equals("All time")) {
+            List<TransactionDetail_TheGiaoDich> list = new ArrayList<>();
+            if (date.contains("-")) {
+                // Date range
+                String[] dates = date.split(" - ");
+                for (TransactionDetail_TheGiaoDich item : filteredList) {
+                    if (item.getNgayThang().compareTo(formatDate2(dates[0])) >= 0 && item.getNgayThang().compareTo(formatDate2(dates[1])) <= 0) {
+                        list.add(item);
+                    }
+                }
+                filteredList = list;
+            } else if (date.contains("/")) {
+                // Single date or month/year
+                for (TransactionDetail_TheGiaoDich item : filteredList) {
+                    if (item.getNgayThang().startsWith(formatDate2(date))) {
+                        list.add(item);
+                    }
+                }
+                filteredList = list;
+            } else {
+                // Year
+                for (TransactionDetail_TheGiaoDich item : filteredList) {
+                    if (item.getNgayThang().contains(date)) {
+                        list.add(item);
+                    }
+                }
+                filteredList = list;
+            }
+        }
+
+        if(!walletName.equals("TOTAL")){
+            // Filter by wallet name
+            List<TransactionDetail_TheGiaoDich> list = new ArrayList<>();
+            for (TransactionDetail_TheGiaoDich item : filteredList) {
+                if(item.getViTien() != null){
+                    if(item.getViDuocNhanTien() != null){
+                        if(item.getViTien().name.equals(walletName) || item.getViDuocNhanTien().name.equals(walletName)){
+                            list.add(item);
+                        }
+                    }
+                    else if(item.getViTien().name.equals(walletName)){
+                        list.add(item);
+                    }
+                }
+            }
+            filteredList = list;
+        }
+
+        if(!chipList.isEmpty()){
+            // Filter by chip list
+            List<CharSequence> chipNames = chipList.stream().map(chip -> ((Category_hdp) chip.getTag()).getCategory_name()).collect(Collectors.toList());
+            List<CharSequence> chipTypes = chipList.stream().map(chip -> ((Category_hdp) chip.getTag()).getCategory_type()).collect(Collectors.toList());
+            List<TransactionDetail_TheGiaoDich> list = new ArrayList<>();
+            for (TransactionDetail_TheGiaoDich item : filteredList) {
+                if (item.getDanhMuc() != null && chipNames.contains(item.getDanhMuc().name) && chipTypes.contains(item.getDanhMuc().type)) {
+                    list.add(item);
+                }
+            }
+            filteredList = list;
+        }
+
+        return filteredList;
+    }
+
+    private ArrayList<Chip> getChipList(){
+        ArrayList<Chip> chipList = new ArrayList<>();
+        chipList.addAll(incomeChipList);
+        chipList.addAll(expenseChipList);
+        return chipList;
+    }
+
+    public void reloadExpandableListView() {
+        // Lấy thông tin cần thiết để lọc dữ liệu
+        TextView walletName = findViewById(R.id.wallet_name_txtview);
+        TextView date = findViewById(R.id.trans_detail_date_txtview);
+        ArrayList<Chip> tempChipList = getChipList();
+        String dateString = date.getText().toString();
+        String walletNameString = walletName.getText().toString();
+
+        // Lọc dữ liệu và thiết lập lại ExpandableListView
+        List<TransactionDetail_TheGiaoDich> filteredList = filter(dateString, walletNameString, tempChipList);
+        filterExpandableListView(filteredList);
+
+        // Thiết lập lại adapter cho ExpandableListView
+        expandableListView = findViewById(R.id.trans_detail_listview);
+        expandableListAdapter = new TransactionDetail_ExpandableListView(TransactionDetail.this, listDataHeader, listDataChild);
+        expandableListView.setAdapter(expandableListAdapter);
+
+        // Mở rộng tất cả các nhóm trong ExpandableListView
+        for (int i = 0; i < expandableListAdapter.getGroupCount(); i++) {
+            expandableListView.expandGroup(i);
         }
     }
 }

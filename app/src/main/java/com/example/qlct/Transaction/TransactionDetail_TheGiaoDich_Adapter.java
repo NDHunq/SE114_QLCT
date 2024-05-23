@@ -51,12 +51,12 @@ public class TransactionDetail_TheGiaoDich_Adapter extends BaseAdapter {
         TextView vitien = (TextView) view.findViewById(R.id.tenvi);
         TransactionDetail_TheGiaoDich theGiaoDich = theGiaoDichList.get(i);
 
-        imageView.setImageResource(theGiaoDich.getHinhAnh());
-        ten.setText(theGiaoDich.getGiaoDich().getCategory_name());
+        imageView.setImageResource(Integer.parseInt(theGiaoDich.getHinhAnh()));
+        ten.setText(theGiaoDich.getDanhMuc().name);
         sotien.setText(theGiaoDich.getSoTien());
         ngaythang.setText(theGiaoDich.getNgayThang());
         ghichu.setText(theGiaoDich.getGhiChu());
-        vitien.setText(theGiaoDich.getViTien());
+        vitien.setText(theGiaoDich.getViTien().name);
         return view;
     }
 }

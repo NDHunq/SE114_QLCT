@@ -2,17 +2,30 @@ package com.example.qlct.Transaction;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.Instrumentation;
 import android.content.Context;
 import android.content.Intent;
 
 import android.content.res.ColorStateList;
 
+import android.database.Cursor;
+import android.graphics.Bitmap;
+
 import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+
 import android.os.Build;
+
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -30,13 +43,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+
 import androidx.annotation.RequiresApi;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.qlct.API_Entity.CreateTransactionEntity;
 import com.example.qlct.API_Entity.GetAllCategoryEntity;
 import com.example.qlct.API_Entity.GetAllWalletsEntity;
@@ -47,6 +67,9 @@ import com.example.qlct.API_Utils.WalletAPIUtil;
 
 import com.example.qlct.Category.Category_hdp;
 import com.example.qlct.Category.Category_adapter;
+
+import com.example.qlct.Home.Home_New_wallet;
+
 import com.example.qlct.Category_Add;
 
 
@@ -58,9 +81,18 @@ import com.example.qlct.SelectWallet_Adapter;
 import com.example.qlct.Wallet_hdp;
 import com.example.qlct.doitiente;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.datepicker.MaterialStyledDatePickerDialog;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
@@ -72,8 +104,23 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
 public class AddTransaction extends AppCompatActivity {
 
+    private String url=null;
+
+    private Button uploadBtn;
+
+    private ImageView transactionImage;
+
+    ActivityResultLauncher<Intent> resultLauncher;
+    private static final int PICK_IMAGE_REQUEST = 1;
     private boolean isUserInteracting = true;
     private ListView categoryListView;
     private List<Category_hdp> categoryList = new ArrayList<>();
@@ -220,6 +267,7 @@ public class AddTransaction extends AppCompatActivity {
                 expenseCategoryStorage = category.getCategory_id();
             }
             dialog.dismiss();
+            //Toast.makeText(AddTransaction.this, category.getImageURL(), Toast.LENGTH_SHORT).show();
         });
 
         TextView addnew = dialog.findViewById(R.id.select_category_addnew_btn);
@@ -228,6 +276,7 @@ public class AddTransaction extends AppCompatActivity {
             public void onClick(View view) {
                 Intent AddCategoryIntent = new Intent(dialog.getContext(), Category_Add.class);
                 startActivity(AddCategoryIntent);
+                dialog.dismiss();
             }
         });
     }
@@ -410,9 +459,18 @@ public class AddTransaction extends AppCompatActivity {
                     walletMoney.setTextColor(getResources().getColor(R.color.xanhdam, null));
                     targetWalletIdStorage = wallet.getId();
                 }
-
             }
             dialog.dismiss();
+        });
+
+        TextView addNewWallet = dialog.findViewById(R.id.select_wallet_addnew_btn);
+        addNewWallet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent AddWalletIntent = new Intent(dialog.getContext(), Home_New_wallet.class);
+                startActivity(AddWalletIntent);
+                dialog.dismiss();
+            }
         });
     }
 
@@ -767,9 +825,9 @@ public class AddTransaction extends AppCompatActivity {
             }
         });
 
-        ImageView calendarIcon = findViewById(R.id.add_trans_calendar_icon);
         TextInputEditText dateTextBox = findViewById(R.id.select_date_txtbox);
-        calendarIcon.setOnClickListener(new View.OnClickListener() {
+
+        dateTextBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Lấy ngày hiện tại làm ngày mặc định cho DatePickerDialog
@@ -778,6 +836,7 @@ public class AddTransaction extends AppCompatActivity {
                 int month = c.get(Calendar.MONTH);
                 int day = c.get(Calendar.DAY_OF_MONTH);
 
+
                 // Tạo và hiển thị DatePickerDialog
                 DatePickerDialog datePickerDialog = new DatePickerDialog(AddTransaction.this,
                         new DatePickerDialog.OnDateSetListener() {
@@ -785,7 +844,6 @@ public class AddTransaction extends AppCompatActivity {
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                                 // Người dùng đã chọn ngày, cập nhật select_date_txtbox
                                 String selectedDate = dayOfMonth + "/" + (month + 1) + "/" + year;
-                                TextInputEditText dateTextBox = findViewById(R.id.select_date_txtbox);
                                 dateTextBox.setText(selectedDate);
                             }
                         }, year, month, day);
@@ -827,6 +885,7 @@ public class AddTransaction extends AppCompatActivity {
                     TextInputEditText noteEditText = findViewById(R.id.note_txtbox);
                     String amount = amountEditText.getText().toString().replaceAll("[.,]", "");
                     String currencies = ((MaterialButton) findViewById(R.id.add_trans_currency_btn)).getText().toString();
+                    ImageView transactionImage = findViewById(R.id.transaction_image);
 
                     if(!validate()){
                         Toast.makeText(AddTransaction.this, "An error(s) has occurred!", Toast.LENGTH_SHORT).show();
@@ -848,21 +907,21 @@ public class AddTransaction extends AppCompatActivity {
                         String note = noteEditText.getText().toString();
                         TransactionAPIUtil transactionAPIUtil = new TransactionAPIUtil();
                         if(income){
-                            CreateTransactionEntity createTransactionEntity = new CreateTransactionEntity(Double.parseDouble(amount), formattedDate, incomeCategoryStorage, incomeWalletIdStorage, note, null, "INCOME", currencies, null);
+                            CreateTransactionEntity createTransactionEntity = new CreateTransactionEntity(Double.parseDouble(amount), formattedDate, incomeCategoryStorage, incomeWalletIdStorage, note, url, "INCOME", currencies, null);
                             transactionAPIUtil.createTransactionAPI(createTransactionEntity);
                             excuteIncome(incomeWalletIdStorage);
                         }
                         else if(expense){
-                            CreateTransactionEntity createTransactionEntity = new CreateTransactionEntity(Double.parseDouble(amount), formattedDate, expenseCategoryStorage, expenseWalletIdStorage, note, null, "EXPENSE", currencies, null);
+                            CreateTransactionEntity createTransactionEntity = new CreateTransactionEntity(Double.parseDouble(amount), formattedDate, expenseCategoryStorage, expenseWalletIdStorage, note, url, "EXPENSE", currencies, null);
                             transactionAPIUtil.createTransactionAPI(createTransactionEntity);
                             excuteExpense(expenseWalletIdStorage);
                         }
                         else {
-                            CreateTransactionEntity createTransactionEntity = new CreateTransactionEntity(Double.parseDouble(amount), formattedDate, null, fromWalletIdStorage, note, null, "TRANSFER", currencies, targetWalletIdStorage);
+                            CreateTransactionEntity createTransactionEntity = new CreateTransactionEntity(Double.parseDouble(amount), formattedDate, null, fromWalletIdStorage, note, url, "TRANSFER", currencies, targetWalletIdStorage);
                             transactionAPIUtil.createTransactionAPI(createTransactionEntity);
                             excuteTransfer(fromWalletIdStorage, targetWalletIdStorage);
                         }
-                        Toast.makeText(AddTransaction.this, "Transaction added successfully", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddTransaction.this, url, Toast.LENGTH_SHORT).show();
                         finish();
                     }                }
             });
@@ -907,6 +966,21 @@ public class AddTransaction extends AppCompatActivity {
         }catch (Exception e){
             e.printStackTrace();
         }
+
+        //Disable strict mode
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+        //review = findViewById(R.id.transaction_image);
+        registerResult();
+        transactionImage = findViewById(R.id.transaction_image);
+        transactionImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                resultLauncher.launch(intent);
+            }
+        });
     }
 
     private void excuteIncome(String incomeID){
@@ -1081,14 +1155,17 @@ public class AddTransaction extends AppCompatActivity {
             if(LocalDate.parse(dateInput, DateTimeFormatter.ofPattern("d/M/yyyy")).isAfter(LocalDate.now())){
                 dateEditTextLayout.setError("Date can't be in the future!");
                 dateEditText.setTextColor(ColorStateList.valueOf(getResources().getColor(R.color.errorColor, null)));
+                dateEditTextLayout.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.errorColor, null)));
                 return false;
             }
             dateEditTextLayout.setError(null);
+            dateEditTextLayout.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.black, null)));
             dateEditText.setTextColor(ColorStateList.valueOf(getResources().getColor(R.color.black, null)));
             return true;
         }
         else{
             dateEditTextLayout.setError("Please press calendar icon to select a date!");
+            dateEditTextLayout.setStartIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.errorColor, null)));
             return false;
         }
     }
@@ -1118,5 +1195,100 @@ public class AddTransaction extends AppCompatActivity {
         boolean isAmountValid = validateAmount();
         boolean isDateValid = validateDate();
         return isAmountValid && isDateValid && isListValid;
+    }
+
+    //API chính để upload ảnh
+    private String uploadImageAPI(Uri imageUri) throws IOException, JSONException {
+
+        //Đường dẫn của server, cái này trong source chính đã để trong folder API_CONFIG
+        String SERVER = "http://13.215.179.128";
+        String API_VERSION = "api/v1";
+
+        //Dưới nãy giữ y chang, không cần suy nghĩ
+        OkHttpClient client = new OkHttpClient().newBuilder()
+                .build();
+        File file = getFileFromUri(this, imageUri);
+        RequestBody body = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                .addFormDataPart("image", file.getName(),
+                        RequestBody.create( file.getAbsoluteFile(),
+                                MediaType.parse("application/octet-stream")
+                        ))
+                .build();
+        Request request = new Request.Builder()
+                .url(SERVER+"/" + API_VERSION + "/media/upload")
+                .method("POST", body)
+                .build();
+        Response response = client.newCall(request).execute();
+
+        //Log.d("Response", response.body().string());
+        return  response.body().string();
+    }
+
+    private void registerResult (){
+        resultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        try {
+                            Uri imageUri = result.getData().getData();
+                            File test = new File(imageUri.getPath());
+                            transactionImage.setImageURI(imageUri);
+                            File file = new File(imageUri.getPath());
+
+                            //Đây là url của ảnh sau khi upload lên server
+                            //Sau khi có url này, thực hiện chèn vào các field API nào mà có "image"
+                            String response = uploadImageAPI(imageUri);
+                            Log.d("Response", response);
+                            JSONObject json = new JSONObject(response);
+                            String imageUrl = json.getJSONObject("data").getString("picture_url");
+
+                            //Log ra để xem url của ảnh
+                            Log.d("Data", imageUrl);
+                            url = imageUrl;
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                }
+        );
+    }
+
+    private String getFileName(Context context, Uri uri) {
+        String result = null;
+        if (uri.getScheme().equals("content")) {
+            try (Cursor cursor = context.getContentResolver().query(uri, null, null, null, null)) {
+                if (cursor != null && cursor.moveToFirst()) {
+                    int index = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+                    if (index != -1) {
+                        result = cursor.getString(index);
+                    }
+                }
+            }
+        }
+        if (result == null) {
+            result = uri.getLastPathSegment();
+        }
+        return result;
+    }
+    private File getFileFromUri(Context context, Uri uri) {
+        File file = null;
+        try {
+            String fileName = getFileName(context, uri);
+            InputStream inputStream = context.getContentResolver().openInputStream(uri);
+            if (inputStream != null) {
+                file = new File(context.getCacheDir(), fileName);
+                FileOutputStream outputStream = new FileOutputStream(file);
+                byte[] buffer = new byte[1024];
+                int bytesRead;
+                while ((bytesRead = inputStream.read(buffer)) != -1) {
+                    outputStream.write(buffer, 0, bytesRead);
+                }
+                outputStream.close();
+                inputStream.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return file;
     }
 }

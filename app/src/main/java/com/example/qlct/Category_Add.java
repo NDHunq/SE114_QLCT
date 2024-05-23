@@ -127,7 +127,6 @@ public class Category_Add extends AppCompatActivity {
 
     }
     private String uploadImageAPI(Uri imageUri) throws IOException, JSONException {
-
         API_Config api_config = new API_Config();
 
         //Đường dẫn của server, cái này trong source chính đã để trong folder API_CONFIG
@@ -899,6 +898,7 @@ public class Category_Add extends AppCompatActivity {
         });
         TextView upload = dialog.findViewById(R.id.upload);
         upload.setOnClickListener(v -> {
+
             ImageView img = findViewById(R.id.hinhanh);
             img.setBackgroundResource(0);
 

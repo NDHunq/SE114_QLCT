@@ -5,19 +5,31 @@ import java.util.Locale;
 
 public class TransactionDetail_ExpandableListItems {
     private LocalDate time;
-    private String totalIncome;
-    private String totalExpense;
+    private double totalIncome;
+    private double totalExpense;
+    private String currency;
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof TransactionDetail_ExpandableListItems) {
+            TransactionDetail_ExpandableListItems temp = (TransactionDetail_ExpandableListItems) obj;
+            return temp.getTime().equals(this.getTime());
+        }
+        return false;
+    }
 
     public TransactionDetail_ExpandableListItems() {
         time = LocalDate.now();
-        totalIncome = "";
-        totalExpense = "";
+        totalIncome = 0;
+        totalExpense = 0;
+        currency = "VND";
     }
 
-    public TransactionDetail_ExpandableListItems(LocalDate time, String totalIncome, String totalExpense) {
+    public TransactionDetail_ExpandableListItems(LocalDate time, double totalIncome, double totalExpense, String currency) {
         this.time = time;
         this.totalIncome = totalIncome;
         this.totalExpense = totalExpense;
+        this.currency = currency;
     }
 
     public int getDate() {
@@ -51,19 +63,27 @@ public class TransactionDetail_ExpandableListItems {
         this.time = time;
     }
 
-    public String getTotalIncome() {
+    public double getTotalIncome() {
         return totalIncome;
     }
 
-    public void setTotalIncome(String totalIncome) {
+    public void setTotalIncome(double totalIncome) {
         this.totalIncome = totalIncome;
     }
 
-    public String getTotalExpense() {
+    public double getTotalExpense() {
         return totalExpense;
     }
 
-    public void setTotalExpense(String totalExpense) {
+    public void setTotalExpense(double totalExpense) {
         this.totalExpense = totalExpense;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 }
