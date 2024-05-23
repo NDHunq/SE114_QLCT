@@ -26,7 +26,7 @@ public class LoginResponse {
 
     public static class Status {
         private int code;
-        private List<String> message;
+        private String message;
 
         // getters and setters
 
@@ -38,8 +38,12 @@ public class LoginResponse {
             this.code = code;
         }
 
-        public List<String> getMessage() {
+        public String getMessage() {
             return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
         }
     }
 
