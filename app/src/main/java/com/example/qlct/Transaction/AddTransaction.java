@@ -1219,34 +1219,34 @@ public class AddTransaction extends AppCompatActivity {
         return  response.body().string();
     }
 
-//    private void registerResult (){
-//        resultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-//                new ActivityResultCallback<Instrumentation.ActivityResult>() {
-//                    @Override
-//                    public void onActivityResult(ActivityResult result) {
-//                        try {
-//                            Uri imageUri = result.getData().getData();
-//                            File test = new File(imageUri.getPath());
-//                            review.setImageURI(imageUri);
-//                            File file = new File(imageUri.getPath());
-//
-//                            //Đây là url của ảnh sau khi upload lên server
-//                            //Sau khi có url này, thực hiện chèn vào các field API nào mà có "image"
-//                            String response = uploadImageAPI(imageUri);
-//                            Log.d("Response", response);
-//                            JSONObject json = new JSONObject(response);
-//                            String imageUrl = json.getJSONObject("data").getString("picture_url");
-//
-//                            //Log ra để xem url của ảnh
-//                            Log.d("Data", imageUrl);
-//                            url.setText(imageUrl);
-//                        }catch (Exception e){
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }
-//        );
-//    }
+    private void registerResult (){
+        resultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        try {
+                            Uri imageUri = result.getData().getData();
+                            File test = new File(imageUri.getPath());
+                            review.setImageURI(imageUri);
+                            File file = new File(imageUri.getPath());
+
+                            //Đây là url của ảnh sau khi upload lên server
+                            //Sau khi có url này, thực hiện chèn vào các field API nào mà có "image"
+                            String response = uploadImageAPI(imageUri);
+                            Log.d("Response", response);
+                            JSONObject json = new JSONObject(response);
+                            String imageUrl = json.getJSONObject("data").getString("picture_url");
+
+                            //Log ra để xem url của ảnh
+                            Log.d("Data", imageUrl);
+                            url.setText(imageUrl);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                }
+        );
+    }
 
     private String getFileName(Context context, Uri uri) {
         String result = null;
