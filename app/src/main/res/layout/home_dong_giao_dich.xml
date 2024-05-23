@@ -2,6 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    app:cardPreventCornerOverlap="false"
+    app:cardUseCompatPadding="false"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
         android:layout_marginTop="10dp"
@@ -16,14 +18,19 @@
             android:layout_height="wrap_content">
             <androidx.cardview.widget.CardView
                 android:layout_width="50dp"
+                android:background="@color/white"
                 android:id="@+id/cardhinhanh"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:layout_marginStart="12dp"
                 app:cardCornerRadius="250dp"
+
                 app:cardBackgroundColor="@color/white">
 
                 <androidx.cardview.widget.CardView
+                    android:background="@color/white"
+                    app:cardBackgroundColor="@color/white"
+
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:layout_gravity="center"
@@ -102,6 +109,7 @@ android:layout_gravity="center"
                     android:orientation="vertical"
                     android:layout_height="match_parent">
                     <TextView
+                        android:textColor="@color/black"
                         android:layout_marginTop="9dp"
                         android:id="@+id/ngaythang"
                         android:textAlignment="textEnd"
@@ -138,6 +146,7 @@ android:background="#ADADAD"
     </LinearLayout>
 
             <TextView
+                android:textColor="@color/black"
                 android:id="@+id/GhiChu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

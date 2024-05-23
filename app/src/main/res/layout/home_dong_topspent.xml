@@ -18,6 +18,7 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_width="150dp"
+                app:cardBackgroundColor="@color/white"
                 android:layout_height="150dp"
                 app:cardCornerRadius="250dp"
                 android:layout_gravity="center">
@@ -58,6 +59,7 @@
                 android:layout_marginStart="5dp"
                 android:layout_height="0dp"></TextView>
             <TextView
+                android:textColor="@color/xamnhat"
                 android:id="@+id/tienVi_Thetop"
                 android:layout_width="wrap_content"
 
@@ -69,6 +71,7 @@
                 android:layout_height="wrap_content"></TextView>
         </LinearLayout>
         <TextView
+            android:textColor="@color/xamnhat"
             android:layout_width="wrap_content"
             android:id="@+id/phantramVi_Thetop"
             android:layout_gravity="center"
