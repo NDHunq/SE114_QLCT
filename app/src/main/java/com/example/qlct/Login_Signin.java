@@ -138,51 +138,51 @@ API_Config api_config;
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                try {
+                    if(phone.length()>=10&&phone.length()<=11&&phone.getText().toString().matches("[0-9]+"))
+                    {
+                        errorphone.setText("");
+                        String phone_convert = phone.getText().toString();
+                        if (phone_convert.startsWith("0")) {
+                            phone_convert = "+84" + phone_convert.substring(1);
+                        }
+                        LoginEntity loginEntity = new LoginEntity(phone_convert, enterpass.getText().toString());
+                        //Gọi API login
+                        UserAPiUtil userAPiUtil = new UserAPiUtil();
 
-               if(phone.length()>=10&&phone.length()<=11&&phone.getText().toString().matches("[0-9]+"))
-                {
-                    errorphone.setText("");
-                    String phone_convert = phone.getText().toString();
-                    if (phone_convert.startsWith("0")) {
-                        phone_convert = "+84" + phone_convert.substring(1);
-                    }
-                    LoginEntity loginEntity = new LoginEntity(phone_convert, enterpass.getText().toString());
-                    //Gọi API login
-                    UserAPiUtil userAPiUtil = new UserAPiUtil();
+                        userAPiUtil.Login(loginEntity, new UserAPiUtil.OnTaskCompleted() {
+                            @Override
+                            public void onTaskCompleted(String result) {
+                                Log.d("Login","1");
 
-                    userAPiUtil.Login(loginEntity, new UserAPiUtil.OnTaskCompleted() {
-                        @Override
-                        public void onTaskCompleted(String result) {
-                            Log.d("Login","1");
+                                // Handle the result here
+                                Log.d("Login", "response: " + result);
+                                Log.d("Login", "2");
+                                Gson gson = new Gson();
+                                // Kiểm tra nếu result là null hoặc trống
+                                if (result == null || result.isEmpty()) {
+                                    Log.d("Login", "Result is null or empty");
+                                    return;
+                                }
+                                Log.d("Login", "excute login");
+                                Log.d("Login", "3");
+                                LoginResponse loginResponse = gson.fromJson(result, LoginResponse.class);
+                                if(loginResponse==null)
+                                {
+                                    Log.d("Login","null");
+                                }
+                                else
+                                {
+                                    Log.d("Login","not null");
+                                }
+                                Log.d("Login", "loginResponse: " + loginResponse.getStatus().getCode());
+                                Log.d("Login", "4");
 
-                            // Handle the result here
-                            Log.d("Login", "response: " + result);
-                            Log.d("Login", "2");
-                            Gson gson = new Gson();
-                            // Kiểm tra nếu result là null hoặc trống
-                            if (result == null || result.isEmpty()) {
-                                Log.d("Login", "Result is null or empty");
-                                return;
-                            }
-                            Log.d("Login", "excute login");
-                            Log.d("Login", "3");
-                            LoginResponse loginResponse = gson.fromJson(result, LoginResponse.class);
-                            if(loginResponse==null)
-                            {
-                                Log.d("Login","null");
-                            }
-                            else
-                            {
-                                Log.d("Login","not null");
-                            }
-                            Log.d("Login", "loginResponse: " + loginResponse.getStatus().getCode());
-                            Log.d("Login", "4");
-
-                            if (loginResponse.getStatus().getCode() == 200) {
-                                SharedPrefManager.getInstance(Login_Signin.this).saveMyVariable(loginResponse.getData().getToken());
-                                api_config = new API_Config();
-                                api_config.setTestLoginToken(SharedPrefManager.getInstance(Login_Signin.this).getMyVariable());
-                                UserAPiUtil userAPiUtil = new UserAPiUtil();
+                                if (loginResponse.getStatus().getCode() == 200) {
+                                    SharedPrefManager.getInstance(Login_Signin.this).saveMyVariable(loginResponse.getData().getToken());
+                                    api_config = new API_Config();
+                                    api_config.setTestLoginToken(SharedPrefManager.getInstance(Login_Signin.this).getMyVariable());
+                                    UserAPiUtil userAPiUtil = new UserAPiUtil();
 //                                userAPiUtil.getUserProfile(new UserAPiUtil.OnTaskCompleted() {
 //                                    @Override
 //                                    public void onTaskCompleted(String result) {
@@ -206,21 +206,27 @@ API_Config api_config;
 //                                        }
 //                                    }
 //                                });
-                                Intent myintent = new Intent(Login_Signin.this, MainActivity.class);
-                                startActivity(myintent);
-                            } else {
-                                Log.d("login", "failed");
-                                errorinfo.setText("Invalid phone number or password");
+                                    Intent myintent = new Intent(Login_Signin.this, MainActivity.class);
+                                    startActivity(myintent);
+                                } else {
+                                    Log.d("login", "failed");
+                                    errorinfo.setText("Invalid phone number or password");
+                                }
                             }
-                        }
 
 
-                    });
+                        });
+                    }
+                    else {
+                        errorinfo.setText("");
+                        errorphone.setText("Invalid phone number");
+                    }
                 }
-                else {
-                    errorinfo.setText("");
-                    errorphone.setText("Invalid phone number");
+                catch (Exception e)
+                {
+                    Log.d("Login", "Error: " + e.toString());
                 }
+
 
             }
         });
