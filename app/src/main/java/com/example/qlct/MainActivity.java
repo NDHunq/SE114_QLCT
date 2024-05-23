@@ -60,7 +60,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     String tenvi = "Ví chính";
-    Home_fragment homeFragment = new Home_fragment();
+
     double   ammount = 0;
     double tongsovi=0;
     String currency_unit = "đ";
@@ -221,7 +221,8 @@ tongsovi = getIntent().getDoubleExtra("tongsovi",0);
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Tạo một instance của HomeFragment
+        // Tạo một instance của HomeFragment\
+        Home_fragment homeFragment = new Home_fragment();
 
         homeFragment.setArguments(bundle);
 
@@ -233,6 +234,9 @@ tongsovi = getIntent().getDoubleExtra("tongsovi",0);
             public void onClick(View v) {
                 updateButtonBackgrounds(R.id.thehome);
                 // Tạo một instance mới của HomeFragment
+                Home_fragment homeFragment = new Home_fragment();
+                homeFragment.setArguments(bundle);
+
 
 
 
