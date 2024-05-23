@@ -50,16 +50,16 @@ TextView currency1;
        phoneNumber="0"+ phoneNumber.substring(3);
         phone.setText(phoneNumber);
         currency1.setText(userProfile.getData().getCurrency_unit());
-        currency.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Log.d("Setting", "onCreate: ");
-                Intent myintent=new Intent(Setting.this,Currency.class);
-                startActivity(myintent);
-                Log.d("Setting", "onCreate1: ");
-            }
-        });
+//        currency.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                Log.d("Setting", "onCreate: ");
+//                Intent myintent=new Intent(Setting.this,Currency.class);
+//                startActivity(myintent);
+//                Log.d("Setting", "onCreate1: ");
+//            }
+//        });
         backsetting.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 finish();

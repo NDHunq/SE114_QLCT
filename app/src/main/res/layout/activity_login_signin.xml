@@ -6,7 +6,8 @@
     android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NewPassword">
+    android:background="@color/white"
+    tools:context=".Login_Signin">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -100,6 +101,7 @@
                     android:inputType="number"
                     android:textColor="#1EABED"
                     android:textStyle="bold"
+                    android:singleLine="true"
                     app:hintTextColor="#1EABED">
                 </com.google.android.material.textfield.TextInputEditText>
             </com.google.android.material.textfield.TextInputLayout>
@@ -150,6 +152,7 @@
                 android:layout_weight="1"
                 android:textColor="#1EABED"
                 android:textStyle="bold"
+                android:singleLine="true"
                 android:background="@android:color/transparent"
                 >
             </EditText>

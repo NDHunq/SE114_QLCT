@@ -21,7 +21,7 @@ import com.example.qlct.API_Utils.UserAPiUtil;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class Create_Account extends AppCompatActivity {
-Button nextcreateaccount;
+TextView nextcreateaccount;
 TextInputEditText phone;
     TextInputEditText username;
 TextView errorphone;

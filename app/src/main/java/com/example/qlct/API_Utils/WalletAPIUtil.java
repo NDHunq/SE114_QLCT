@@ -145,7 +145,8 @@ public class WalletAPIUtil extends AppCompatActivity {
         }
     }
 
-    public void deleteWallet(String walletId){
+    public String deleteWallet(String walletId){
+        String loi="loi";
             try {
             OkHttpClient client = new OkHttpClient().newBuilder()
                     .build();
@@ -157,7 +158,14 @@ public class WalletAPIUtil extends AppCompatActivity {
             Response response = client.newCall(request).execute();
             String jsonData = response.body().string();
             Log.d("Delete_wallet", jsonData);
+            loi=jsonData;
         }catch (Exception e) {
+                loi="loi";
+                Log.d("Delete_wallet", "loi");
             e.printStackTrace();
-        } }
-}
+
+       }
+        return loi;
+    }
+
+    }
