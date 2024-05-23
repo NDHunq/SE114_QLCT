@@ -97,7 +97,7 @@
 
 
             <androidx.cardview.widget.CardView
-
+app:cardBackgroundColor="@color/white"
                 android:id="@+id/cardView2"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
