@@ -78,7 +78,14 @@ public class SelectWallet_Adapter extends BaseAdapter {
 
         // Tạo một đối tượng LayoutParams mới với chiều rộng và chiều cao mong muốn
 
-        image.setImageResource(wallet.getImage());
+        if(wallet.getWalletName().equals("Total")){
+            walletname.setTextColor(context.getResources().getColor(R.color.xanhnen));
+            image.setImageResource(R.drawable.global);
+        }
+        else{
+            image.setImageResource(R.drawable.wallet);
+        }
+
 
         return view;
     }
