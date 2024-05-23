@@ -811,7 +811,7 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
                     return;
                 }
                 // Tao intent show more
-                Intent ShowMoreIntent = new Intent(getActivity(), Category_Add.class);
+                Intent ShowMoreIntent = new Intent(getActivity(), TransactionDetail.class);
 
                 // Mo activity transaction details
                 startActivity(ShowMoreIntent);
