@@ -637,7 +637,6 @@ public class AddTransaction extends AppCompatActivity {
         close_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setResult(RESULT_OK);
                 finish();
             }
         });
@@ -878,7 +877,6 @@ public class AddTransaction extends AppCompatActivity {
 
         try {
             saveButton.setOnClickListener(new View.OnClickListener() {
-                @RequiresApi(api = Build.VERSION_CODES.O)
                 @Override
                 public void onClick(View view) {
                     TextInputEditText amountEditText = findViewById(R.id.Amount_txtbox);
@@ -886,7 +884,6 @@ public class AddTransaction extends AppCompatActivity {
                     TextInputEditText noteEditText = findViewById(R.id.note_txtbox);
                     String amount = amountEditText.getText().toString().replaceAll("[.,]", "");
                     String currencies = ((MaterialButton) findViewById(R.id.add_trans_currency_btn)).getText().toString();
-                    ImageView transactionImage = findViewById(R.id.transaction_image);
 
                     if(!validate()){
                         Toast.makeText(AddTransaction.this, "An error(s) has occurred!", Toast.LENGTH_SHORT).show();
@@ -922,7 +919,8 @@ public class AddTransaction extends AppCompatActivity {
                             transactionAPIUtil.createTransactionAPI(createTransactionEntity);
                             excuteTransfer(fromWalletIdStorage, targetWalletIdStorage);
                         }
-                        Toast.makeText(AddTransaction.this, url, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddTransaction.this, "Add transaction successfully", Toast.LENGTH_SHORT).show();
+                        setResult(RESULT_OK);
                         finish();
                     }                }
             });

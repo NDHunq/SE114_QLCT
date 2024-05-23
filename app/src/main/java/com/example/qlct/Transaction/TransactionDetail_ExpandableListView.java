@@ -108,11 +108,7 @@ public class TransactionDetail_ExpandableListView extends BaseExpandableListAdap
             TextView targetwallet = (TextView) convertView.findViewById(R.id.target_wallet_name);
 
             if(item != null){
-                if(item.getHinhAnh() != null){
-                    if(item.getHinhAnh().matches("^-?\\\\d+$")){
-                        imageView.setImageResource(Integer.parseInt(item.getHinhAnh()));
-                    }
-                }
+                imageView.setImageResource(R.drawable.transfer_icon);
 
                 switch (item.getDonViTien()) {
                     case "VND":
@@ -154,11 +150,6 @@ public class TransactionDetail_ExpandableListView extends BaseExpandableListAdap
             TextView ghichu = (TextView) convertView.findViewById(R.id.GhiChu);
             TextView vitien = (TextView) convertView.findViewById(R.id.tenvi);
             if(item != null){
-                if(item.getHinhAnh() != null){
-                    if(item.getHinhAnh().matches("^-?\\\\d+$")){
-                        imageView.setImageResource(Integer.parseInt(item.getHinhAnh()));
-                    }
-                }
                 if(item.getDanhMuc() != null){
                     ten.setText(item.getDanhMuc().name);
                 }

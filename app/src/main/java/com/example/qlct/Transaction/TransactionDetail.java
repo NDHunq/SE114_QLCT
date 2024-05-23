@@ -217,7 +217,6 @@ public class TransactionDetail extends AppCompatActivity {
             public void onClick(View view) {
                 try{
                     addCheckedChipsToLists(dialog);
-                    Toast.makeText(dialog.getContext(), String.valueOf(incomeChipList.size()) + String.valueOf(expenseChipList.size()), Toast.LENGTH_SHORT).show();
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -1000,7 +999,6 @@ public class TransactionDetail extends AppCompatActivity {
             public void onClick(View view) {
                 income = true;
                 expense = false;
-                //Toast.makeText(TransactionDetail.this, String.valueOf(incomeChipList.size()) + " " + String.valueOf(expenseChipList.size()), Toast.LENGTH_SHORT).show();
                 showDialog();
                 ChipGroup chipGroup = findViewById(R.id.chipgroup);
                 AnhXaChipToFilter(chipGroup);
@@ -1026,6 +1024,7 @@ public class TransactionDetail extends AppCompatActivity {
         });
     }
 
+    // Override phương thức onActivityResult() để xử lý kết quả
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -1034,8 +1033,17 @@ public class TransactionDetail extends AppCompatActivity {
         if (requestCode == 1) {
             // Kiểm tra resultCode để xác định kết quả
             if (resultCode == RESULT_OK) {
-                // Nếu kết quả là RESULT_OK, reload lại ExpandableListView
-                reloadExpandableListView();
+                // Nếu kết quả là RESULT_OK, gọi hàm hardReloadExpandableListView
+                hardReloadExpandableListView(theGiaoDichList);
+                // Thiết lập lại adapter cho ExpandableListView
+                expandableListView = findViewById(R.id.trans_detail_listview);
+                expandableListAdapter = new TransactionDetail_ExpandableListView(TransactionDetail.this, listDataHeader, listDataChild);
+                expandableListView.setAdapter(expandableListAdapter);
+
+                // Mở rộng tất cả các nhóm trong ExpandableListView
+                for (int i = 0; i < expandableListAdapter.getGroupCount(); i++) {
+                    expandableListView.expandGroup(i);
+                }
             }
         }
     }
@@ -1154,6 +1162,9 @@ public class TransactionDetail extends AppCompatActivity {
                     if(item.category != null){
                         TransactionList.add(new TransactionDetail_TheGiaoDich(item.picture, item.category.picture, item.category, item.amount, item.transaction_date, item.transaction_type, item.notes, item.currency_unit, findWalletById(item.wallet_id), findWalletById(item.target_wallet_id)));
                     }
+                    else{
+                        TransactionList.add(new TransactionDetail_TheGiaoDich(item.picture, null, item.category, item.amount, item.transaction_date, item.transaction_type, item.notes, item.currency_unit, findWalletById(item.wallet_id), findWalletById(item.target_wallet_id)));
+                    }
                 }
             }catch (Exception e){
                 e.printStackTrace();
@@ -1224,6 +1235,88 @@ public class TransactionDetail extends AppCompatActivity {
 
     }
 
+    public void hardReloadExpandableListView(List<TransactionDetail_TheGiaoDich> TransactionList){
+        try{
+            TransactionAPIUtil transactionAPIUtil = new TransactionAPIUtil();
+            ArrayList<GetAllTransactionsEntity> parseAPIList = transactionAPIUtil.getAllTransactionsAPI();
+            for(GetAllTransactionsEntity item : parseAPIList){
+                if(item.category != null){
+                    TransactionList.add(new TransactionDetail_TheGiaoDich(item.picture, item.category.picture, item.category, item.amount, item.transaction_date, item.transaction_type, item.notes, item.currency_unit, findWalletById(item.wallet_id), findWalletById(item.target_wallet_id)));
+                }
+                else{
+                    TransactionList.add(new TransactionDetail_TheGiaoDich(item.picture, null, item.category, item.amount, item.transaction_date, item.transaction_type, item.notes, item.currency_unit, findWalletById(item.wallet_id), findWalletById(item.target_wallet_id)));
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+        // Adding header data
+        listDataHeader = new ArrayList<>();
+        //Toast.makeText(TransactionDetail.this, formatDate(theGiaoDichList.get(0).getNgayThang()), Toast.LENGTH_SHORT).show();
+
+        TransactionList.sort(Comparator.comparing(TransactionDetail_TheGiaoDich::getNgayThang_LocalDate).reversed());
+
+        doitiente doi_tien_te = new doitiente();
+
+        if(!TransactionList.isEmpty()){
+            if(TransactionList.get(0).getLoaiGiaoDich().equals("INCOME")){
+                listDataHeader.add(new TransactionDetail_ExpandableListItems(LocalDate.parse(formatDate(TransactionList.get(0).getNgayThang())), doi_tien_te.converttoVND(TransactionList.get(0).getDonViTien(), Double.parseDouble(TransactionList.get(0).getSoTien())) , 0, TransactionList.get(0).getDonViTien()));
+            }
+            else if(TransactionList.get(0).getLoaiGiaoDich().equals("EXPENSE")){
+                listDataHeader.add(new TransactionDetail_ExpandableListItems(LocalDate.parse(formatDate(TransactionList.get(0).getNgayThang())), 0, doi_tien_te.converttoVND(TransactionList.get(0).getDonViTien(), Double.parseDouble(TransactionList.get(0).getSoTien())), TransactionList.get(0).getDonViTien()));
+            }
+            else{
+                listDataHeader.add(new TransactionDetail_ExpandableListItems(LocalDate.parse(formatDate(TransactionList.get(0).getNgayThang())), 0, 0, TransactionList.get(0).getDonViTien()));
+            }
+
+            for(int i = 1; i < TransactionList.size(); i++){
+                if(!TransactionList.get(i).getNgayThang().equals(TransactionList.get(i - 1).getNgayThang())){
+                    if(TransactionList.get(i).getViTien() != null){
+                        if(TransactionList.get(i).getLoaiGiaoDich().equals("INCOME")){
+                            listDataHeader.add(new TransactionDetail_ExpandableListItems(LocalDate.parse(formatDate(TransactionList.get(i).getNgayThang())), doi_tien_te.converttoVND(TransactionList.get(i).getDonViTien(), Double.parseDouble(TransactionList.get(i).getSoTien())), 0, TransactionList.get(i).getDonViTien()));
+                        }
+                        else if(TransactionList.get(i).getLoaiGiaoDich().equals("EXPENSE")){
+                            listDataHeader.add(new TransactionDetail_ExpandableListItems(LocalDate.parse(formatDate(TransactionList.get(i).getNgayThang())), 0, doi_tien_te.converttoVND(TransactionList.get(i).getDonViTien(), Double.parseDouble(TransactionList.get(i).getSoTien())), TransactionList.get(i).getDonViTien()));
+                        }
+                        else{
+                            listDataHeader.add(new TransactionDetail_ExpandableListItems(LocalDate.parse(formatDate(TransactionList.get(i).getNgayThang())), 0, 0, TransactionList.get(i).getDonViTien()));
+                        }
+                    }
+                }
+                else{
+                    if(TransactionList.get(i).getLoaiGiaoDich().equals("INCOME")){
+                        listDataHeader.get(listDataHeader.size() - 1).setTotalIncome(doi_tien_te.converttoVND("VND", listDataHeader.get(listDataHeader.size() - 1).getTotalIncome()) + doi_tien_te.converttoVND(TransactionList.get(i).getDonViTien(), Double.parseDouble(TransactionList.get(i).getSoTien())));
+                    }
+                    else if(TransactionList.get(i).getLoaiGiaoDich().equals("EXPENSE")){
+                        listDataHeader.get(listDataHeader.size() - 1).setTotalExpense(doi_tien_te.converttoVND("VND", listDataHeader.get(listDataHeader.size() - 1).getTotalExpense()) + doi_tien_te.converttoVND(TransactionList.get(i).getDonViTien(), Double.parseDouble(TransactionList.get(i).getSoTien())));
+                    }
+                }
+            }
+        }
+
+        listDataChild = new HashMap<TransactionDetail_ExpandableListItems, List<TransactionDetail_TheGiaoDich>>();
+        for (TransactionDetail_ExpandableListItems headerItem : listDataHeader) {
+            List<TransactionDetail_TheGiaoDich> childList = new ArrayList<>();
+
+            // Duyệt qua từng phần tử trong theGiaoDichList
+            for (TransactionDetail_TheGiaoDich giaoDichItem : TransactionList) {
+                // So sánh ngày của giaoDichItem với ngày của headerItem
+                if (formatDate(giaoDichItem.getNgayThang()).equals(headerItem.getTime().toString())) {
+                    // Nếu ngày giống nhau, thêm giaoDichItem vào childList
+                    childList.add(giaoDichItem);
+                }
+            }
+
+            // Thêm childList vào listDataChild với key là headerItem
+            listDataChild.put(headerItem, childList);
+        }
+
+    }
+
+
+
     public void filterExpandableListView(List<TransactionDetail_TheGiaoDich> TransactionList){
         TextView noTransaction = findViewById(R.id.no_transaction);
         ExpandableListView expandableListView = findViewById(R.id.trans_detail_listview);
@@ -1240,7 +1333,7 @@ public class TransactionDetail extends AppCompatActivity {
             listDataHeader = new ArrayList<>();
             //Toast.makeText(TransactionDetail.this, formatDate(theGiaoDichList.get(0).getNgayThang()), Toast.LENGTH_SHORT).show();
 
-            TransactionList.sort(Comparator.comparing(TransactionDetail_TheGiaoDich::getNgayThang_LocalDate));
+            TransactionList.sort(Comparator.comparing(TransactionDetail_TheGiaoDich::getNgayThang_LocalDate).reversed());
 
             doitiente doi_tien_te = new doitiente();
 
