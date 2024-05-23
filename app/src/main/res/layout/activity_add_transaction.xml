@@ -270,14 +270,13 @@
                     android:textStyle="bold"
                     android:textColor="@color/black" />
 
-                <TextView
+                <ImageView
                     android:id="@+id/add_trans_select_income_category"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=">"
-                    android:textSize="28sp"
                     android:textColor="@color/black"
                     android:backgroundTint="#F2F2F2"
+                    android:src="@drawable/arrowhead_icon"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="2dp"
                     android:layout_gravity="center" />
@@ -320,14 +319,13 @@
                     android:textStyle="bold"
                     android:textColor="@color/black" />
 
-                <TextView
+                <ImageView
                     android:id="@+id/add_trans_select_expense_category"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=">"
-                    android:textSize="28sp"
                     android:textColor="@color/black"
                     android:backgroundTint="#F2F2F2"
+                    android:src="@drawable/arrowhead_icon"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="2dp"
                     android:layout_gravity="center" />
@@ -382,14 +380,13 @@
                     android:textAlignment="textEnd"
                     android:layout_marginEnd="10dp"/>
 
-                <TextView
+                <ImageView
                     android:id="@+id/add_trans_select_from_wallet"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=">"
-                    android:textSize="28sp"
                     android:textColor="@color/black"
                     android:backgroundTint="#F2F2F2"
+                    android:src="@drawable/arrowhead_icon"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="2dp"
                     android:layout_gravity="center" />
@@ -478,14 +475,13 @@
                     android:textAlignment="textEnd"
                     android:layout_marginEnd="10dp"/>
 
-                <TextView
+                <ImageView
                     android:id="@+id/add_trans_select_income_wallet"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=">"
-                    android:textSize="28sp"
                     android:textColor="@color/black"
                     android:backgroundTint="#F2F2F2"
+                    android:src="@drawable/arrowhead_icon"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="2dp"
                     android:layout_gravity="center" />
@@ -540,14 +536,13 @@
                     android:textAlignment="textEnd"
                     android:layout_marginEnd="10dp"/>
 
-                <TextView
+                <ImageView
                     android:id="@+id/add_trans_select_expense_wallet"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=">"
-                    android:textSize="28sp"
                     android:textColor="@color/black"
                     android:backgroundTint="#F2F2F2"
+                    android:src="@drawable/arrowhead_icon"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="2dp"
                     android:layout_gravity="center" />
@@ -602,14 +597,13 @@
                     android:textAlignment="textEnd"
                     android:layout_marginEnd="10dp"/>
 
-                <TextView
+                <ImageView
                     android:id="@+id/add_trans_select_target_wallet"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=">"
-                    android:textSize="28sp"
                     android:textColor="@color/black"
                     android:backgroundTint="#F2F2F2"
+                    android:src="@drawable/arrowhead_icon"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="2dp"
                     android:layout_gravity="center" />
