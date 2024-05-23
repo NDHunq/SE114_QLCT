@@ -113,7 +113,7 @@ public class TransactionDetail extends AppCompatActivity {
             for (GetAllWalletsEntity item : parseAPIList) {
                 walletList.add(new Wallet_hdp(item.id, item.name, item.amount, R.drawable.wallet, item.currency_unit));
             }
-            walletList.add(new Wallet_hdp("total", "TOTAL", "", R.drawable.wallet, ""));
+            walletList.add(new Wallet_hdp("total", "Total", "", R.drawable.global, ""));
             Log.d("Get_wallet_data_object", walletList.toString());
         }catch (Exception e){
             e.printStackTrace();
