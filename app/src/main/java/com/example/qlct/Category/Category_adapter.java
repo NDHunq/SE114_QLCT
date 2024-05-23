@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.qlct.R;
 import com.google.android.material.card.MaterialCardView;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -49,8 +50,10 @@ public class Category_adapter extends BaseAdapter {
         ImageView categoryIcon = convertView.findViewById(R.id.category_icon);
         TextView categoryName = convertView.findViewById(R.id.category_txtview);
 
+
         Category_hdp category = categoryList.get(position);
         Glide.with(context).load(category.getImageURL()).into(categoryIcon);
+
         categoryName.setText(category.getCategory_name());
         return convertView;
     }

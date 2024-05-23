@@ -1,18 +1,22 @@
 package com.example.qlct.Home;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -160,7 +164,13 @@ public class Home_My_wallets extends AppCompatActivity {
 
 
         Anhxa();
+//loading
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        builder.setView(inflater.inflate(R.layout.loading_dialog, null));
+        builder.setCancelable(false);
 
+        AlertDialog load = builder.create();
         TextView tongtien = findViewById(R.id.tongammount);
         LinearLayout total =findViewById(R.id.total_layout);
         total.setOnClickListener(new View.OnClickListener() {
@@ -171,7 +181,19 @@ public class Home_My_wallets extends AppCompatActivity {
                 intent.putExtra("ammount", TongTien);
                 intent.putExtra("currency_unit", "VND");
                 intent.putExtra("tongsovi", tongsovi);
+
+
                 startActivity(intent);
+
+
+
+
+// Set the layout parameters to match parent (full screen)
+
+
+
+
+
             }
         });
 

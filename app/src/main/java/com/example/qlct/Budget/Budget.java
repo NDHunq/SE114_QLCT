@@ -13,8 +13,9 @@ public class Budget implements Serializable {
     private String toDate;
     private String Image;
     String type;
+    String currency;
 
-    public Budget(String category, double max_money, double curent_money, String fromDate, String toDate, String image, String type, String id) {
+    public Budget(String category, double max_money, double curent_money, String fromDate, String toDate, String image, String type, String id,String currency) {
         this.category = category;
         this.max_money = max_money;
         this.curent_money = curent_money;
@@ -23,6 +24,15 @@ public class Budget implements Serializable {
         Image = image;
         this.type = type;
         this.id = id;
+        this.currency=currency;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 
     public String getId() {

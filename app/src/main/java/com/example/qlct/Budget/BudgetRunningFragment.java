@@ -340,12 +340,12 @@ public class BudgetRunningFragment extends Fragment {
                         to="";
                     }
                     else {
-                        from="From: "+allBudgets.get(i).getCreate_at().substring(0,10);
+                        from=allBudgets.get(i).getCreate_at().substring(0,10);
                         to="Renew "+allBudgets.get(i).getRenew_date_unit();
                     }
 
                 }
-                Budget budget = new Budget(GetNameCategory(allBudgets.get(i).getCategory_id()),Double.valueOf(allBudgets.get(i).getLimit_amount()) ,Double.valueOf(allBudgets.get(i).getExpensed_amount()) ,from,to,allBudgets.get(i).getCategory().getPicture(),allBudgets.get(i).getBudget_type(),allBudgets.get(i).getId());
+                Budget budget = new Budget(GetNameCategory(allBudgets.get(i).getCategory_id()),Double.valueOf(allBudgets.get(i).getLimit_amount()) ,Double.valueOf(allBudgets.get(i).getExpensed_amount()) ,from,to,allBudgets.get(i).getCategory().getPicture(),allBudgets.get(i).getBudget_type(),allBudgets.get(i).getId(),allBudgets.get(i).getCurrency_unit());
                     list.add(budget);
             }
         else{

@@ -10,11 +10,11 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
-        android:usesCleartextTraffic="true"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:icon="@drawable/asset_allocation"
+        android:label="Finance Expert"
+        android:roundIcon="@drawable/asset_allocation"
         android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
         android:theme="@style/Theme.QLCT"
         tools:targetApi="31">
         <activity
@@ -42,8 +42,12 @@
             android:name=".Budget.AddBudget"
             android:exported="false" />
         <activity
-            android:name=".Category.Category_Add"
-            android:exported="false" />
+            android:name=".Category_Add"
+            android:exported="true" >
+
+
+
+        </activity>
         <activity
             android:name=".Category_Add"
             android:exported="false" />
@@ -52,7 +56,7 @@
             android:exported="false"
             android:theme="@style/Theme.QLCT" />
         <activity
-            android:name=".Notification.Notificaiton"
+            android:name=".Notification.Notificaiton_activity"
             android:exported="false" />
         <activity
             android:name=".Home.Home_Wallet_Information"
@@ -63,12 +67,7 @@
         <activity
             android:name=".Home.Home_My_wallets"
             android:exported="false" />
-        <activity
-            android:name=".Transaction.TransactionDetail"
-            android:exported="false" />
-        <activity
-            android:name=".Transaction.AddTransaction"
-            android:exported="false" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -77,6 +76,8 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+
         </activity>
 
         <meta-data

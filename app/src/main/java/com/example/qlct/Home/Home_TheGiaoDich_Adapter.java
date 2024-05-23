@@ -8,8 +8,13 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.qlct.R;
 
+import androidx.cardview.widget.CardView;
+
+
+import com.bumptech.glide.Glide;
+import com.example.qlct.R;
+import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 public class Home_TheGiaoDich_Adapter extends BaseAdapter {
@@ -42,6 +47,7 @@ public class Home_TheGiaoDich_Adapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view=inflater.inflate(layout,null);
+
         ImageView imageView = (ImageView) view.findViewById(R.id.hinhanh);
         TextView ten = (TextView) view.findViewById(R.id.tendanhmuc);
         TextView sotien = (TextView) view.findViewById(R.id.sotien);
@@ -49,9 +55,20 @@ public class Home_TheGiaoDich_Adapter extends BaseAdapter {
         TextView ghichu = (TextView) view.findViewById(R.id.GhiChu);
         TextView vitien = (TextView) view.findViewById(R.id.tenvi);
         Home_TheGiaoDich theGiaoDich = theGiaoDichList.get(i);
-        imageView.setImageResource(theGiaoDich.getHinhAnh());
+        if(theGiaoDich.Typee.equals("EXPENSE")){
+            sotien.setTextColor(context.getResources().getColor(R.color.red));
+        }
+        else if(theGiaoDich.Typee.equals("INCOME")){
+            sotien.setTextColor(context.getResources().getColor(R.color.xanhdam));
+        }
+        else if(theGiaoDich.Typee.equals("TRANSFER")){
+            sotien.setTextColor(context.getResources().getColor(R.color.xanhnendam));
+
+        }
+       String url=theGiaoDich.getHinhAnh();
+        Glide.with(context).load(url).into(imageView);
         ten.setText(theGiaoDich.getTenGiaoDich());
-        sotien.setText(theGiaoDich.getSoTien());
+        sotien.setText(theGiaoDich.getSoTien()+""+theGiaoDich.getCurrencyUnit());
         ngaythang.setText(theGiaoDich.getNgayThang());
         ghichu.setText(theGiaoDich.getGhiChu());
         vitien.setText(theGiaoDich.getViTien());

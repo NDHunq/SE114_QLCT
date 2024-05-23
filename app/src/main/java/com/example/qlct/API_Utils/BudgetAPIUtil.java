@@ -62,7 +62,7 @@ public class BudgetAPIUtil extends AppCompatActivity {
             String jsonData = response.body().string();
             Log.d("Create_budget", jsonData);
         }catch (Exception e) {
-            e.printStackTrace();
+            Log.d("Create_budget", e.toString());
         }
     }
     public ArrayList<GetAllBudget> getAllBudgets (){
@@ -87,7 +87,7 @@ public class BudgetAPIUtil extends AppCompatActivity {
         }
         catch(Exception e) {
             //Thông báo lỗi, không thể kết nối đến server, co the hien mot notification ra app
-            e.printStackTrace();
+            Log.d("Create_budget", e.toString());
             return null;
         }
     }

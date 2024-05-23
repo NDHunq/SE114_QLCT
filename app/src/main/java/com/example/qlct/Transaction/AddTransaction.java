@@ -5,14 +5,20 @@ import android.app.Dialog;
 import android.app.Instrumentation;
 import android.content.Context;
 import android.content.Intent;
+
 import android.content.res.ColorStateList;
+
 import android.database.Cursor;
 import android.graphics.Bitmap;
+
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+
+import android.os.Build;
+
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.provider.MediaStore;
@@ -41,6 +47,9 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+
+import androidx.annotation.RequiresApi;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -55,10 +64,18 @@ import com.example.qlct.API_Entity.UpdateWalletEntity;
 import com.example.qlct.API_Utils.CategoryAPIUtil;
 import com.example.qlct.API_Utils.TransactionAPIUtil;
 import com.example.qlct.API_Utils.WalletAPIUtil;
+
 import com.example.qlct.Category.Category_hdp;
-import com.example.qlct.Category.Category_Add;
 import com.example.qlct.Category.Category_adapter;
+
 import com.example.qlct.Home.Home_New_wallet;
+
+import com.example.qlct.Category_Add;
+
+
+
+import com.example.qlct.Category.Category_adapter;
+
 import com.example.qlct.R;
 import com.example.qlct.SelectWallet_Adapter;
 import com.example.qlct.Wallet_hdp;
@@ -846,6 +863,7 @@ public class AddTransaction extends AppCompatActivity {
                     // Do nothing
                 }
 
+                @RequiresApi(api = Build.VERSION_CODES.O)
                 @Override
                 public void afterTextChanged(Editable s) {
                     validateDate();
@@ -859,6 +877,7 @@ public class AddTransaction extends AppCompatActivity {
 
         try {
             saveButton.setOnClickListener(new View.OnClickListener() {
+                @RequiresApi(api = Build.VERSION_CODES.O)
                 @Override
                 public void onClick(View view) {
                     TextInputEditText amountEditText = findViewById(R.id.Amount_txtbox);
@@ -904,8 +923,7 @@ public class AddTransaction extends AppCompatActivity {
                         }
                         Toast.makeText(AddTransaction.this, url, Toast.LENGTH_SHORT).show();
                         finish();
-                    }
-                }
+                    }                }
             });
         }catch (Exception e){
             e.printStackTrace();
@@ -1127,6 +1145,7 @@ public class AddTransaction extends AppCompatActivity {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private boolean validateDate() {
         TextInputLayout dateEditTextLayout = findViewById(R.id.select_date_txtbox_layout);
         TextInputEditText dateEditText = findViewById(R.id.select_date_txtbox);
@@ -1151,6 +1170,7 @@ public class AddTransaction extends AppCompatActivity {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private boolean validate(){
         boolean isListValid = true;
         if(income){
