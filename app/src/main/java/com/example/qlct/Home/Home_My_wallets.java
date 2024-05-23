@@ -181,7 +181,18 @@ public class Home_My_wallets extends AppCompatActivity {
                 intent.putExtra("ammount", TongTien);
                 intent.putExtra("currency_unit", "VND");
                 intent.putExtra("tongsovi", tongsovi);
+
+
+
                 startActivity(intent);
+
+
+
+
+// Set the layout parameters to match parent (full screen)
+
+
+
 
             }
         });

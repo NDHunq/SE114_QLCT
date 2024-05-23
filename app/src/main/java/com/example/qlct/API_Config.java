@@ -1,5 +1,6 @@
 package com.example.qlct;
 
+
 import com.example.qlct.API_Entity.LoginResponse;
 import com.example.qlct.API_Entity.SharedDaTa;
 
@@ -11,7 +12,6 @@ public class API_Config {
     {
         TEST_LOGIN_TOKEN = token;
     }
-
 
 
 

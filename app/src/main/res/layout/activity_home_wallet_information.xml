@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+    android:background="@color/white"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -21,7 +22,8 @@
 android:layout_marginStart="12dp"
 
             android:textColor="@color/black"
-            android:textSize="37dp"
+            android:textSize="32dp"
+            android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"></TextView>
@@ -34,7 +36,7 @@ android:layout_marginStart="12dp"
             android:layout_weight="1"
             android:text="Wallet Information"
             android:textColor="@color/black"
-            android:textSize="30dp"
+            android:textSize="25dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
 

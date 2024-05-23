@@ -69,18 +69,20 @@
                 android:gravity="center">
 
                 <ImageButton
+                    android:id="@+id/incomearrow"
                     android:layout_width="20dp"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/arrow_down"
+                    android:layout_height="25dp"
+                    android:background="@drawable/downarrow_white"
                     android:gravity="center"></ImageButton>
 
                 <TextView
+                    android:id="@+id/income1"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
                     android:gravity="center"
                     android:text="Income"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="20dp"></TextView>
             </LinearLayout>
 
@@ -93,12 +95,14 @@
                 android:gravity="center">
 
                 <ImageButton
+                    android:id="@+id/expensearrow"
                     android:layout_width="20dp"
-                    android:layout_height="30dp"
+                    android:layout_height="25dp"
                     android:background="@drawable/up_arrow_1"
                     android:gravity="center"></ImageButton>
 
                 <TextView
+                    android:id="@+id/expense1"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
@@ -111,30 +115,6 @@
             </LinearLayout>
         </LinearLayout>
 
-        <RelativeLayout
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/editText"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@drawable/background_item" />
-
-            <ImageButton
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                android:id="@+id/imageButton"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/search" />
-
-        </RelativeLayout>
 
         <ListView android:dividerHeight="10dp"
             android:divider="@android:color/transparent"

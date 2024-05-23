@@ -65,8 +65,8 @@
                         android:textSize="16dp"
                         android:textColor="@color/black"
                         android:layout_marginLeft="0dp"
-                        app:buttonTint="#5CC2F2"
-                        >
+                        app:buttonTint="#5CC2F2">
+
 
                     </com.google.android.material.radiobutton.MaterialRadioButton>
                     <com.google.android.material.radiobutton.MaterialRadioButton

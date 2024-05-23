@@ -27,13 +27,15 @@
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:layout_gravity="center"
+                    app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="250dp">
 
                     <ImageView
                         android:id="@+id/hinhanh"
                         android:layout_width="35dp"
-
+                        android:background="@color/white"
                         android:layout_height="35dp"
+                        android:src="@drawable/transfer_icon"
 
                         android:layout_gravity="center">
 
@@ -52,43 +54,30 @@
                 android:layout_gravity="center"
                 android:layout_height="wrap_content">
                 <TextView
-                    android:id="@+id/tendanhmuc"
+                    android:id="@+id/from_wallet_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
                     android:text="Food"
                     android:textStyle="bold"
-                    android:textSize="23dp"
-                    android:textColor="@color/black"
-
-                    ></TextView>
+                    android:textSize="20dp"
+                    android:textColor="@color/black"/>
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_marginTop="0dp"
                     android:orientation="horizontal"
                     android:layout_height="wrap_content">
-                    <ImageView
-                        android:layout_marginTop="4dp"
-                        android:layout_width="20dp"
-                        android:background="@drawable/walleticon"
-                        android:layout_height="20dp">
 
-                    </ImageView>
                     <TextView
-                        android:id="@+id/tenvi"
+                        android:id="@+id/target_wallet_name"
                         android:textColor="@color/black"
                         android:layout_marginStart="5dp"
                         android:layout_width="match_parent"
+                        android:textStyle="bold"
                         android:text="Vi 1"
-                        android:textSize="18dp"
-                        android:layout_height="match_parent">
-
-                    </TextView>
-
-
+                        android:textSize="20dp"
+                        android:layout_height="match_parent"/>
                 </LinearLayout>
-
-
-
             </LinearLayout>
             <LinearLayout
                 android:layout_marginEnd="12dp"
@@ -104,6 +93,7 @@
                         android:textAlignment="textEnd"
                         android:layout_width="match_parent"
                         android:text="12/12/2020"
+                        android:textColor="@color/black"
                         android:textSize="14dp"
                         android:layout_height="wrap_content">
 
@@ -140,6 +130,7 @@
             android:layout_height="wrap_content"
             android:text="Ghi Chu"
             android:layout_marginTop="5dp"
+            android:textColor="@color/black"
             android:textSize="15dp"
             android:layout_marginStart="12dp"
             >

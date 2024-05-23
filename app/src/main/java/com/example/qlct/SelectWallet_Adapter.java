@@ -9,6 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 
 public class SelectWallet_Adapter extends BaseAdapter {
@@ -64,12 +66,38 @@ public class SelectWallet_Adapter extends BaseAdapter {
                 currencySymbol = "¥";
                 break;
         }
-        String amount = wallet.getAmountMoney() + " " + currencySymbol;
-        money.setText(amount);
+        String walletAmount = wallet.getAmountMoney();
+        if(walletAmount.equals("")){
+            money.setText(walletAmount);
+        }
+        else{
+            String formattedAmount = formatCurrency(Double.parseDouble(walletAmount), wallet.getCurrency());
+            String amount = formattedAmount + " " + currencySymbol;
+            money.setText(amount);
+        }
+
         // Tạo một đối tượng LayoutParams mới với chiều rộng và chiều cao mong muốn
 
         image.setImageResource(wallet.getImage());
 
         return view;
+    }
+
+    public static String formatCurrency(double amount, String currency) {
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+
+        // Set the thousands separator depending on the currency
+        if ("VND".equals(currency)) {
+            symbols.setGroupingSeparator('.');
+        } else {
+            symbols.setGroupingSeparator(',');
+        }
+
+        // Always use a dot for the decimal separator
+        symbols.setDecimalSeparator('.');
+
+        // Create a DecimalFormat with the desired symbols and format the amount
+        DecimalFormat formatter = new DecimalFormat("###,###.##", symbols);
+        return formatter.format(amount);
     }
 }

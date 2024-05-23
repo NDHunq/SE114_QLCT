@@ -52,6 +52,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Locale;
 
 public class Home_fragment extends Fragment {
 
@@ -74,6 +75,7 @@ public class Home_fragment extends Fragment {
     int currentWeek = now.get(Calendar.WEEK_OF_YEAR);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
+        theTopSpentList2=new ArrayList<>();
 
 
 double sumtien=0;
@@ -204,7 +206,8 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 
-
+        theTopSpentList2=new ArrayList<>();
+        theTopSpentList=new ArrayList<>();
         double sumtien=0;
         theTopSpentList = new ArrayList<>();
         for(int i=0;i<theGiaoDichList.size();i++)
@@ -312,8 +315,10 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
         Collections.sort(theTopSpentList, new Comparator<Home_TheTopSpent>() {
             @Override
             public int compare(Home_TheTopSpent o1, Home_TheTopSpent o2) {
-                double percent1 = Double.parseDouble(o1.getPercent().replace("%", ""));
-                double percent2 = Double.parseDouble(o2.getPercent().replace("%", ""));
+                String s1 = o1.getPercent().replace(",", ".");
+                String s2 = o2.getPercent().replace(",", ".");
+                double percent1 = Double.parseDouble(s1.replace("%", ""));
+                double percent2 = Double.parseDouble(s2.replace("%", ""));
                 return Double.compare(percent2, percent1);
             }
         });
@@ -332,7 +337,7 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
         try {
             theGiaoDichList = new ArrayList<>();
             int i=0;
-            ArrayList<GetAllTransactionsEntity_quyen> parseAPIList = new TransactionAPIUtil().getAllTransactionsAPI();
+            ArrayList<GetAllTransactionsEntity_quyen> parseAPIList = new TransactionAPIUtil().getAllTransactionsAPI_quyen();
             ArrayList<GetAllWalletsEntity> walletsEntities = new WalletAPIUtil().getAllWalletAPI();
             //Chạy vòng lặp để lấy ra các field cần thiết cho hiển thị ra Views
             for (GetAllTransactionsEntity_quyen item : parseAPIList) {
@@ -354,7 +359,12 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
                 {
                     if(TenVi.equals("Total")||TenVi.equals(item.wallet.name))
                     {
-                    theGiaoDichList.add(new Home_TheGiaoDich(item.category.picture, item.category.name, item.amount, dv, item.transaction_date, item.notes, item.wallet.name, item.transaction_type));
+                        SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+                        SimpleDateFormat targetFormat = new SimpleDateFormat("yyyy-MM-dd");
+                        Date date = originalFormat.parse(item.transaction_date);
+                        String formattedDate = targetFormat.format(date);
+
+                        theGiaoDichList.add(new Home_TheGiaoDich(item.category.picture, item.category.name, item.amount, dv, formattedDate, item.notes, item.wallet.name, item.transaction_type));
                 }
                     }
             }
@@ -437,7 +447,14 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
 
 
         Anhxa();
+
         try {
+            tongtranthangtruoc=0;
+            tongtranthangnay=0;
+            tongtrantuannay=0;
+            tongtrantuantruoc=0;
+
+
             Anhxa2();
         } catch (ParseException e) {
             e.printStackTrace();
@@ -472,7 +489,9 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
         sotien.setText(doitien.formatValue(tongtranthangnay) + " đ");
         ColorStateList colorStateList = ColorStateList.valueOf(Color.WHITE);
 
+
         BarChart barChart = view.findViewById(R.id.barChart);
+        barChart.clear();
         barChart.setTouchEnabled(false);
         barChart.setDragEnabled(false);
         barChart.setScaleEnabled(false);
@@ -486,6 +505,13 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
 // Rút gọn dữ liệu
         float scaledTongtranthangtruoc = (float) (tongtranthangtruoc / greatestCommonDivisor);
         float scaledTongtranthangnay = (float) (tongtranthangnay / greatestCommonDivisor);
+        float chuan=scaledTongtranthangtruoc;
+        while(scaledTongtranthangnay<chuan)
+        {scaledTongtranthangnay=scaledTongtranthangnay*10;
+            scaledTongtranthangtruoc=scaledTongtranthangtruoc*10;
+
+        }
+
 
 // Tạo dữ liệu mới cho BarChart
         ArrayList<BarEntry> dataValues1 = new ArrayList<>();
@@ -605,6 +631,7 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
                 try {
                     Anhxa2();
                 } catch (ParseException e) {
+
                     throw new RuntimeException(e);
                 }
                 month.setTextColor(Color.parseColor("#5CC2F2"));
@@ -619,6 +646,7 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
                 ColorStateList colorStateList2= ColorStateList.valueOf(Color.parseColor("#ACACAC"));
                 year.setBackgroundTintList(colorStateList2);
                 BarChart barChart = view.findViewById(R.id.barChart);
+                barChart.clear();
                 barChart.setTouchEnabled(false);
                 barChart.setDragEnabled(false);
                 barChart.setScaleEnabled(false);
@@ -632,6 +660,14 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
 // Rút gọn dữ liệu
                 float scaledTongtranthangtruoc = (float) (tongtranthangtruoc / greatestCommonDivisor);
                 float scaledTongtranthangnay = (float) (tongtranthangnay / greatestCommonDivisor);
+
+                float chuan=scaledTongtranthangtruoc;
+                while(scaledTongtranthangnay<chuan)
+                {scaledTongtranthangnay=scaledTongtranthangnay*10;
+                    scaledTongtranthangtruoc=scaledTongtranthangtruoc*10;
+
+                }
+
 
 // Tạo dữ liệu mới cho BarChart
                 ArrayList<BarEntry> dataValues1 = new ArrayList<>();
@@ -685,7 +721,9 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
             public void onClick(View v) {
                 try {
                     Anhxa3();
+
                 } catch (ParseException e) {
+
                     throw new RuntimeException(e);
                 }
                 TextView tstm = view.findViewById(R.id.tstm);
@@ -716,6 +754,12 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
 // Rút gọn dữ liệu
                 float scaledTongtranthangtruoc = (float) (tongtrantuantruoc / greatestCommonDivisor);
                 float scaledTongtranthangnay = (float) (tongtrantuannay / greatestCommonDivisor);
+               float chuan=scaledTongtranthangtruoc;
+               while(scaledTongtranthangnay<chuan)
+               {scaledTongtranthangnay=scaledTongtranthangnay*10;
+                   scaledTongtranthangtruoc=scaledTongtranthangtruoc*10;
+
+               }
 
 // Tạo dữ liệu mới cho BarChart
                 ArrayList<BarEntry> dataValues1 = new ArrayList<>();
@@ -811,7 +855,7 @@ if(transactionYear!=currentYear||transactionMonth!=currentMonth)
                     return;
                 }
                 // Tao intent show more
-                Intent ShowMoreIntent = new Intent(getActivity(), Category_Add.class);
+                Intent ShowMoreIntent = new Intent(getActivity(), TransactionDetail.class);
 
                 // Mo activity transaction details
                 startActivity(ShowMoreIntent);

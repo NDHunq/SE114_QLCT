@@ -33,6 +33,10 @@ public class  My_categories extends AppCompatActivity {
 
     LinearLayout income;
     LinearLayout expense;
+    TextView income1;
+    TextView expense1;
+    ImageButton incomearrow;
+    ImageButton expensearrow;
 
 
 
@@ -52,6 +56,10 @@ public class  My_categories extends AppCompatActivity {
               finish();
            }
        });
+       income1=findViewById(R.id.income1);
+         expense1=findViewById(R.id.expense1);
+            incomearrow=findViewById(R.id.incomearrow);
+            expensearrow=findViewById(R.id.expensearrow);
        income=findViewById(R.id.income);
        expense=findViewById(R.id.expense);
        addnew=findViewById(R.id.addnew);
@@ -70,7 +78,11 @@ public class  My_categories extends AppCompatActivity {
                 isIncome = true;
                 Anhxa();
                   income.setBackgroundColor(getResources().getColor(R.color.xanhdam));
-                    expense.setBackground(getResources().getDrawable(R.drawable.expense));
+                  income1.setTextColor(getResources().getColor(R.color.white));
+                  incomearrow.setBackground(getResources().getDrawable(R.drawable.downarrow_white));
+                  expense.setBackground(getResources().getDrawable(R.drawable.expense));
+                  expense1.setTextColor(getResources().getColor(R.color.black));
+                    expensearrow.setBackground(getResources().getDrawable(R.drawable.up_arrow_1));
               }
          });
        expense.setOnClickListener(new View.OnClickListener() {
@@ -79,7 +91,11 @@ public class  My_categories extends AppCompatActivity {
                isIncome = false;
                 Anhxa();
                income.setBackground(getResources().getDrawable(R.drawable.expense));
+               income1.setTextColor(getResources().getColor(R.color.black));
+               incomearrow.setBackground(getResources().getDrawable(R.drawable.arrow_down));
                expense.setBackgroundColor(getResources().getColor(R.color.red));
+               expense1.setTextColor(getResources().getColor(R.color.white));
+               expensearrow.setBackground(getResources().getDrawable(R.drawable.uparrow_white));
            }
        });
     }

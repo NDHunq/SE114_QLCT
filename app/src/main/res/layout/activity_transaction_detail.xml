@@ -8,6 +8,16 @@
     android:background="@color/white"
     tools:context=".Transaction.TransactionDetail">
 
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -72,8 +82,9 @@
                 android:layout_height="wrap_content"
                 android:text="All time"
                 android:textColor="@color/black"
-                android:textSize="20sp"
-                android:layout_marginTop="12dp"
+                android:textSize="15sp"
+                android:layout_marginTop="15dp"
+                android:singleLine="true"
                 android:layout_weight="6"/>
 
             <LinearLayout
@@ -90,7 +101,7 @@
                     android:id="@+id/wallet_name_txtview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Total"
+                    android:text="TOTAL"
                     android:textSize="20sp"
                     android:textColor="@color/black"
                     android:layout_marginTop="5dp"
@@ -118,15 +129,21 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <LinearLayout
+            <HorizontalScrollView
+                android:id="@+id/chipgroup_scrollview"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_marginBottom="12dp"
-                android:orientation="horizontal"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_weight="1">
 
-
-            </LinearLayout>
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipgroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:singleLine="true">
+                </com.google.android.material.chip.ChipGroup>
+            </HorizontalScrollView>
 
             <ImageButton
                 android:id="@+id/trans_detail_more_option_btn"
@@ -139,7 +156,7 @@
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/trans_detail_listview_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -150,13 +167,27 @@
         app:layout_constraintTop_toBottomOf="@id/filter_layout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
+        <TextView
+            android:id="@+id/no_transaction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No transactions"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/inter"
+            android:textColor="@color/black"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginStart="70dp"
+            android:visibility="visible"/>
+
         <ExpandableListView
             android:id="@+id/trans_detail_listview"
             android:layout_width="match_parent"
             android:layout_height="600dp"
             android:layout_margin="12dp">
         </ExpandableListView>
-    </LinearLayout>
+    </RelativeLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/trans_detail_add_trans"

@@ -151,7 +151,7 @@ public class BudgetRenewFragment extends Fragment {
                     int day = c.get(Calendar.DAY_OF_MONTH);
 
                     // Tạo một DatePickerDialog mới
-                    DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
+                    DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), R.style.CustomDatePickerDialogTheme,
                             new DatePickerDialog.OnDateSetListener() {
                                 @Override
                                 public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {

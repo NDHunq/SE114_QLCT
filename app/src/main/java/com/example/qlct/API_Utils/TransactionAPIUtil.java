@@ -39,7 +39,7 @@ public class TransactionAPIUtil extends AppCompatActivity {
     private String LOGIN_TOKEN = API_Config.TEST_LOGIN_TOKEN;
 //
 
-    public ArrayList<GetAllTransactionsEntity_quyen> getAllTransactionsAPI (){
+    public ArrayList<GetAllTransactionsEntity_quyen> getAllTransactionsAPI_quyen (){
         try {
             OkHttpClient client = new OkHttpClient().newBuilder()
                     .build();
@@ -59,6 +59,38 @@ public class TransactionAPIUtil extends AppCompatActivity {
 
             Type listType = new TypeToken<ArrayList<GetAllTransactionsEntity_quyen>>(){}.getType();
             ArrayList<GetAllTransactionsEntity_quyen> parseAPIList = new Gson().fromJson(json.getJSONObject("data").getJSONArray("rows").toString(), listType);
+
+            return parseAPIList;
+        }
+        catch(Exception e) {
+            Log.d("123", e.getMessage());
+
+            //Thông báo lỗi, không thể kết nối đến server, co the hien mot notification ra app
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public ArrayList<GetAllTransactionsEntity> getAllTransactionsAPI (){
+        try {
+            OkHttpClient client = new OkHttpClient().newBuilder()
+                    .build();
+            Log.d("url", SERVER + "/" + API_VERSION + "/transactions/me");
+            Request request = new Request.Builder()
+
+                    .url( SERVER + "/" + API_VERSION + "/transactions/me")
+                    .method("GET", null)
+                    .addHeader("Authorization", LOGIN_TOKEN)
+                    .build();
+            Response response = client.newCall(request).execute();
+            String jsonData = response.body().string();
+            Log.d("Get_transaction", jsonData);
+            JSONObject json = new JSONObject(jsonData);
+
+            //Maping json to entity
+
+            Type listType = new TypeToken<ArrayList<GetAllTransactionsEntity>>(){}.getType();
+            ArrayList<GetAllTransactionsEntity> parseAPIList = new Gson().fromJson(json.getJSONObject("data").getJSONArray("rows").toString(), listType);
 
             return parseAPIList;
         }

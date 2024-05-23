@@ -12,6 +12,14 @@ public class Category_hdp {
 //        this.image = image;
 //    }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Category_hdp) {
+            Category_hdp category = (Category_hdp) obj;
+            return this.category_id.equals(category.category_id);
+        }
+        return false;
+    }
     public Category_hdp(String category_id, String category_name, String image, String category_type){
         this.category_id = category_id;
         this.category_name = category_name;
