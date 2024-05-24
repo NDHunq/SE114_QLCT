@@ -24,9 +24,14 @@ import com.example.qlct.API_Utils.UserAPiUtil;
 
 public class NewPassword extends AppCompatActivity {
     UserAPiUtil userAPiUtil = new UserAPiUtil();
+    UserProfile userProfile=userAPiUtil.getUserProfile();
 
 ImageButton backnewpass;
+String pass=userProfile.getData().getPassword();
+TextView errorpass;
+TextView errorfill;
 EditText enterpass;
+TextView errorcurrentpass;
     EditText currentpass;
 EditText repeatpass;
 ImageButton showpass;
@@ -53,6 +58,9 @@ TextView save;
                 startActivity(myintent);
             }
         });
+        errorcurrentpass=findViewById(R.id.errorcurrentpass);
+        errorpass=findViewById(R.id.errorpass);
+        errorfill=findViewById(R.id.errorfill);
         save=findViewById(R.id.save);
         currentpass=findViewById(R.id.currentpass);
         currentpass.setTransformationMethod(new PasswordTransformationMethod());
@@ -65,40 +73,64 @@ TextView save;
         showpass1=findViewById(R.id.showpass1);
         showpass2=findViewById(R.id.showpass2);
         save.setOnClickListener(new View.OnClickListener() {
+            int flag1=1;
            int flag=1;
+           int flag2=1;
             @Override
             public void onClick(View v) {
-                if(currentpass.getText().toString().isEmpty()||enterpass.getText().toString().isEmpty()||repeatpass.getText().toString().isEmpty())
+                if(!currentpass.getText().toString().equals(pass))
                 {
-                    flag=0;
-                }
-                if(enterpass.getText().toString().equals(repeatpass.getText().toString()))
-                {
-                    flag=1;
+                    flag2=0;
+                    errorcurrentpass.setText("Current password is incorrect");
+                    Log.d("newpass", "pass sai "+flag2);
                 }
                 else
                 {
+                    flag2=1;
+                    errorcurrentpass.setText("");
+                    Log.d("newpass", "pass dung "+flag2);
+                }
+                if(currentpass.getText().toString().isEmpty()||enterpass.getText().toString().isEmpty()||repeatpass.getText().toString().isEmpty())
+                {
                     flag=0;
+                    errorfill.setText("Please fill all the fields");
+                    Log.d("newpass", "thong tin trong "+flag);
+                }
+                if(enterpass.getText().toString().equals(repeatpass.getText().toString()))
+                {
+                    flag1=1;
+                    Log.d("newpass", "pass dung "+flag1);
+                    errorpass.setText("");
+                }
+                else
+                {
+                    Log.d("newpass", "pass sai "+flag1);
+                    flag1=0;
+                    errorpass.setText("Password does not match");
                 }
 
                 ChangePassWord changePassWord = new ChangePassWord(currentpass.getText().toString(),enterpass.getText().toString());
-                if(flag==1)
+                if(flag==1&&flag1==1&&flag2==1  )
                 {
+
+                    errorfill.setText("");
+                    errorpass.setText("");
                     userAPiUtil.changePassword(changePassWord, new UserAPiUtil.OnTaskCompleted() {
                         @Override
                         public void onTaskCompleted(String result) {
                             Log.d("NewPass", "response");
                         }
                 });
+                    try {
+                        SharedPrefManager.getInstance(NewPassword.this).saveMyVariable(null);
+                        Intent myintent = new Intent(NewPassword.this, Login_Signin.class);
+                        startActivity(myintent);
+                    } catch (Exception e) {
+                        // Log lỗi hoặc xử lý ngoại lệ tại đây
+                        Log.d("ErrorPassword", "Error: ", e);
+                    }
                 }
-                try {
-                    SharedPrefManager.getInstance(NewPassword.this).saveMyVariable(null);
-                    Intent myintent = new Intent(NewPassword.this, Login_Signin.class);
-                    startActivity(myintent);
-                } catch (Exception e) {
-                    // Log lỗi hoặc xử lý ngoại lệ tại đây
-                    Log.d("ErrorPassword", "Error: ", e);
-                }
+
             }
         });
         showpass2.setOnClickListener(new View.OnClickListener() {

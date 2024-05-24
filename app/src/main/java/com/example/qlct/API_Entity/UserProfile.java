@@ -50,10 +50,19 @@ public class UserProfile {
         private String id;
         private String username;
         private String phone_number;
+        private String password;
         private String currency_unit;
         private List<UserWallet> user_wallets;
         private List<Object> transactions;
         private List<Object> categories;
+
+        public String getPassword() {
+            return password;
+        }
+
+        public void setPassword(String password) {
+            this.password = password;
+        }
 
         public String getId() {
             return id;
