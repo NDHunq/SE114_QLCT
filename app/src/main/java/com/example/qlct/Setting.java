@@ -26,7 +26,7 @@ LinearLayout currency;
 TextView phone;
 LinearLayout changepass;
 ImageButton backsetting;
-TextView currency1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,8 +40,6 @@ TextView currency1;
         UserAPiUtil userAPiUtil = new UserAPiUtil();
         UserProfile userProfile=userAPiUtil.getUserProfile();
 
-        currency1=findViewById(R.id.currency1);
-        currency=findViewById(R.id.currency);
         phone=findViewById(R.id.phone);
 //        changemail=findViewById(R.id.changemail);
         changepass=findViewById(R.id.changpass);
@@ -49,7 +47,7 @@ TextView currency1;
         String phoneNumber = userProfile.getData().getPhone_number();
        phoneNumber="0"+ phoneNumber.substring(3);
         phone.setText(phoneNumber);
-        currency1.setText(userProfile.getData().getCurrency_unit());
+
 //        currency.setOnClickListener(new View.OnClickListener() {
 //
 //            @Override

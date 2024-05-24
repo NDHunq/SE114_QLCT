@@ -32,6 +32,9 @@ public class forget_setpass extends AppCompatActivity {
     String otp_code;
     String phone;
     TextView savepass;
+
+    TextView errorpass;
+    TextView errorfill;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,20 +56,46 @@ public class forget_setpass extends AppCompatActivity {
         backnewpass.setOnClickListener(v -> finish());
         enterpass=findViewById(R.id.enterpass);
         enterpass.setTransformationMethod(new PasswordTransformationMethod());
-
+        errorpass=findViewById(R.id.errorpass);
+        errorfill=findViewById(R.id.errorfill);
         repeatpass=findViewById(R.id.repeatpass);
         repeatpass.setTransformationMethod(new PasswordTransformationMethod());
         showpass = findViewById(R.id.showpass);
         showpass1=findViewById(R.id.showpass1);
         savepass=findViewById(R.id.savepass);
         savepass.setOnClickListener(new View.OnClickListener() {
+            int flag1=1;
+            int flag=1;
 
             @Override
             public void onClick(View v) {
+                if(enterpass.getText().toString().isEmpty()||repeatpass.getText().toString().isEmpty())
+                {
+                    flag=0;
+                    errorfill.setText("Please fill all the fields");
+                    Log.d("newpass", "thong tin trong "+flag);
+                }
+                else {
+                    flag=1;
+                    errorfill.setText("");
+                    Log.d("newpass", "thong tin co "+flag);
+                }
+                if(enterpass.getText().toString().equals(repeatpass.getText().toString()))
+                {
+                    flag1=1;
+                    Log.d("newpass", "pass dung "+flag1);
+                    errorpass.setText("");
+                }
+                else
+                {
+                    Log.d("newpass", "pass sai "+flag1);
+                    flag1=0;
+                    errorpass.setText("Password does not match");
+                }
 
 
 
-                if(enterpass.getText().toString().equals(repeatpass.getText().toString())){
+                if(flag1==1&&flag==1){
                     Log.d("Phone", "onClick: " + phone);
                     Log.d("Phone", "onClick: " + otp_code);
                     Log.d("Phone", "onClick: " + enterpass.getText().toString());
@@ -97,9 +126,6 @@ public class forget_setpass extends AppCompatActivity {
                             }
                         }
                     });
-                }
-                else {
-                    Log.d("Phone", "onClick: " + "Mật khẩu không trùng khớp");
                 }
             }
         });
