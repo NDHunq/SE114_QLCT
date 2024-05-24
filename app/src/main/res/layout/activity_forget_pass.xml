@@ -36,6 +36,7 @@
                 android:layout_height="wrap_content"
                 android:text="Confirm Phone"
                 android:textColor="@color/black"
+                android:textStyle="bold"
                 android:textSize="30dp">
 
             </TextView>
@@ -46,6 +47,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textColor="@color/black"
+
             android:textSize="23dp"
             android:text="Enter the code we-ve have sent to">
         </TextView>
@@ -60,8 +62,7 @@
             android:textSize="30dp">
         </TextView>
         <LinearLayout
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="30dp"
+            android:layout_margin="30dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="80dp"
@@ -127,6 +128,17 @@
                 android:maxLength="1">
             </EditText>
         </LinearLayout>
+        <TextView
+            android:id="@+id/error"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text=""
+            android:textColor="@color/red"
+            android:gravity="center_vertical"
+            android:textSize="20dp">
+        </TextView>
         <TextView
             android:id="@+id/resent"
             android:layout_marginLeft="30dp"

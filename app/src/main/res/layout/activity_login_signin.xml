@@ -192,12 +192,12 @@
             style="@style/Widget.Material3.Button.OutlinedButton"
             android:text="Log In"
             android:textStyle="bold"
-            android:textColor="#1EABED"
+            android:textColor="@color/white"
             android:textSize="23dp"
             android:layout_height="60dp"
             app:rippleColor="@color/xanhnennhat"
             app:strokeWidth="3dp"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="@color/xanhnen"
             app:strokeColor="@color/xanhnen">
 
         </com.google.android.material.button.MaterialButton>

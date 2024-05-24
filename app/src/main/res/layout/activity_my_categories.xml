@@ -37,6 +37,7 @@
                 android:layout_weight="1"
                 android:text="My categories"
                 android:textColor="@color/black"
+                android:textStyle="bold"
                 android:textSize="25dp">
 
             </TextView>

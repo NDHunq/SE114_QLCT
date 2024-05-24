@@ -112,6 +112,11 @@ TextView save;
                     errorfill.setText("Please fill all the fields");
                     Log.d("newpass", "thong tin trong "+flag);
                 }
+                else {
+                    flag=1;
+                    errorfill.setText("");
+                    Log.d("newpass", "thong tin co "+flag);
+                }
                 if(enterpass.getText().toString().equals(repeatpass.getText().toString()))
                 {
                     flag1=1;

@@ -30,6 +30,7 @@ android:background="@color/xanhnen"        >
         <androidx.cardview.widget.CardView
             android:layout_width="150dp"
             android:layout_height="150dp"
+            app:cardBackgroundColor="@color/white"
             android:layout_gravity="center"
             app:cardCornerRadius="250dp">
 

@@ -1,11 +1,15 @@
 package com.example.qlct;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -26,6 +30,7 @@ import com.example.qlct.API_Utils.UserAPiUtil;
 import com.google.gson.Gson;
 
 public class forget_pass extends AppCompatActivity {
+    TextView error;
     TextView phone;
     ImageButton back;
     TextView next;
@@ -33,6 +38,21 @@ public class forget_pass extends AppCompatActivity {
     private int lastEditTextIndex = 0;
     // Tạo một mảng chứa tất cả các EditText
     EditText[] editTexts = new EditText[6];
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if (v instanceof EditText) {
+                Rect outRect = new Rect();
+                v.getGlobalVisibleRect(outRect);
+                if (!outRect.contains((int)event.getRawX(), (int)event.getRawY())) {
+                    v.clearFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        }
+        return super.dispatchTouchEvent( event );
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +64,7 @@ public class forget_pass extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        error=findViewById(R.id.error);
         editTexts[0] = findViewById(R.id.editText1);
         editTexts[1] = findViewById(R.id.editText2);
         editTexts[2] = findViewById(R.id.editText3);
@@ -81,21 +102,30 @@ public class forget_pass extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(android.view.View v) {
-                try {
+                if(editTexts[0].getText().toString().isEmpty()||editTexts[1].getText().toString().isEmpty()||editTexts[2].getText().toString().isEmpty()||editTexts[3].getText().toString().isEmpty()||editTexts[4].getText().toString().isEmpty()||editTexts[5].getText().toString().isEmpty())
+                {
+                    error.setText("Please fill all the fields");
 
-                    for(int i=0;i<6;i++)
-                    {
-                        Log.d("phone",editTexts[i].getText().toString());
-                        id = id + editTexts[i].getText().toString();
-                    }
-                    Log.d("OTP",id);
-                } catch (Exception e) {
-                    Log.d("OTP", "Exception occurred: "+ e.toString());
                 }
-                Intent myintent=new Intent(forget_pass.this, forget_setpass.class);
-                myintent.putExtra("OTP",id);
-                myintent.putExtra("phone",phoneNumber);
-                startActivity(myintent);
+                else {
+                    error.setText("");
+                    try {
+
+                        for(int i=0;i<6;i++)
+                        {
+                            Log.d("phone",editTexts[i].getText().toString());
+                            id = id + editTexts[i].getText().toString();
+                        }
+                        Log.d("OTP",id);
+                    } catch (Exception e) {
+                        Log.d("OTP", "Exception occurred: "+ e.toString());
+                    }
+                    Intent myintent=new Intent(forget_pass.this, forget_setpass.class);
+                    myintent.putExtra("OTP",id);
+                    myintent.putExtra("phone",phoneNumber);
+                    startActivity(myintent);
+                }
+
             }
 
 

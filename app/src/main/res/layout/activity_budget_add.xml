@@ -82,6 +82,7 @@
             android:layout_gravity="center"
             android:layout_marginLeft="15dp"
             android:textStyle="bold"
+            android:textColor="@color/black"
             android:text="Select category"
             android:textSize="18dp"></TextView>
     </LinearLayout>
@@ -100,6 +101,7 @@
             android:layout_weight="9"
             android:hint="Amount"
             app:hintTextColor="@color/xanhnen"
+            android:textColorHint="@color/black"
             app:boxStrokeColor="#1EABED"
             app:prefixText="$"
             app:prefixTextColor="@color/xanhnen"
@@ -149,6 +151,7 @@
             app:boxStrokeColor="#1EABED"
             app:boxStrokeWidth="2dp"
             app:cursorColor="@color/xanhnen"
+            android:textColorHint="@color/black"
             app:errorEnabled="true"
             app:hintTextColor="@color/xanhnen">
         <com.google.android.material.textfield.TextInputEditText
@@ -181,6 +184,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:textStyle="bold"
+        android:textColor="@color/black"
         android:text="No renew"
         android:textSize="18dp"></TextView>
     <RelativeLayout
@@ -197,6 +201,7 @@
             android:text="Enable Notification"
             android:layout_marginLeft="12dp"
             android:layout_marginTop="5dp"
+            android:textColor="@color/black"
             android:textSize="18dp"
             android:textStyle="bold">
 
@@ -207,6 +212,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:textColor="@color/black"
             android:layout_marginLeft="12dp"
             android:layout_marginTop="26dp"
             android:text="Get notified when this budget finishes"

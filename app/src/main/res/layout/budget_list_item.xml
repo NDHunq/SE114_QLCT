@@ -113,6 +113,7 @@
             android:layout_marginStart="-5dp"
             android:layout_marginEnd="0dp"
             android:thumbTint="#0091D5"
+            android:progressBackgroundTint="@color/xamdam"
             android:progressTint="@color/xanhnendam"
 
             >
