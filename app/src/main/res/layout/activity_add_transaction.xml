@@ -272,11 +272,11 @@
 
                 <ImageView
                     android:id="@+id/add_trans_select_income_category"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:textColor="@color/black"
                     android:backgroundTint="#F2F2F2"
-                    android:src="@drawable/arrowhead_icon"
+                    android:src="@drawable/right"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="2dp"
                     android:layout_gravity="center" />
@@ -321,11 +321,11 @@
 
                 <ImageView
                     android:id="@+id/add_trans_select_expense_category"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:textColor="@color/black"
                     android:backgroundTint="#F2F2F2"
-                    android:src="@drawable/arrowhead_icon"
+                    android:src="@drawable/right"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="2dp"
                     android:layout_gravity="center" />
@@ -382,11 +382,11 @@
 
                 <ImageView
                     android:id="@+id/add_trans_select_from_wallet"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:textColor="@color/black"
                     android:backgroundTint="#F2F2F2"
-                    android:src="@drawable/arrowhead_icon"
+                    android:src="@drawable/right"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="2dp"
                     android:layout_gravity="center" />
@@ -477,11 +477,11 @@
 
                 <ImageView
                     android:id="@+id/add_trans_select_income_wallet"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:textColor="@color/black"
                     android:backgroundTint="#F2F2F2"
-                    android:src="@drawable/arrowhead_icon"
+                    android:src="@drawable/right"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="2dp"
                     android:layout_gravity="center" />
@@ -538,11 +538,11 @@
 
                 <ImageView
                     android:id="@+id/add_trans_select_expense_wallet"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:textColor="@color/black"
                     android:backgroundTint="#F2F2F2"
-                    android:src="@drawable/arrowhead_icon"
+                    android:src="@drawable/right"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="2dp"
                     android:layout_gravity="center" />
@@ -599,11 +599,11 @@
 
                 <ImageView
                     android:id="@+id/add_trans_select_target_wallet"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:textColor="@color/black"
                     android:backgroundTint="#F2F2F2"
-                    android:src="@drawable/arrowhead_icon"
+                    android:src="@drawable/right"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="2dp"
                     android:layout_gravity="center" />

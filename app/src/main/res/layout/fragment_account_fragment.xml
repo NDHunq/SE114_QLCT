@@ -108,9 +108,10 @@
             </TextView>
 
             <ImageButton
+                android:layout_marginEnd="12dp"
 
-                android:layout_width="15dp"
-                android:layout_height="15dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:background="@drawable/right"
                 android:layout_gravity="center">
             </ImageButton>
@@ -147,9 +148,10 @@
             </TextView>
 
             <ImageButton
+                android:layout_marginEnd="12dp"
 
-                android:layout_width="10dp"
-                android:layout_height="14dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_gravity="center"
                 android:background="@drawable/right">
             </ImageButton>
@@ -187,8 +189,9 @@
 
             <ImageButton
 
-                android:layout_width="15dp"
-                android:layout_height="15dp"
+                android:layout_marginEnd="12dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:background="@drawable/right"
                 android:layout_gravity="center">
             </ImageButton>
@@ -210,9 +213,11 @@
             </ImageButton>
 
             <TextView
+                android:layout_marginStart="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Log out"
+                android:textStyle="bold"
                 android:textColor="@color/xanhnen"
                 android:textSize="20dp">
 

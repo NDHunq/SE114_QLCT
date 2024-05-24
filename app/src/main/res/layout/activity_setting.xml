@@ -15,6 +15,7 @@
        >
 
         <LinearLayout
+            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:gravity="center_vertical"
@@ -23,6 +24,7 @@
             >
 
             <ImageButton
+                android:layout_marginStart="12dp"
                 android:id="@+id/backsetting"
                 android:layout_marginLeft="10dp"
                 android:layout_width="30dp"
@@ -33,6 +35,7 @@
             </ImageButton>
 
             <TextView
+                android:layout_marginStart="12dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Setting"
@@ -44,17 +47,22 @@
         </LinearLayout>
 
         <TextView
+
+            android:layout_marginBottom="5dp"
+            android:layout_marginStart="12dp"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:text="Account"
             android:textColor="@color/xanhnen"
             android:layout_marginLeft="10dp"
-            android:textSize="20dp">
+            android:textSize="25dp">
 
         </TextView>
 
         <LinearLayout
             android:layout_marginTop="10dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:layout_marginLeft="10dp"
@@ -63,6 +71,7 @@
             android:orientation="vertical">
 
             <LinearLayout
+
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:gravity="center_vertical"
@@ -76,17 +85,21 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="10dp"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:text="Phone"
+                        android:textStyle="bold"
                         android:textColor="@color/black"
-                        android:textSize="15dp">
+                        android:textSize="18dp">
 
                     </TextView>
 
                     <TextView
                         android:textColor="@color/black"
                         android:id="@+id/phone"
+                        android:layout_marginStart="10dp"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:text="TranQuyen2132004@gmail.com"
@@ -127,6 +140,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
+                android:layout_marginEnd="15dp"
                 android:layout_marginRight="10dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
@@ -136,14 +150,19 @@
                     android:layout_height="60dp"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
                     android:orientation="vertical">
 
                     <TextView
+                        android:layout_marginTop="10dp"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
+                        android:layout_marginStart="10dp"
                         android:text="Password"
+                        android:textStyle="bold"
                         android:textColor="@color/black"
-                        android:textSize="15dp">
+                        android:textSize="18dp">
 
                     </TextView>
 
@@ -151,7 +170,9 @@
                         android:textColor="@color/black"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
+                        android:layout_marginStart="10dp"
                         android:text="Change password"
+                        android:layout_marginEnd="10dp"
                         android:textSize="15dp">
 
                     </TextView>
@@ -159,6 +180,7 @@
 
                 <LinearLayout
                     android:id="@+id/changpass"
+                    android:layout_marginTop="5dp"
                     android:layout_width="100dp"
                     android:layout_height="30dp"
                     android:background="@drawable/background_item"
