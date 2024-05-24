@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -12,6 +14,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +32,7 @@ import com.example.qlct.API_Entity.SharedPrefManager;
 import com.example.qlct.API_Utils.UserAPiUtil;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 
 public class Login_Signin extends AppCompatActivity {
@@ -121,8 +125,6 @@ API_Config api_config;
         Log.d("MyApp", "Start to login");
     }
 
-        errorinfo=findViewById(R.id.errorinfo);
-        errorphone=findViewById(R.id.errorphone);
         signin=findViewById(R.id.signin);
         enterpass=findViewById(R.id.enterpass);
         enterpass.setTransformationMethod(new PasswordTransformationMethod());
@@ -161,9 +163,8 @@ API_Config api_config;
             @Override
             public void onClick(View v) {
                 try {
-                    if(phone.length()>=10&&phone.length()<=11&&phone.getText().toString().matches("[0-9]+"))
+                    if(validate())
                     {
-                        errorphone.setText("");
                         String phone_convert = phone.getText().toString();
                         if (phone_convert.startsWith("0")) {
                             phone_convert = "+84" + phone_convert.substring(1);
@@ -200,7 +201,7 @@ API_Config api_config;
                                 Log.d("Login", "loginResponse: " + loginResponse.getStatus().getCode());
                                 Log.d("Login", "4");
 
-                                if (loginResponse.getStatus().getCode() == 200) {
+                                if (validateStatusCode(loginResponse.getStatus().getCode())) {
                                     SharedPrefManager.getInstance(Login_Signin.this).saveMyVariable(loginResponse.getData().getToken());
                                     api_config = new API_Config();
                                     api_config.setTestLoginToken(SharedPrefManager.getInstance(Login_Signin.this).getMyVariable());
@@ -232,16 +233,13 @@ API_Config api_config;
                                     startActivity(myintent);
                                 } else {
                                     Log.d("login", "failed");
-                                    errorinfo.setText("Invalid phone number or password");
+                                    Toast.makeText(Login_Signin.this, "Error(s) has occured!", Toast.LENGTH_SHORT).show();
                                 }
                             }
-
-
                         });
                     }
                     else {
-                        errorinfo.setText("");
-                        errorphone.setText("Invalid phone number");
+                        Toast.makeText(Login_Signin.this, "Error(s) has occured!", Toast.LENGTH_SHORT).show();
                     }
                 }
                 catch (Exception e)
@@ -249,9 +247,106 @@ API_Config api_config;
                     Log.d("Login", "Error: " + e.toString());
                 }
 
+                TextInputEditText phone = findViewById(R.id.phone);
+                TextInputEditText enterpass = findViewById(R.id.enterpass);
 
+                phone.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    }
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        validatePhoneNumber();
+                    }
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                    }
+                });
+
+                enterpass.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    }
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        validatePassword();
+                    }
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                    }
+                });
             }
         });
 
+    }
+
+    private boolean validatePhoneNumber(){
+        TextInputLayout phoneLayout = findViewById(R.id.phone_layout);
+        TextInputEditText phone = findViewById(R.id.phone);
+
+        if(!phone.getText().toString().equals("")){
+            if(phone.length()>=10&&phone.length()<=11&&phone.getText().toString().matches("[0-9]+"))
+            {
+                //errorphone.setText("");
+                phoneLayout.setError(null);
+                phone.setTextColor(getResources().getColor(R.color.xanhnen, null));
+                return true;
+            }
+            phoneLayout.setError("Invalid phone number!");
+            phone.setTextColor(getResources().getColor(R.color.errorColor, null));
+            return false;
+        }
+        else{
+            phoneLayout.setError("Phone number is empty!");
+            phone.setTextColor(getResources().getColor(R.color.errorColor, null));
+            return false;
+        }
+    }
+
+    private boolean validatePassword(){
+        TextInputLayout passwordLayout = findViewById(R.id.enterpass_layout);
+        TextInputEditText password = findViewById(R.id.enterpass);
+
+        if (!password.getText().toString().equals("")) {
+            passwordLayout.setError(null);
+            password.setTextColor(getResources().getColor(R.color.xanhnen, null));
+            return true;
+        } else {
+            passwordLayout.setError("Password is empty!");
+            password.setTextColor(getResources().getColor(R.color.errorColor, null));
+            return false;
+        }
+    }
+
+    private boolean validateStatusCode(int statusCode){
+        TextInputLayout phoneLayout = findViewById(R.id.phone_layout);
+        TextInputEditText phone = findViewById(R.id.phone);
+        TextInputLayout passwordLayout = findViewById(R.id.enterpass_layout);
+        TextInputEditText password = findViewById(R.id.enterpass);
+
+        if(statusCode == 200){
+            phoneLayout.setError(null);
+            phone.setTextColor(getResources().getColor(R.color.xanhnen, null));
+            passwordLayout.setError(null);
+            password.setTextColor(getResources().getColor(R.color.xanhnen, null));
+            return true;
+        }
+        else{
+            phoneLayout.setError("Invalid phone number!");
+            phone.setTextColor(getResources().getColor(R.color.errorColor, null));
+            passwordLayout.setError("Invalid password!");
+            password.setTextColor(getResources().getColor(R.color.errorColor, null));
+            return false;
+        }
+
+
+    }
+
+    private boolean validate(){
+        boolean phoneValid = validatePhoneNumber();
+        boolean passwordValid = validatePassword();
+        return phoneValid && passwordValid;
     }
 }

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -12,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,12 +24,15 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.qlct.API_Utils.UserAPiUtil;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 public class Phone extends AppCompatActivity {
     String phone_convert;
 TextView nextphone;
 ImageButton backphone;
 TextInputEditText    phone;
+
+TextInputLayout phoneLayout;
     public boolean dispatchTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             View v = getCurrentFocus();
@@ -55,14 +61,30 @@ TextInputEditText    phone;
         backphone=findViewById(R.id.backphone);
         nextphone=findViewById(R.id.nextphone);
         phone=findViewById(R.id.phone);
+        phoneLayout=findViewById(R.id.phone_layout);
 
+        phone.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                validatePhoneNumber();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         nextphone.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(android.view.View v) {
-                if (phone.getText().toString().isEmpty()) {
-                    phone.setError("Vui lòng nhập số điện thoại");
-                    return;
+                if (!validatePhoneNumber()) {
+                    Toast.makeText(Phone.this, "Error(s) has occurred", Toast.LENGTH_SHORT).show();
                 } else {
                     try {
                         Log.d("Phone", "phone: " + phone.getText().toString());
@@ -89,5 +111,28 @@ TextInputEditText    phone;
             }
         });
         backphone.setOnClickListener(v -> finish());
+    }
+
+    private boolean validatePhoneNumber(){
+        phoneLayout = findViewById(R.id.phone_layout);
+        phone = findViewById(R.id.phone);
+
+        if(!phone.getText().toString().equals("")){
+            if(phone.length()>=10&&phone.length()<=11&&phone.getText().toString().matches("[0-9]+"))
+            {
+                //errorphone.setText("");
+                phoneLayout.setError(null);
+                phone.setTextColor(getResources().getColor(R.color.xanhnen, null));
+                return true;
+            }
+            phoneLayout.setError("Invalid phone number!");
+            phone.setTextColor(getResources().getColor(R.color.errorColor, null));
+            return false;
+        }
+        else{
+            phoneLayout.setError("Phone number is empty!");
+            phone.setTextColor(getResources().getColor(R.color.errorColor, null));
+            return false;
+        }
     }
 }

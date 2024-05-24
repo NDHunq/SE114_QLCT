@@ -64,14 +64,15 @@
         <LinearLayout
             android:layout_margin="30dp"
             android:orientation="horizontal"
-            android:layout_width="match_parent"
+           android:layout_gravity="center"
+            android:layout_width="wrap_content"
             android:layout_height="80dp"
             >
             <EditText
                 android:id="@+id/editText1"
                 android:paddingLeft="10dp"
-                android:textSize="40dp"
-                android:layout_width="50dp"
+                android:textSize="30dp"
+                android:layout_width="40dp"
                 android:layout_marginRight="10dp"
                 android:layout_height="match_parent"
                 android:background="@drawable/background_item"
@@ -80,8 +81,8 @@
             <EditText
                 android:id="@+id/editText2"
                 android:paddingLeft="10dp"
-                android:textSize="40dp"
-                android:layout_width="50dp"
+                android:textSize="30dp"
+                android:layout_width="40dp"
                 android:layout_marginRight="10dp"
                 android:layout_height="match_parent"
                 android:background="@drawable/background_item"
@@ -90,8 +91,8 @@
             <EditText
                 android:id="@+id/editText3"
                 android:paddingLeft="10dp"
-                android:textSize="40dp"
-                android:layout_width="50dp"
+                android:textSize="30dp"
+                android:layout_width="40dp"
                 android:layout_marginRight="10dp"
                 android:layout_height="match_parent"
                 android:background="@drawable/background_item"
@@ -100,8 +101,8 @@
             <EditText
                 android:id="@+id/editText4"
                 android:paddingLeft="10dp"
-                android:textSize="40dp"
-                android:layout_width="50dp"
+                android:textSize="30dp"
+                android:layout_width="40dp"
                 android:layout_marginRight="10dp"
                 android:layout_height="match_parent"
                 android:background="@drawable/background_item"
@@ -110,8 +111,8 @@
             <EditText
                 android:id="@+id/editText5"
                 android:paddingLeft="10dp"
-                android:textSize="40dp"
-                android:layout_width="50dp"
+                android:textSize="30dp"
+                android:layout_width="40dp"
                 android:layout_marginRight="10dp"
                 android:layout_height="match_parent"
                 android:background="@drawable/background_item"
@@ -120,8 +121,8 @@
             <EditText
                 android:id="@+id/editText6"
                 android:paddingLeft="10dp"
-                android:textSize="40dp"
-                android:layout_width="50dp"
+                android:textSize="30dp"
+                android:layout_width="40dp"
                 android:layout_marginRight="10dp"
                 android:layout_height="match_parent"
                 android:background="@drawable/background_item"

@@ -1,11 +1,15 @@
 package com.example.qlct;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -32,7 +36,23 @@ String phoneNumber;
     // Tạo một mảng chứa tất cả các EditText
     EditText[] editTexts = new EditText[6];
     TextView phone;
+    TextView error;
 
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if (v instanceof EditText) {
+                Rect outRect = new Rect();
+                v.getGlobalVisibleRect(outRect);
+                if (!outRect.contains((int)event.getRawX(), (int)event.getRawY())) {
+                    v.clearFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        }
+        return super.dispatchTouchEvent( event );
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d("phone1","0");
@@ -61,6 +81,7 @@ String phoneNumber;
         Log.d("phone1","1");
         phoneNumber=getIntent().getStringExtra("phone");
         Log.d("phone1","2");
+        error=findViewById(R.id.error);
 
         create=findViewById(R.id.create);
         back=findViewById(R.id.back);
@@ -74,43 +95,48 @@ String phoneNumber;
         create.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        try {
-
-                                            for(int i=0;i<6;i++)
-                                            {
-                                                Log.d("phone",editTexts[i].getText().toString());
-                                                id = id + editTexts[i].getText().toString();
-                                            }
-                                            Log.d("phone",id);
-                                        } catch (Exception e) {
-                                            Log.d("phone", "Exception occurred: "+ e.toString());
+                                        if(editTexts[0].getText().toString().equals("")||editTexts[1].getText().toString().equals("")||editTexts[2].getText().toString().equals("")||editTexts[3].getText().toString().equals("")||editTexts[4].getText().toString().equals("")||editTexts[5].getText().toString().equals(""))
+                                        {
+                                            error.setText("Please enter all the fields");
+                                            return;
                                         }
-                                        Toast.makeText(email_login.this, "Create account", Toast.LENGTH_SHORT).show();
-                                        Log.d("phone1","onClick called");
-                                        Log.d("phone1","3");
-                                        Log.d("phone1",phoneNumber);
+                                        else {
 
-                                        UserAPiUtil userAPiUtil = new UserAPiUtil();
-                                        userAPiUtil.verifyPhoneNumber(phoneNumber, id, new UserAPiUtil.OnTaskCompleted() {
-                                            @Override
-                                            public void onTaskCompleted(String result) {
-                                                Gson gson = new Gson();
-                                                OTPResponse otpResponse = gson.fromJson(result, OTPResponse.class);
-                                                if(otpResponse.getStatus().getCode()==200)
-                                                {
-                                                    Intent myintent = new Intent(email_login.this,Login_Signin.class);
-                                                    Log.d("create","success");
-                                                    myintent.putExtra("phone",phoneNumber);
-                                                    startActivity(myintent);
+
+                                            try {
+
+                                                for (int i = 0; i < 6; i++) {
+                                                    Log.d("phone", editTexts[i].getText().toString());
+                                                    id = id + editTexts[i].getText().toString();
                                                 }
-                                                else
-                                                {
-                                                    Log.d("create","fail");
-                                                }
-                                                // handle the result here
-                                                // for example, navigate to the next screen if the verification is successful
+                                                Log.d("phone", id);
+                                            } catch (Exception e) {
+                                                Log.d("phone", "Exception occurred: " + e.toString());
                                             }
-                                        });
+                                            Toast.makeText(email_login.this, "Create account", Toast.LENGTH_SHORT).show();
+                                            Log.d("phone1", "onClick called");
+                                            Log.d("phone1", "3");
+                                            Log.d("phone1", phoneNumber);
+
+                                            UserAPiUtil userAPiUtil = new UserAPiUtil();
+                                            userAPiUtil.verifyPhoneNumber(phoneNumber, id, new UserAPiUtil.OnTaskCompleted() {
+                                                @Override
+                                                public void onTaskCompleted(String result) {
+                                                    Gson gson = new Gson();
+                                                    OTPResponse otpResponse = gson.fromJson(result, OTPResponse.class);
+                                                    if (otpResponse.getStatus().getCode() == 200) {
+                                                        Intent myintent = new Intent(email_login.this, Login_Signin.class);
+                                                        Log.d("create", "success");
+                                                        myintent.putExtra("phone", phoneNumber);
+                                                        startActivity(myintent);
+                                                    } else {
+                                                        Log.d("create", "fail");
+                                                    }
+                                                    // handle the result here
+                                                    // for example, navigate to the next screen if the verification is successful
+                                                }
+                                            });
+                                        }
                                     }
                                 });
         back.setOnClickListener(new View.OnClickListener() {
