@@ -83,6 +83,7 @@
             android:layout_marginLeft="15dp"
             android:textStyle="bold"
             android:text="Select category"
+            android:textColor="@color/black"
             android:textSize="18dp"></TextView>
     </LinearLayout>
 
@@ -183,6 +184,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:textStyle="bold"
+        android:textColor="@color/black"
         android:text="No renew"
         android:textSize="18dp"></TextView>
     <RelativeLayout
@@ -197,6 +199,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Enable Notification"
+            android:textColor="@color/black"
             android:layout_marginLeft="12dp"
             android:layout_marginTop="5dp"
             android:textSize="18dp"
@@ -210,6 +213,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="12dp"
+            android:textColor="@color/black"
             android:layout_marginTop="26dp"
             android:text="Get notified when this budget finishes"
             android:textSize="14dp">

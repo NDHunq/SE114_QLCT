@@ -75,6 +75,7 @@ public class BudgetRunningFragment extends Fragment {
     }
     public void Load(List<Budget> listt)
     {
+
         Budget_adapter adapter=new Budget_adapter(getContext(),R.layout.budget_list_item,listt);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -370,7 +371,7 @@ public class BudgetRunningFragment extends Fragment {
                         }
                         else
                         {
-                            if(list.get(i).getFromDate().equals(""))
+                            if(list.get(i).getFromDate().isEmpty())
                             {
                                 if(CheckThisDay(list.get(i).getToDate()))
                                 {
@@ -388,6 +389,7 @@ public class BudgetRunningFragment extends Fragment {
                         }
                     }
                     Load(list1);
+
                 }
                 catch (Exception e)
                 {
