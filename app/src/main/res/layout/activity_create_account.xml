@@ -155,32 +155,35 @@
             android:layout_marginTop="20dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="70dp"
             android:layout_marginRight="20dp"
             android:gravity="center_vertical"
-            android:background="@drawable/border"
+            android:focusable="true"
+            android:clickable="true"
+            android:focusableInTouchMode="true"
             >
 
-            <EditText
-                android:paddingLeft="20dp"
-                android:textSize="20dp"
-                android:id="@+id/enterpass"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/enterpass_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:textColor="#1EABED"
-                android:textStyle="bold"
-                android:background="@android:color/transparent"
-                >
-            </EditText>
-            <ImageButton
-                android:id="@+id/showpass"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginRight="20dp"
-                android:background="@drawable/show">
-
-            </ImageButton>
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
+                app:endIconMode="password_toggle"
+                app:hintTextColor="@color/xanhnen"
+                app:boxStrokeColor="#1EABED"
+                app:cursorColor="@color/xanhnen"
+                app:errorEnabled="true"
+                app:boxStrokeWidth="2dp"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/enterpass"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textPassword"
+                    android:textColor="#1EABED"
+                    android:textStyle="bold"
+                    android:textSize="17sp"
+                    android:singleLine="true" />
+            </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
         <TextView
@@ -198,34 +201,46 @@
             android:layout_marginTop="20dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="70dp"
             android:layout_marginRight="20dp"
             android:gravity="center_vertical"
-            android:background="@drawable/border"
+            android:focusable="true"
+            android:clickable="true"
+            android:focusableInTouchMode="true"
             >
 
-            <EditText
-                android:paddingLeft="20dp"
-                android:textSize="20dp"
-                android:id="@+id/repeatpass"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/repeatpass_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:textColor="#1EABED"
-                android:textStyle="bold"
-                android:background="@android:color/transparent"
-                >
-            </EditText>
-            <ImageButton
-                android:id="@+id/showpass1"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginRight="20dp"
-                android:background="@drawable/show">
-
-            </ImageButton>
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
+                app:endIconMode="password_toggle"
+                app:hintTextColor="@color/xanhnen"
+                app:boxStrokeColor="#1EABED"
+                app:cursorColor="@color/xanhnen"
+                app:errorEnabled="true"
+                app:boxStrokeWidth="2dp"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/repeatpass"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textPassword"
+                    android:textColor="#1EABED"
+                    android:textStyle="bold"
+                    android:textSize="17sp"
+                    android:singleLine="true" />
+            </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
+        <TextView
+            android:id="@+id/errorpass"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginLeft="20dp"
+            android:textColor="@color/red"
+            android:textSize="20dp"
+            android:text="">
+        </TextView>
         <TextView
             android:id="@+id/errorinfo"
             android:layout_width="match_parent"
@@ -235,28 +250,27 @@
             android:textSize="20dp"
             android:text="">
         </TextView>
-        </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <TextView
                 android:id="@+id/nextcreateacount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Next"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
-                android:textSize="25dp"
-                android:textColor="@color/xanhnen"
-                android:textStyle="bold"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
-                >
+                android:text="Next"
+                android:textColor="@color/xanhnen"
+                android:textSize="25dp"
+                android:textStyle="bold">
 
             </TextView>
         </RelativeLayout>
-
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

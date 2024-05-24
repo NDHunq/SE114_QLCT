@@ -1,10 +1,14 @@
 package com.example.qlct;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -38,6 +42,21 @@ ImageButton showpass;
 ImageButton showpass1;
 TextView save;
     ImageButton showpass2;
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if (v instanceof EditText) {
+                Rect outRect = new Rect();
+                v.getGlobalVisibleRect(outRect);
+                if (!outRect.contains((int)event.getRawX(), (int)event.getRawY())) {
+                    v.clearFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        }
+        return super.dispatchTouchEvent( event );
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,9 +88,6 @@ TextView save;
 
         repeatpass=findViewById(R.id.repeatpass);
         repeatpass.setTransformationMethod(new PasswordTransformationMethod());
-        showpass = findViewById(R.id.showpass);
-        showpass1=findViewById(R.id.showpass1);
-        showpass2=findViewById(R.id.showpass2);
         save.setOnClickListener(new View.OnClickListener() {
             int flag1=1;
            int flag=1;
@@ -133,36 +149,6 @@ TextView save;
 
             }
         });
-        showpass2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (currentpass.getTransformationMethod() != null) {
-                    currentpass.setTransformationMethod(null);
-                } else {
-                    currentpass.setTransformationMethod(new PasswordTransformationMethod());
-                }
-            }
-        });
-        showpass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (enterpass.getTransformationMethod() != null) {
-                    enterpass.setTransformationMethod(null);
-                } else {
-                    enterpass.setTransformationMethod(new PasswordTransformationMethod());
-                }
-            }
-        });
 
-        showpass1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (repeatpass.getTransformationMethod() != null) {
-                    repeatpass.setTransformationMethod(null);
-                } else {
-                    repeatpass.setTransformationMethod(new PasswordTransformationMethod());
-                }
-            }
-        });
     }
 }

@@ -1,10 +1,14 @@
 package com.example.qlct;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -26,12 +30,28 @@ TextInputEditText phone;
     TextInputEditText username;
 TextView errorphone;
 int flag=1;
+TextView errorpass;
     EditText enterpass;
     EditText repeatpass;
     ImageButton showpass;
     ImageButton showpass1;
     ImageButton back;
     TextView errorinfo;
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if (v instanceof EditText) {
+                Rect outRect = new Rect();
+                v.getGlobalVisibleRect(outRect);
+                if (!outRect.contains((int)event.getRawX(), (int)event.getRawY())) {
+                    v.clearFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        }
+        return super.dispatchTouchEvent( event );
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +62,7 @@ int flag=1;
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        errorpass=findViewById(R.id.errorpass);
         errorinfo=findViewById(R.id.errorinfo);
         nextcreateaccount=findViewById(R.id.nextcreateacount);
         errorphone=findViewById(R.id.errorphone);
@@ -58,10 +79,12 @@ int flag=1;
                     errorinfo.setText("Please fill in all the information");
                 }
                 if (enterpass.getText().toString().equals(repeatpass.getText().toString())) {
-
+                    errorpass.setText("");
                 }
                 else {
                     flag = 0;
+                    errorpass.setText("Password does not match");
+
                 }
                 if (phone.length() >= 10 && phone.length() <= 11 && phone.getText().toString().matches("[0-9]+")) {
                     if (flag == 1) {
@@ -105,29 +128,29 @@ Log.d("Register1", "da intent thanh cong");
 
         repeatpass=findViewById(R.id.repeatpass);
         repeatpass.setTransformationMethod(new PasswordTransformationMethod());
-        showpass = findViewById(R.id.showpass);
-        showpass1=findViewById(R.id.showpass1);
-        showpass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (enterpass.getTransformationMethod() != null) {
-                    enterpass.setTransformationMethod(null);
-                } else {
-                    enterpass.setTransformationMethod(new PasswordTransformationMethod());
-                }
-            }
-        });
-
-        showpass1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (repeatpass.getTransformationMethod() != null) {
-                    repeatpass.setTransformationMethod(null);
-                } else {
-                    repeatpass.setTransformationMethod(new PasswordTransformationMethod());
-                }
-            }
-        });
+//        showpass = findViewById(R.id.showpass);
+//        showpass1=findViewById(R.id.showpass1);
+//        showpass.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (enterpass.getTransformationMethod() != null) {
+//                    enterpass.setTransformationMethod(null);
+//                } else {
+//                    enterpass.setTransformationMethod(new PasswordTransformationMethod());
+//                }
+//            }
+//        });
+//
+//        showpass1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (repeatpass.getTransformationMethod() != null) {
+//                    repeatpass.setTransformationMethod(null);
+//                } else {
+//                    repeatpass.setTransformationMethod(new PasswordTransformationMethod());
+//                }
+//            }
+//        });
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
