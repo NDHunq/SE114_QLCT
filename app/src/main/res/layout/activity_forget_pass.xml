@@ -69,6 +69,7 @@
             android:layout_height="80dp"
             >
             <EditText
+                android:textColor="@color/black"
                 android:id="@+id/editText1"
                 android:paddingLeft="10dp"
                 android:textSize="30dp"
@@ -79,6 +80,7 @@
                 android:maxLength="1">
             </EditText>
             <EditText
+                android:textColor="@color/black"
                 android:id="@+id/editText2"
                 android:paddingLeft="10dp"
                 android:textSize="30dp"
@@ -89,6 +91,7 @@
                 android:maxLength="1">
             </EditText>
             <EditText
+                android:textColor="@color/black"
                 android:id="@+id/editText3"
                 android:paddingLeft="10dp"
                 android:textSize="30dp"
@@ -99,6 +102,7 @@
                 android:maxLength="1">
             </EditText>
             <EditText
+                android:textColor="@color/black"
                 android:id="@+id/editText4"
                 android:paddingLeft="10dp"
                 android:textSize="30dp"
@@ -109,6 +113,7 @@
                 android:maxLength="1">
             </EditText>
             <EditText
+                android:textColor="@color/black"
                 android:id="@+id/editText5"
                 android:paddingLeft="10dp"
                 android:textSize="30dp"
@@ -119,6 +124,7 @@
                 android:maxLength="1">
             </EditText>
             <EditText
+                android:textColor="@color/black"
                 android:id="@+id/editText6"
                 android:paddingLeft="10dp"
                 android:textSize="30dp"
