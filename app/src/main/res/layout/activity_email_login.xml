@@ -69,6 +69,7 @@
             >
             <EditText
                 android:id="@+id/editText1"
+                android:textColor="@color/black"
                 android:inputType="number"
                 android:paddingLeft="10dp"
                 android:textSize="30dp"
@@ -80,6 +81,7 @@
             </EditText>
             <EditText
                 android:id="@+id/editText2"
+                android:textColor="@color/black"
                 android:inputType="number"
                 android:paddingLeft="10dp"
                 android:textSize="30dp"
@@ -91,6 +93,7 @@
             </EditText>
             <EditText
                 android:id="@+id/editText3"
+                android:textColor="@color/black"
                 android:inputType="number"
                 android:paddingLeft="10dp"
                 android:textSize="30dp"
@@ -102,6 +105,7 @@
             </EditText>
             <EditText
                 android:id="@+id/editText4"
+                android:textColor="@color/black"
                 android:inputType="number"
                 android:paddingLeft="10dp"
                 android:textSize="30dp"
@@ -113,6 +117,7 @@
             </EditText>
             <EditText
                 android:id="@+id/editText5"
+                android:textColor="@color/black"
                 android:inputType="number"
                 android:paddingLeft="10dp"
                 android:textSize="30dp"
@@ -124,6 +129,7 @@
             </EditText>
             <EditText
                 android:id="@+id/editText6"
+                android:textColor="@color/black"
                 android:inputType="number"
                 android:paddingLeft="10dp"
                 android:textSize="30dp"
