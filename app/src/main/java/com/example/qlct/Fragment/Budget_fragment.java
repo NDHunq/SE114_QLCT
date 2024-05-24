@@ -23,7 +23,10 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.example.qlct.API_Entity.GetAllBudget;
+import com.example.qlct.API_Entity.GetAllCategoryy;
 import com.example.qlct.API_Utils.BudgetAPIUtil;
+import com.example.qlct.API_Utils.CategoryAPIUntill;
+import com.example.qlct.API_Utils.CategoryAPIUtil;
 import com.example.qlct.Budget.AddBudget;
 import com.example.qlct.Budget.BudgetFinishFragment;
 import com.example.qlct.Budget.BudgetRunningFragment;
@@ -43,6 +46,7 @@ public class Budget_fragment extends Fragment {
     ImageView bell;
     LinearLayout running_budget;
     ArrayList<GetAllBudget> allBudgets = new ArrayList<>();
+    ArrayList<GetAllCategoryy> listCate;
     TextView remaining;
     TextView total_spent;
     TextView total_budget;
@@ -82,6 +86,7 @@ public class Budget_fragment extends Fragment {
         seekBar=view.findViewById(R.id.seekBar);
         //CALL API
         allBudgets=new BudgetAPIUtil().getAllBudgets();
+        listCate=new CategoryAPIUntill().getAllCategoryys();
         if(allBudgets==null){
             Log.d("Budget","null");
         }
@@ -131,7 +136,7 @@ public class Budget_fragment extends Fragment {
         });
         FragmentManager fragmentManager=getChildFragmentManager();
         FragmentTransaction transaction=fragmentManager.beginTransaction();
-        Fragment child=new BudgetRunningFragment(allBudgets);
+        Fragment child=new BudgetRunningFragment(allBudgets,listCate);
         transaction.replace(R.id.budget_container,child);
         transaction.commit();
         running.setOnClickListener(new View.OnClickListener() {
@@ -147,7 +152,7 @@ public class Budget_fragment extends Fragment {
 
                 FragmentManager fragmentManager2=getChildFragmentManager();
                 FragmentTransaction transaction2=fragmentManager2.beginTransaction();
-                Fragment child1=new BudgetRunningFragment(allBudgets);
+                Fragment child1=new BudgetRunningFragment(allBudgets,listCate);
                 transaction2.replace(R.id.budget_container,child1);
                 transaction2.commit();
             }
@@ -165,7 +170,7 @@ public class Budget_fragment extends Fragment {
 
                 FragmentManager fragmentManager3=getChildFragmentManager();
                 FragmentTransaction transaction3=fragmentManager3.beginTransaction();
-                Fragment child2=new BudgetFinishFragment(allBudgets);
+                Fragment child2=new BudgetFinishFragment(allBudgets,listCate);
                 transaction3.replace(R.id.budget_container,child2);
                 transaction3.commit();
             }

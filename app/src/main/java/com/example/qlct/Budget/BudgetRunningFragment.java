@@ -42,8 +42,9 @@ public class BudgetRunningFragment extends Fragment {
     ArrayList<GetAllCategoryy> listCate;
     public BudgetRunningFragment() {
     }
-    public BudgetRunningFragment(ArrayList<GetAllBudget> allBudgets) {
+    public BudgetRunningFragment(ArrayList<GetAllBudget> allBudgets,ArrayList<GetAllCategoryy> listCate) {
         this.allBudgets = allBudgets;
+        this.listCate = listCate;
     }
 
     public static BudgetRunningFragment newInstance(String param1, String param2) {
@@ -68,7 +69,6 @@ public class BudgetRunningFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.fragment_budget_running, container, false);
         listView=view.findViewById(R.id.listviewRunning);
-        GetAllCategory();
         Anhxa(view);
         Load(list);
         return view;
@@ -310,18 +310,21 @@ public class BudgetRunningFragment extends Fragment {
         list=new ArrayList<>();
         String from="";
         String to="";
+        String to1="";
         if(allBudgets != null)
             for(int i=0;i<allBudgets.size();i++){
                 if(allBudgets.get(i).getBudget_type().equals("NO_RENEW")) {
                     if (allBudgets.get(i).getNo_renew_date_unit().equals("DAY") ) {
                         from = "";
                         to = allBudgets.get(i).getNo_renew_date();
+                        to1 = allBudgets.get(i).getNo_renew_date();
                     }
                     else {
                         String[] dates = allBudgets.get(i).getNo_renew_date().split(" ");
                         if(dates.length == 2) {
                             from ="From: "+ dates[0];
                             to = "To: "+dates[1];
+                            to1 = dates[1];
                         }
                     }
                 }
@@ -347,6 +350,7 @@ public class BudgetRunningFragment extends Fragment {
 
                 }
                 Budget budget = new Budget(GetNameCategory(allBudgets.get(i).getCategory_id()),Double.valueOf(allBudgets.get(i).getLimit_amount()) ,Double.valueOf(allBudgets.get(i).getExpensed_amount()) ,from,to,allBudgets.get(i).getCategory().getPicture(),allBudgets.get(i).getBudget_type(),allBudgets.get(i).getId(),allBudgets.get(i).getCurrency_unit());
+                if((IsNowBeforeDay(to1)&& budget.getType().equals("NO_RENEW"))||budget.getType().equals("RENEW") )
                     list.add(budget);
             }
         else{
@@ -584,5 +588,15 @@ public class BudgetRunningFragment extends Fragment {
             }
         }
         return "";
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    boolean IsNowBeforeDay(String date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate inputDate = LocalDate.parse(date, formatter);
+        LocalDate currentDate = LocalDate.now();
+
+        return currentDate.isBefore(inputDate);
     }
 }

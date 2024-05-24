@@ -45,8 +45,9 @@ public class BudgetFinishFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public BudgetFinishFragment( ArrayList<GetAllBudget> allBudgets) {
+    public BudgetFinishFragment( ArrayList<GetAllBudget> allBudgets,    ArrayList<GetAllCategoryy> listCate) {
         this.allBudgets = allBudgets;
+        this.listCate = listCate;
     }
 
     /**
@@ -83,7 +84,6 @@ public class BudgetFinishFragment extends Fragment {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_budget_finish, container, false);
         listView=view.findViewById(R.id.listviewFinish);
-        GetAllCategory();
         Anhxa();
         Budget_adapter adapter=new Budget_adapter(getContext(),R.layout.budget_list_item,list);
         listView.setAdapter(adapter);
@@ -95,27 +95,39 @@ public class BudgetFinishFragment extends Fragment {
         list=new ArrayList<>();
         String from="";
         String to="";
+        Log.d("BudgetRunningFragment", allBudgets.size()+"");
+
         if(allBudgets != null)
             for(int i=0;i<allBudgets.size();i++){
                 if(allBudgets.get(i).getBudget_type().equals("NO_RENEW")) {
+                    Log.d("BudgetRunningFragment", i+" :::NO_RENEW");
                     if (allBudgets.get(i).getNo_renew_date_unit().equals("DAY") ) {
+                        Log.d("BudgetRunningFragment", i+" :::DAY");
+
                         from = "";
                         to = allBudgets.get(i).getNo_renew_date();
-                        if(!DayIsBeforeNow(to))
-                            break;
+                        if(!IsNowBeforeDay(to))
+                        {
+                            Budget budget = new Budget(GetNameCategory(allBudgets.get(i).getCategory_id()),Double.valueOf(allBudgets.get(i).getLimit_amount()) ,Double.valueOf(allBudgets.get(i).getExpensed_amount()) ,from,to,allBudgets.get(i).getCategory().getPicture(),allBudgets.get(i).getBudget_type(),allBudgets.get(i).getId(),allBudgets.get(i).getCurrency_unit());
+                            list.add(budget);
+                        }
+
                     }
                     else {
+                        Log.d("BudgetRunningFragment", i+" :::khác day");
+
                         String[] dates = allBudgets.get(i).getNo_renew_date().split(" ");
                         if(dates.length == 2) {
                             from ="From: "+ dates[0];
                             to = "To: "+dates[1];
-                            if(!DayIsBeforeNow(dates[1]))
-                                break;
+                            if(!IsNowBeforeDay(dates[1]))
+                            {
+                                Budget budget = new Budget(GetNameCategory(allBudgets.get(i).getCategory_id()),Double.valueOf(allBudgets.get(i).getLimit_amount()) ,Double.valueOf(allBudgets.get(i).getExpensed_amount()) ,from,to,allBudgets.get(i).getCategory().getPicture(),allBudgets.get(i).getBudget_type(),allBudgets.get(i).getId(),allBudgets.get(i).getCurrency_unit());
+                                list.add(budget);
+                            }
                         }
                     }
-                    Budget budget = new Budget(GetNameCategory(allBudgets.get(i).getCategory_id()),Double.valueOf(allBudgets.get(i).getLimit_amount()) ,Double.valueOf(allBudgets.get(i).getExpensed_amount()) ,from,to,allBudgets.get(i).getCategory().getPicture(),allBudgets.get(i).getBudget_type(),allBudgets.get(i).getId(),allBudgets.get(i).getCurrency_unit());
-                    list.add(budget);
-                    Log.d("Finishhhh", "Budget: " + budget.toString());
+
                 }
             }
         else{
@@ -123,12 +135,12 @@ public class BudgetFinishFragment extends Fragment {
         }
     }
     @RequiresApi(api = Build.VERSION_CODES.O)
-    boolean DayIsBeforeNow(String date) {
+    boolean IsNowBeforeDay(String date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate inputDate = LocalDate.parse(date, formatter);
         LocalDate currentDate = LocalDate.now();
 
-        return inputDate.isBefore(currentDate);
+        return currentDate.isBefore(inputDate);
     }
     void GetAllCategory()
     {
