@@ -104,6 +104,7 @@ public class TransactionDetail extends AppCompatActivity {
     private ArrayList<Chip> expenseChipList = new ArrayList<>();
 
     private CircularProgressIndicator loading;
+    String TenVi;
 
     private void AnhXaWallet(){
         try{

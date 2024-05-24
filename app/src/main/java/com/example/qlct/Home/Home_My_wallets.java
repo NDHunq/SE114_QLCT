@@ -127,6 +127,11 @@ public class Home_My_wallets extends AppCompatActivity {
             e.printStackTrace();
         }
         TextView tongtien = findViewById(R.id.tongammount);
+        if(TongTien<0)
+        {
+            tongtien.setTextColor(Color.RED);
+        }
+
         tongtien.setText(doitien.formatValue(TongTien)+ " ₫");
         // Sort theViList by item.name in ascending order
 
