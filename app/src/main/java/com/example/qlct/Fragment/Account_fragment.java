@@ -43,9 +43,13 @@ public class Account_fragment extends Fragment {
     LinearLayout setting;
     TextView phone;
     TextView name;
-UserProfile userProfile;
+    UserProfile userProfile;
     String phoneNumber;
     ImageButton bell;
+
+    public Account_fragment() {
+        // Required empty public constructor
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

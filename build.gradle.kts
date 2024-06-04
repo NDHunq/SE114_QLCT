@@ -8,8 +8,6 @@ buildscript{
         google()
         mavenCentral()
     }
-
-
 }
 
 

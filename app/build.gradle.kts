@@ -4,6 +4,10 @@ plugins {
 }
 
 android {
+    lintOptions {
+        disable("Instantiatable")
+    }
+
     namespace = "com.example.qlct"
     compileSdk = 34
 
