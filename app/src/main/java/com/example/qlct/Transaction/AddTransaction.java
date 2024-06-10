@@ -57,6 +57,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.qlct.API_Config;
 import com.example.qlct.API_Entity.CreateTransactionEntity;
 import com.example.qlct.API_Entity.GetAllCategoryEntity;
 import com.example.qlct.API_Entity.GetAllWalletsEntity;
@@ -920,7 +921,7 @@ public class AddTransaction extends AppCompatActivity {
                             excuteTransfer(fromWalletIdStorage, targetWalletIdStorage);
                         }
                         Toast.makeText(AddTransaction.this, "Add transaction successfully", Toast.LENGTH_SHORT).show();
-                        setResult(RESULT_OK);
+                        //setResult(RESULT_OK);
                         finish();
                     }                }
             });
@@ -1144,7 +1145,7 @@ public class AddTransaction extends AppCompatActivity {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+    //@RequiresApi(api = Build.VERSION_CODES.O)
     private boolean validateDate() {
         TextInputLayout dateEditTextLayout = findViewById(R.id.select_date_txtbox_layout);
         TextInputEditText dateEditText = findViewById(R.id.select_date_txtbox);
@@ -1200,8 +1201,8 @@ public class AddTransaction extends AppCompatActivity {
     private String uploadImageAPI(Uri imageUri) throws IOException, JSONException {
 
         //Đường dẫn của server, cái này trong source chính đã để trong folder API_CONFIG
-        String SERVER = "http://13.215.179.128";
-        String API_VERSION = "api/v1";
+        String SERVER = API_Config.SERVER;
+        String API_VERSION = API_Config.API_VERSION;
 
         //Dưới nãy giữ y chang, không cần suy nghĩ
         OkHttpClient client = new OkHttpClient().newBuilder()
