@@ -137,7 +137,7 @@
                 <TextView
                     android:id="@+id/date"
                     android:layout_width="80dp"
-                    android:text="05-2024"
+                    android:text="06-2024"
                     android:gravity="center"
                     android:textColor="@color/black"
                     android:textSize="16dp"

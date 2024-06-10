@@ -47,9 +47,9 @@ public class Account_fragment extends Fragment {
     String phoneNumber;
     ImageButton bell;
 
-    public Account_fragment() {
-        // Required empty public constructor
-    }
+//    public Account_fragment() {
+//        // Required empty public constructor
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,15 +67,15 @@ public class Account_fragment extends Fragment {
         UserAPiUtil userAPiUtil = new UserAPiUtil();
         UserProfile userProfile=userAPiUtil.getUserProfile();
 //        userProfile = SharedDaTa.getInstance().getUserProfile();
-        if (
-                userProfile== null
-        ) {
-            phoneNumber = "";
+        if (userProfile != null) {
+            if(userProfile.getData() != null){
+                name.setText(userProfile.getData().getUsername());
+                phoneNumber = userProfile.getData().getPhone_number();
+                phoneNumber="0"+ phoneNumber.substring(3);
+            }
         }
         else {
-            name.setText(userProfile.getData().getUsername());
-            phoneNumber = userProfile.getData().getPhone_number();
-            phoneNumber="0"+ phoneNumber.substring(3);
+            phoneNumber = "";
         }
 
         phone.setText(phoneNumber);
